@@ -1,5 +1,4 @@
 {
-  "draft": true,
   "reviewed": "2026-11-24",
   "lead": "Process a whole disk image or phone extraction once, then search everything inside it from one screen. IPED was built by forensic examiners of the Brazilian Federal Police to get through very large cases quickly.",
   "use_when": [

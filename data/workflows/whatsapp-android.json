@@ -1,0 +1,150 @@
+{
+  "draft": true,
+  "reviewed": "2026-11-24",
+  "title": "Which WhatsApp chats are on this Android phone?",
+  "short": "WhatsApp chats on Android",
+  "lead": "WhatsApp keeps its messages in a database on the phone and in encrypted backup files. This workflow shows where they are, how to read them with free tools, and what can and cannot be recovered after messages are deleted.",
+  "level": "Intermediate",
+  "time": "2 to 3 hours",
+  "evidence": "A file system extraction of an Android phone, or WhatsApp backup files",
+  "answers": [
+    "Which chats and contacts are stored on the phone",
+    "What was sent and received, and when",
+    "Which media files belong to which chat",
+    "Whether traces of deleted messages remain"
+  ],
+  "need": [
+    "An extraction of the phone made with your lab's approved tool, or a practice image (see the practice section on this page)",
+    "A workstation with Python 3 for the analysis tools"
+  ],
+  "steps": [
+    {
+      "title": "Check what kind of extraction you have",
+      "text": "The live WhatsApp database sits in the app's private folder. It is only present in a full file system extraction, or on a rooted phone. A simple backup or media copy contains only the encrypted backup files and the media. This decides which of the next steps apply.",
+      "tools": [
+        "adb"
+      ]
+    },
+    {
+      "title": "Locate the WhatsApp files",
+      "text": "In the extraction, look for the message database, the contacts database, the key file and the backup folder. On Android 11 and later the backup and media folders are under Android/media instead of the top of the storage.",
+      "paths": [
+        "/data/data/com.whatsapp/databases/msgstore.db",
+        "/data/data/com.whatsapp/databases/wa.db",
+        "/data/data/com.whatsapp/files/key",
+        "/sdcard/WhatsApp/Databases/msgstore.db.crypt14",
+        "/sdcard/Android/media/com.whatsapp/WhatsApp/Databases/"
+      ]
+    },
+    {
+      "title": "Parse the extraction with ALEAPP",
+      "text": "Point ALEAPP at the extraction (a folder, tar or zip file). It writes an HTML report. Open the WhatsApp sections of the report for messages and contacts.",
+      "tools": [
+        "aleapp"
+      ]
+    },
+    {
+      "title": "Confirm important messages in the raw database",
+      "text": "Open a copy of msgstore.db in DB Browser for SQLite and find the message and chat tables. Check that the messages your report shows are really there, with the same time and chat. Open wa.db to match phone numbers to contact names.",
+      "tools": [
+        "db4s"
+      ],
+      "note": "Message times are stored as milliseconds since 1 January 1970 (UTC). Table and column names change between WhatsApp versions."
+    },
+    {
+      "title": "If you only have encrypted backups, decrypt them",
+      "text": "Backup files end in .crypt14 or .crypt15. To decrypt a crypt14 file you need the key file from the app's private folder. For an end-to-end encrypted crypt15 backup you need the 64-digit key or the key file. With the key, wa-crypt-tools produces a normal msgstore.db, and WhatsApp Chat Exporter turns it into readable pages.",
+      "tools": [
+        "wa-crypt-tools",
+        "whatsapp-chat-exporter"
+      ]
+    },
+    {
+      "title": "Look for traces of deleted messages",
+      "text": "Three places are worth checking. First, the temporary files next to the database (msgstore.db-wal and msgstore.db-journal) and unused space inside the database can still hold deleted records: FQLite can search them. Second, older dated backup files may contain messages that were deleted later. Third, a message deleted for everyone usually leaves a placeholder row showing that something was removed.",
+      "tools": [
+        "fqlite",
+        "db4s"
+      ],
+      "note": "Always export the -wal and -journal files together with the database. Opening the database without them, or letting a tool merge them, can destroy the deleted records."
+    },
+    {
+      "title": "Match media files to chats",
+      "text": "Photos, videos, voice notes and documents are stored as ordinary files in the WhatsApp Media folders. The database records the file name or path for each media message."
+    },
+    {
+      "title": "Cross-check and write it down",
+      "text": "Confirm key messages with two tools. Record the tool versions, the source file of each value, the WhatsApp version and the time zone.",
+      "tools": [
+        "aleapp",
+        "db4s"
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "name": "msgstore.db",
+      "where": "/data/data/com.whatsapp/databases",
+      "tells": "Chats and messages (needs a full file system extraction or root)"
+    },
+    {
+      "name": "wa.db",
+      "where": "/data/data/com.whatsapp/databases",
+      "tells": "Contacts"
+    },
+    {
+      "name": "key",
+      "where": "/data/data/com.whatsapp/files",
+      "tells": "Key for decrypting local backups"
+    },
+    {
+      "name": "msgstore.db.crypt14 / .crypt15",
+      "where": "WhatsApp/Databases on shared storage",
+      "tells": "Encrypted backups of the message database, including older dated copies"
+    },
+    {
+      "name": "msgstore.db-wal, -journal",
+      "where": "Next to msgstore.db",
+      "tells": "Recent changes; may still hold deleted records"
+    },
+    {
+      "name": "Media folders",
+      "where": "WhatsApp/Media on shared storage",
+      "tells": "Photos, videos, voice notes and documents"
+    }
+  ],
+  "limits": [
+    "Recovering deleted messages is never certain. Deleted records are overwritten over time, and often nothing remains.",
+    "Without a full file system extraction or root access, the live database cannot be reached.",
+    "An end-to-end encrypted backup cannot be decrypted without its key or password.",
+    "A message shows which account and phone it was sent from. It does not show who typed it.",
+    "Disappearing messages and view-once media are removed by design.",
+    "WhatsApp changes its database layout often. A tool that has not been updated can miss or misread data, so always check the raw database."
+  ],
+  "practice": {
+    "name": "Public Android images by Joshua Hickman",
+    "by": "Digital Corpora",
+    "url": "https://digitalcorpora.org/android-13-image/",
+    "text": "Full Android images made for training, research and tool testing, with several popular apps filled with test data. The documentation for each image lists the apps it contains and what was done in them.",
+    "task": "Download one image, run ALEAPP on it, and read the documentation to see which chat apps it contains. Then open one chat database from the report in DB Browser for SQLite and confirm three messages by hand."
+  },
+  "learn": [
+    {
+      "label": "Group-IB: WhatsApp forensic artifacts",
+      "url": "https://www.group-ib.com/blog/whatsapp-forensic-artifacts/"
+    },
+    {
+      "label": "Magnet Forensics: Artifact profile, WhatsApp Messenger",
+      "url": "https://www.magnetforensics.com/blog/artifact-profile-whatsapp-messenger/"
+    },
+    {
+      "label": "WhatsApp Chat Exporter: Android usage",
+      "url": "https://github.com/KnugiHK/Whatsapp-Chat-Exporter/wiki/Android-Usage"
+    },
+    {
+      "label": "Digital Corpora: Android 13 image",
+      "url": "https://digitalcorpora.org/android-13-image/"
+    }
+  ],
+  "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases."
+}

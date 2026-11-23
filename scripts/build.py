@@ -309,6 +309,16 @@ def build_home():
     featured = "".join(card(TOOL[i], "") for i in SITE.get("featured", []) if i in TOOL)
     oss = sum(1 for t in TOOLS if eff_type(t) == "open-source")
     checked = fmt_date(RELDATA.get("generated"))
+    wf_home = ""
+    if WORKFLOWS:
+        wf_home = ('<section class="section" id="workflows"><div class="section-head"><h2>Start from the question</h2>'
+                   '<a href="workflows.html" style="font-weight:600">All case workflows</a></div>'
+                   '<p class="muted" style="max-width:760px;margin-bottom:18px">Step-by-step workflows: the tool for each step, where the evidence is stored, and public data to practise on.</p>'
+                   '<div class="grid">%s</div></section>'
+                   % "".join('<article class="card"><h3><a href="workflows/%s.html">%s</a></h3><p class="sum">%s</p>'
+                             '<div class="tags"><span class="tag">%s</span><span class="tag">%d steps</span></div></article>'
+                             % (wid, e(w["title"]), e(w["lead"]), e(w["level"]), len(w["steps"]))
+                             for wid, w in list(WORKFLOWS.items())[:6]))
     body = """
 <div class="wrap">
 <section class="hero">
@@ -326,6 +336,7 @@ def build_home():
 <div class="section-head"><h2>Browse by category</h2><span class="mono muted" style="font-size:13px">{ncat} categories · offset 0x00 – 0x{last:02X} · <a href="nist.html">browse by NIST functionality</a></span></div>
 <div class="grid cats">{cats}</div>
 </section>
+{wf}
 </div>
 <section class="band" id="inside"><div class="wrap split">
 <div class="side"><div class="label y">Inside commercial tools</div>
@@ -344,7 +355,7 @@ def build_home():
 <p class="muted" style="max-width:760px">Type the name of a commercial product and see free tools that do a similar job, with honest notes on what "similar" means.</p>
 </section>
 </div>
-""".format(tagline=e(SITE["tagline"]), icon=ICON_SEARCH, n=len(TOOLS), oss=oss, ncat=len(CATS), last=len(CATS) - 1,
+""".format(wf=wf_home, tagline=e(SITE["tagline"]), icon=ICON_SEARCH, n=len(TOOLS), oss=oss, ncat=len(CATS), last=len(CATS) - 1,
            checked=('<span>links checked <b>%s</b></span>' % checked) if checked else "",
            cats="".join(cat_cards), rows="".join(rows), featured=featured)
     page("index.html", NAME, SITE["description"], body, "")
@@ -596,9 +607,11 @@ def build_workflows():
         return
     cards = []
     for wid, w in WORKFLOWS.items():
-        cards.append('<article class="card"><h3><a href="workflows/%s.html">%s</a></h3><p class="sum">%s</p>'
-                     '<div class="tags"><span class="tag">%s</span><span class="tag">%s</span><span class="tag">%d steps</span></div></article>'
-                     % (wid, e(w["title"]), e(w["lead"]), e(w["level"]), e(w["evidence"]), len(w["steps"])))
+        cards.append('<article class="card"><div class="top"><h3><a href="workflows/%s.html">%s</a></h3>%s</div>'
+                     '<div class="by">Evidence: %s</div><p class="sum">%s</p>'
+                     '<div class="tags"><span class="tag">%s</span><span class="tag">%d steps</span></div></article>'
+                     % (wid, e(w["title"]), '<span class="badge warn">Draft</span>' if w.get("draft") else "",
+                        e(w["evidence"]), e(w["lead"]), e(w["level"]), len(w["steps"])))
     body = ('<div class="wrap"><div class="page-head"><h1>Case workflows</h1>'
             '<p class="lead">Start from the question you need to answer. Each workflow gives the steps in order, the free tool for each step, '
             'where the evidence is stored, and a public practice image to try it on.</p></div>'
@@ -620,6 +633,9 @@ def build_workflows():
         steps = []
         for n, st in enumerate(w["steps"], 1):
             extra = ""
+            if st.get("cmd"):
+                extra += ('<div class="cmd-row" style="margin-top:10px"><pre class="cmd">%s</pre>'
+                          '<button type="button" class="btn small" data-copy="%s">Copy</button></div>' % (e(st["cmd"]), e(st["cmd"])))
             if st.get("paths"):
                 extra += '<div class="paths">%s</div>' % "".join("<code>%s</code>" % e(p) for p in st["paths"])
             if st.get("note"):
@@ -823,6 +839,11 @@ def main():
         if not it.get("source_url"):
             sys.exit("Integration entry for %s has no source_url. Entries without a source are not published." % it.get("product"))
     OUT.mkdir(exist_ok=True)
+    for old in OUT.rglob("*.html"):  # drop pages left over from an earlier build
+        try:
+            old.unlink()
+        except OSError:
+            pass
     assets = OUT / "assets"
     shutil.copytree(ROOT / "static", assets, dirs_exist_ok=True)
     build_home(); build_tools_index(); build_categories(); build_tool_pages()

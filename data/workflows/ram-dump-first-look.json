@@ -1,0 +1,154 @@
+{
+  "draft": true,
+  "reviewed": "2026-11-24",
+  "title": "What was running on this computer? A first look at a RAM dump",
+  "short": "First look at a RAM dump",
+  "lead": "Memory holds what a disk does not: running programs, open network connections and code that never touched a file. This workflow is a first pass over a Windows memory dump with Volatility 3.",
+  "level": "Intermediate",
+  "time": "2 hours on a practice dump",
+  "evidence": "A memory (RAM) dump of a Windows computer",
+  "answers": [
+    "Which programs were running when memory was captured",
+    "Which program started which",
+    "What command line each program was started with",
+    "Which network connections were open",
+    "Which processes deserve a closer look"
+  ],
+  "need": [
+    "A memory dump file, or a practice dump (see the practice section on this page)",
+    "Volatility 3 installed, which needs Python 3",
+    "An internet connection on first use, so that Volatility can fetch the Windows symbol files it needs"
+  ],
+  "steps": [
+    {
+      "title": "Capture memory first, if the computer is still on",
+      "text": "Memory is lost when the computer is switched off, so capture it before anything else. Run the capture tool from a USB drive and save the dump to that drive, not to the computer's own disk. Note the time and the tool used.",
+      "tools": [
+        "winpmem",
+        "magnet-dumpit",
+        "belkasoft-ram-capturer",
+        "ftk-imager"
+      ],
+      "note": "Running a capture tool changes a small part of memory. That is accepted practice, but write down that you did it."
+    },
+    {
+      "title": "Check that Volatility can read the dump",
+      "text": "Run the info plugin. If it prints the Windows version and system time, the dump is readable and you can continue. Note the system time: it is when the dump was taken.",
+      "tools": [
+        "volatility3"
+      ],
+      "cmd": "vol -f memory.raw windows.info"
+    },
+    {
+      "title": "List the processes",
+      "text": "pslist shows the processes Windows itself was tracking. pstree shows the same list as a tree, so you can see which program started which. Look for odd names, odd parents (for example a document program starting a command shell) and programs running from temporary folders.",
+      "tools": [
+        "volatility3"
+      ],
+      "cmd": "vol -f memory.raw windows.pstree"
+    },
+    {
+      "title": "Look for hidden or finished processes",
+      "text": "psscan searches memory for process records directly. A process that psscan finds and pslist does not may have ended already, or may have been hidden. Compare the two lists.",
+      "tools": [
+        "volatility3"
+      ],
+      "cmd": "vol -f memory.raw windows.psscan"
+    },
+    {
+      "title": "Read the command lines",
+      "text": "cmdline shows how each process was started, including any options and file names passed to it. This often explains what a suspicious process was doing.",
+      "tools": [
+        "volatility3"
+      ],
+      "cmd": "vol -f memory.raw windows.cmdline"
+    },
+    {
+      "title": "List network connections",
+      "text": "netscan lists connections and listening ports, with the process that owned each one. Note any unexpected remote addresses for the processes you flagged.",
+      "tools": [
+        "volatility3"
+      ],
+      "cmd": "vol -f memory.raw windows.netscan"
+    },
+    {
+      "title": "Flag possible injected code",
+      "text": "malfind points out memory regions that look like code placed inside another process. Its results are leads, not findings: normal software triggers it too. Follow up only on the processes you already had doubts about.",
+      "tools": [
+        "volatility3",
+        "yara"
+      ],
+      "cmd": "vol -f memory.raw windows.malfind"
+    },
+    {
+      "title": "Browse and cross-check",
+      "text": "MemProcFS shows the same dump as folders and files, which makes it easy to browse a process and confirm what Volatility reported. Record the tool versions, the commands you ran and the dump's hash value.",
+      "tools": [
+        "memprocfs",
+        "bulk-extractor"
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "name": "windows.info",
+      "where": "Volatility 3 plugin",
+      "tells": "Windows version and the time of the dump"
+    },
+    {
+      "name": "windows.pslist / pstree",
+      "where": "Volatility 3 plugin",
+      "tells": "Processes Windows was tracking, and their parents"
+    },
+    {
+      "name": "windows.psscan",
+      "where": "Volatility 3 plugin",
+      "tells": "Process records found by scanning, including ended or hidden ones"
+    },
+    {
+      "name": "windows.cmdline",
+      "where": "Volatility 3 plugin",
+      "tells": "How each process was started"
+    },
+    {
+      "name": "windows.netscan",
+      "where": "Volatility 3 plugin",
+      "tells": "Connections and listening ports, with the owning process"
+    },
+    {
+      "name": "windows.malfind",
+      "where": "Volatility 3 plugin",
+      "tells": "Memory regions that may hold injected code (leads only)"
+    }
+  ],
+  "limits": [
+    "A memory dump shows one moment. It does not show what happened before, except for traces that happened to remain.",
+    "Memory changes while it is being captured, so some records can be inconsistent.",
+    "malfind and similar plugins produce false alarms. A flagged process is not proof of malware.",
+    "If the computer was switched off before capture, live memory is gone. A hibernation file or page file on the disk may hold part of it.",
+    "Volatility needs symbol files that match the Windows build. Without them, plugins fail.",
+    "Plugin names and options change between Volatility versions. Check the documentation for the version you install."
+  ],
+  "practice": {
+    "name": "MemLabs",
+    "by": "stuxnet999",
+    "url": "https://github.com/stuxnet999/MemLabs",
+    "text": "A set of free practice labs for memory forensics in a capture-the-flag style, each with a memory dump to download and a short scenario.",
+    "task": "Download the first lab and run steps 2 to 6 of this workflow on its dump. Write down the Windows version, the processes that look out of place and the command lines they were started with."
+  },
+  "learn": [
+    {
+      "label": "Volatility 3 documentation",
+      "url": "https://volatility3.readthedocs.io/"
+    },
+    {
+      "label": "Volatility 3 on GitHub (README with first commands)",
+      "url": "https://github.com/volatilityfoundation/volatility3"
+    },
+    {
+      "label": "MemLabs practice labs",
+      "url": "https://github.com/stuxnet999/MemLabs"
+    }
+  ],
+  "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases."
+}

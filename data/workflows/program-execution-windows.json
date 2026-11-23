@@ -1,0 +1,163 @@
+{
+  "draft": true,
+  "reviewed": "2026-11-24",
+  "title": "Which programs were run on this Windows computer?",
+  "short": "Program execution on Windows",
+  "lead": "Windows records program activity in several places, and each record means something slightly different. This workflow shows where to look, which free tool reads each record, and how strong each one is as evidence.",
+  "level": "Intermediate",
+  "time": "2 hours on the practice image",
+  "evidence": "A disk image of a Windows computer",
+  "answers": [
+    "Whether a given program was run",
+    "When it was last run, and how many times",
+    "Which user account ran it",
+    "Where the program file was stored"
+  ],
+  "need": [
+    "A forensic image of the Windows computer, or a practice image (see the practice section on this page)",
+    "A Windows workstation for the analysis tools"
+  ],
+  "steps": [
+    {
+      "title": "Get a first list with Autopsy",
+      "text": "Add the image to a case and run the Recent Activity module. Open the result list named Run Programs. Use it as a starting list of program names to confirm in the next steps.",
+      "tools": [
+        "autopsy"
+      ]
+    },
+    {
+      "title": "Export the files that hold the evidence",
+      "text": "Export the Prefetch folder, the registry hives and the two databases listed below. Export one NTUSER.DAT for each user profile.",
+      "tools": [
+        "autopsy",
+        "ftk-imager"
+      ],
+      "paths": [
+        "Windows\\Prefetch\\*.pf",
+        "Windows\\System32\\config\\SYSTEM",
+        "Users\\<user name>\\NTUSER.DAT",
+        "Windows\\AppCompat\\Programs\\Amcache.hve",
+        "Windows\\System32\\sru\\SRUDB.dat"
+      ]
+    },
+    {
+      "title": "Read the Prefetch files",
+      "text": "Run PECmd on the exported Prefetch folder. Each file is named after a program. It gives the run count, the last run times and the files the program loaded. Prefetch is the strongest single sign that a program really ran.",
+      "tools": [
+        "pecmd",
+        "timeline-explorer"
+      ],
+      "note": "Windows 8 and later keep up to eight last run times in each file. Windows 7 keeps one. Prefetch can be switched off, which is common on Windows Server."
+    },
+    {
+      "title": "Check UserAssist for programs started by the user",
+      "text": "Open each NTUSER.DAT in Registry Explorer and go to UserAssist. It lists programs started through the Windows desktop, with a run count and last run time, for that user only. The names are stored in a simple letter-shift code (ROT13), which the tool decodes for you.",
+      "tools": [
+        "registry-explorer",
+        "regripper"
+      ],
+      "paths": [
+        "NTUSER.DAT\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\UserAssist"
+      ]
+    },
+    {
+      "title": "On Windows 10 and later, check BAM",
+      "text": "The Background Activity Moderator key in the SYSTEM hive lists the full path of programs and their last run time, grouped by user. It exists on Windows 10 version 1709 and later.",
+      "tools": [
+        "registry-explorer"
+      ],
+      "paths": [
+        "SYSTEM\\ControlSet001\\Services\\bam\\State\\UserSettings\\<user SID>"
+      ]
+    },
+    {
+      "title": "Use ShimCache and Amcache as supporting evidence",
+      "text": "ShimCache, in the SYSTEM hive, and Amcache.hve list program files that Windows has seen, with their paths. Amcache also stores a SHA-1 hash of the file. Treat both as proof that the file was present on the computer, not as proof that it ran. Eric Zimmerman's Tools include a parser for each.",
+      "tools": [
+        "ez-tools",
+        "regripper"
+      ],
+      "paths": [
+        "SYSTEM\\ControlSet001\\Control\\Session Manager\\AppCompatCache"
+      ]
+    },
+    {
+      "title": "On Windows 8 and later, add SRUM",
+      "text": "The SRUM database records, for roughly the last month or two, which programs used processor time and network data, and under which user account. Parse it with SRUM-Dump.",
+      "tools": [
+        "srum-dump"
+      ]
+    },
+    {
+      "title": "Cross-check and write it down",
+      "text": "A program that appears in Prefetch and in UserAssist with matching times is well supported. One that appears only in ShimCache or Amcache needs more evidence. Record the tool, version, source file and time zone for every value.",
+      "tools": [
+        "timeline-explorer"
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "name": "Prefetch",
+      "where": "Windows\\Prefetch",
+      "tells": "Program ran: run count, last run times, files it loaded"
+    },
+    {
+      "name": "UserAssist",
+      "where": "NTUSER.DAT of each user",
+      "tells": "Programs the user started from the desktop: run count and last run time"
+    },
+    {
+      "name": "BAM",
+      "where": "SYSTEM hive (Windows 10 version 1709 and later)",
+      "tells": "Program path and last run time for each user"
+    },
+    {
+      "name": "ShimCache (AppCompatCache)",
+      "where": "SYSTEM hive",
+      "tells": "Program file was present; path and file modified time"
+    },
+    {
+      "name": "Amcache.hve",
+      "where": "Windows\\AppCompat\\Programs",
+      "tells": "Program file was present; path and SHA-1 hash"
+    },
+    {
+      "name": "SRUM",
+      "where": "Windows\\System32\\sru (Windows 8 and later)",
+      "tells": "Program and network usage by user, for recent weeks"
+    }
+  ],
+  "limits": [
+    "These records show that a program ran under a user account. They do not show who was using the account.",
+    "ShimCache and Amcache show that a file was present. On their own they do not prove that it was run.",
+    "ShimCache is written to the registry when the computer shuts down, so recent entries can be missing from an image of a running or crashed system.",
+    "Prefetch can be switched off, and old Prefetch files are removed as new ones are created.",
+    "A program can be renamed. Match by path and hash, not only by name.",
+    "Which records exist depends on the Windows version. Check what applies to the version you are examining."
+  ],
+  "practice": {
+    "name": "NIST CFReDS: Data Leakage Case",
+    "by": "NIST",
+    "url": "https://cfreds-archive.nist.gov/data_leakage_case/data-leakage-case.html",
+    "answers_url": "https://cfreds-archive.nist.gov/data_leakage_case/leakage-answers.pdf",
+    "text": "A simulated intellectual property theft on a Windows 7 computer. The PC image is about 5 GB to download as a compressed DD image, or about 7.3 GB in E01 format. NIST publishes an answer document, so you can check your result.",
+    "task": "Answer question 11 of the case: \"List application execution logs.\" Then compare with the published answers.",
+    "note": "The practice computer runs Windows 7, so BAM and SRUM will not be there. Prefetch, UserAssist and ShimCache apply."
+  },
+  "learn": [
+    {
+      "label": "Microsoft Incident Response: guides to Windows forensic artifacts (Prefetch, AmCache, Shimcache, SRUM, UserAssist)",
+      "url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/final/en-us/microsoft-brand/documents/IR-Guidebook-Final.pdf"
+    },
+    {
+      "label": "Google Cloud (Mandiant): Did it execute?",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/execute"
+    },
+    {
+      "label": "NIST CFReDS: Data Leakage Case",
+      "url": "https://cfreds-archive.nist.gov/data_leakage_case/data-leakage-case.html"
+    }
+  ],
+  "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases."
+}
