@@ -22,17 +22,25 @@
     {
       "title": "Work on an image, never the original",
       "text": "If you are starting from a real disk, make a forensic image through a write blocker and note its hash value. Every later step uses the image. For practice, download a public test image instead.",
-      "tools": ["ftk-imager", "guymager"]
+      "tools": [
+        "ftk-imager",
+        "guymager"
+      ]
     },
     {
       "title": "Get a first answer with Autopsy",
       "text": "Create a case, add the image as a data source and run the Recent Activity module. When it finishes, open the result list named USB Device Attached (older versions call it Devices Attached). You get the make, model and device ID of each device and a date and time. Treat this as a lead to confirm in the next steps.",
-      "tools": ["autopsy"]
+      "tools": [
+        "autopsy"
+      ]
     },
     {
       "title": "Export the files that hold the evidence",
       "text": "From the image, export the registry hives and logs listed below. In Autopsy, right-click a file and choose Extract File(s). Export one NTUSER.DAT for each user profile.",
-      "tools": ["autopsy", "ftk-imager"],
+      "tools": [
+        "autopsy",
+        "ftk-imager"
+      ],
       "paths": [
         "Windows\\System32\\config\\SYSTEM",
         "Windows\\System32\\config\\SOFTWARE",
@@ -44,46 +52,98 @@
     {
       "title": "Identify the device",
       "text": "Open the SYSTEM hive in Registry Explorer and go to the USBSTOR key. Each sub-key is one device model, named with the vendor, product and revision. The key under it is the serial number. If the second character of the serial number is &, Windows made that value up because the device did not report a serial number of its own, so it cannot identify one physical device.",
-      "tools": ["registry-explorer", "regripper"],
-      "paths": ["SYSTEM\\ControlSet001\\Enum\\USBSTOR", "SYSTEM\\ControlSet001\\Enum\\USB"]
+      "tools": [
+        "registry-explorer",
+        "regripper"
+      ],
+      "paths": [
+        "SYSTEM\\ControlSet001\\Enum\\USBSTOR",
+        "SYSTEM\\ControlSet001\\Enum\\USB"
+      ]
     },
     {
       "title": "Find the drive letter and volume name",
       "text": "MountedDevices in the SYSTEM hive maps drive letters and volume GUIDs to devices. It keeps only the last device that used each letter. The Windows Portable Devices key in the SOFTWARE hive stores a friendly name, which is often the volume label.",
-      "tools": ["registry-explorer"],
-      "paths": ["SYSTEM\\MountedDevices", "SOFTWARE\\Microsoft\\Windows Portable Devices\\Devices"]
+      "tools": [
+        "registry-explorer"
+      ],
+      "paths": [
+        "SYSTEM\\MountedDevices",
+        "SOFTWARE\\Microsoft\\Windows Portable Devices\\Devices"
+      ]
     },
     {
       "title": "Work out when it was connected",
       "text": "Search setupapi.dev.log for the serial number. The first entry is the time Windows first installed the device, written in the computer's local time. On Windows 8 and later, the device's Properties key in USBSTOR also stores first install, last connected and last removed times. On Windows 10 and later, the Partition/Diagnostic event log records event 1006 for each connect and disconnect.",
-      "tools": ["registry-explorer", "evtxecmd", "timeline-explorer"],
+      "tools": [
+        "registry-explorer",
+        "evtxecmd",
+        "timeline-explorer"
+      ],
       "note": "Registry times are in UTC. setupapi.dev.log uses local time. Write down the time zone of the computer before you compare them."
     },
     {
       "title": "Link the device to a user account",
       "text": "Open each user's NTUSER.DAT and look at MountPoints2. If the volume GUID you found in MountedDevices appears there, that account was logged in while the volume was mounted.",
-      "tools": ["registry-explorer"],
-      "paths": ["NTUSER.DAT\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MountPoints2"]
+      "tools": [
+        "registry-explorer"
+      ],
+      "paths": [
+        "NTUSER.DAT\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MountPoints2"
+      ]
     },
     {
       "title": "Find what was opened from the drive",
       "text": "Shortcut (LNK) files, jump lists and shellbags record files and folders the user opened, together with the drive letter and volume serial number. Matching the volume serial number ties those files to the USB drive. Autopsy lists shortcut files under Recent Documents. The LNK, jump list and shellbag parsers in Eric Zimmerman's Tools give more detail.",
-      "tools": ["autopsy", "ez-tools"]
+      "tools": [
+        "autopsy",
+        "ez-tools"
+      ]
     },
     {
       "title": "Cross-check and write it down",
       "text": "Confirm each fact from two places, for example Autopsy and Registry Explorer, or the registry and the event log. In your notes, record the tool name and version, the file each value came from, and the time zone.",
-      "tools": ["regripper"]
+      "tools": [
+        "regripper"
+      ]
     }
   ],
   "artifacts": [
-    {"name": "USBSTOR", "where": "SYSTEM hive", "tells": "Vendor, product and serial number of each USB storage device"},
-    {"name": "MountedDevices", "where": "SYSTEM hive", "tells": "The last device that used each drive letter, and volume GUIDs"},
-    {"name": "Windows Portable Devices", "where": "SOFTWARE hive", "tells": "Friendly name, often the volume label"},
-    {"name": "MountPoints2", "where": "NTUSER.DAT of each user", "tells": "Which user account had the volume mounted"},
-    {"name": "setupapi.dev.log", "where": "Windows\\INF", "tells": "First time the device was installed (local time)"},
-    {"name": "Partition/Diagnostic log, event 1006", "where": "Windows event logs (Windows 10 and later)", "tells": "Each connect and disconnect, sometimes with the volume serial number"},
-    {"name": "LNK files, jump lists, shellbags", "where": "User profile and user registry hives", "tells": "Files and folders opened, with drive letter and volume serial number"}
+    {
+      "name": "USBSTOR",
+      "where": "SYSTEM hive",
+      "tells": "Vendor, product and serial number of each USB storage device"
+    },
+    {
+      "name": "MountedDevices",
+      "where": "SYSTEM hive",
+      "tells": "The last device that used each drive letter, and volume GUIDs"
+    },
+    {
+      "name": "Windows Portable Devices",
+      "where": "SOFTWARE hive",
+      "tells": "Friendly name, often the volume label"
+    },
+    {
+      "name": "MountPoints2",
+      "where": "NTUSER.DAT of each user",
+      "tells": "Which user account had the volume mounted"
+    },
+    {
+      "name": "setupapi.dev.log",
+      "where": "Windows\\INF",
+      "tells": "First time the device was installed (local time)"
+    },
+    {
+      "name": "Partition/Diagnostic log, event 1006",
+      "where": "Windows event logs (Windows 10 and later)",
+      "tells": "Each connect and disconnect, sometimes with the volume serial number"
+    },
+    {
+      "name": "LNK files, jump lists, shellbags",
+      "where": "User profile and user registry hives",
+      "tells": "Files and folders opened, with drive letter and volume serial number"
+    }
   ],
   "limits": [
     "A device record shows that a device was connected. It does not show who physically plugged it in.",
@@ -103,10 +163,23 @@
     "note": "The practice computer runs Windows 7, so the Partition/Diagnostic event log in step 6 will not be there. Everything else in this workflow applies."
   },
   "learn": [
-    {"label": "Autopsy user documentation: Recent Activity module", "url": "https://www.sleuthkit.org/autopsy/docs/user-docs/4.22.1/recent_activity_page.html"},
-    {"label": "SANS: The truth about USB device serial numbers", "url": "https://www.sans.org/blog/the-truth-about-usb-device-serial-numbers"},
-    {"label": "Magnet Forensics: Artifact profile, USB devices", "url": "https://magnetforensics.com/blog/artifact-profile-usb-devices"},
-    {"label": "NIST CFReDS: Data Leakage Case", "url": "https://cfreds-archive.nist.gov/data_leakage_case/data-leakage-case.html"}
+    {
+      "label": "Autopsy user documentation: Recent Activity module",
+      "url": "https://www.sleuthkit.org/autopsy/docs/user-docs/4.22.1/recent_activity_page.html"
+    },
+    {
+      "label": "SANS: The truth about USB device serial numbers",
+      "url": "https://www.sans.org/blog/the-truth-about-usb-device-serial-numbers"
+    },
+    {
+      "label": "Magnet Forensics: Artifact profile, USB devices",
+      "url": "https://magnetforensics.com/blog/artifact-profile-usb-devices"
+    },
+    {
+      "label": "NIST CFReDS: Data Leakage Case",
+      "url": "https://cfreds-archive.nist.gov/data_leakage_case/data-leakage-case.html"
+    }
   ],
-  "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases."
+  "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases.",
+  "untested": true
 }

@@ -1,0 +1,204 @@
+{
+  "reviewed": "2026-11-24",
+  "lead": "Volatility 3 pulls evidence out of RAM samples, such as running processes and their details. It is a framework with many plugins, and it works on its own, without the computer being investigated.",
+  "use_when": [
+    "You have a memory dump from a Windows, Linux or macOS computer and want to see what was running.",
+    "You want a scriptable tool that gives the same output each time and can save results as text, JSON or CSV.",
+    "You need to check a process list, a process tree or account data from a captured memory image."
+  ],
+  "features": [
+    {
+      "title": "Plugin based analysis",
+      "items": [
+        "Each kind of analysis is a plugin, started by name after the memory image path",
+        "Plugin families exist for Windows, Linux and macOS, for example windows.pslist and linux.pslist",
+        "Every plugin has its own help text, shown with the plugin name and -h",
+        "You can add your own plugin folders"
+      ]
+    },
+    {
+      "title": "Windows examples from the project tutorial",
+      "items": [
+        "windows.pslist lists the processes that were running, with PID, parent PID, name, threads, handles and creation time",
+        "windows.pstree shows parent and child processes as an indented tree",
+        "windows.hashdump lists user accounts with their password hashes",
+        "windows.info checks that a Windows sample is supported"
+      ]
+    },
+    {
+      "title": "Symbols",
+      "items": [
+        "Reads kernel structures through its own JSON symbol files",
+        "Downloads, builds and caches missing Windows symbols automatically from Microsoft PDB files",
+        "Uses symbol packs for Windows, Linux and macOS that you place in the symbols folder",
+        "The banners plugin helps you find the kernel version of a Linux image"
+      ]
+    },
+    {
+      "title": "Output and automation",
+      "items": [
+        "Output can be a text table, JSON, JSON lines, SQLite or CSV, chosen with the renderer option",
+        "Files that a plugin creates are written to a folder you choose with -o",
+        "Settings can be saved to a config file so a run can be repeated",
+        "It can also be used as a Python library"
+      ]
+    }
+  ],
+  "requirements": "Python 3.8.0 or later. Install from PyPI with pip, or clone the GitHub repository and install from source. You also need a memory image that was captured with another tool. Symbol files are needed for each operating system version. Windows symbols are fetched automatically, which needs internet access unless you add them by hand.",
+  "steps": [
+    {
+      "title": "Install Volatility 3",
+      "text": "Make sure Python 3.8 or later is installed. Then install the package from PyPI. A virtual environment keeps the install separate from your other Python tools.",
+      "cmd": "pip install volatility3"
+    },
+    {
+      "title": "Get a memory image",
+      "text": "Volatility only reads images. Capture the RAM first with an acquisition tool, or use a practice dump. Keep the original file unchanged and work on a copy. Note the full path to the file."
+    },
+    {
+      "title": "Check the help",
+      "text": "Run the help command to see the global options and the list of plugins. Plugin help is shown by adding -h after the plugin name.",
+      "cmd": "vol -h"
+    },
+    {
+      "title": "Confirm the image is supported",
+      "text": "For a Windows image, run windows.info on it. The first run with new symbol files can take a while because the cache is built. This happens once per file. Do not stop it early.",
+      "cmd": "vol -f /cases/mem/sample.vmem windows.info"
+    },
+    {
+      "title": "List the processes",
+      "text": "Run windows.pslist to see the processes that were running when the memory was captured. Then run windows.pstree to see which process started which.",
+      "cmd": "vol -f /cases/mem/sample.vmem windows.pslist"
+    },
+    {
+      "title": "Handle a Linux image",
+      "text": "For Linux, run the banners plugin to read the kernel version. Find a matching symbol file in the project's symbol repository, or build one by following the documentation. Put the file in the symbols folder, then run linux.pslist.",
+      "cmd": "vol -f memory.vmem banners"
+    },
+    {
+      "title": "Save the results",
+      "text": "Choose a renderer such as json with -r, and write plugin output to a file. Use -o to set the folder for files that plugins create. Record the exact command, the version and the hash of the image in your notes.",
+      "cmd": "vol -q -r json -f /cases/mem/sample.vmem windows.pslist"
+    }
+  ],
+  "options": [
+    {
+      "cmd": "-f FILE",
+      "what": "The memory image to analyse."
+    },
+    {
+      "cmd": "-r RENDERER",
+      "what": "Output format. The manual lists quick (default), pretty, json and jsonl."
+    },
+    {
+      "cmd": "-o OUTPUT_DIR",
+      "what": "Folder for files that plugins create. The default is the current folder."
+    },
+    {
+      "cmd": "-q",
+      "what": "Hides progress messages. Useful when you send output to a file."
+    },
+    {
+      "cmd": "-v",
+      "what": "More detailed logging. It can be repeated, up to six times."
+    },
+    {
+      "cmd": "-s SYMBOL_DIRS",
+      "what": "Extra folders, separated by semicolons, that hold symbol files or symbol packs."
+    },
+    {
+      "cmd": "--offline",
+      "what": "Stops online searches for symbol tables. Use it on a computer with no internet."
+    },
+    {
+      "cmd": "--save-config",
+      "what": "Writes a config.json file in the current folder so the run can be recreated."
+    }
+  ],
+  "cases": [
+    {
+      "title": "Suspected malware on a computer",
+      "why": "The process list and process tree show what was running and how each process was started, which helps you spot odd parent and child links."
+    },
+    {
+      "title": "Incident response after a live capture",
+      "why": "A RAM image holds things that are not on disk. Volatility gives a repeatable way to read it long after the computer is gone."
+    },
+    {
+      "title": "Linux server investigations",
+      "why": "With a matching symbol file, the Linux plugins list processes from a memory image of a server."
+    },
+    {
+      "title": "Teaching memory forensics",
+      "why": "It is free, runs from the command line and has a published tutorial, so a class can share the same steps and compare output."
+    },
+    {
+      "title": "Automated triage",
+      "why": "JSON output and a Python library let you run the same plugins over many images and collect the results in a script."
+    }
+  ],
+  "strengths": [
+    "Free, with the source code published. It is distributed under the project's own Volatility Software License.",
+    "Covers Windows, Linux and macOS memory images through one common interface.",
+    "Windows symbols are downloaded and cached automatically, so there is little setup for a Windows image.",
+    "Several output formats make it easy to feed results into other tools."
+  ],
+  "limits": [
+    "It only analyses memory that was already captured. It cannot capture RAM itself.",
+    "It is a command-line tool with no point-and-click screen. Beginners need time to learn the plugin names.",
+    "Linux and macOS symbol tables often must be found or built by hand. The project says its Linux symbol packs are not complete.",
+    "Automatic Windows symbol download needs internet access, or you must add the files yourself.",
+    "The first run on a new image can be slow while symbols are cached.",
+    "Plugin names and options change between versions, so check the help for the version you installed.",
+    "It reads one sample at a time, and most plugins expect a single image."
+  ],
+  "works_with": [
+    {
+      "id": "winpmem",
+      "note": "Capture Windows memory to analyse"
+    },
+    {
+      "id": "lime",
+      "note": "Capture Linux and Android memory to analyse"
+    },
+    {
+      "id": "avml",
+      "note": "Capture Linux memory to analyse"
+    },
+    {
+      "id": "memprocfs",
+      "note": "A second tool to browse the same image and cross-check findings"
+    },
+    {
+      "id": "yara",
+      "note": "Rules for pattern matching in memory content"
+    },
+    {
+      "id": "bulk-extractor",
+      "note": "Scans the same image for email addresses, URLs and other strings"
+    }
+  ],
+  "learn": [
+    {
+      "label": "Volatility 3 documentation",
+      "url": "https://volatility3.readthedocs.io/en/latest/"
+    },
+    {
+      "label": "Command line options (documentation)",
+      "url": "https://volatility3.readthedocs.io/en/latest/vol-cli.html"
+    },
+    {
+      "label": "Windows tutorial (documentation)",
+      "url": "https://volatility3.readthedocs.io/en/latest/getting-started-windows-tutorial.html"
+    },
+    {
+      "label": "Linux tutorial (documentation)",
+      "url": "https://volatility3.readthedocs.io/en/latest/getting-started-linux-tutorial.html"
+    },
+    {
+      "label": "Project repository and README",
+      "url": "https://github.com/volatilityfoundation/volatility3"
+    }
+  ],
+  "sources_note": "Written in our own words from the Volatility 3 project's README and documentation."
+}

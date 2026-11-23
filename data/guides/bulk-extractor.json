@@ -1,0 +1,208 @@
+{
+  "reviewed": "2026-11-24",
+  "lead": "bulk_extractor scans a disk image, a file or a folder and pulls out useful items such as email addresses and card numbers. It does not read the file system, so it also finds data in deleted and unused space.",
+  "use_when": [
+    "You need a fast first pass over an image to find email addresses, URLs, phone numbers or card numbers.",
+    "The file system is damaged, unknown or hard to read, but you still want to search the raw data.",
+    "You have a memory image or a mix of data and want to search it for strings and features."
+  ],
+  "features": [
+    {
+      "title": "Scans without a file system",
+      "items": [
+        "Reads the input as raw bytes and does not parse the file system",
+        "Works on disk images, single files and directories",
+        "Checks whether data can be decompressed or decoded, then scans the result again",
+        "Can find items inside encoded data that simple carving misses, such as a Base64 picture"
+      ]
+    },
+    {
+      "title": "Scanners for many item types",
+      "items": [
+        "Email scanner: email addresses, URLs, domains and related items",
+        "Accounts scanner: credit card numbers, phone numbers and similar numbers",
+        "Exif and GPS scanners: picture metadata, location coordinates and carved JPEG files",
+        "Scanners for ZIP, RAR, gzip, JSON, PDF, Windows PE files and Windows prefetch data",
+        "A wordlist scanner that collects words found in the data"
+      ]
+    },
+    {
+      "title": "Results as text files",
+      "items": [
+        "Every found item is written as one line with its byte offset and the item",
+        "Output is plain text, so you can search it or load it into other tools",
+        "Histogram files count how often each item appears, for example email_histogram.txt"
+      ]
+    },
+    {
+      "title": "Control",
+      "items": [
+        "Scanners can be switched on or off by name",
+        "Search terms can be given as regular expressions, or in a file",
+        "An alert list flags terms of interest, and a stop list sets aside terms you do not need",
+        "Several threads are used, and an interrupted run can be resumed"
+      ]
+    }
+  ],
+  "formats": [
+    "Raw disk images",
+    "Single files",
+    "Directories of files (with -R)",
+    "E01 images (when built with libewf support)"
+  ],
+  "requirements": "The project recommends a tested release from GitHub for normal use. Building from source needs a C++17 compiler, GNU Make, Python 3, Autotools, Flex and several libraries. The project states that native Windows builds are not supported. A cross-built Windows program is produced by its automated build, but it is unsigned and is not an installer.",
+  "steps": [
+    {
+      "title": "Get the program",
+      "text": "Download a tested release from the project's GitHub releases page. If you build from source, follow the project's installation guide. A checkout needs bootstrap.sh before configure."
+    },
+    {
+      "title": "Check what your build supports",
+      "text": "Print the help to see the options and the scanners in your build. E01 support is only present if the build includes libewf.",
+      "cmd": "bulk_extractor -h"
+    },
+    {
+      "title": "Prepare a new output folder",
+      "text": "Choose a folder for the results. Use a new folder for each run. Keep it away from the evidence. Work on an image or a copy, never on the original source."
+    },
+    {
+      "title": "Run the scan",
+      "text": "Give the output folder with -o, then the image. The synopsis in the manual is shown here. A large image takes time, and progress messages are printed while it runs.",
+      "cmd": "bulk_extractor -o output_dir image.raw"
+    },
+    {
+      "title": "Read the feature files",
+      "text": "Open the files in the output folder. For example, email.txt lists email addresses with their offsets, and the histogram file shows which addresses appear most often. The offset tells you where in the image the item was found."
+    },
+    {
+      "title": "Narrow the scan if needed",
+      "text": "To run only one scanner, use -E with its name. This disables all scanners and enables the one you name. Use -x to turn off a scanner that you do not need.",
+      "cmd": "bulk_extractor -E email -o output_dir image.raw"
+    },
+    {
+      "title": "Scan a folder of files",
+      "text": "To scan a directory of single files, use -R with the folder. Disk images inside it are treated as plain files.",
+      "cmd": "bulk_extractor -o output_dir -R /cases/files"
+    }
+  ],
+  "options": [
+    {
+      "cmd": "-o outdir",
+      "what": "The output folder. It is created if needed. If it holds a partial run, the tool tries to resume."
+    },
+    {
+      "cmd": "-R dir",
+      "what": "Scan a directory of files recursively."
+    },
+    {
+      "cmd": "-e scanner",
+      "what": "Enable a scanner."
+    },
+    {
+      "cmd": "-x scanner",
+      "what": "Disable a scanner."
+    },
+    {
+      "cmd": "-E scanner",
+      "what": "Disable all scanners, then enable the one named."
+    },
+    {
+      "cmd": "-f regex",
+      "what": "Add one regular expression as a search term."
+    },
+    {
+      "cmd": "-F rfile",
+      "what": "Read search terms from a file."
+    },
+    {
+      "cmd": "-j NN",
+      "what": "Number of analysis threads. The default is the number of processors."
+    },
+    {
+      "cmd": "-P dir",
+      "what": "A folder to search for extra scanner plugins."
+    }
+  ],
+  "cases": [
+    {
+      "title": "Finding contacts and web addresses",
+      "why": "Email addresses, domains and URLs are collected with offsets, and histograms show which ones occur most."
+    },
+    {
+      "title": "Fraud and card data cases",
+      "why": "The accounts scanner looks for card numbers and phone numbers across the whole image, including deleted space."
+    },
+    {
+      "title": "Damaged or unknown file systems",
+      "why": "Because it ignores the file system, it still works when the structure is broken or the format is not recognised."
+    },
+    {
+      "title": "Memory images",
+      "why": "The project lists scanners such as AES key schedules and network packets, which can make sense for data taken from RAM."
+    },
+    {
+      "title": "Location evidence in pictures",
+      "why": "The exif and GPS scanners report picture metadata and coordinates, and can carve JPEG files."
+    },
+    {
+      "title": "Building a word list",
+      "why": "The wordlist scanner collects words from the image. Examiners can use it as a list of terms to try on protected files."
+    }
+  ],
+  "strengths": [
+    "Fast broad triage of large images, because it does not depend on the file system.",
+    "Finds data in deleted and unallocated space, and inside encoded or compressed data.",
+    "Plain text output with offsets is easy to search and to check.",
+    "Free, with the source code published."
+  ],
+  "limits": [
+    "It gives items and offsets, not files in folders. You do not get file names, paths or dates from the file system.",
+    "Results can contain many false hits, such as number strings that are not real card numbers. Each one needs checking.",
+    "The project states that native Windows builds are not supported. The Windows program from its automated build is unsigned.",
+    "Building from source needs several tools and libraries. E01 images need libewf support in the build.",
+    "The project's Docker image runs without extra rights, leaves out libewf, and is not meant for raw device access.",
+    "The README does not list every scanner, so you must use the help output and the manuals.",
+    "You still need to take the image with another tool, and reading a raw Windows device needs an elevated prompt."
+  ],
+  "works_with": [
+    {
+      "id": "ftk-imager",
+      "note": "Create the disk image first"
+    },
+    {
+      "id": "guymager",
+      "note": "Create the disk image on Linux"
+    },
+    {
+      "id": "libewf",
+      "note": "Adds E01 support to the build"
+    },
+    {
+      "id": "autopsy",
+      "note": "Look at the same image with a full case tool"
+    },
+    {
+      "id": "volatility3",
+      "note": "Analyse a memory image for processes"
+    }
+  ],
+  "learn": [
+    {
+      "label": "Project repository and README",
+      "url": "https://github.com/simsong/bulk_extractor"
+    },
+    {
+      "label": "Installation guide (repository)",
+      "url": "https://github.com/simsong/bulk_extractor/blob/main/doc/installation.md"
+    },
+    {
+      "label": "Project manuals",
+      "url": "https://simsong.github.io/bulk_extractor/"
+    },
+    {
+      "label": "Project releases",
+      "url": "https://github.com/simsong/bulk_extractor/releases"
+    }
+  ],
+  "sources_note": "Written in our own words from the bulk_extractor project's README, installation guide and manual page."
+}

@@ -1,0 +1,172 @@
+{
+  "reviewed": "2026-11-24",
+  "lead": "Autopsy is a graphical program for examining a hard drive, disk image or mobile device and recovering evidence from it. It is built on The Sleuth Kit and other open source forensic tools.",
+  "use_when": [
+    "You have a disk image and want to browse files, search for words and review web activity in one window.",
+    "You are learning forensics and want a free tool with a clear case workflow.",
+    "Several examiners need to work on the same case."
+  ],
+  "features": [
+    {
+      "title": "Cases and data sources",
+      "items": [
+        "Creates a case, then adds one or more data sources to it",
+        "Data source types include disk image or VM file, local disk, logical files and unallocated space image file",
+        "Also accepts Autopsy Logical Imager results and XRY text exports",
+        "Works with a host name for each data source, so you can group sources by device"
+      ]
+    },
+    {
+      "title": "Ingest modules",
+      "items": [
+        "Ingest modules run in the background after you add a data source",
+        "Hash Lookup calculates file hashes and checks them against hash sets",
+        "Keyword Search looks for words in the content of the data source",
+        "Recent Activity extracts web artifacts and other signs of user activity"
+      ]
+    },
+    {
+      "title": "Reviewing and searching",
+      "items": [
+        "Tree viewer with Data Sources, Views and Results nodes",
+        "Searches by keyword, file attributes and common properties, and across cases",
+        "Specialised viewers: Image Gallery, Timeline, Communications Visualization, Geolocation and Personas",
+        "Tags and comments mark the items that matter"
+      ]
+    },
+    {
+      "title": "Reports",
+      "items": [
+        "HTML and Excel reports of all results or only tagged results",
+        "CASE-UCO JSON file for one data source",
+        "Google Earth KML file from GPS data",
+        "Portable Case, which is a smaller Autopsy case holding tagged items"
+      ]
+    }
+  ],
+  "formats": [
+    "Raw single (.img, .dd, .raw, .bin)",
+    "Raw split (.001, .aa)",
+    "EnCase (.e01)",
+    "VMDK",
+    "VHD and VHDX"
+  ],
+  "requirements": "The project provides a Windows installer (.msi) and ZIP files for Linux and macOS. The user guide recommends at least 16 GB of RAM. By default Autopsy uses up to 4 GB of memory, and you can raise this in the options. Set your antivirus to skip the case folder, or it may remove results.",
+  "steps": [
+    {
+      "title": "Download and install",
+      "text": "Get the installer from the Autopsy download page. On Windows, run the .msi file and click through the dialogs until Finish. On Linux and macOS, the project provides ZIP files."
+    },
+    {
+      "title": "Create a case",
+      "text": "On the Welcome screen click Create New Case, or use the Case menu and choose New Case Wizard. Enter a case name and a storage folder. Case number and examiner name are optional."
+    },
+    {
+      "title": "Add a data source",
+      "text": "The Add Data Source wizard opens after the case is created. Choose a host, then the data source type. For an image, select the first file of the set. Work on a copy of the evidence, never the original."
+    },
+    {
+      "title": "Choose ingest modules",
+      "text": "Select the modules to run. Use the Advanced button on a module to add hash sets or keyword lists. A progress bar in the lower right shows the work. You can start browsing while modules are still running."
+    },
+    {
+      "title": "Review the results",
+      "text": "Use the tree on the left. Web activity is under Results, Extracted Data. Matches against hash sets are under Results, Hashset Hits. The Ingest Inbox lists recent findings. Right-click a file to extract it."
+    },
+    {
+      "title": "Tag items of interest",
+      "text": "Right-click a file or result and add a tag or comment. Tags are what you will use to build the report, so tag as you go and add a short note on why each item matters."
+    },
+    {
+      "title": "Generate a report",
+      "text": "Click Generate Report on the toolbar. Pick a report type such as HTML or Excel, choose the data sources and tags, and run it. Finished reports are listed under the Reports node at the bottom of the tree."
+    }
+  ],
+  "cases": [
+    {
+      "title": "General disk examination",
+      "why": "Browse the file system, see deleted files and view file content and metadata in one place."
+    },
+    {
+      "title": "Web and user activity",
+      "why": "The Recent Activity module collects web artifacts so you can review what a user did on a computer."
+    },
+    {
+      "title": "Known file filtering",
+      "why": "Hash sets let you flag known files of interest or set known files aside."
+    },
+    {
+      "title": "Keyword investigations",
+      "why": "Keyword Search indexes the content so you can look for names, words and phrases across the whole image."
+    },
+    {
+      "title": "Team casework",
+      "why": "Multi-user mode lets several examiners work on one case. It needs extra server setup described in the user guide."
+    },
+    {
+      "title": "Teaching and practice",
+      "why": "It is free and has a guided workflow, so students can practise on test images."
+    }
+  ],
+  "strengths": [
+    "Free and open source.",
+    "One window for browsing, searching, timeline, geolocation and reporting.",
+    "Reads common image formats such as raw, E01, VMDK and VHD.",
+    "Detailed user documentation is published for each version.",
+    "Third-party ingest modules can be installed."
+  ],
+  "limits": [
+    "Large images take a long time to process, and the user guide recommends at least 16 GB of RAM.",
+    "Keyword search depends on indexing, so searches may be incomplete until the Keyword Search module has finished.",
+    "The Linux and macOS packages are ZIP files, and the installation page gives no step-by-step setup for them, so beginners may need extra help.",
+    "It examines evidence that already exists. You need another tool to make the disk image first.",
+    "Antivirus software can interfere with the case folder.",
+    "Multi-user cases need a server cluster, which is more work to set up.",
+    "Results depend on which ingest modules you chose, so a missed setting can mean missed evidence."
+  ],
+  "works_with": [
+    {
+      "id": "sleuthkit",
+      "note": "The command-line toolkit that Autopsy is built on"
+    },
+    {
+      "id": "ftk-imager",
+      "note": "Create the disk image first"
+    },
+    {
+      "id": "guymager",
+      "note": "Create the disk image on Linux"
+    },
+    {
+      "id": "nsrl",
+      "note": "Hash sets for the Hash Lookup module"
+    },
+    {
+      "id": "iped",
+      "note": "A second tool to cross-check important findings"
+    },
+    {
+      "id": "plaso",
+      "note": "Build a wider super timeline from the same evidence"
+    }
+  ],
+  "learn": [
+    {
+      "label": "Autopsy User Documentation",
+      "url": "https://sleuthkit.org/autopsy/docs/user-docs/latest/"
+    },
+    {
+      "label": "Autopsy Quick Start Guide",
+      "url": "https://sleuthkit.org/autopsy/docs/user-docs/4.23.0/quick_start_guide.html"
+    },
+    {
+      "label": "Autopsy download page",
+      "url": "https://sleuthkit.org/autopsy/download.php"
+    },
+    {
+      "label": "Autopsy on GitHub",
+      "url": "https://github.com/sleuthkit/autopsy"
+    }
+  ],
+  "sources_note": "Written in our own words from the Autopsy project's documentation."
+}

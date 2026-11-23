@@ -1,5 +1,4 @@
 {
-  "draft": true,
   "reviewed": "2026-11-24",
   "title": "Who logged in to this Windows computer, and when?",
   "short": "Windows logons and logoffs",
@@ -23,12 +22,19 @@
     {
       "title": "Work on an image, never the original",
       "text": "If you start from a real computer, make a forensic image through a write blocker and write down its hash value. Open the image in Autopsy or FTK Imager. If someone gave you only exported log files, hash them on arrival and note who gave them to you and when.",
-      "tools": ["ftk-imager", "guymager", "autopsy"]
+      "tools": [
+        "ftk-imager",
+        "guymager",
+        "autopsy"
+      ]
     },
     {
       "title": "Export the log files and registry hives",
       "text": "Copy the files below out of the image. In Autopsy, right-click a file and choose Extract File(s). In the log folder, file names show a slash in the log name as %4. Also export the SYSTEM hive: it holds the computer's time zone setting in the TimeZoneInformation key. Event times are stored in UTC, so you need the time zone to explain them in local time.",
-      "tools": ["autopsy", "ftk-imager"],
+      "tools": [
+        "autopsy",
+        "ftk-imager"
+      ],
       "paths": [
         "Windows\\System32\\winevt\\Logs\\Security.evtx",
         "Windows\\System32\\winevt\\Logs\\Microsoft-Windows-TerminalServices-LocalSessionManager%4Operational.evtx",
@@ -40,51 +46,102 @@
     {
       "title": "Turn the Security log into a table",
       "text": "An .evtx file is a binary format, so you need a parser. EvtxECmd reads it and writes a CSV file with one row per event. Open the CSV in Timeline Explorer, which lets you sort, filter and search large tables. Run the parser again for each log file you exported.",
-      "tools": ["evtxecmd", "ez-tools", "timeline-explorer"],
+      "tools": [
+        "evtxecmd",
+        "ez-tools",
+        "timeline-explorer"
+      ],
       "cmd": "EvtxECmd.exe -f \"Security.evtx\" --csv \"C:\\case\\out\" --csvf security.csv"
     },
     {
       "title": "Read the successful logons (event 4624)",
       "text": "Filter the table for event ID 4624, which means an account was logged on. Look at the account name, the logon type and the source address. Common logon types: 2 is interactive (at the keyboard), 3 is network (for example a shared folder), 5 is a service starting, 7 is an unlock, 10 is Remote Desktop and 11 is a logon with cached credentials. Many 4624 rows are system accounts and services, so filter those out and focus on user accounts.",
-      "tools": ["timeline-explorer"],
+      "tools": [
+        "timeline-explorer"
+      ],
       "note": "Each logon has a Logon ID. Use it to match a logon to its logoff and to other events of the same session. It is only unique until the computer restarts."
     },
     {
       "title": "Add failures, logoffs and special logons",
       "text": "4625 is a failed logon. Its status codes give the reason, such as a bad password or an unknown user name. 4634 is the end of a session and 4647 is a user asking to log off. 4648 is a logon with explicitly given credentials, which also happens in normal use such as scheduled tasks. 4672 means the new session received sensitive privileges, which is normal for administrators and system accounts. Match them by Logon ID.",
-      "tools": ["timeline-explorer", "evtxecmd"]
+      "tools": [
+        "timeline-explorer",
+        "evtxecmd"
+      ]
     },
     {
       "title": "Check Remote Desktop activity",
       "text": "Parse the two Remote Desktop logs the same way. In the LocalSessionManager log, event 21 means a session logon succeeded, 24 means a session was disconnected and 25 means a session was reconnected. In the RemoteConnectionManager log, event 1149 means user authentication succeeded, with the source network address. Authentication is not the same as a full session, so compare with 4624 of logon type 10.",
-      "tools": ["evtxecmd", "timeline-explorer"]
+      "tools": [
+        "evtxecmd",
+        "timeline-explorer"
+      ]
     },
     {
       "title": "Triage fast, then look for gaps",
       "text": "Hayabusa and Chainsaw scan a folder of .evtx files with detection rules and point you at unusual events quickly. Treat their output as leads to check in the raw events. Then look for gaps: event 1102 in the Security log means the log was cleared, and the first and last dates in the file show how far back it reaches.",
-      "tools": ["hayabusa", "chainsaw"],
+      "tools": [
+        "hayabusa",
+        "chainsaw"
+      ],
       "note": "A detection rule can flag normal activity. Always open the original event before you write a conclusion."
     },
     {
       "title": "List the accounts in the SAM hive",
       "text": "The SAM hive stores the local user accounts. Open it in Registry Explorer under SAM\\Domains\\Account\\Users, or run the SAM plugin of RegRipper. You get the account names, creation dates, last logon times and last password change. Compare the last logon time with the newest 4624 event for the same account.",
-      "tools": ["registry-explorer", "regripper"],
-      "paths": ["SAM\\Domains\\Account\\Users"]
+      "tools": [
+        "registry-explorer",
+        "regripper"
+      ],
+      "paths": [
+        "SAM\\Domains\\Account\\Users"
+      ]
     },
     {
       "title": "Cross-check and write it down",
       "text": "Confirm each important logon from two sources, for example a 4624 event and a LocalSessionManager event, or a last logon time in SAM and the event log. In your notes, record tool names and versions, the source file of each event, the Logon ID and the computer's time zone.",
-      "tools": ["timeline-explorer", "regripper"]
+      "tools": [
+        "timeline-explorer",
+        "regripper"
+      ]
     }
   ],
   "artifacts": [
-    {"name": "Security.evtx, event 4624 and 4625", "where": "Windows\\System32\\winevt\\Logs", "tells": "Successful and failed logons, with account, logon type and source address"},
-    {"name": "Security.evtx, events 4634, 4647, 4648, 4672", "where": "Windows\\System32\\winevt\\Logs", "tells": "Logoffs, explicit credentials and sessions with sensitive privileges"},
-    {"name": "TerminalServices-LocalSessionManager log, events 21, 24, 25", "where": "Windows\\System32\\winevt\\Logs", "tells": "Remote Desktop and local session logon, disconnect and reconnect"},
-    {"name": "TerminalServices-RemoteConnectionManager log, event 1149", "where": "Windows\\System32\\winevt\\Logs", "tells": "Successful Remote Desktop authentication, with source address"},
-    {"name": "Security event 1102", "where": "Security.evtx", "tells": "The Security log was cleared, and which account did it"},
-    {"name": "SAM hive", "where": "Windows\\System32\\config\\SAM", "tells": "Local accounts, creation date, last logon and last password change"},
-    {"name": "TimeZoneInformation", "where": "SYSTEM hive", "tells": "The computer's time zone setting, needed to read times in local time"}
+    {
+      "name": "Security.evtx, event 4624 and 4625",
+      "where": "Windows\\System32\\winevt\\Logs",
+      "tells": "Successful and failed logons, with account, logon type and source address"
+    },
+    {
+      "name": "Security.evtx, events 4634, 4647, 4648, 4672",
+      "where": "Windows\\System32\\winevt\\Logs",
+      "tells": "Logoffs, explicit credentials and sessions with sensitive privileges"
+    },
+    {
+      "name": "TerminalServices-LocalSessionManager log, events 21, 24, 25",
+      "where": "Windows\\System32\\winevt\\Logs",
+      "tells": "Remote Desktop and local session logon, disconnect and reconnect"
+    },
+    {
+      "name": "TerminalServices-RemoteConnectionManager log, event 1149",
+      "where": "Windows\\System32\\winevt\\Logs",
+      "tells": "Successful Remote Desktop authentication, with source address"
+    },
+    {
+      "name": "Security event 1102",
+      "where": "Security.evtx",
+      "tells": "The Security log was cleared, and which account did it"
+    },
+    {
+      "name": "SAM hive",
+      "where": "Windows\\System32\\config\\SAM",
+      "tells": "Local accounts, creation date, last logon and last password change"
+    },
+    {
+      "name": "TimeZoneInformation",
+      "where": "SYSTEM hive",
+      "tells": "The computer's time zone setting, needed to read times in local time"
+    }
   ],
   "limits": [
     "A logon record shows that an account was used. It does not show which person typed the password or sat at the computer.",
@@ -105,11 +162,27 @@
     "note": "The case does not tell you which events its Security log holds, and some of the logs in steps 6 and 7 may be missing or empty on a Windows 7 computer. If a log is empty, write that down. For more practice with plain .evtx files, the public EVTX-ATTACK-SAMPLES repository on GitHub collects samples of attack techniques. Check its own README before you use it."
   },
   "learn": [
-    {"label": "Microsoft: event 4624, an account was successfully logged on", "url": "https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-4624"},
-    {"label": "Microsoft: event 4625, an account failed to log on", "url": "https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-4625"},
-    {"label": "Microsoft: event 4647, user initiated logoff", "url": "https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-4647"},
-    {"label": "Microsoft: event 1102, the audit log was cleared", "url": "https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-1102"},
-    {"label": "EvtxECmd on GitHub", "url": "https://github.com/EricZimmerman/evtx"}
+    {
+      "label": "Microsoft: event 4624, an account was successfully logged on",
+      "url": "https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-4624"
+    },
+    {
+      "label": "Microsoft: event 4625, an account failed to log on",
+      "url": "https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-4625"
+    },
+    {
+      "label": "Microsoft: event 4647, user initiated logoff",
+      "url": "https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-4647"
+    },
+    {
+      "label": "Microsoft: event 1102, the audit log was cleared",
+      "url": "https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-1102"
+    },
+    {
+      "label": "EvtxECmd on GitHub",
+      "url": "https://github.com/EricZimmerman/evtx"
+    }
   ],
-  "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases."
+  "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases.",
+  "untested": true
 }

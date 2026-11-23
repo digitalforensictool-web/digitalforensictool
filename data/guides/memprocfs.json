@@ -1,0 +1,197 @@
+{
+  "reviewed": "2026-11-24",
+  "lead": "MemProcFS shows a memory image as a set of folders and files. You browse processes and other items with your normal file tools, and you can also use it from code.",
+  "use_when": [
+    "You prefer to click through folders instead of typing many commands.",
+    "You want to open memory content in a hex editor, a script or another tool you already use.",
+    "You want a quick forensic overview of a Windows memory dump, including a scan with YARA rules."
+  ],
+  "features": [
+    {
+      "title": "Memory as a file system",
+      "items": [
+        "Mounts physical memory as a virtual drive on Windows, or at a folder you choose on Linux",
+        "Processes, modules and other items appear as folders and files",
+        "The wiki lists a folder for each process and a folder for system information such as drivers, services, users and network",
+        "Files can be read and written with hex editors, scripts and other tools"
+      ]
+    },
+    {
+      "title": "Forensic mode",
+      "items": [
+        "Started with the -forensic option",
+        "Builds a timeline and lists files that have recoverable content",
+        "Includes a FindEvil check that looks for signs of malicious activity",
+        "Results are also available as CSV and JSON files, according to the wiki"
+      ]
+    },
+    {
+      "title": "Many memory sources",
+      "items": [
+        "Existing dump files",
+        "Live Windows memory, through a DumpIt capture in live mode or the WinPMEM driver",
+        "Memory from some virtual machines, and from PCILeech FPGA hardware",
+        "A remote computer, through the project's LeechAgent over a secured link",
+        "Separate page files and swap files can be added to improve the view of memory"
+      ]
+    },
+    {
+      "title": "Use it from code",
+      "items": [
+        "Programming interfaces for C/C++, C#, Java, Go, Python and Rust",
+        "A memprocfs package for Python, which also works in Jupyter notebooks",
+        "Plugins can be written in C/C++, Rust or Python"
+      ]
+    }
+  ],
+  "formats": [
+    "Raw memory dump files",
+    "Live memory through DumpIt or WinPMEM (Windows)",
+    "PCILeech FPGA devices",
+    "Virtual machine memory (some platforms)",
+    "LeechAgent remote acquisition"
+  ],
+  "requirements": "On Windows, install the Dokany version 2 file system library before mounting. On Linux, FUSE is needed. On macOS, macFUSE is needed only for mounting. FPGA hardware also needs a driver file. Download the program from the project's GitHub releases page. Source code is under AGPLv3, and some bundled parts have other licences.",
+  "steps": [
+    {
+      "title": "Install the file system library",
+      "text": "On Windows, install Dokany version 2 first. On Linux, install FUSE. Without it the memory cannot be mounted as a drive or folder."
+    },
+    {
+      "title": "Download MemProcFS",
+      "text": "Get the latest release from the project's GitHub releases page and unpack it to a folder. Open a command prompt in that folder. Keep the memory dump on a drive with enough free space."
+    },
+    {
+      "title": "Mount a memory dump",
+      "text": "Run the program with your dump file as the device. On Windows the drive M: is used by default. Leave the program running while you browse, because closing it unmounts the drive.",
+      "cmd": "memprocfs.exe -device c:\\temp\\win10x64-dump.raw"
+    },
+    {
+      "title": "Browse the drive",
+      "text": "Open M: in your file manager. Each process has its own folder. System information, such as drivers and services, is in a separate sys folder. Open files with the tools you already know."
+    },
+    {
+      "title": "Turn on forensic mode",
+      "text": "Stop the program and start it again with the forensic option. It runs extra analysis in the background. Wait until it finishes before you trust the forensic folder. The wiki explains the modes from 1 to 4.",
+      "cmd": "memprocfs.exe -device c:\\temp\\win10x64-dump.raw -forensic 1"
+    },
+    {
+      "title": "Choose a mount point on Linux",
+      "text": "On Linux give a folder with the mount option. Use a folder that already exists and is empty.",
+      "cmd": "./memprocfs -mount /home/pi/linux -device /dumps/win10x64-dump.raw"
+    },
+    {
+      "title": "Add page files if you have them",
+      "text": "If you also collected the page file and swap file, add them. This can give a fuller view of memory. A page file collected at a different time can make the result worse.",
+      "cmd": "memprocfs.exe -device unknown-x64-dump.raw -pagefile0 pagefile.sys -pagefile1 swapfile.sys"
+    }
+  ],
+  "options": [
+    {
+      "cmd": "-device <source>",
+      "what": "The memory source, such as a dump file, fpga, or a live capture driver."
+    },
+    {
+      "cmd": "-mount <target>",
+      "what": "Where to mount. The Windows default is drive M:. On Linux give a folder path."
+    },
+    {
+      "cmd": "-forensic <mode>",
+      "what": "Turns on forensic mode. Modes 1 to 4 choose how the database is stored."
+    },
+    {
+      "cmd": "-forensic-yara-rules <file>",
+      "what": "Uses your own YARA rules file during forensic scans."
+    },
+    {
+      "cmd": "-v",
+      "what": "More messages on the console. The options -vv and -vvv give more. The wiki does not recommend -vvv."
+    },
+    {
+      "cmd": "-pagefile0 <file>",
+      "what": "Adds a page file. The number is the index, so pagefile1 is the next one."
+    },
+    {
+      "cmd": "-remote <connection>",
+      "what": "Connects to a running LeechAgent on another computer."
+    }
+  ],
+  "cases": [
+    {
+      "title": "Quick look at a Windows memory dump",
+      "why": "Mounting the image lets you see processes and system information in a file manager, with no plugin names to learn first."
+    },
+    {
+      "title": "Malware triage",
+      "why": "Forensic mode includes a FindEvil check and YARA scanning, which can point you to processes that need a closer look."
+    },
+    {
+      "title": "Remote incident response",
+      "why": "The LeechAgent link lets you analyse memory on another computer. The project says it suits slow connections."
+    },
+    {
+      "title": "Scripted analysis",
+      "why": "The Python package and other interfaces let you read memory and process data in your own scripts or notebooks."
+    },
+    {
+      "title": "Teaching and demonstrations",
+      "why": "Seeing memory as ordinary folders helps students understand what a process and a module are."
+    }
+  ],
+  "strengths": [
+    "Presents memory in a form that most people already know how to use.",
+    "Works with many sources, from dump files to live capture and remote computers.",
+    "Free to use, with source code published under AGPLv3.",
+    "Offers programming interfaces in six languages, plus plugins."
+  ],
+  "limits": [
+    "Mounting needs a separate file system library: Dokany on Windows, FUSE on Linux, macFUSE on macOS.",
+    "The built-in Elastic YARA rules need you to accept a separate licence with a startup option. Without it they are not used.",
+    "Forensic mode adds extra processing, and you must wait for it to finish.",
+    "It does not capture memory by itself in the dump file case. Use an acquisition tool first.",
+    "The FindEvil results are detections that need human checking and are not proof.",
+    "The wiki has many pages. Beginners may need time to find the folder they need.",
+    "The project is open source but does not take general code contributions."
+  ],
+  "works_with": [
+    {
+      "id": "winpmem",
+      "note": "Capture live Windows memory"
+    },
+    {
+      "id": "magnet-dumpit",
+      "note": "Capture a Windows memory dump"
+    },
+    {
+      "id": "volatility3",
+      "note": "A second tool to cross-check findings"
+    },
+    {
+      "id": "yara",
+      "note": "Rules used in forensic YARA scans"
+    },
+    {
+      "id": "hxd",
+      "note": "Open memory files from the mounted drive"
+    }
+  ],
+  "learn": [
+    {
+      "label": "MemProcFS wiki",
+      "url": "https://github.com/ufrisk/MemProcFS/wiki"
+    },
+    {
+      "label": "Command line parameters (wiki)",
+      "url": "https://github.com/ufrisk/MemProcFS/wiki/_CommandLine"
+    },
+    {
+      "label": "Forensic folder (wiki)",
+      "url": "https://github.com/ufrisk/MemProcFS/wiki/FS_Forensic"
+    },
+    {
+      "label": "Project repository and README",
+      "url": "https://github.com/ufrisk/MemProcFS"
+    }
+  ],
+  "sources_note": "Written in our own words from the MemProcFS project's README and wiki."
+}

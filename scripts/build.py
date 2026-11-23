@@ -218,7 +218,7 @@ def page(path, title, desc, body, current=""):
 </main>
 <footer class="site-foot"><div class="wrap">
 <p class="about">{name} is an independent educational resource. It is not affiliated with, sponsored by or endorsed by any vendor or project listed here. Credit for every tool belongs to its developers. Product names are trademarks of their owners. Downloads come from third parties: validate every tool yourself before using it on real evidence.</p>
-<nav aria-label="Footer"><a href="{px}compare.html">Compare tools</a><a href="{px}nist.html">Browse by NIST functionality</a><a href="{px}about.html">About and disclaimer</a><a href="{px}about.html#corrections">Corrections and removal requests</a><a href="{px}about.html#privacy">Privacy</a>{maint}</nav>
+<nav aria-label="Footer"><a href="{px}compare.html">Compare tools</a><a href="{px}toolbox.html">Pocket toolbox</a><a href="{px}nist.html">Browse by NIST functionality</a><a href="{px}about.html">About and disclaimer</a><a href="{px}about.html#corrections">Corrections and removal requests</a><a href="{px}about.html#privacy">Privacy</a>{maint}</nav>
 </div></footer>
 <script src="{px}assets/app.js" defer></script>
 </body>
@@ -311,6 +311,12 @@ def build_home():
     featured = "".join(card(TOOL[i], "") for i in SITE.get("featured", []) if i in TOOL)
     oss = sum(1 for t in TOOLS if eff_type(t) == "open-source")
     checked = fmt_date(RELDATA.get("generated"))
+    explore = "".join('<a href="%s"><strong>%s</strong><span>%s</span></a>' % x for x in [
+        ("map.html", "Evidence map", "Tap a laptop or phone to see where evidence lives")] * int((DATA / "xray.json").exists() and (PREVIEW or not json.load(open(DATA / "xray.json", encoding="utf-8")).get("draft"))) + [
+        ("workflows.html", "Case workflows", "Step by step, with practice data")] * int(bool(WORKFLOWS)) + [
+        ("compare.html", "Compare tools", "Two or three tools side by side"),
+        ("toolbox.html", "Pocket toolbox", "Timestamp, hash and text decoders")] + [
+        ("hotseat.html", "Examiner's hot seat", "Hard viva and court questions")] * int((DATA / "hotseat.json").exists() and (PREVIEW or not json.load(open(DATA / "hotseat.json", encoding="utf-8")).get("draft"))))
     wf_home = ""
     if WORKFLOWS:
         wf_home = ('<section class="section" id="workflows"><div class="section-head"><h2>Start from the question</h2>'
@@ -332,6 +338,7 @@ def build_home():
 <button class="btn primary" type="submit">Search</button>
 </form>
 <div class="chips"><span class="muted">Popular:</span><a href="categories/memory.html">Memory forensics</a><a href="categories/android.html">Android</a><a href="categories/windows.html">Windows registry</a><a href="categories/incident-response.html">Incident response</a></div>
+<div class="explore">{explore}</div>
 <div class="stats"><span><b>{n}</b> tools</span><span><b>{oss}</b> open source</span><span><b>{ncat}</b> categories</span>{checked}</div>
 </section>
 <section class="section" id="categories">
@@ -362,7 +369,7 @@ def build_home():
 <p class="muted" style="max-width:760px">Type the name of a commercial product and see free tools that do a similar job, with honest notes on what "similar" means.</p>
 </section>
 </div>
-""".format(wf=wf_home, cmp="".join(compare_presets("")), tagline=e(SITE["tagline"]), icon=ICON_SEARCH, n=len(TOOLS), oss=oss, ncat=len(CATS), last=len(CATS) - 1,
+""".format(wf=wf_home, explore=explore, cmp="".join(compare_presets("")), tagline=e(SITE["tagline"]), icon=ICON_SEARCH, n=len(TOOLS), oss=oss, ncat=len(CATS), last=len(CATS) - 1,
            checked=('<span>links checked <b>%s</b></span>' % checked) if checked else "",
            cats="".join(cat_cards), rows="".join(rows), featured=featured)
     page("index.html", NAME, SITE["description"], body, "")
@@ -696,9 +703,11 @@ def build_workflows():
         nav = '<nav class="jump" aria-label="On this page"><span class="label">On this page</span>%s</nav>' % "".join(jump)
         body = ('<div class="wrap"><div class="page-head">'
                 '<div class="crumbs"><a href="../index.html">Home</a> / <a href="../workflows.html">Workflows</a> / %s</div>'
-                '<div class="label y">Case workflow</div><h1>%s</h1><p class="lead">%s</p>%s</div>'
+                '<div class="label y">Case workflow</div><h1>%s</h1><p class="lead">%s</p>%s%s</div>'
                 '<div class="tool-layout"><div class="tool-main">%s%s</div><aside class="tool-side" aria-label="Workflow facts">%s</aside></div></div>'
-                % (e(w.get("short", w["title"])), e(w["title"]), e(w["lead"]), draft_banner(w), nav, "".join(main), "".join(side)))
+                % (e(w.get("short", w["title"])), e(w["title"]), e(w["lead"]), draft_banner(w),
+                   '<p class="note">This workflow was written from the tools\' documentation and published references. It has not yet been checked step by step on the practice data. If a step does not match what you see, please report it.</p>' if w.get("untested") else "",
+                   nav, "".join(main), "".join(side)))
         page("workflows/%s.html" % wid, w["title"], w["lead"], body, "workflows")
 
 
@@ -755,6 +764,114 @@ def build_compare():
             '</section></div><script type="application/json" id="cmp-data">%s</script>'
             % (e(checked), "".join('<option value="%s">%s</option>' % (c["id"], e(c["name"])) for c in CATS), presets, blob))
     page("compare.html", "Compare tools", "Compare free and open-source digital forensics tools side by side: functions, licence, platforms and project activity.", body, "compare")
+
+
+def build_xray():
+    """Evidence map: a see-through laptop and phone. Tap a part to see what evidence lives there."""
+    f = DATA / "xray.json"
+    if not f.exists():
+        return
+    with open(f, encoding="utf-8") as fh:
+        x = json.load(fh)
+    if x.get("draft") and not PREVIEW:
+        return
+
+    def spots(device):
+        out = []
+        for p in x["parts"]:
+            if p["device"] != device:
+                continue
+            out.append('<a class="spot" href="#part-%s" data-part="%s" aria-label="%s"><circle class="ring" cx="%d" cy="%d" r="22"/>'
+                       '<circle class="dot" cx="%d" cy="%d" r="11"/><text x="%d" y="%d" text-anchor="middle">%s</text></a>'
+                       % (p["id"], p["id"], e(p["label"]), p["x"], p["y"], p["x"], p["y"], p["x"], p["y"] + 44, e(p["label"])))
+        return "".join(out)
+
+    laptop = ('<svg class="xray" viewBox="0 0 620 450" role="group" aria-label="Laptop: tap a part">'
+              '<rect class="shell" x="40" y="24" width="540" height="270" rx="16"/>'
+              '<rect class="glass" x="58" y="42" width="504" height="234" rx="8"/>'
+              '<path class="shell" d="M14 318 H606 L582 432 H38 Z"/>'
+              '<path class="faint" d="M40 318 V294 M580 318 V294"/>'
+              '<rect class="faint" x="64" y="338" width="112" height="70" rx="8"/><circle class="faint" cx="120" cy="373" r="24"/>'
+              '<rect class="faint" x="222" y="346" width="96" height="54" rx="4"/><path class="faint" d="M234 400v10M250 400v10M266 400v10M282 400v10M298 400v10"/>'
+              '<path class="faint" d="M380 392c16-30 44-30 60 0M392 398c10-18 26-18 36 0"/>'
+              '<rect class="faint" x="514" y="358" width="52" height="28" rx="4"/>'
+              '<rect class="faint" x="84" y="64" width="132" height="92" rx="6"/><path class="faint" d="M84 82h132"/>'
+              '<rect class="faint" x="264" y="64" width="132" height="92" rx="6"/><path class="faint" d="M300 96l24 14-24 14z"/>'
+              '<rect class="faint" x="84" y="172" width="132" height="86" rx="6"/><path class="faint" d="M100 196h100M100 214h100M100 232h64"/>'
+              '<rect class="faint" x="264" y="172" width="132" height="86" rx="6"/><path class="faint" d="M264 180l66 44 66-44"/>'
+              '<path class="faint" d="M452 122h56l-6 84h-44zM444 122h72M468 112h24"/>'
+              '%s</svg>' % spots("laptop"))
+    phone = ('<svg class="xray phone" viewBox="0 0 240 450" role="group" aria-label="Phone: tap a part">'
+             '<rect class="shell" x="24" y="14" width="192" height="422" rx="30"/>'
+             '<rect class="glass" x="38" y="50" width="164" height="350" rx="10"/>'
+             '<path class="faint" d="M100 32h40"/><circle class="faint" cx="120" cy="418" r="8"/>'
+             '%s</svg>' % spots("phone"))
+
+    panels = []
+    for p in x["parts"]:
+        tools = "".join('<a class="tool-chip" href="tools/%s.html">%s</a>' % (tid, e(TOOL[tid]["name"])) for tid in p["tools"] if tid in TOOL)
+        wfs = "".join('<li><a href="workflows/%s.html">%s</a></li>' % (wid, e(WORKFLOWS[wid]["title"])) for wid in p.get("workflows", []) if wid in WORKFLOWS)
+        panels.append('<section class="card xpanel" id="part-%s" data-panel="%s"><div class="label">%s</div><h2>%s</h2>'
+                      '<h3>What you can find here</h3><ul class="tight">%s</ul>'
+                      '<h3>Free tools that read it</h3><div class="tool-chips on-card">%s</div>%s'
+                      '<p><a href="categories/%s.html" style="font-weight:600">See all tools for %s</a></p></section>'
+                      % (p["id"], p["id"], "Laptop" if p["device"] == "laptop" else "Phone", e(p["label"]),
+                         "".join("<li>%s</li>" % e(i) for i in p["finds"]), tools,
+                         ('<h3>Step-by-step workflow</h3><ul class="list-plain">%s</ul>' % wfs) if wfs else "",
+                         p["category"], e(CAT[p["category"]]["name"])))
+    body = ('<div class="wrap"><div class="page-head"><div class="label y">Evidence map</div><h1>Where does the evidence live?</h1>'
+            '<p class="lead">Tap any part of the laptop or the phone to see what an investigator can find there and which free tool reads it.</p>%s</div>'
+            '<div class="xray-layout"><div class="xray-stage">%s%s</div><div class="xray-panels" aria-live="polite">'
+            '<p class="xhint">Tap a yellow dot to start.</p>%s</div></div></div>'
+            % (draft_banner(x), laptop, phone, "".join(panels)))
+    page("map.html", "Evidence map", "A see-through laptop and phone: tap a part to see what evidence it holds and which free tool reads it.", body, "map")
+
+
+def build_hotseat():
+    f = DATA / "hotseat.json"
+    if not f.exists():
+        return False
+    with open(f, encoding="utf-8") as fh:
+        h = json.load(fh)
+    if h.get("draft") and not PREVIEW:
+        return False
+    groups = []
+    for g in h["groups"]:
+        cards = "".join('<details class="qa"><summary>%s</summary><p>%s</p><p class="rem"><strong>Remember:</strong> %s</p></details>'
+                        % (e(c["q"]), e(c["a"]), e(c["remember"])) for c in g["cards"])
+        groups.append('<section><h2>%s</h2><div class="qa-list">%s</div></section>' % (e(g["title"]), cards))
+    body = ('<div class="wrap"><div class="page-head"><div class="label y">Practice for viva and court</div><h1>The examiner\'s hot seat</h1>'
+            '<p class="lead">The hard questions a defence lawyer, a judge or a viva examiner asks a forensic examiner. Try to answer each one aloud, then tap it to see a model answer.</p>'
+            '<p class="note" style="max-width:820px">These are general study answers about forensic method. They are not legal advice. Follow the law and procedure of your country and your lab.</p>%s</div>'
+            '<div class="prose wide" style="padding-bottom:64px">%s</div></div>' % (draft_banner(h), "".join(groups)))
+    page("hotseat.html", "The examiner's hot seat", "Hard questions asked of digital forensic examiners in a viva or in court, with model answers for students.", body, "hotseat")
+    return True
+
+
+def build_toolbox():
+    body = """<div class="wrap"><div class="page-head"><div class="label y">Runs in your browser</div><h1>Pocket toolbox</h1>
+<p class="lead">Small helpers for daily forensic work. Everything runs on your own device. Nothing you type or open here is sent anywhere.</p></div>
+<div class="grid two" style="padding-bottom:64px">
+<section class="card tb" id="time"><h2>Timestamp converter</h2><p class="sum">Paste a raw time value from a database or the registry and choose its format.</p>
+<label class="label" for="tb-ts">Value</label><input id="tb-ts" inputmode="numeric" autocomplete="off" placeholder="For example 13350000000000000">
+<label class="label" for="tb-fmt">Format</label><select id="tb-fmt">
+<option value="unix">Unix seconds (since 1970)</option><option value="unixms">Unix milliseconds (Android, WhatsApp)</option>
+<option value="prtime">Unix microseconds (Firefox)</option><option value="webkit">Chrome and Edge (microseconds since 1601)</option>
+<option value="filetime">Windows FILETIME (100-nanosecond steps since 1601)</option><option value="mac">Apple seconds (since 2001)</option>
+<option value="macns">Apple nanoseconds (since 2001)</option></select>
+<div class="tb-out" id="tb-ts-out" aria-live="polite">The date will appear here.</div></section>
+<section class="card tb" id="hash"><h2>File hash</h2><p class="sum">Choose a file to calculate its SHA-256 and SHA-1 values. The file stays on your device.</p>
+<label class="label" for="tb-file">File</label><input id="tb-file" type="file">
+<div class="tb-out" id="tb-hash-out" aria-live="polite">The hash values will appear here.</div>
+<p class="sum" style="font-size:13px">Use a small file. Very large images need a desktop hashing tool.</p></section>
+<section class="card tb" id="rot13"><h2>ROT13 decoder</h2><p class="sum">Windows stores UserAssist program names in ROT13. Paste the stored name to read it.</p>
+<label class="label" for="tb-rot">Text</label><textarea id="tb-rot" rows="3" placeholder="For example P:\\\\Hfref\\\\Choyvp"></textarea>
+<div class="tb-out" id="tb-rot-out" aria-live="polite">The decoded text will appear here.</div></section>
+<section class="card tb" id="b64"><h2>Base64 and hex decoder</h2><p class="sum">Decode a Base64 or hex string to readable text.</p>
+<label class="label" for="tb-b64">Text</label><textarea id="tb-b64" rows="3" placeholder="For example SGVsbG8="></textarea>
+<div class="tb-out" id="tb-b64-out" aria-live="polite">The decoded text will appear here.</div></section>
+</div><noscript><p class="note">The toolbox needs JavaScript.</p></noscript></div>"""
+    page("toolbox.html", "Pocket toolbox", "Timestamp converter, file hash, ROT13 and Base64 decoders that run in your browser. Nothing is uploaded.", body, "toolbox")
 
 
 def build_alternatives():
@@ -916,7 +1033,7 @@ def main():
     assets = OUT / "assets"
     shutil.copytree(ROOT / "static", assets, dirs_exist_ok=True)
     build_home(); build_tools_index(); build_categories(); build_tool_pages()
-    build_workflows(); build_compare(); build_alternatives(); build_inside(); build_nist(); build_practice(); build_learn(); build_about(); build_404()
+    build_workflows(); build_xray(); build_compare(); build_hotseat(); build_toolbox(); build_alternatives(); build_inside(); build_nist(); build_practice(); build_learn(); build_about(); build_404()
     (OUT / ".nojekyll").write_text("", encoding="utf-8")
     domain = SITE.get("domain", "").strip()
     if domain:

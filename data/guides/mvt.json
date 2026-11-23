@@ -1,0 +1,201 @@
+{
+  "reviewed": "2026-11-24",
+  "lead": "Check a phone backup or dump for signs of known spyware. MVT, the Mobile Verification Toolkit, was released by Amnesty International's Security Lab in 2021 and works on both iOS and Android data.",
+  "use_when": [
+    "You have an iOS backup or an Android backup or bug report and want to compare it with published spyware indicators.",
+    "The device owner has agreed to the analysis. The project says MVT is for consensual analysis only.",
+    "You want records such as messages, calls, browser history and installed apps pulled out as JSON files."
+  ],
+  "features": [
+    {
+      "title": "Three command line tools",
+      "items": [
+        "mvt-ios for iPhone and iPad data",
+        "mvt-android for Android data",
+        "mvt for shared tasks such as downloading indicators"
+      ]
+    },
+    {
+      "title": "iOS checks",
+      "items": [
+        "Reads an iTunes or Finder backup, and can decrypt an encrypted backup with the password",
+        "Can also check a file system dump and a sysdiagnose archive",
+        "Extracts records such as SMS, calls, contacts, Safari and Chrome history, WhatsApp data and installed applications"
+      ]
+    },
+    {
+      "title": "Android checks",
+      "items": [
+        "Checks output collected with AndroidQF",
+        "Checks a standalone Android bug report",
+        "Checks the SMS messages in an Android backup made with adb backup"
+      ]
+    },
+    {
+      "title": "Indicators of compromise",
+      "items": [
+        "Compares extracted records with indicators in STIX2 files",
+        "Can download public indicator lists with one command",
+        "Matches are shown in the terminal and saved to JSON files with a detected suffix in the name"
+      ]
+    }
+  ],
+  "formats": [
+    "iTunes or Finder backup (iOS)",
+    "Decrypted iOS backup folder",
+    "iOS file system dump",
+    "iOS sysdiagnose archive",
+    "Android backup (.ab file or unpacked folder, SMS only)",
+    "AndroidQF output folder",
+    "Android bug report (zip)",
+    "STIX2 indicator files (.stix2 or .json)"
+  ],
+  "requirements": "You need Python 3.11 or newer. On Linux install a few system packages such as sqlite3 and libusb. On macOS the project asks for Xcode and Homebrew. The project does not officially support running natively on Windows and recommends WSL. The project says you should understand forensic basics and the command line to use it.",
+  "steps": [
+    {
+      "title": "Install it",
+      "text": "The project recommends installing with pipx. Install pipx first from your package manager, then run the command below. If the commands are not found afterwards, run pipx ensurepath and open a new terminal. On Windows, use WSL.",
+      "cmd": "pipx install mvt"
+    },
+    {
+      "title": "Download the public indicators",
+      "text": "This fetches indicator lists from the project's indicators repository and stores them where MVT loads them automatically. You can also pass your own STIX2 file later with --iocs.",
+      "cmd": "mvt-ios download-iocs"
+    },
+    {
+      "title": "Get the data to check",
+      "text": "For iOS, make a backup with iTunes or Finder, or with pymobiledevice3. For Android, collect data with AndroidQF, take a bug report, or make an SMS backup with adb backup. Get the owner's consent first. Work on a copy."
+    },
+    {
+      "title": "Decrypt an encrypted iOS backup",
+      "text": "Skip this if the backup is not encrypted. The destination folder will hold the decrypted copy. MVT asks for the password if you leave out -p.",
+      "cmd": "mvt-ios decrypt-backup -d /path/to/decrypted /path/to/backup"
+    },
+    {
+      "title": "Run the check",
+      "text": "Point the command at the backup folder and give an output folder for the JSON results. Without --output nothing is saved to disk.",
+      "cmd": "mvt-ios check-backup --output /path/to/output/ /path/to/backup/udid/"
+    },
+    {
+      "title": "Check an Android source",
+      "text": "Use the command that matches how you collected the data. This example is for an AndroidQF folder. For a bug report use check-bugreport. For an SMS backup use check-backup.",
+      "cmd": "mvt-android check-androidqf /path/to/androidqf-output"
+    },
+    {
+      "title": "Read the results",
+      "text": "Open the JSON files in the output folder. Files with a detected suffix hold indicator matches. A match needs human review. No match does not prove the phone is clean."
+    }
+  ],
+  "options": [
+    {
+      "cmd": "--iocs <file.stix2>",
+      "what": "Adds a STIX2 indicator file to check against. You can repeat it for several files."
+    },
+    {
+      "cmd": "--output <folder>",
+      "what": "Saves results as JSON files in this folder."
+    },
+    {
+      "cmd": "--fast",
+      "what": "On iOS checks, skips features that take a lot of time or resources."
+    },
+    {
+      "cmd": "--list-modules",
+      "what": "On iOS checks, lists the available modules and exits."
+    },
+    {
+      "cmd": "--module <name>",
+      "what": "On iOS checks, runs one named module instead of all of them."
+    },
+    {
+      "cmd": "--backup-password \"<password>\"",
+      "what": "Gives the password for an encrypted Android backup. MVT asks for it if you leave it out."
+    },
+    {
+      "cmd": "MVT_NETWORK_ACCESS_ALLOWED=false",
+      "what": "Environment setting that stops MVT sending web requests to resolve shortened links."
+    }
+  ],
+  "cases": [
+    {
+      "title": "Suspected targeted spyware",
+      "why": "It compares phone records with indicators published for known campaigns, such as those from Amnesty International."
+    },
+    {
+      "title": "Suspected stalkerware",
+      "why": "The project lists a public stalkerware indicator source that can be used with the same commands."
+    },
+    {
+      "title": "Reviewing messages for malicious links",
+      "why": "URLs found in messages are extracted and, when you set an output folder, written to a file for review."
+    },
+    {
+      "title": "Support for journalists and activists",
+      "why": "The project points civil society users to expert help from Amnesty International's Security Lab and Access Now's Digital Security Helpline."
+    },
+    {
+      "title": "Study of mobile forensics methods",
+      "why": "The documentation explains the trade-offs between backups, file system dumps and sysdiagnose, which is useful teaching material."
+    }
+  ],
+  "strengths": [
+    "Free and open source, built by a human rights organisation's security lab.",
+    "One tool covers both iOS and Android.",
+    "Uses the open STIX2 format, so you can add indicators from several sources.",
+    "Clear documentation site with a page for each acquisition method."
+  ],
+  "limits": [
+    "It is a triage and detection tool. It is not a general phone forensics suite and it does not do full app parsing.",
+    "Public indicators cannot show that a device is clean. The project says relying on them alone can give a false sense of security.",
+    "The license prohibits using it on devices of people who have not consented. It is not for adversarial forensics.",
+    "Direct Android analysis over adb has been removed. You must collect data with AndroidQF, a bug report or a backup first.",
+    "The Android backup check only covers SMS messages, and adb backup is deprecated.",
+    "An iOS file system dump needs a jailbreak, which can alter records. Not every device or iOS version can be jailbroken.",
+    "Windows is not officially supported. Use WSL."
+  ],
+  "works_with": [
+    {
+      "id": "ileapp",
+      "note": "Parses app data from the same iOS backup for a wider view"
+    },
+    {
+      "id": "aleapp",
+      "note": "Parses app data from the same Android extraction"
+    },
+    {
+      "id": "libimobiledevice",
+      "note": "A way to make the iOS backup that MVT checks"
+    },
+    {
+      "id": "adb",
+      "note": "Needed to make an Android SMS backup"
+    },
+    {
+      "id": "timesketch",
+      "note": "Review extracted records and timelines with a team"
+    }
+  ],
+  "learn": [
+    {
+      "label": "MVT documentation home",
+      "url": "https://docs.mvt.re/en/latest/"
+    },
+    {
+      "label": "Installation",
+      "url": "https://docs.mvt.re/en/latest/install/"
+    },
+    {
+      "label": "Introduction and limits of the tool",
+      "url": "https://docs.mvt.re/en/latest/introduction/"
+    },
+    {
+      "label": "Check an iTunes backup (iOS)",
+      "url": "https://docs.mvt.re/en/latest/ios/backup/check/"
+    },
+    {
+      "label": "Indicators of compromise",
+      "url": "https://docs.mvt.re/en/latest/iocs/"
+    }
+  ],
+  "sources_note": "Written in our own words from the Mobile Verification Toolkit project's documentation."
+}

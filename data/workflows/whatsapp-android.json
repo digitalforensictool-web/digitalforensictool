@@ -1,5 +1,4 @@
 {
-  "draft": true,
   "reviewed": "2026-11-24",
   "title": "Which WhatsApp chats are on this Android phone?",
   "short": "WhatsApp chats on Android",
@@ -146,5 +145,6 @@
       "url": "https://digitalcorpora.org/android-13-image/"
     }
   ],
-  "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases."
+  "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases.",
+  "untested": true
 }

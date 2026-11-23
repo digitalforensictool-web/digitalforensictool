@@ -1,0 +1,182 @@
+{
+  "reviewed": "2026-11-24",
+  "lead": "TestDisk and PhotoRec are two free programs from CGSecurity for data recovery. TestDisk repairs lost partitions and damaged file system structures. PhotoRec recovers files by their content, even when the file system is damaged.",
+  "use_when": [
+    "A partition has disappeared or a disk will not boot after a partition table problem.",
+    "A drive or memory card was formatted, and you want to recover pictures or documents.",
+    "You want to undelete files from a FAT, exFAT, NTFS or ext2 file system."
+  ],
+  "features": [
+    {
+      "title": "TestDisk: partitions",
+      "items": [
+        "Repairs partition tables and recovers deleted partitions",
+        "Restores FAT32 and NTFS boot sectors from backups, or rebuilds them",
+        "Fixes FAT tables and the NTFS MFT using its mirror",
+        "Finds ext2, ext3 and ext4 backup superblocks"
+      ]
+    },
+    {
+      "title": "TestDisk: files",
+      "items": [
+        "Undeletes files from FAT, exFAT, NTFS and ext2",
+        "Copies files from a deleted partition",
+        "Collects details about a disk that will not start, to share with a technician"
+      ]
+    },
+    {
+      "title": "PhotoRec: file carving",
+      "items": [
+        "Ignores the file system and scans the media block by block for known file signatures",
+        "The project reports support for more than 480 file extensions",
+        "Works on hard disks, SSDs, CD-ROMs, memory cards and USB drives",
+        "Reads from the source in read-only mode"
+      ]
+    },
+    {
+      "title": "PhotoRec: control",
+      "items": [
+        "File Opt lets you pick which file families to recover",
+        "Can search the whole partition or only unallocated space",
+        "Paranoid mode, on by default, rejects invalid files",
+        "Recovered files are saved in folders named recup_dir.1, recup_dir.2 and so on"
+      ]
+    }
+  ],
+  "formats": [
+    "Physical disks and partitions",
+    "Raw DD images",
+    "EnCase E01 images (PhotoRec)"
+  ],
+  "requirements": "Both programs run in a text window and are used with the keyboard. They run on Windows, Linux, macOS, FreeBSD, NetBSD, OpenBSD and others. You need administrator or root rights to open a disk. The latest stable release is 7.2. You need a second drive with free space to save recovered files.",
+  "steps": [
+    {
+      "title": "Download",
+      "text": "Download the package for your system from the TestDisk download page on cgsecurity.org and unzip it. TestDisk and PhotoRec are in the same package."
+    },
+    {
+      "title": "Protect the source",
+      "text": "Stop writing to the affected drive at once, because new data can overwrite what you want to recover. Prepare a separate drive for the recovered files, and never save them to the partition you are recovering from."
+    },
+    {
+      "title": "Start PhotoRec with admin rights",
+      "text": "On Windows, right-click photorec_win.exe and choose Run as administrator. On Linux, run it as root.",
+      "cmd": "sudo photorec"
+    },
+    {
+      "title": "Choose the disk and options",
+      "text": "Use the arrow keys to select the disk and press Enter. Choose the partition. Use File Opt to select the file types, and Options if you need to change settings. Choose Search to start."
+    },
+    {
+      "title": "Set the file system and scope",
+      "text": "Choose Other for the file system unless it is ext2, ext3 or ext4. Then choose whether to scan the whole partition or only the unallocated space. Unallocated space finds deleted files only."
+    },
+    {
+      "title": "Choose where to save",
+      "text": "Select the destination folder on a different drive and confirm. PhotoRec shows progress while it works. Files appear in recup_dir folders, and you can open some before the scan ends."
+    },
+    {
+      "title": "Check the results",
+      "text": "Review the summary when it finishes. File names are usually not kept, so sort files by type and open them to check. Scan recovered files for viruses before you open them. For a lost partition, run TestDisk instead and choose Analyse, then Quick Search."
+    }
+  ],
+  "options": [
+    {
+      "cmd": "sudo testdisk",
+      "what": "Starts TestDisk on Linux. After disk selection, Analyse checks the partition structure, Quick Search looks for missing partitions, and Deeper Search scans more thoroughly."
+    },
+    {
+      "cmd": "Paranoid",
+      "what": "A PhotoRec option, on by default, that rejects invalid files."
+    },
+    {
+      "cmd": "Keep corrupted files",
+      "what": "A PhotoRec option that keeps files that fail the checks. They start with the letter b."
+    },
+    {
+      "cmd": "bruteforce",
+      "what": "A PhotoRec option that recovers more fragmented JPEG files but uses a lot of processor time."
+    },
+    {
+      "cmd": "Low memory",
+      "what": "A PhotoRec option for systems that crash during recovery. Use it only when needed."
+    }
+  ],
+  "cases": [
+    {
+      "title": "Missing partition",
+      "why": "TestDisk can search for the lost partition and write a repaired partition table."
+    },
+    {
+      "title": "Formatted memory card",
+      "why": "PhotoRec carves pictures and videos from a card by their signatures, even when the file system is gone."
+    },
+    {
+      "title": "Damaged boot sector",
+      "why": "TestDisk can restore a FAT32 or NTFS boot sector from its backup."
+    },
+    {
+      "title": "Recently deleted files",
+      "why": "TestDisk can undelete files on FAT, exFAT, NTFS and ext2, and file names may be kept."
+    },
+    {
+      "title": "Quick recovery from a disk image",
+      "why": "PhotoRec accepts raw DD and E01 images, so you can work on a copy and leave the original alone."
+    }
+  ],
+  "strengths": [
+    "Free and open source under the GPL v2 or later.",
+    "Runs on many operating systems, including Windows, Linux and macOS.",
+    "TestDisk lists a wide range of file systems for partition recovery, including FAT, NTFS, exFAT, ext2 to ext4, HFS+, XFS and APFS.",
+    "PhotoRec uses read-only access to the source drive."
+  ],
+  "limits": [
+    "Both tools use a text menu with keyboard control, which is hard for some beginners.",
+    "PhotoRec recovered files usually lose their original names and folders.",
+    "Fragmented files may be partly or fully unrecoverable.",
+    "PhotoRec performs poorly on ReiserFS.",
+    "Writing a partition table in TestDisk changes the disk. Work on a copy if the data matters.",
+    "They are recovery tools, not case management tools. They do not keep a full audit record of your work."
+  ],
+  "works_with": [
+    {
+      "id": "ddrescue",
+      "note": "Copy a failing drive first, then recover from the copy"
+    },
+    {
+      "id": "dc3dd",
+      "note": "Make a hashed image to work from"
+    },
+    {
+      "id": "foremost",
+      "note": "Another file carver to compare results"
+    },
+    {
+      "id": "autopsy",
+      "note": "Examine the recovered files and the image"
+    },
+    {
+      "id": "exiftool",
+      "note": "Read the metadata of recovered pictures"
+    }
+  ],
+  "learn": [
+    {
+      "label": "TestDisk project page",
+      "url": "https://www.cgsecurity.org/wiki/TestDisk"
+    },
+    {
+      "label": "TestDisk Step By Step",
+      "url": "https://www.cgsecurity.org/wiki/TestDisk_Step_By_Step"
+    },
+    {
+      "label": "PhotoRec project page",
+      "url": "https://www.cgsecurity.org/wiki/PhotoRec"
+    },
+    {
+      "label": "PhotoRec Step By Step",
+      "url": "https://www.cgsecurity.org/wiki/PhotoRec_Step_By_Step"
+    }
+  ],
+  "sources_note": "Written in our own words from the TestDisk and PhotoRec project's documentation."
+}

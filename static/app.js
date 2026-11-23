@@ -137,6 +137,114 @@
     apply();
   });
 
+  // Evidence map: tap a part of the device to show its panel.
+  var xpanels = document.querySelector(".xray-panels");
+  if (xpanels) {
+    var spots = Array.prototype.slice.call(document.querySelectorAll(".xray .spot"));
+    var showPart = function (id, scroll) {
+      var found = false;
+      xpanels.querySelectorAll(".xpanel").forEach(function (p) {
+        var on = p.getAttribute("data-panel") === id;
+        p.classList.toggle("on", on);
+        if (on) found = p;
+      });
+      spots.forEach(function (sp) { sp.classList.toggle("on", sp.getAttribute("data-part") === id); });
+      xpanels.classList.toggle("idle", !found);
+      if (found && scroll && window.innerWidth < 900) found.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    };
+    spots.forEach(function (sp) {
+      sp.addEventListener("click", function (ev) {
+        ev.preventDefault();
+        var id = sp.getAttribute("data-part");
+        try { window.history.replaceState(null, "", "#part-" + id); } catch (e) {}
+        showPart(id, true);
+      });
+    });
+    showPart((window.location.hash || "").replace("#part-", ""), false);
+  }
+
+  // Pocket toolbox: everything is computed locally.
+  var tbTs = document.getElementById("tb-ts");
+  if (tbTs && typeof BigInt === "function") {
+    var tbFmt = document.getElementById("tb-fmt");
+    var tbTsOut = document.getElementById("tb-ts-out");
+    var EPOCH_1601 = BigInt("11644473600000");
+    var EPOCH_2001 = BigInt("978307200000");
+    var convert = function () {
+      var raw = tbTs.value.replace(/[\s,_]/g, "");
+      if (!raw) { tbTsOut.textContent = "The date will appear here."; return; }
+      if (!/^-?\d+(\.\d+)?$/.test(raw)) { tbTsOut.textContent = "Please enter digits only."; return; }
+      var ms;
+      try {
+        var whole = BigInt(raw.split(".")[0]);
+        var f = tbFmt.value;
+        if (f === "unix") ms = whole * BigInt(1000);
+        else if (f === "unixms") ms = whole;
+        else if (f === "prtime") ms = whole / BigInt(1000);
+        else if (f === "webkit") ms = whole / BigInt(1000) - EPOCH_1601;
+        else if (f === "filetime") ms = whole / BigInt(10000) - EPOCH_1601;
+        else if (f === "mac") ms = whole * BigInt(1000) + EPOCH_2001;
+        else ms = whole / BigInt(1000000) + EPOCH_2001;
+      } catch (err) { tbTsOut.textContent = "That value could not be read."; return; }
+      var d = new Date(Number(ms));
+      if (isNaN(d.getTime())) { tbTsOut.textContent = "That value is outside the range of dates. Check the format."; return; }
+      tbTsOut.textContent = "UTC:        " + d.toISOString().replace("T", " ").replace(".000Z", "").replace("Z", "") +
+        "\nYour time:  " + d.toString() + "\n\nCheck important values with a second tool.";
+    };
+    tbTs.addEventListener("input", convert);
+    tbFmt.addEventListener("change", convert);
+  }
+  var tbFile = document.getElementById("tb-file");
+  if (tbFile) {
+    var tbHashOut = document.getElementById("tb-hash-out");
+    var hex = function (buf) {
+      return Array.prototype.map.call(new Uint8Array(buf), function (x) { return ("0" + x.toString(16)).slice(-2); }).join("");
+    };
+    tbFile.addEventListener("change", function () {
+      var file = tbFile.files && tbFile.files[0];
+      if (!file) return;
+      if (!(window.crypto && window.crypto.subtle)) { tbHashOut.textContent = "This browser cannot calculate hashes on this page."; return; }
+      if (file.size > 300 * 1024 * 1024) { tbHashOut.textContent = "This file is larger than 300 MB. Use a desktop hashing tool."; return; }
+      tbHashOut.textContent = "Calculating...";
+      file.arrayBuffer().then(function (buf) {
+        return Promise.all([window.crypto.subtle.digest("SHA-256", buf), window.crypto.subtle.digest("SHA-1", buf)]);
+      }).then(function (r) {
+        tbHashOut.textContent = "File:    " + file.name + "\nSize:    " + file.size + " bytes\nSHA-256: " + hex(r[0]) + "\nSHA-1:   " + hex(r[1]);
+      }).catch(function () { tbHashOut.textContent = "The file could not be read."; });
+    });
+  }
+  var tbRot = document.getElementById("tb-rot");
+  if (tbRot) {
+    var tbRotOut = document.getElementById("tb-rot-out");
+    tbRot.addEventListener("input", function () {
+      tbRotOut.textContent = tbRot.value ? tbRot.value.replace(/[a-zA-Z]/g, function (ch) {
+        var base = ch <= "Z" ? 65 : 97;
+        return String.fromCharCode((ch.charCodeAt(0) - base + 13) % 26 + base);
+      }) : "The decoded text will appear here.";
+    });
+  }
+  var tbB64 = document.getElementById("tb-b64");
+  if (tbB64) {
+    var tbB64Out = document.getElementById("tb-b64-out");
+    tbB64.addEventListener("input", function () {
+      var v = tbB64.value.replace(/\s+/g, "");
+      if (!v) { tbB64Out.textContent = "The decoded text will appear here."; return; }
+      try {
+        var bytes;
+        if (/^(0x)?([0-9a-fA-F]{2})+$/.test(v)) {
+          v = v.replace(/^0x/, "");
+          bytes = new Uint8Array(v.length / 2);
+          for (var i = 0; i < bytes.length; i++) bytes[i] = parseInt(v.substr(i * 2, 2), 16);
+        } else {
+          var bin = window.atob(v.replace(/-/g, "+").replace(/_/g, "/"));
+          bytes = new Uint8Array(bin.length);
+          for (var k = 0; k < bin.length; k++) bytes[k] = bin.charCodeAt(k);
+        }
+        tbB64Out.textContent = new TextDecoder("utf-8").decode(bytes);
+      } catch (err) { tbB64Out.textContent = "This is not valid Base64 or hex."; }
+    });
+  }
+
   // Compare page: two or three tools side by side, facts only.
   var cmp = document.getElementById("cmp");
   var cmpData = document.getElementById("cmp-data");

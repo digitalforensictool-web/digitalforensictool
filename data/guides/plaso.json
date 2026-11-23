@@ -1,0 +1,224 @@
+{
+  "reviewed": "2026-11-24",
+  "lead": "Read a disk image or a folder of files and pull out every timestamp it can find into one big timeline. Plaso, also called log2timeline, is a Python engine for building these super timelines.",
+  "use_when": [
+    "You need to know what happened on a computer and in which order, using many kinds of evidence together.",
+    "You have a disk image and want events from the file system, logs, browsers and other sources in one list.",
+    "You want a timeline you can filter by date, then send to another tool."
+  ],
+  "features": [
+    {
+      "title": "Collect",
+      "items": [
+        "Reads storage media images, volume systems and file systems",
+        "Parses many file types, such as SQLite databases, Windows Registry files, plist files, ESE databases, OLE files, cookies and text logs",
+        "Can select Volume Shadow Copy stores, partitions and volumes",
+        "Can run hashers, and can unpack some archive types"
+      ]
+    },
+    {
+      "title": "Control what is parsed",
+      "items": [
+        "Parsers and presets can be chosen, and a parser can be excluded with an exclamation mark",
+        "A YAML file filter limits processing to chosen paths",
+        "Yara rules can be matched against file content"
+      ]
+    },
+    {
+      "title": "Output",
+      "items": [
+        "psort writes the timeline in formats such as dynamic, l2tcsv, json, json_line, xlsx, tln and kml",
+        "Date filters and slices show only the time range you care about",
+        "Has an output module for OpenSearch, including a variant for Timesketch"
+      ]
+    },
+    {
+      "title": "Analysis helpers",
+      "items": [
+        "Analysis plugins include tagging, browser search, Chrome extension, Windows services and VirusTotal",
+        "Tagging uses a rules file to label events",
+        "pinfo shows what a storage file contains and can compare two files"
+      ]
+    },
+    {
+      "title": "Other tools in the package",
+      "items": [
+        "psteal makes a timeline in one step",
+        "image_export extracts files from an image"
+      ]
+    }
+  ],
+  "formats": [
+    "Storage media images",
+    "Volume system formats",
+    "File system formats",
+    "SQLite databases",
+    "Windows Registry files",
+    "ESE databases",
+    "OLE compound files",
+    "plist files",
+    "Text-based logs",
+    "JSON-L logs"
+  ],
+  "requirements": "Plaso needs Python and several support libraries, so most users install a packaged release. The project documents installs for Ubuntu, Fedora, macOS and Docker. Docker is the simplest start for beginners. Large images need a lot of time, disk space and memory.",
+  "steps": [
+    {
+      "title": "Install with Docker",
+      "text": "The project publishes a Docker image named log2timeline/plaso. Install Docker first. Then put your evidence in a folder, for example /data, and share that folder with the container as shown in the next steps."
+    },
+    {
+      "title": "Look at the options",
+      "text": "Print the parsers and presets your version has. This shows what Plaso can read and helps you plan.",
+      "cmd": "docker run -v /data/:/data log2timeline/plaso log2timeline --info"
+    },
+    {
+      "title": "Build the storage file",
+      "text": "Run log2timeline on the image or folder. It writes a .plaso storage file. This step can take hours for a large image.",
+      "cmd": "docker run -v /data/:/data log2timeline/plaso log2timeline --storage-file /data/evidences.plaso /data/evidences"
+    },
+    {
+      "title": "Check what was found",
+      "text": "Use pinfo on the storage file. It shows the sessions, the number of events per parser and any warnings. Read the warnings, because they show files that could not be parsed.",
+      "cmd": "docker run -v /data/:/data log2timeline/plaso pinfo /data/evidences.plaso"
+    },
+    {
+      "title": "Write the timeline",
+      "text": "Run psort to turn the storage file into a readable file. You can run it again with other filters or formats without parsing the image again.",
+      "cmd": "docker run -v /data/:/data log2timeline/plaso psort -w /data/timeline.log /data/evidences.plaso"
+    },
+    {
+      "title": "Narrow the time range",
+      "text": "Add a date filter at the end of the psort command. A timeline of a whole computer is huge, so cut it down to the days that matter. Put the filter in quotes.",
+      "cmd": "psort.py -q -w out.csv timeline.plaso \"date > '2004-09-20 16:10:00' and date < '2004-09-20 16:20:00'\""
+    },
+    {
+      "title": "Review in a viewer",
+      "text": "Open the CSV in a spreadsheet or a timeline viewer. You can also send the data to Timesketch with the matching psort output module so a team can work on it together."
+    }
+  ],
+  "options": [
+    {
+      "cmd": "--parsers 'linux,!text/bash_history'",
+      "what": "Chooses parsers and presets. A leading exclamation mark leaves one out."
+    },
+    {
+      "cmd": "--hashers md5,sha256",
+      "what": "Hashes files while parsing. Use --hashers list to see the choices."
+    },
+    {
+      "cmd": "-z Europe/Amsterdam",
+      "what": "Sets the time zone for timestamps stored without one. Use -z list to see the choices."
+    },
+    {
+      "cmd": "--vss_stores all",
+      "what": "Also processes Volume Shadow Copy stores. The docs show the option with an underscore."
+    },
+    {
+      "cmd": "-f filter.yaml",
+      "what": "Processes only the paths named in a filter file."
+    },
+    {
+      "cmd": "psort.py -o list",
+      "what": "Lists the output formats."
+    },
+    {
+      "cmd": "psort.py --output-time-zone list",
+      "what": "Lists the time zones you can use for output."
+    },
+    {
+      "cmd": "psteal.py --source image.raw -o dynamic -w registrar.csv",
+      "what": "Builds the timeline in one step with default settings."
+    }
+  ],
+  "cases": [
+    {
+      "title": "Reconstructing a user's activity",
+      "why": "Events from files, browsers and the Registry sit in one ordered list, so you can see what happened around a key moment."
+    },
+    {
+      "title": "Incident response",
+      "why": "A single timeline shows how an attack moved through a system and when each step happened."
+    },
+    {
+      "title": "Checking a time window",
+      "why": "Date filters and slices let you look at only a few minutes around an event."
+    },
+    {
+      "title": "Older system states",
+      "why": "You can select Volume Shadow Copy stores, which may hold earlier versions of the system."
+    },
+    {
+      "title": "Team timelines",
+      "why": "The OpenSearch output can feed Timesketch, where several analysts can search and tag the same timeline."
+    },
+    {
+      "title": "Teaching timeline analysis",
+      "why": "The two-step flow of log2timeline then psort shows clearly how raw evidence becomes a timeline."
+    }
+  ],
+  "strengths": [
+    "Free and open source, with full user and developer documentation.",
+    "Parses many kinds of evidence in one run, so you do not need a separate tool for each.",
+    "The storage file lets you filter and export again without parsing the evidence again.",
+    "Works with a command-line workflow that is easy to script and repeat.",
+    "Can run in Docker, which avoids many install problems."
+  ],
+  "limits": [
+    "It has no graphical interface. You work from the command line and then open the result elsewhere.",
+    "Timelines are very large. Without date filters or parser choices the output is hard to read.",
+    "Processing a full image is slow and needs plenty of disk space and memory.",
+    "It reads what the parsers know. A file type without a parser gives no events.",
+    "Time zones are a common trap. Timestamps stored without a zone depend on the setting you give.",
+    "Installing it without Docker or a packaged release can be hard, and the project has a troubleshooting section for it.",
+    "Some output modules and analysis plugins need extra libraries or settings, such as an API key."
+  ],
+  "works_with": [
+    {
+      "id": "timesketch",
+      "note": "Upload the timeline for team analysis"
+    },
+    {
+      "id": "timeline-explorer",
+      "note": "Open the CSV output on Windows"
+    },
+    {
+      "id": "libewf",
+      "note": "Work with E01 images"
+    },
+    {
+      "id": "sleuthkit",
+      "note": "Check files and file systems in the same image"
+    },
+    {
+      "id": "sift",
+      "note": "A workstation that often has Plaso installed"
+    },
+    {
+      "id": "hayabusa",
+      "note": "Detail on Windows event logs that you can add to your timeline"
+    }
+  ],
+  "learn": [
+    {
+      "label": "Plaso documentation home",
+      "url": "https://plaso.readthedocs.io/en/latest/"
+    },
+    {
+      "label": "Creating a timeline",
+      "url": "https://plaso.readthedocs.io/en/latest/sources/user/Creating-a-timeline.html"
+    },
+    {
+      "label": "Using log2timeline",
+      "url": "https://plaso.readthedocs.io/en/latest/sources/user/Using-log2timeline.html"
+    },
+    {
+      "label": "Using psort",
+      "url": "https://plaso.readthedocs.io/en/latest/sources/user/Using-psort.html"
+    },
+    {
+      "label": "Installing with Docker",
+      "url": "https://plaso.readthedocs.io/en/latest/sources/user/Installing-with-docker.html"
+    }
+  ],
+  "sources_note": "Written in our own words from the Plaso project's documentation."
+}

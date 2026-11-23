@@ -1,5 +1,4 @@
 {
-  "draft": true,
   "reviewed": "2026-11-24",
   "title": "What is on this iPhone? A first look",
   "short": "First look at an iPhone",
@@ -25,62 +24,117 @@
     {
       "title": "Know which kind of extraction you have",
       "text": "A full file system extraction copies the files from the phone's storage, so it can hold the most data. A backup made with Finder or iTunes holds only what iOS puts into a backup. Apple states that an encrypted backup can hold more than an unencrypted one, for example saved passwords, Wi-Fi settings, website history, health data and call history. Check your tool's report to see what you really have.",
-      "tools": ["libimobiledevice", "ufade"],
+      "tools": [
+        "libimobiledevice",
+        "ufade"
+      ],
       "note": "An encrypted backup cannot be used without its password. Write down who supplied the password and how."
     },
     {
       "title": "Record the source and make a working copy",
       "text": "Hash the extraction file or the files in the folder, and write the values down with the date, the tool used for the extraction and the phone's model and iOS version. Work on a copy. Keep the original extraction unchanged, in the way your lab requires.",
-      "tools": ["quickhash", "hashdeep"]
+      "tools": [
+        "quickhash",
+        "hashdeep"
+      ]
     },
     {
       "title": "Run iLEAPP",
       "text": "iLEAPP reads an iOS extraction and writes an HTML report. You can start it with its window, or from the command line. Choose the input type: fs for a folder of extracted files, tar or zip or gz for an archive, and itunes for a Finder or iTunes backup. The output folder must exist before you start. For an encrypted backup, give the password with the password option.",
-      "tools": ["ileapp"],
+      "tools": [
+        "ileapp"
+      ],
       "cmd": "ileapp -t tar -i /path/to/extraction.tar -o /path/to/output/",
       "note": "On Windows the program may be called ileapp.exe. Use the input type that matches your data."
     },
     {
       "title": "Read the report in a sensible order",
       "text": "Open the HTML report in a browser. Start with the device information and the accounts, so that you know whose phone it appears to be. Then look at the installed apps, then messages, call history and Safari history. After that, look at the location items and the photo metadata. Section names change between iLEAPP versions, so use the menu and search box of your version. Make a note of anything you need to confirm.",
-      "tools": ["ileapp"]
+      "tools": [
+        "ileapp"
+      ]
     },
     {
       "title": "Confirm key records in the raw database",
       "text": "Open the original database in DB Browser for SQLite, in read-only mode if the program offers it, on a copy of the file. In a full file system extraction, text messages are in sms.db. In the tables, the message table holds the text and the date, and the handle table holds the phone number or email address of the other side. Compare a few rows with the report.",
-      "tools": ["db4s"],
-      "paths": ["/private/var/mobile/Library/SMS/sms.db"],
+      "tools": [
+        "db4s"
+      ],
+      "paths": [
+        "/private/var/mobile/Library/SMS/sms.db"
+      ],
       "note": "In a backup, files have scrambled names, so ask iLEAPP or your tool which file is which."
     },
     {
       "title": "Convert Apple timestamps",
       "text": "Many Apple databases count time from 1 January 2001 UTC. This is called Mac absolute time. Older databases count seconds. Newer ones, such as sms.db on recent iOS versions, can use nanoseconds, which gives a very long number. In SQLite, for nanoseconds, divide by 1000000000 and add 978307200, which is the number of seconds between 1970 and 2001. Check a known message to see that your conversion looks right.",
-      "tools": ["db4s", "dcode"]
+      "tools": [
+        "db4s",
+        "dcode"
+      ]
     },
     {
       "title": "Look at property list (plist) files",
       "text": "A plist is a file that stores settings, as XML text or in a binary form. Many iOS settings, device details and app preferences are plist files, and iLEAPP reads many of them for you. If an item is missing from the report, find the plist in the extraction and open it with a plist viewer. Note the file path and the key that you read.",
-      "tools": ["ileapp", "mac-apt"]
+      "tools": [
+        "ileapp",
+        "mac-apt"
+      ]
     },
     {
       "title": "Try other iOS tools for a second view",
       "text": "Mobile Verification Toolkit (MVT) checks backups and file systems for traces of known spyware. APOLLO combines several Apple activity databases into one timeline. mac_apt can also process iOS data. Use them to test what iLEAPP showed, not to take their output on trust.",
-      "tools": ["mvt", "apollo", "mac-apt"]
+      "tools": [
+        "mvt",
+        "apollo",
+        "mac-apt"
+      ]
     },
     {
       "title": "Cross-check and write it down",
       "text": "Confirm each important fact from two places, for example the iLEAPP report and the raw database, or two different tools. In your notes, record the tool names and versions, the iOS version, the source file or database path for each fact, the hash of the extraction, and the time zone you used.",
-      "tools": ["ileapp", "db4s"]
+      "tools": [
+        "ileapp",
+        "db4s"
+      ]
     }
   ],
   "artifacts": [
-    {"name": "sms.db", "where": "/private/var/mobile/Library/SMS/ in a full file system extraction", "tells": "Text messages and iMessages, with dates, the other party and attachments"},
-    {"name": "iLEAPP HTML report", "where": "The output folder you chose", "tells": "A readable summary of many artifacts, with links to the source files"},
-    {"name": "Device and account information", "where": "Property list and database files, shown in the report", "tells": "Device name, iOS version and the accounts signed in on the phone"},
-    {"name": "Installed apps list", "where": "System databases, shown in the report", "tells": "Which apps were on the phone, and where their data lives"},
-    {"name": "Call history", "where": "Call history database, shown in the report", "tells": "Calls with time and length. In a backup, only an encrypted one holds it, per Apple"},
-    {"name": "Safari history", "where": "Safari databases, shown in the report", "tells": "Web pages visited and when"},
-    {"name": "Photos database and photo metadata", "where": "Photos library files, shown in the report", "tells": "Photo records with dates and, in some cases, locations"}
+    {
+      "name": "sms.db",
+      "where": "/private/var/mobile/Library/SMS/ in a full file system extraction",
+      "tells": "Text messages and iMessages, with dates, the other party and attachments"
+    },
+    {
+      "name": "iLEAPP HTML report",
+      "where": "The output folder you chose",
+      "tells": "A readable summary of many artifacts, with links to the source files"
+    },
+    {
+      "name": "Device and account information",
+      "where": "Property list and database files, shown in the report",
+      "tells": "Device name, iOS version and the accounts signed in on the phone"
+    },
+    {
+      "name": "Installed apps list",
+      "where": "System databases, shown in the report",
+      "tells": "Which apps were on the phone, and where their data lives"
+    },
+    {
+      "name": "Call history",
+      "where": "Call history database, shown in the report",
+      "tells": "Calls with time and length. In a backup, only an encrypted one holds it, per Apple"
+    },
+    {
+      "name": "Safari history",
+      "where": "Safari databases, shown in the report",
+      "tells": "Web pages visited and when"
+    },
+    {
+      "name": "Photos database and photo metadata",
+      "where": "Photos library files, shown in the report",
+      "tells": "Photo records with dates and, in some cases, locations"
+    }
   ],
   "limits": [
     "An encrypted backup needs its password. Without it you cannot read the backup.",
@@ -100,10 +154,23 @@
     "note": "Read the documentation that comes with the data set first. It says how the data was created and how to open the backup. The author's blog post is at https://thebinaryhick.blog/2020/04/16/ios-13-images-images-now-available/"
   },
   "learn": [
-    {"label": "iLEAPP on GitHub (usage and input types)", "url": "https://github.com/abrignoni/iLEAPP"},
-    {"label": "Apple Support: About encrypted backups", "url": "https://support.apple.com/en-us/108353"},
-    {"label": "SANS: Time is not on our side, messages in iOS 11", "url": "https://sans.org/blog/time-is-not-on-our-side-when-it-comes-to-messages-in-ios-11"},
-    {"label": "Digital Corpora: iOS 13 images", "url": "https://digitalcorpora.org/corpora/cell-phones/ios-13/"}
+    {
+      "label": "iLEAPP on GitHub (usage and input types)",
+      "url": "https://github.com/abrignoni/iLEAPP"
+    },
+    {
+      "label": "Apple Support: About encrypted backups",
+      "url": "https://support.apple.com/en-us/108353"
+    },
+    {
+      "label": "SANS: Time is not on our side, messages in iOS 11",
+      "url": "https://sans.org/blog/time-is-not-on-our-side-when-it-comes-to-messages-in-ios-11"
+    },
+    {
+      "label": "Digital Corpora: iOS 13 images",
+      "url": "https://digitalcorpora.org/corpora/cell-phones/ios-13/"
+    }
   ],
-  "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases."
+  "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases.",
+  "untested": true
 }

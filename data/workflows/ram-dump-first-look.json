@@ -1,5 +1,4 @@
 {
-  "draft": true,
   "reviewed": "2026-11-24",
   "title": "What was running on this computer? A first look at a RAM dump",
   "short": "First look at a RAM dump",
@@ -150,5 +149,6 @@
       "url": "https://github.com/stuxnet999/MemLabs"
     }
   ],
-  "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases."
+  "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases.",
+  "untested": true
 }

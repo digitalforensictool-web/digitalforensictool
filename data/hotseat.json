@@ -1,0 +1,186 @@
+{
+ "draft": false,
+ "reviewed": "2026-11-24",
+ "groups": [
+  {
+   "title": "Copying the evidence",
+   "cards": [
+    {
+     "q": "Why did you not examine the original device directly?",
+     "a": "Opening or running the original can change it, even without meaning to. I made a verified copy and worked only on the copy. The original stays safe, and another examiner can repeat my work from the same source.",
+     "remember": "Protect the original. Work on the copy."
+    },
+    {
+     "q": "What is a write blocker, and why did you use one?",
+     "a": "A write blocker lets a computer read a storage device but stops it from writing anything back. Without it, the operating system may change the device in small ways. I also tested that the blocker works as expected and recorded it in my notes.",
+     "remember": "Read yes, write no. Test and record your blocker."
+    },
+    {
+     "q": "How do you know your copy is complete and exact?",
+     "a": "I calculated a hash of the source before and after copying, and of the image file. The values matched, so the copy is bit for bit the same as what I read. If some sectors could not be read, I would say so in my report.",
+     "remember": "Match the hashes, and report any unreadable areas."
+    },
+    {
+     "q": "You only took a logical copy. What did you miss?",
+     "a": "A logical copy holds the files the system shows, but usually not deleted data, free space or hidden areas. I chose it for a stated reason, such as time or scope, and I wrote that reason down. A full disk image would allow more recovery work.",
+     "remember": "Logical copy: fewer places to look. State why."
+    },
+    {
+     "q": "There is a gap in the chain of custody. Is your evidence useless?",
+     "a": "A gap does not prove the evidence changed, but it gives the other side a fair question. I would explain exactly what is known about that period and show the hash checks before and after. Whether the evidence is accepted is for the court to decide under its own rules.",
+     "remember": "Record every handover. Explain gaps honestly."
+    }
+   ]
+  },
+  {
+   "title": "Hash values",
+   "cards": [
+    {
+     "q": "What does a matching hash value prove?",
+     "a": "It shows that two sets of data are identical in every bit at the time they were checked. It does not show that the content is true, who made it, or that nothing happened to it before it was first hashed.",
+     "remember": "A hash proves sameness, not truth."
+    },
+    {
+     "q": "MD5 is broken. Why do you still use it?",
+     "a": "MD5 and SHA-1 can be attacked on purpose to build two different files with the same hash. For checking that a copy was not damaged by accident, they still work. I use a stronger algorithm as well, such as SHA-256, to be safe.",
+     "remember": "Collisions are possible but rare. Use two hashes."
+    },
+    {
+     "q": "The hash of the file and the hash of the image are different. Why?",
+     "a": "They are hashes of different things, so they should differ. A file hash covers one file. An image hash covers the whole disk. I only compare a hash with the hash of the same data, taken at another time.",
+     "remember": "Compare like with like. Same data, same hash."
+    },
+    {
+     "q": "Does your hash show nobody changed the data before you received it?",
+     "a": "No. A hash only shows that the data has not changed since it was hashed. If someone altered the device before my first hash, the hash cannot tell. Other records, such as the chain of custody, help here.",
+     "remember": "A hash protects from the first hash onward."
+    },
+    {
+     "q": "A file matches a known hash list. What does that tell you?",
+     "a": "It tells me the file content is identical to a known file in that list. It does not tell me the user opened, read or understood it. The file name can be different, and the list is only as correct as its source.",
+     "remember": "A hash match identifies content, not intent."
+    }
+   ]
+  },
+  {
+   "title": "Dates and times",
+   "cards": [
+    {
+     "q": "Which time zone are the times in your report?",
+     "a": "I state the time zone for every time. Many systems store time in UTC and then show local time using the device setting. I record the setting, convert carefully, and show both UTC and local time when it helps.",
+     "remember": "Always say the time zone. Prefer UTC."
+    },
+    {
+     "q": "The phone clock was wrong. Does that spoil your timeline?",
+     "a": "Not necessarily. I compare the device time with a trusted time at the time of seizure and note the difference, called clock drift. I can then adjust the times in my analysis and say that I did. If I cannot measure the error, I say that too.",
+     "remember": "Measure and record the clock error."
+    },
+    {
+     "q": "Does the modified date show when my client wrote this file?",
+     "a": "Not always. File system dates show what the system recorded, and copying, moving or opening can change them. Dates inside the file, such as document properties, may tell a different story. I compare both and do not rely on one.",
+     "remember": "File system dates and embedded dates can differ."
+    },
+    {
+     "q": "Could someone have changed the dates on this file?",
+     "a": "Yes, dates can be changed by a user or a tool. I look for signs of this, such as dates that do not fit other records like logs, backups or email headers. If I find no evidence of change, I say only that none was found.",
+     "remember": "Dates can be edited. Check other sources."
+    },
+    {
+     "q": "The created date is later than the modified date. Is that an error?",
+     "a": "Not always. When a file is copied to a new place, the copy may get a new created date but keep the old modified date. It can look odd but may be normal. I would explain the likely cause and check it by testing.",
+     "remember": "Odd dates may be normal. Test before you claim."
+    }
+   ]
+  },
+  {
+   "title": "Who did it?",
+   "cards": [
+    {
+     "q": "Does this log prove my client was at the keyboard?",
+     "a": "No. The log shows that an account was used at that time. Who was using it needs other evidence, such as CCTV, door records, witness statements or an admission. I can report what the device recorded, not who sat there.",
+     "remember": "An account is not a person."
+    },
+    {
+     "q": "The computer is shared by the whole family. Why blame him?",
+     "a": "I do not blame anyone. I report what is on the device and which accounts and times are linked to it. With a shared device, I look for other links, such as personal logins or content only one person would use, and I state the limits.",
+     "remember": "Shared device: report facts, do not guess the person."
+    },
+    {
+     "q": "Could malware or remote access explain these actions?",
+     "a": "It is possible, so I checked. I looked for unusual programs, remote access tools and odd connections. If I find none, I say none were found on this device with these methods. I cannot say it is impossible.",
+     "remember": "Test other explanations before you decide."
+    },
+    {
+     "q": "The file is on his phone. Does that prove he knew about it?",
+     "a": "No. Files can arrive without the owner opening them, for example through automatic downloads or messaging apps. Signs that the user opened, moved or shared the file would support knowledge. I report what I found and what I did not.",
+     "remember": "Presence is not knowledge."
+    },
+    {
+     "q": "His password was used. Does that mean he did it?",
+     "a": "It shows that someone used his password. Passwords can be shared, guessed, stolen or saved on a device. I would look at where and how the login happened, such as the device and network, and report what these facts can and cannot show.",
+     "remember": "A correct password shows access, not identity."
+    }
+   ]
+  },
+  {
+   "title": "Deleted and missing data",
+   "cards": [
+    {
+     "q": "You found nothing. Does that mean nothing was ever there?",
+     "a": "No. Absence of evidence is not proof that something did not exist. Data may have been overwritten, stored elsewhere, encrypted or never saved. I say what I searched, with which methods, and what I could not check.",
+     "remember": "Not found is not the same as not there."
+    },
+    {
+     "q": "Can you always recover deleted files?",
+     "a": "No. Once space is reused, the old data may be overwritten. On solid state drives, the TRIM function can clear deleted data soon after deletion. Encryption can also make recovered data unreadable. Results depend on the device and the time passed.",
+     "remember": "Recovery is possible, never certain."
+    },
+    {
+     "q": "This recovered file has no name and only part of its content. Is it reliable?",
+     "a": "It is real data found on the device, but it is incomplete. Without a name or full content, I cannot say much about its source or use. I report it as a fragment and say what can and cannot be concluded from it.",
+     "remember": "A fragment is a fragment. Do not overstate it."
+    },
+    {
+     "q": "The file was deleted. Does that show he tried to hide it?",
+     "a": "No. Deleting a file can be normal, and systems also delete files automatically, for example temporary files or cleaned caches. I can report when and how deletion likely happened. Why it happened is a different question.",
+     "remember": "Deletion shows an event, not a motive."
+    },
+    {
+     "q": "Was this recovered file ever opened by the user?",
+     "a": "Recovery alone cannot show that. I would check other traces, such as recent file lists, application records and thumbnails, and see if they agree. If they do not, I say that I cannot tell whether it was opened.",
+     "remember": "Recovered does not mean opened."
+    }
+   ]
+  },
+  {
+   "title": "Your tools and your method",
+   "cards": [
+    {
+     "q": "How do you know your tool gives correct results?",
+     "a": "I test tools on data where I already know the right answer and I record the results. I also check the tool version, because updates can change output. A tool that passed one test may still have limits, so I note them.",
+     "remember": "Test your tools. Do not just trust them."
+    },
+    {
+     "q": "Two of your tools show different results. Which one is right?",
+     "a": "I do not assume. I check the raw data by hand, for example in a hex view, and find out why they differ. Then I report both results and the reason. Using a second tool to cross-check is good practice.",
+     "remember": "Disagreement means: go back to the raw data."
+    },
+    {
+     "q": "Why should we trust an open-source tool?",
+     "a": "Trust comes from testing, not from the licence. With open-source tools, anyone can read the code and the method. With commercial tools, the code is usually closed, so I rely more on testing and vendor information. Either type needs validation.",
+     "remember": "Open or commercial: validate both the same way."
+    },
+    {
+     "q": "Could another examiner repeat your work and get the same result?",
+     "a": "That is my aim. I write down the tool names and versions, settings, hash values and each step in order. With the same image and the same steps, another examiner should reach the same results, and I welcome that check.",
+     "remember": "Document so that others can repeat it."
+    },
+    {
+     "q": "This question is outside your expertise, is it not?",
+     "a": "If it is, I say so clearly. I stay within what I have trained for and can show. I can explain what the data shows, and for other areas I suggest a suitable specialist. I follow the law and procedure of my country and my lab.",
+     "remember": "Know your limits and say them."
+    }
+   ]
+  }
+ ]
+}

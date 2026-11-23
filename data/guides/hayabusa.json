@@ -1,0 +1,217 @@
+{
+  "reviewed": "2026-11-24",
+  "lead": "Turn Windows event log files into one timeline and flag the events that match detection rules. Hayabusa is written in Rust by the Yamato Security group and is built to handle many logs quickly.",
+  "use_when": [
+    "You have Windows .evtx files and need a first list of suspicious events fast.",
+    "You need one timeline from the logs of one computer or many computers.",
+    "You want a quick count of logons or event IDs before you read the logs in detail."
+  ],
+  "features": [
+    {
+      "title": "Detection",
+      "items": [
+        "Checks events against a rule set and gives each match a level from informational to critical",
+        "Supports Sigma rules, and the project also ships its own rules",
+        "Rules can be updated from the project's rules repository with one command"
+      ]
+    },
+    {
+      "title": "Timeline output",
+      "items": [
+        "Writes the timeline as CSV, JSON or JSON Lines",
+        "Output profiles choose how many fields each line holds, from minimal to very detailed",
+        "Has profiles shaped for import into Timesketch",
+        "Output is meant for tools such as Timeline Explorer, LibreOffice, Elastic Stack and Timesketch"
+      ]
+    },
+    {
+      "title": "Quick summaries",
+      "items": [
+        "logon-summary shows logon events",
+        "eid-metrics counts events by event ID",
+        "computer-metrics counts events by computer name",
+        "log-metrics and pivot-keywords-list give more overviews of the logs"
+      ]
+    },
+    {
+      "title": "Searching",
+      "items": [
+        "The search command looks through all events for keywords or a regular expression",
+        "Searches can ignore case and can combine several keywords"
+      ]
+    },
+    {
+      "title": "Ways to run",
+      "items": [
+        "Scan a folder of collected logs, or one file",
+        "Scan the logs on the current Windows system (needs administrator rights)",
+        "Multi-threaded to use several processor cores"
+      ]
+    }
+  ],
+  "formats": [
+    "Windows event log (.evtx)",
+    "VHDX image (analysis commands)",
+    "E01 image (analysis commands)"
+  ],
+  "requirements": "The project publishes ready-made programs for Windows (Intel 64-bit, Intel 32-bit and ARM 64-bit), Linux (Intel and ARM 64-bit) and macOS (Intel and ARM 64-bit). You can also build it from source. Scanning the live system needs administrator rights.",
+  "steps": [
+    {
+      "title": "Download",
+      "text": "Get the latest release for your system from the project's Releases page on GitHub and unzip it into its own folder. Keep the rules folder next to the program, because the program reads the rules from there."
+    },
+    {
+      "title": "Update the rules",
+      "text": "Before a case, sync the rules with the project's rules repository. The project notes that this resets any level tuning you made, so repeat that tuning afterward.",
+      "cmd": "hayabusa.exe update-rules"
+    },
+    {
+      "title": "Collect the event logs",
+      "text": "Copy the .evtx files from the evidence into a working folder. Work on copies, not on the original evidence. You can also get a first view of a folder with the metrics commands."
+    },
+    {
+      "title": "Get a quick overview",
+      "text": "Count the events by event ID to see what the logs hold. This helps you spot missing logs or odd peaks before you run the full scan.",
+      "cmd": "hayabusa.exe eid-metrics -d C:\\case\\evtx"
+    },
+    {
+      "title": "Build the timeline",
+      "text": "Scan the folder and save a CSV timeline. The documentation shows this form for the timeline command. If your release names the command differently, run the program with help to see the exact name.",
+      "cmd": "hayabusa.exe dfir-timeline -d C:\\case\\evtx -o results.csv"
+    },
+    {
+      "title": "Review the results",
+      "text": "Open the CSV in Timeline Explorer or a spreadsheet. Sort by time and read the rule titles. Start with the highest levels, then check the events around each hit."
+    },
+    {
+      "title": "Look at logons and search",
+      "text": "Use the logon summary for a view of logon events, and the search command to look for a name, address or tool in every event.",
+      "cmd": "hayabusa.exe search -d C:\\case\\evtx -k \"mimikatz\" -i"
+    }
+  ],
+  "options": [
+    {
+      "cmd": "-f eventlog.evtx",
+      "what": "Scans one log file instead of a folder."
+    },
+    {
+      "cmd": "-p verbose",
+      "what": "Picks an output profile. The default is standard. Others include minimal, verbose, all-field-info, super-verbose and timesketch-minimal."
+    },
+    {
+      "cmd": "-t json",
+      "what": "Chooses the output type. The choices are csv (default), json and jsonl."
+    },
+    {
+      "cmd": "-m low",
+      "what": "Sets the lowest rule level to load. The default is informational."
+    },
+    {
+      "cmd": "-w",
+      "what": "Skips the start-up wizard and scans all events and alerts."
+    },
+    {
+      "cmd": "-E",
+      "what": "Scans only common event IDs. It is faster, but alerts can be missed."
+    },
+    {
+      "cmd": "-U",
+      "what": "Shows time in UTC. The default is local time."
+    },
+    {
+      "cmd": "-l",
+      "what": "Scans the logs on the running Windows system. It needs administrator rights."
+    }
+  ],
+  "cases": [
+    {
+      "title": "Compromised Windows computers",
+      "why": "Rule hits point you to suspicious events, and the full timeline lets you read what happened before and after them."
+    },
+    {
+      "title": "Logon investigations",
+      "why": "The logon summary and the search command help you follow who signed in and from where."
+    },
+    {
+      "title": "Many computers at once",
+      "why": "Logs from many hosts can be merged into one timeline, so one search covers the whole network."
+    },
+    {
+      "title": "Triage before deep analysis",
+      "why": "A fast first pass shows which machines and which time ranges deserve a closer look."
+    },
+    {
+      "title": "Building a combined timeline",
+      "why": "The timeline can be imported into Timesketch, so event log results sit beside other sources."
+    },
+    {
+      "title": "Checking collected logs",
+      "why": "The metrics commands show how many events exist per event ID and per computer, which reveals gaps in the evidence."
+    }
+  ],
+  "strengths": [
+    "Free and open source under the AGPLv3 licence. The detection rules use a separate rule licence.",
+    "Fast, because it runs on several threads.",
+    "One program gives detection, a timeline and summaries.",
+    "Ready-made programs exist for Windows, Linux and macOS, so there is nothing to compile.",
+    "Has a live-response package aimed at running on endpoints."
+  ],
+  "limits": [
+    "It reads Windows event logs. It does not parse other artifacts such as the registry or browser history.",
+    "It is a command-line tool, so you must be comfortable with a terminal.",
+    "Detection depends on the rules. A match is a lead to check, not proof, and some malicious activity will not match any rule.",
+    "Sorting the output uses much more memory, so very large sets need a strong computer.",
+    "Rules can be noisy or unsupported, and some are off by default. The choices you make change what you see.",
+    "Command names and options can change between releases. Check the documentation for your version.",
+    "Antivirus products may react to the rule files on some systems. The project offers a live-response package for that reason."
+  ],
+  "works_with": [
+    {
+      "id": "timeline-explorer",
+      "note": "Open the CSV timeline and filter it"
+    },
+    {
+      "id": "timesketch",
+      "note": "Import the timeline for team work"
+    },
+    {
+      "id": "sigma",
+      "note": "The rule format that Hayabusa supports"
+    },
+    {
+      "id": "chainsaw",
+      "note": "A similar log hunting tool to cross-check hits"
+    },
+    {
+      "id": "evtxecmd",
+      "note": "Another way to parse the same event logs"
+    },
+    {
+      "id": "velociraptor",
+      "note": "Collect logs from many endpoints"
+    }
+  ],
+  "learn": [
+    {
+      "label": "Hayabusa documentation site",
+      "url": "https://yamato-security.github.io/hayabusa/"
+    },
+    {
+      "label": "Getting started (project docs)",
+      "url": "https://yamato-security.github.io/hayabusa/getting-started/"
+    },
+    {
+      "label": "Command reference (project docs)",
+      "url": "https://yamato-security.github.io/hayabusa/commands/"
+    },
+    {
+      "label": "Timeline output and profiles (project docs)",
+      "url": "https://yamato-security.github.io/hayabusa/output/"
+    },
+    {
+      "label": "Hayabusa on GitHub",
+      "url": "https://github.com/Yamato-Security/hayabusa"
+    }
+  ],
+  "sources_note": "Written in our own words from the Hayabusa project's documentation."
+}

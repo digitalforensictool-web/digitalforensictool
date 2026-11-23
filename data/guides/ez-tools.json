@@ -1,0 +1,215 @@
+{
+  "reviewed": "2026-11-24",
+  "lead": "A suite of free programs by Eric Zimmerman that read Windows artifacts, such as the registry, the MFT, event logs, Prefetch and shortcut files. Most are command-line tools that write CSV, and a few have a graphical window.",
+  "use_when": [
+    "You have a Windows disk image or a set of collected Windows files and need to read the artifacts inside.",
+    "You want results in CSV so you can sort and filter them in a table viewer.",
+    "You need to show what ran, what opened and what changed on a Windows computer."
+  ],
+  "features": [
+    {
+      "title": "File system and execution traces",
+      "items": [
+        "MFTECmd parses the $MFT, $J, $Boot, $SDS, $I30 and $LogFile",
+        "PECmd parses Prefetch files",
+        "AmcacheParser and AppCompatCacheParser read the Amcache and ShimCache",
+        "SrumECmd reads the SRUDB.dat database, and SumECmd reads User Access Logs"
+      ]
+    },
+    {
+      "title": "User activity traces",
+      "items": [
+        "LECmd parses LNK shortcut files",
+        "JLECmd parses Jump Lists, and JumpList Explorer shows them in a window",
+        "SBECmd and ShellBags Explorer work with ShellBag data",
+        "RBCmd parses Recycle Bin artifacts, and WxTCmd parses Windows Timeline databases"
+      ]
+    },
+    {
+      "title": "Registry, logs and databases",
+      "items": [
+        "RECmd and Registry Explorer search and view registry hives",
+        "RLA applies transaction logs to a registry hive that is not clean",
+        "EvtxECmd parses event logs to CSV, XML or JSON using maps",
+        "SQLECmd finds and processes SQLite files using maps"
+      ]
+    },
+    {
+      "title": "Viewers and helpers",
+      "items": [
+        "Timeline Explorer views, filters, groups and sorts CSV and Excel files",
+        "MFTExplorer, EZViewer, SDB Explorer and Hasher are graphical tools",
+        "VSCMount mounts Volume Shadow Copies",
+        "Get-ZimmermanTools is a PowerShell script that downloads and updates the tools"
+      ]
+    }
+  ],
+  "formats": [
+    "$MFT, $J, $Boot, $SDS, $I30, $LogFile",
+    "Prefetch (.pf)",
+    "Registry hives and Amcache.hve",
+    "EVTX event logs",
+    "LNK shortcut files",
+    "Jump Lists",
+    "SRUDB.dat",
+    "SQLite databases"
+  ],
+  "requirements": "The tools are for Windows. Command-line tools are built for .NET Framework 4.7.2 and .NET 10, and the graphical tools need .NET 10 and the desktop runtime. Extract downloads with 7-Zip or WinRAR, because Windows can block the files. Do not run the tools from Program Files unless you run as administrator.",
+  "steps": [
+    {
+      "title": "Get the download script",
+      "text": "Open ericzimmerman.github.io and download Get-ZimmermanTools. Extract it with 7-Zip or WinRAR into a folder you control, such as a tools folder on your analysis computer."
+    },
+    {
+      "title": "Download all tools",
+      "text": "Run the script in PowerShell and give it a destination folder. It finds the available tools and downloads those you do not have yet. The default is the .NET 10 build.",
+      "cmd": ".\\Get-ZimmermanTools.ps1 -Dest C:\\Tools\\EZ"
+    },
+    {
+      "title": "Install the .NET runtime",
+      "text": "If a tool does not start, install the .NET version it needs. Graphical tools need the .NET 10 desktop runtime. The project says antivirus warnings on its signed files are false alarms, but check this against your lab rules."
+    },
+    {
+      "title": "Work on copies of the evidence",
+      "text": "Export the artifact files from your image, or mount the image read-only. For example, copy the $MFT or a Prefetch folder to a working folder. Never run tools against the only copy of the evidence."
+    },
+    {
+      "title": "Parse Prefetch files",
+      "text": "Run PECmd on a folder of .pf files and write CSV to an output folder.",
+      "cmd": "PECmd.exe -d \"C:\\Cases\\001\\Prefetch\" --csv \"C:\\Cases\\001\\out\""
+    },
+    {
+      "title": "Parse the $MFT",
+      "text": "Run MFTECmd on an exported $MFT file and write CSV to an output folder. You can give the output file a name with the csvf option.",
+      "cmd": "MFTECmd.exe -f \"C:\\Cases\\001\\$MFT\" --csv \"C:\\Cases\\001\\out\" --csvf mft.csv"
+    },
+    {
+      "title": "Review in Timeline Explorer",
+      "text": "Open the CSV files in Timeline Explorer. Filter by date, group by a column and search for file names or programs. Write down what you find and which source file it came from."
+    }
+  ],
+  "options": [
+    {
+      "cmd": "-f",
+      "what": "Used by many command-line tools to point at one input file."
+    },
+    {
+      "cmd": "-d",
+      "what": "Used by tools such as PECmd to process a whole folder, including sub-folders."
+    },
+    {
+      "cmd": "--csv <folder>",
+      "what": "Writes CSV output to a folder."
+    },
+    {
+      "cmd": "--csvf <name>",
+      "what": "Sets the CSV file name instead of the default."
+    },
+    {
+      "cmd": "--json <folder>",
+      "what": "Writes JSON output to a folder in tools that support it, such as PECmd and MFTECmd."
+    },
+    {
+      "cmd": "--vss",
+      "what": "In PECmd and MFTECmd, also processes Volume Shadow Copies on the drive."
+    },
+    {
+      "cmd": "--dedupe",
+      "what": "In PECmd and MFTECmd, removes duplicates found by SHA-1 and keeps the first one found."
+    },
+    {
+      "cmd": "-NetVersion 4",
+      "what": "In Get-ZimmermanTools, chooses the .NET 4 build. Use 10 for .NET 10, or 0 for both."
+    }
+  ],
+  "cases": [
+    {
+      "title": "Program execution",
+      "why": "Prefetch, Amcache and ShimCache can show that a program ran or was present, and often when."
+    },
+    {
+      "title": "File and folder activity",
+      "why": "LNK files, Jump Lists and ShellBags can show which files and folders a user opened."
+    },
+    {
+      "title": "File system timeline",
+      "why": "The MFT and the $J change journal give file names, timestamps and changes to build a timeline."
+    },
+    {
+      "title": "Windows event log review",
+      "why": "EvtxECmd turns event logs into CSV that you can filter for logons and other events."
+    },
+    {
+      "title": "Registry examination",
+      "why": "Registry Explorer and RECmd let you search keys and values across hives."
+    },
+    {
+      "title": "Deleted file traces",
+      "why": "Recycle Bin parsing can show the original names and delete times of removed files."
+    },
+    {
+      "title": "Network and application use",
+      "why": "SRUM data can show how much network and process activity an application had."
+    }
+  ],
+  "strengths": [
+    "Free to download, and many of the tools have their source code on GitHub.",
+    "Tools cover many common Windows artifacts, and the author maintains them.",
+    "Output goes to CSV or JSON, so it works with spreadsheets and other tools.",
+    "All software is digitally signed, according to the project."
+  ],
+  "limits": [
+    "The tools target Windows artifacts. They do not cover phones, Linux or macOS evidence.",
+    "They parse artifacts you give them. They do not create disk images or find the files for you.",
+    "Most tools are command-line only, so beginners need to learn the options.",
+    "Newer builds need .NET 10, and some tools are .NET 10 only. Older computers can be a problem.",
+    "Check the licence of each tool in its repository before you reuse or share it.",
+    "Antivirus programs may flag the files. Plan this with your lab before you start.",
+    "A tool shows what the artifact holds. You still must understand what each artifact means before you draw a conclusion."
+  ],
+  "works_with": [
+    {
+      "id": "registry-explorer",
+      "note": "The graphical registry viewer that belongs to this suite"
+    },
+    {
+      "id": "kape",
+      "note": "Collects the artifacts, then these tools parse them"
+    },
+    {
+      "id": "ftk-imager",
+      "note": "Create the image and export artifact files first"
+    },
+    {
+      "id": "autopsy",
+      "note": "Browse an image and export the files you want to parse"
+    },
+    {
+      "id": "plaso",
+      "note": "A different way to build a timeline from the same sources"
+    }
+  ],
+  "learn": [
+    {
+      "label": "Eric Zimmerman's Tools (downloads and tool list)",
+      "url": "https://ericzimmerman.github.io/"
+    },
+    {
+      "label": "EricZimmerman on GitHub",
+      "url": "https://github.com/EricZimmerman"
+    },
+    {
+      "label": "MFTECmd README",
+      "url": "https://github.com/EricZimmerman/MFTECmd"
+    },
+    {
+      "label": "PECmd README",
+      "url": "https://github.com/EricZimmerman/PECmd"
+    },
+    {
+      "label": "Get-ZimmermanTools README",
+      "url": "https://github.com/EricZimmerman/Get-ZimmermanTools"
+    }
+  ],
+  "sources_note": "Written in our own words from the Eric Zimmerman's Tools project pages and repositories."
+}

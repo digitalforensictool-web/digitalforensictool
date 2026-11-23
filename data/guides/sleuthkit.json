@@ -1,0 +1,202 @@
+{
+  "reviewed": "2026-11-24",
+  "lead": "The Sleuth Kit is a set of command-line tools and a code library for analysing disk images and file systems. Autopsy and other forensic programs use it inside.",
+  "use_when": [
+    "You want to see the partition layout of a disk image and list its files, including deleted names.",
+    "You want to learn how file systems work by looking at one layer at a time.",
+    "You need scripts that run the same steps on many images."
+  ],
+  "features": [
+    {
+      "title": "Image and volume tools",
+      "items": [
+        "mmls shows the partition layout, including unallocated space",
+        "img_stat shows details about the image file format",
+        "mmstat and mmcat show volume system details and extract a volume"
+      ]
+    },
+    {
+      "title": "File system tools",
+      "items": [
+        "fsstat shows file system details such as layout, sizes and labels",
+        "fls lists allocated and deleted file names",
+        "istat and ils show details of metadata entries",
+        "icat extracts a file's data by metadata address, and ifind and ffind link names to metadata"
+      ]
+    },
+    {
+      "title": "Data unit and recovery tools",
+      "items": [
+        "blkls can extract the unallocated space of a file system",
+        "blkcat and blkstat show the content and details of a data unit",
+        "tsk_recover extracts files from an image into a folder, either unallocated files or all files"
+      ]
+    },
+    {
+      "title": "Timelines and hashes",
+      "items": [
+        "fls with the -m option writes a body file, and mactime turns it into a file activity timeline",
+        "tsk_loaddb loads image metadata into a SQLite database",
+        "hfind looks up hashes in databases such as the NIST NSRL",
+        "sorter sorts files by type and checks extensions"
+      ]
+    }
+  ],
+  "formats": [
+    "Raw images",
+    "Split images, by giving the first segment such as .001"
+  ],
+  "requirements": "The Sleuth Kit is open source, and the repository includes build notes in INSTALL.txt. Many Linux distributions also offer it as a package. The tools run in a terminal, so you need to be comfortable with command-line basics. Run the tools on a copy of the evidence.",
+  "steps": [
+    {
+      "title": "Install the tools",
+      "text": "Install the sleuthkit package from your Linux distribution, or build it from the project's GitHub repository by following INSTALL.txt. Check the tools are available by running a command such as mmls -V, which prints the version.",
+      "cmd": "mmls -V"
+    },
+    {
+      "title": "Look at the partition layout",
+      "text": "Run mmls on your image to list partitions and unallocated space. Note the start sector of the partition you want. If you give the first segment of a split image, such as .001, the rest are included.",
+      "cmd": "mmls image.dd"
+    },
+    {
+      "title": "Show file system details",
+      "text": "Use fsstat with the -o option and the start sector from mmls to confirm the file system type and layout.",
+      "cmd": "fsstat -o 2048 image.dd"
+    },
+    {
+      "title": "List files, including deleted names",
+      "text": "Run fls with -r to go through all folders and -p to show full paths. The -d option shows only deleted entries. Each line shows a metadata number you can use in the next step.",
+      "cmd": "fls -r -p -o 2048 image.dd"
+    },
+    {
+      "title": "Extract one file",
+      "text": "Use icat with the metadata number from fls. Send the output to a file in a separate case folder. Add -r to try recovery of a deleted file.",
+      "cmd": "icat -o 2048 image.dd 1234 > recovered_file"
+    },
+    {
+      "title": "Recover many files at once",
+      "text": "tsk_recover copies unallocated files from the image into an output folder. Add -e to recover all files, both allocated and unallocated. Without -o it handles every volume and saves each to its own folder.",
+      "cmd": "tsk_recover -e image.dd recovered_files"
+    },
+    {
+      "title": "Build a timeline",
+      "text": "Write a body file with fls -m, then convert it with mactime. Use -z to set the time zone of the original system. Add a date range to keep the output short.",
+      "cmd": "fls -r -m / -o 2048 image.dd > body.txt\nmactime -b body.txt -y > timeline.txt"
+    }
+  ],
+  "options": [
+    {
+      "cmd": "-o sector_offset",
+      "what": "Tells fls, icat, fsstat and similar tools where the file system starts in the image, in sectors."
+    },
+    {
+      "cmd": "-i list",
+      "what": "Lists the image formats your build supports. Most tools autodetect the format if you leave -i out."
+    },
+    {
+      "cmd": "-f list",
+      "what": "Lists the supported file system types. Most tools autodetect the type."
+    },
+    {
+      "cmd": "fls -d",
+      "what": "Shows only deleted entries."
+    },
+    {
+      "cmd": "fls -l",
+      "what": "Long format with times, size and owner IDs."
+    },
+    {
+      "cmd": "mactime -d",
+      "what": "Writes comma-delimited output that you can open in a spreadsheet."
+    },
+    {
+      "cmd": "mactime -z TIME_ZONE",
+      "what": "Sets the time zone where the data was collected."
+    }
+  ],
+  "cases": [
+    {
+      "title": "Checking partitions",
+      "why": "mmls shows the layout and unallocated gaps, which helps when a partition table looks wrong or hidden."
+    },
+    {
+      "title": "Finding deleted file names",
+      "why": "fls can list deleted entries, and icat can extract the content where it is still available."
+    },
+    {
+      "title": "Timeline of file activity",
+      "why": "A body file and mactime give a sorted list of file times for a date range."
+    },
+    {
+      "title": "Bulk recovery",
+      "why": "tsk_recover copies files from an image to a folder for review in other tools."
+    },
+    {
+      "title": "Hash checking",
+      "why": "hfind searches hash databases such as the NIST NSRL to find known files."
+    },
+    {
+      "title": "Teaching file system structure",
+      "why": "Each tool works on one layer, so students can see how names, metadata and data units connect."
+    }
+  ],
+  "strengths": [
+    "Free and open source, with a library that other tools can use.",
+    "Each tool does one job, which makes the steps easy to explain and to script.",
+    "Works on image files, so the original disk is not touched.",
+    "Manual pages for each tool are published on the project site."
+  ],
+  "limits": [
+    "There is no graphical interface. Autopsy provides one on top of these tools.",
+    "The tools are low level, so you must know sector offsets and metadata numbers.",
+    "It does not parse apps, browsers or the registry on its own.",
+    "It reads images but does not create forensic images. Use an imaging tool for that.",
+    "The old wiki is no longer maintained, and the project is moving documentation to new sites.",
+    "Which image formats work depends on how your copy was built, so check with -i list."
+  ],
+  "works_with": [
+    {
+      "id": "autopsy",
+      "note": "A graphical case tool built on The Sleuth Kit"
+    },
+    {
+      "id": "libewf",
+      "note": "Read and convert E01 images"
+    },
+    {
+      "id": "nsrl",
+      "note": "Hash sets for hfind"
+    },
+    {
+      "id": "plaso",
+      "note": "Larger timelines from many artifact types"
+    },
+    {
+      "id": "dc3dd",
+      "note": "Create the raw image first"
+    }
+  ],
+  "learn": [
+    {
+      "label": "The Sleuth Kit on GitHub",
+      "url": "https://github.com/sleuthkit/sleuthkit"
+    },
+    {
+      "label": "TSK Tool Overview (project wiki)",
+      "url": "https://wiki.sleuthkit.org/TSK-Tool-Overview/"
+    },
+    {
+      "label": "fls manual page",
+      "url": "https://www.sleuthkit.org/sleuthkit/man/fls.html"
+    },
+    {
+      "label": "tsk_recover manual page",
+      "url": "https://sleuthkit.org/sleuthkit/man/tsk_recover.html"
+    },
+    {
+      "label": "mactime manual page",
+      "url": "https://www.sleuthkit.org/sleuthkit/man/mactime.html"
+    }
+  ],
+  "sources_note": "Written in our own words from the Sleuth Kit project's documentation."
+}

@@ -1,0 +1,222 @@
+{
+  "reviewed": "2026-11-24",
+  "lead": "Read the hidden metadata inside photos, videos, documents and many other files, such as camera model, dates and GPS position. ExifTool is a command-line program and Perl library written by Phil Harvey.",
+  "use_when": [
+    "You need to know when, where and with what device a photo or video was made.",
+    "You want to compare the metadata of many files and put it in a spreadsheet.",
+    "You need to check what personal data a file would reveal, or remove it before sharing."
+  ],
+  "features": [
+    {
+      "title": "Reads metadata",
+      "items": [
+        "Reads EXIF, GPS, IPTC, XMP, JFIF, ICC Profile, ID3 and other metadata types",
+        "Reads the maker notes of many camera brands, including Canon, Nikon, Sony, Fujifilm and GoPro",
+        "Supports hundreds of file types, such as JPEG, PNG, TIFF, HEIC, RAW camera files, PDF, MP4, MOV, MP3 and Office documents",
+        "Can show tag names in groups so you see where each value is stored"
+      ]
+    },
+    {
+      "title": "Works on many files at once",
+      "items": [
+        "Processes whole folders and, with an option, all sub-folders",
+        "Can limit work to chosen file extensions",
+        "Can process only files that match a condition on a tag value",
+        "Can pull data out of embedded documents inside a file"
+      ]
+    },
+    {
+      "title": "Output you can use",
+      "items": [
+        "Prints plain text, tab-separated tables, HTML, XML, JSON and CSV",
+        "Lets you choose the date format and build your own print layout",
+        "Shows GPS values as degrees or as decimal numbers",
+        "Can compare the metadata of two files"
+      ]
+    },
+    {
+      "title": "Writes and edits metadata",
+      "items": [
+        "Sets, changes or deletes single tags, whole tag groups or all metadata",
+        "Copies tags from one file to another, even between different formats",
+        "Shifts date and time values and can geotag pictures from a GPS track log",
+        "Can rename or sort files by values taken from their metadata"
+      ]
+    }
+  ],
+  "formats": [
+    "JPEG",
+    "PNG",
+    "TIFF",
+    "HEIC / HEIF",
+    "RAW camera files (for example CR2, CR3, NEF, ARW, DNG)",
+    "PDF",
+    "MP4 / MOV",
+    "MP3 / FLAC / WAV",
+    "DOCX / XLSX / PPTX"
+  ],
+  "requirements": "On Windows you can use a stand-alone program that already contains Perl. On macOS there is an installer package. On other systems you need Perl, which most already have. It runs from the command line, so you need a command window or terminal. No special hardware is needed.",
+  "steps": [
+    {
+      "title": "Download",
+      "text": "Go to exiftool.org and download the version for your system. On Windows choose the 32-bit or 64-bit zip. On macOS use the package. On Linux and other systems use the full distribution archive."
+    },
+    {
+      "title": "Install on Windows",
+      "text": "Unzip the download. Rename the file exiftool(-k).exe to exiftool.exe. Keep it together with the exiftool_files folder, because the program needs it. Put both in a folder that is on your PATH, or note the full path to the file."
+    },
+    {
+      "title": "Check that it runs",
+      "text": "Open a command window or terminal and print the version number. If you see a number, the install works.",
+      "cmd": "exiftool -ver"
+    },
+    {
+      "title": "Read one file",
+      "text": "Run ExifTool with a file name. It prints all the metadata it can find. Look for the camera model, the date fields and any GPS position.",
+      "cmd": "exiftool photo.jpg"
+    },
+    {
+      "title": "Show where each value comes from",
+      "text": "Add the group option so every line shows its group name. Add the duplicates and unknown-tags options to see more. This helps you tell apart values stored in different places in the same file.",
+      "cmd": "exiftool -a -u -G1 photo.jpg"
+    },
+    {
+      "title": "Export a whole folder to CSV",
+      "text": "Run it on a folder with the recursive option and write CSV to a file. Open the CSV in a spreadsheet and sort by date or by camera. Always work on a copy of the evidence, not the original.",
+      "cmd": "exiftool -csv -r evidence_copy > metadata.csv"
+    },
+    {
+      "title": "Get GPS as decimal numbers",
+      "text": "Use the no-conversion option so coordinates print as plain decimal values that you can paste into a mapping tool.",
+      "cmd": "exiftool -n -gpslatitude -gpslongitude photo.jpg"
+    }
+  ],
+  "options": [
+    {
+      "cmd": "-r",
+      "what": "Goes into sub-folders as well."
+    },
+    {
+      "cmd": "-ext JPG",
+      "what": "Processes only files with this extension. Use --ext to leave an extension out."
+    },
+    {
+      "cmd": "-csv",
+      "what": "Prints the result as CSV. With =file.csv it imports values from a CSV file instead."
+    },
+    {
+      "cmd": "-json",
+      "what": "Prints the result as JSON."
+    },
+    {
+      "cmd": "-G1",
+      "what": "Shows the group name in front of each tag."
+    },
+    {
+      "cmd": "-a -u",
+      "what": "Shows duplicate tags and tags the tool does not know by name."
+    },
+    {
+      "cmd": "-n",
+      "what": "Turns off value conversion, for example to see raw numbers and decimal GPS."
+    },
+    {
+      "cmd": "-d \"%Y-%m-%d %H:%M:%S\"",
+      "what": "Sets how dates are printed."
+    },
+    {
+      "cmd": "-ee",
+      "what": "Also reads embedded documents inside a file."
+    },
+    {
+      "cmd": "-overwrite_original",
+      "what": "When writing, do not keep a backup. Without it the original is kept with _original added to its name."
+    },
+    {
+      "cmd": "-P",
+      "what": "Keeps the file modification date unchanged when you write tags."
+    }
+  ],
+  "cases": [
+    {
+      "title": "Where and when a photo was taken",
+      "why": "Date tags and GPS tags can show a time and a place. You can compare them with other evidence."
+    },
+    {
+      "title": "Which device made a file",
+      "why": "Make, model and maker note values can link several pictures to one camera or phone."
+    },
+    {
+      "title": "Document authorship",
+      "why": "PDF and Office files can carry author names, software names and creation dates."
+    },
+    {
+      "title": "Spotting edited pictures",
+      "why": "Software names, extra metadata blocks and date values that do not match can be a reason to look closer."
+    },
+    {
+      "title": "Large sets of files",
+      "why": "One command can export the metadata of thousands of files to one CSV for sorting and filtering."
+    },
+    {
+      "title": "Privacy checks and clean-up",
+      "why": "You can see which personal data a file would reveal, and delete tags from a copy before sharing it."
+    }
+  ],
+  "strengths": [
+    "Free and open source, and it runs on Windows, macOS and Linux.",
+    "Supports a very wide range of file types and metadata formats, which the project lists on its home page.",
+    "Output goes to CSV, JSON, XML or HTML, so other tools can use it.",
+    "Detailed documentation of every option and every tag name is published."
+  ],
+  "limits": [
+    "It has no graphical window. You must type commands, and the first days need practice.",
+    "It reads metadata only. It does not recover deleted files or look at disk images.",
+    "Metadata is easy to change or remove, so a missing or odd value is not proof of anything alone.",
+    "Writing changes files. Work on copies and keep the original evidence untouched.",
+    "By default, writing a tag changes the file modification date unless you use the preserve option.",
+    "On Windows, file names with special characters may need extra options. The FAQ explains the character set options.",
+    "Support differs by format. Some formats can be read but not written."
+  ],
+  "works_with": [
+    {
+      "id": "autopsy",
+      "note": "Find files in a disk image, export them, then read their metadata here"
+    },
+    {
+      "id": "sleuthkit",
+      "note": "Extract files from an image on the command line before checking them"
+    },
+    {
+      "id": "cyberchef",
+      "note": "Decode or convert odd values that you find in metadata"
+    },
+    {
+      "id": "bulk-extractor",
+      "note": "Another way to find pictures and GPS-like data in raw data"
+    }
+  ],
+  "learn": [
+    {
+      "label": "ExifTool home page and supported file types",
+      "url": "https://exiftool.org/"
+    },
+    {
+      "label": "Application documentation (all options)",
+      "url": "https://exiftool.org/exiftool_pod.html"
+    },
+    {
+      "label": "Installation instructions",
+      "url": "https://exiftool.org/install.html"
+    },
+    {
+      "label": "Tag names",
+      "url": "https://exiftool.org/TagNames/index.html"
+    },
+    {
+      "label": "FAQ",
+      "url": "https://exiftool.org/faq.html"
+    }
+  ],
+  "sources_note": "Written in our own words from the ExifTool project's documentation."
+}

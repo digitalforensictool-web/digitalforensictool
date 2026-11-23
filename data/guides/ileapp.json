@@ -1,0 +1,196 @@
+{
+  "reviewed": "2026-11-24",
+  "lead": "Turn an iPhone or iPad extraction into a report you can browse. iLEAPP reads the app data, logs and property lists in the extraction and shows them as tables.",
+  "use_when": [
+    "You already have an iOS or iPadOS extraction or an iTunes or Finder backup and need to see what is inside.",
+    "You want a readable overview of apps, messages and device activity from the extraction.",
+    "You need output you can sort, search or load into another tool, such as TSV files or a timeline."
+  ],
+  "features": [
+    {
+      "title": "Parses iOS artifacts",
+      "items": [
+        "Runs artifact modules that each read one kind of iOS data",
+        "The project says it supports iOS and iPadOS from version 11 to current versions",
+        "Modules are loaded when you run the tool, so extra modules can be added from another folder"
+      ]
+    },
+    {
+      "title": "Several output formats",
+      "items": [
+        "HTML report you open in a browser",
+        "TSV files for spreadsheets",
+        "Timeline and KML output for dated and located items",
+        "A LAVA database output",
+        "For very large tables, the HTML page can point to the LAVA and TSV output instead of showing all rows"
+      ]
+    },
+    {
+      "title": "Many input types",
+      "items": [
+        "Folder of extracted files, zip, tar and gz archives",
+        "iTunes or Finder backup folders, including encrypted backups when you give the password",
+        "A single file",
+        "Disk images with the raw type when running from source"
+      ]
+    },
+    {
+      "title": "Workflow helpers",
+      "items": [
+        "A profile file can limit which modules run",
+        "A case data file can be loaded into the run",
+        "A wizard creates these files, and an option lists the paths that the modules search for"
+      ]
+    }
+  ],
+  "formats": [
+    "Folder of extracted files (fs)",
+    "ZIP",
+    "TAR (plain or tar.xz)",
+    "GZ",
+    "iTunes or Finder backup folder (itunes)",
+    "Single file (file)",
+    "Disk images such as E01, dd/img and dmg (raw, source builds)"
+  ],
+  "requirements": "The release downloads need no Python. To run from source you need Python 3.11 to 3.15 and Git, and you install the packages in requirements.txt, ideally in a virtual environment. On Linux the graphical version needs tkinter. Linux AppImages need glibc 2.35 or newer. A compressed tar file is unpacked into the report folder first, so keep enough free disk space.",
+  "steps": [
+    {
+      "title": "Get the program",
+      "text": "Download the build for your system from the project's GitHub Releases page: a Windows portable zip, a macOS dmg or a Linux AppImage. Check the file against the SHA256SUMS.txt file from the same release."
+    },
+    {
+      "title": "Prepare the extraction",
+      "text": "Work on a copy of your iOS extraction or backup. Find out what it is: a folder with normal file names, a zip, a tar, a gz file, or an iTunes or Finder backup with hashed file names. You must pick the matching input type."
+    },
+    {
+      "title": "Create an output folder",
+      "text": "Make an empty folder for the report. The project says the output folder must already exist before the run."
+    },
+    {
+      "title": "Run it from the command line",
+      "text": "Use -t for the input type, -i for the input and -o for the output folder. This example is for a Windows release and a zip file.",
+      "cmd": "ileapp.exe -t zip -i C:\\path\\to\\extraction.zip -o C:\\path\\to\\output\\"
+    },
+    {
+      "title": "Or use the graphical window",
+      "text": "Start the release app with no arguments to get the window. From source, run the GUI script. For an encrypted iTunes or Finder backup the window asks for the password.",
+      "cmd": "python ileappGUI.py"
+    },
+    {
+      "title": "Open the report",
+      "text": "Open the report folder it created and open the HTML report in your browser. Use the menu to move between artifacts. TSV files and the other outputs are in the same report."
+    },
+    {
+      "title": "Check important findings",
+      "text": "Compare key results with the original data or a second tool before you rely on them. Write down the tool version, the input type and the date in your case notes."
+    }
+  ],
+  "options": [
+    {
+      "cmd": "-t fs | tar | zip | gz | itunes | file",
+      "what": "Sets the input type."
+    },
+    {
+      "cmd": "-i <path>",
+      "what": "Path to the input file or folder."
+    },
+    {
+      "cmd": "-o <path>",
+      "what": "Output folder. It must already exist."
+    },
+    {
+      "cmd": "--itunes_password",
+      "what": "Password for an encrypted iTunes or Finder backup, used with the itunes type."
+    },
+    {
+      "cmd": "-m <file.ilprofile>",
+      "what": "Loads a profile file that limits which modules run."
+    },
+    {
+      "cmd": "--html_row_limit 0",
+      "what": "Writes every row to the HTML tables. The default limit is 50000 rows."
+    },
+    {
+      "cmd": "-p",
+      "what": "Writes the artifact search paths to a file called path_list.txt. Use it alone."
+    }
+  ],
+  "cases": [
+    {
+      "title": "Triage of an iPhone extraction",
+      "why": "A readable overview of apps, messages and device activity helps you decide what needs a closer look."
+    },
+    {
+      "title": "Reviewing an iTunes or Finder backup",
+      "why": "The itunes input type reads a backup folder with its hashed file names, and encrypted backups can be opened with the password."
+    },
+    {
+      "title": "Building a timeline of activity",
+      "why": "The timeline output puts events from different artifacts in one list that you can sort by time."
+    },
+    {
+      "title": "Location questions",
+      "why": "Artifacts that carry location can be written as KML and opened in a mapping program."
+    },
+    {
+      "title": "Training and student labs",
+      "why": "It is free, runs from a download and works on public sample extractions, so it suits practice."
+    }
+  ],
+  "strengths": [
+    "Free, with the source code published on GitHub.",
+    "Ready-made downloads for Windows, macOS and Linux, on Intel and ARM.",
+    "The project states that it processes extractions locally and does not send data over the network unless you or an installer ask for it.",
+    "Several output formats from one run, and a public list of supported artifacts at leapps.org."
+  ],
+  "limits": [
+    "It parses an extraction that already exists. It does not connect to an iPhone or collect data from one.",
+    "It only reads what its modules support. An app with no module will not show up, so absence of results is not proof that nothing is there.",
+    "Results depend on the extraction. A backup holds much less than a full file system extraction.",
+    "The output folder must exist before you run it, which is a common first mistake.",
+    "The raw disk image type is for source builds. The project does not list it in its main input table.",
+    "The Windows builds are not code-signed yet, and Linux AppImages need a recent system (glibc 2.35 or newer).",
+    "The README does not list individual artifacts. You have to look at the artifact list on the LEAPPs website."
+  ],
+  "works_with": [
+    {
+      "id": "libimobiledevice",
+      "note": "Can make an iOS backup that iLEAPP then reads"
+    },
+    {
+      "id": "mvt",
+      "note": "A different check on the same backup, looking for traces of known spyware"
+    },
+    {
+      "id": "aleapp",
+      "note": "The sister tool for Android extractions"
+    },
+    {
+      "id": "autopsy",
+      "note": "Cross-check findings from the same extraction"
+    },
+    {
+      "id": "iped",
+      "note": "Search across a whole case that also includes other devices"
+    }
+  ],
+  "learn": [
+    {
+      "label": "iLEAPP README (project page)",
+      "url": "https://github.com/abrignoni/iLEAPP"
+    },
+    {
+      "label": "List of supported artifacts (LEAPPs)",
+      "url": "https://leapps.org/artifacts"
+    },
+    {
+      "label": "LEAPPs releases",
+      "url": "https://leapps.org/releases"
+    },
+    {
+      "label": "Windows setup walkthrough (Hexordia, PDF)",
+      "url": "https://www.hexordia.com/s/ILEAPP-Walkthrough.pdf"
+    }
+  ],
+  "sources_note": "Written in our own words from the iLEAPP project's README."
+}

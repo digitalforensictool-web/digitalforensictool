@@ -1,5 +1,4 @@
 {
-  "draft": true,
   "reviewed": "2026-11-24",
   "title": "Which websites were visited on this Windows computer?",
   "short": "Browser history and downloads",
@@ -134,5 +133,6 @@
       "url": "https://cfreds-archive.nist.gov/data_leakage_case/data-leakage-case.html"
     }
   ],
-  "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases."
+  "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases.",
+  "untested": true
 }

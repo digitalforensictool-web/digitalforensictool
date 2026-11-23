@@ -1,0 +1,188 @@
+{
+  "reviewed": "2026-11-24",
+  "lead": "Turn an Android phone extraction into a report you can browse. ALEAPP reads the app data, logs and system files in the extraction and shows them as tables.",
+  "use_when": [
+    "You already have an Android extraction, such as a zip, a tar archive or a folder, and need to see what is inside.",
+    "You want a quick, readable overview of apps, messages, settings and device activity.",
+    "You need output you can sort, search or load into another tool, such as TSV files or a timeline."
+  ],
+  "features": [
+    {
+      "title": "Parses Android artifacts",
+      "items": [
+        "Runs a set of artifact modules, each one reads one kind of Android data",
+        "Modules are plain Python files in a scripts folder and are loaded every time you run the tool",
+        "Because modules load at run time, new or custom modules can be added without rebuilding the program"
+      ]
+    },
+    {
+      "title": "Several output formats",
+      "items": [
+        "HTML report you open in a browser",
+        "TSV files for spreadsheets and other tools",
+        "A timeline output and KML output for items that carry location",
+        "A LAVA database output"
+      ]
+    },
+    {
+      "title": "Flexible input",
+      "items": [
+        "Reads zip, tar, gz and folder-style extractions",
+        "Can read disk images directly with the raw input type, including E01, AFF4, DMG, VHD, VHDX, VMDK and QCOW2",
+        "Can open encrypted images when you supply a password, a private key or a BitLocker key"
+      ]
+    },
+    {
+      "title": "Easy to start",
+      "items": [
+        "Ready-made downloads for Windows, macOS and Linux that need no Python",
+        "A graphical window and a command line version",
+        "Each release includes a checksum file so you can verify your download"
+      ]
+    }
+  ],
+  "formats": [
+    "ZIP",
+    "TAR (the graphical version also accepts tar.xz)",
+    "GZ",
+    "Folder of extracted files (fs)",
+    "Raw disk images (dd, img, E01, AFF, AFF4, DMG, VHD, VHDX, VMDK, QCOW2)"
+  ],
+  "requirements": "The release downloads need no Python. To run from source you need Python 3.10 or newer and the packages in requirements.txt. On Linux the graphical version also needs tkinter installed separately. A compressed tar file is unpacked into the report folder first, so keep enough free disk space.",
+  "steps": [
+    {
+      "title": "Get the program",
+      "text": "Download the build for your system from the project's GitHub Releases page, for example the Windows portable zip, the macOS dmg or the Linux AppImage. Check the file against the SHA256SUMS.txt file from the same release."
+    },
+    {
+      "title": "Prepare the extraction",
+      "text": "Keep your Android extraction in a place you can read from. Work on a copy, not on the original evidence. Know whether it is a zip, a tar, a gz file, a folder or a disk image, because you must pick the matching type."
+    },
+    {
+      "title": "Create an output folder",
+      "text": "Make an empty folder for the report before you start. The project says the output folder must already exist."
+    },
+    {
+      "title": "Run it from the command line",
+      "text": "Use -t for the input type, -i for the extraction and -o for the output folder. This example is for a Windows release and a zip file.",
+      "cmd": "aleapp.exe -t zip -i C:\\path\\to\\extraction.zip -o C:\\path\\to\\output\\"
+    },
+    {
+      "title": "Or use the graphical window",
+      "text": "Start the release app with no arguments to get the window. From source, run the GUI script. Choose the input, the output folder and the modules, then start the run.",
+      "cmd": "python aleappGUI.py"
+    },
+    {
+      "title": "Open the report",
+      "text": "Open the report folder it created and open the HTML report in your browser. Use the menu to move between artifacts. TSV files for each artifact are in the same folder."
+    },
+    {
+      "title": "Check important findings",
+      "text": "Compare key results with the original files or with a second tool before you rely on them. Note the tool version and the date in your own case notes."
+    }
+  ],
+  "options": [
+    {
+      "cmd": "-t zip | tar | fs | gz | raw",
+      "what": "Sets the input type."
+    },
+    {
+      "cmd": "-i <path>",
+      "what": "Path to the extraction or image."
+    },
+    {
+      "cmd": "-o <path>",
+      "what": "Folder where the report is written."
+    },
+    {
+      "cmd": "--help",
+      "what": "Shows the built-in list of options. Run it with python aleapp.py when using source."
+    },
+    {
+      "cmd": "--bitlocker_key",
+      "what": "Gives a BitLocker startup key for a raw image. It can be repeated."
+    },
+    {
+      "cmd": "--no-find-members",
+      "what": "For raw images, reads only the image you name and skips automatic search for other RAID members."
+    }
+  ],
+  "cases": [
+    {
+      "title": "Triage of a seized Android phone",
+      "why": "A readable overview of apps, messages and device settings helps you decide what needs a closer look."
+    },
+    {
+      "title": "Checking one app's data",
+      "why": "Each module reads one kind of artifact, so you can look at a single app's records in a table."
+    },
+    {
+      "title": "Building a timeline of activity",
+      "why": "The timeline output puts events from different artifacts in one list that you can sort by time."
+    },
+    {
+      "title": "Where was the device?",
+      "why": "Artifacts that carry location can be written as KML and opened in a mapping program."
+    },
+    {
+      "title": "Training and student labs",
+      "why": "It is free, runs from a download and works on public sample extractions, so it suits practice."
+    }
+  ],
+  "strengths": [
+    "Free, with the source code published on GitHub.",
+    "Ready-made downloads for Windows, macOS and Linux, on Intel and ARM.",
+    "Modules load at run time, so the tool can be extended with extra Python modules.",
+    "Several output formats from one run: HTML, TSV, timeline, KML and LAVA."
+  ],
+  "limits": [
+    "It parses an extraction that already exists. It does not connect to a phone or collect data from one.",
+    "It only reads what its modules support. An app with no module will not show up in the report, so absence of results is not proof that nothing is there.",
+    "Results depend on the extraction. A thin logical extraction holds far less data than a full file system extraction.",
+    "The output folder must exist before you run it, which is a common first mistake.",
+    "The Windows builds are not code-signed yet, so Windows may show a warning.",
+    "On Linux, the graphical version needs tkinter installed separately.",
+    "The project's README is short. Check module details in the code."
+  ],
+  "works_with": [
+    {
+      "id": "adb",
+      "note": "A common way to collect data from an Android phone before parsing it"
+    },
+    {
+      "id": "andriller",
+      "note": "Another Android extraction and decoding tool to compare results"
+    },
+    {
+      "id": "autopsy",
+      "note": "Cross-check findings from the same extraction"
+    },
+    {
+      "id": "ileapp",
+      "note": "The sister tool for iOS extractions"
+    },
+    {
+      "id": "iped",
+      "note": "Search across a whole case that also includes other devices"
+    }
+  ],
+  "learn": [
+    {
+      "label": "ALEAPP README (project page)",
+      "url": "https://github.com/abrignoni/ALEAPP"
+    },
+    {
+      "label": "ALEAPP releases (GitHub)",
+      "url": "https://github.com/abrignoni/ALEAPP/releases"
+    },
+    {
+      "label": "LEAPPs releases",
+      "url": "https://leapps.org/releases"
+    },
+    {
+      "label": "LEAPPs blog",
+      "url": "https://leapps.org/blog"
+    }
+  ],
+  "sources_note": "Written in our own words from the ALEAPP project's README."
+}

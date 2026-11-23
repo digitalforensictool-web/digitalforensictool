@@ -1,0 +1,282 @@
+{
+ "draft": false,
+ "parts": [
+  {
+   "device": "laptop",
+   "id": "browser",
+   "label": "Web browser",
+   "x": 150,
+   "y": 110,
+   "finds": [
+    "Websites visited, with dates and times",
+    "Search words typed into search engines",
+    "Files downloaded and where they were saved"
+   ],
+   "tools": [
+    "autopsy",
+    "hindsight",
+    "db4s",
+    "unfurl"
+   ],
+   "workflows": [
+    "browser-history-windows"
+   ],
+   "category": "browser"
+  },
+  {
+   "device": "laptop",
+   "id": "programs",
+   "label": "Programs run",
+   "x": 330,
+   "y": 110,
+   "finds": [
+    "Which programs were started, and when",
+    "How many times a program ran",
+    "Which user account ran it"
+   ],
+   "tools": [
+    "pecmd",
+    "registry-explorer",
+    "srum-dump",
+    "ez-tools"
+   ],
+   "workflows": [
+    "program-execution-windows"
+   ],
+   "category": "windows"
+  },
+  {
+   "device": "laptop",
+   "id": "logons",
+   "label": "Logins and logs",
+   "x": 150,
+   "y": 215,
+   "finds": [
+    "Who logged in, and when",
+    "Failed login attempts",
+    "Remote Desktop connections"
+   ],
+   "tools": [
+    "evtxecmd",
+    "hayabusa",
+    "chainsaw",
+    "timeline-explorer"
+   ],
+   "workflows": [
+    "windows-logons"
+   ],
+   "category": "logs"
+  },
+  {
+   "device": "laptop",
+   "id": "email",
+   "label": "Email",
+   "x": 330,
+   "y": 215,
+   "finds": [
+    "Mailbox files stored on the computer",
+    "Messages, attachments and headers",
+    "Traces of deleted messages"
+   ],
+   "tools": [
+    "mha",
+    "google-messageheader",
+    "libpff",
+    "msg-extractor"
+   ],
+   "workflows": [],
+   "category": "email"
+  },
+  {
+   "device": "laptop",
+   "id": "deleted",
+   "label": "Deleted files",
+   "x": 480,
+   "y": 162,
+   "finds": [
+    "Files removed but not yet overwritten",
+    "Contents of the Recycle Bin",
+    "Files rebuilt from their signatures"
+   ],
+   "tools": [
+    "autopsy",
+    "testdisk",
+    "bulk-extractor"
+   ],
+   "workflows": [
+    "deleted-file-recovery"
+   ],
+   "category": "recovery"
+  },
+  {
+   "device": "laptop",
+   "id": "disk",
+   "label": "Drive",
+   "x": 120,
+   "y": 372,
+   "finds": [
+    "An exact copy of the whole drive",
+    "Hash values that prove the copy is exact",
+    "Everything else on this map starts here"
+   ],
+   "tools": [
+    "ftk-imager",
+    "guymager",
+    "autopsy",
+    "sleuthkit"
+   ],
+   "workflows": [
+    "forensic-image-and-hash"
+   ],
+   "category": "imaging"
+  },
+  {
+   "device": "laptop",
+   "id": "ram",
+   "label": "Memory",
+   "x": 270,
+   "y": 372,
+   "finds": [
+    "Programs running at that moment",
+    "Open network connections",
+    "Code that never touched the disk"
+   ],
+   "tools": [
+    "volatility3",
+    "memprocfs",
+    "winpmem",
+    "magnet-dumpit"
+   ],
+   "workflows": [
+    "ram-dump-first-look"
+   ],
+   "category": "memory"
+  },
+  {
+   "device": "laptop",
+   "id": "network",
+   "label": "Network",
+   "x": 410,
+   "y": 372,
+   "finds": [
+    "Which computers talked to each other",
+    "Files sent over the network",
+    "Websites and services contacted"
+   ],
+   "tools": [
+    "wireshark",
+    "networkminer",
+    "zeek"
+   ],
+   "workflows": [
+    "pcap-first-look"
+   ],
+   "category": "network"
+  },
+  {
+   "device": "laptop",
+   "id": "usb",
+   "label": "USB port",
+   "x": 540,
+   "y": 372,
+   "finds": [
+    "Which USB drives were connected",
+    "First and last connection times",
+    "Which user account used the drive"
+   ],
+   "tools": [
+    "registry-explorer",
+    "regripper",
+    "autopsy",
+    "evtxecmd"
+   ],
+   "workflows": [
+    "usb-connected-windows"
+   ],
+   "category": "windows"
+  },
+  {
+   "device": "phone",
+   "id": "chat",
+   "label": "Chat apps",
+   "x": 120,
+   "y": 120,
+   "finds": [
+    "Chats and contacts stored on the phone",
+    "Media sent and received",
+    "Traces of deleted messages"
+   ],
+   "tools": [
+    "aleapp",
+    "ileapp",
+    "whatsapp-chat-exporter",
+    "wa-crypt-tools"
+   ],
+   "workflows": [
+    "whatsapp-android"
+   ],
+   "category": "messaging"
+  },
+  {
+   "device": "phone",
+   "id": "photos",
+   "label": "Photos",
+   "x": 120,
+   "y": 205,
+   "finds": [
+    "When a photo was taken",
+    "Where it was taken, if location was on",
+    "Which camera or phone took it"
+   ],
+   "tools": [
+    "exiftool",
+    "sherloq",
+    "forensically"
+   ],
+   "workflows": [
+    "photo-metadata"
+   ],
+   "category": "multimedia"
+  },
+  {
+   "device": "phone",
+   "id": "location",
+   "label": "Location",
+   "x": 120,
+   "y": 290,
+   "finds": [
+    "Places the phone has been",
+    "Saved Wi-Fi networks",
+    "Routes and map searches"
+   ],
+   "tools": [
+    "aleapp",
+    "ileapp"
+   ],
+   "workflows": [],
+   "category": "gps"
+  },
+  {
+   "device": "phone",
+   "id": "phonedata",
+   "label": "Phone data",
+   "x": 120,
+   "y": 375,
+   "finds": [
+    "Calls, messages and contacts",
+    "Installed apps and their data",
+    "Accounts used on the phone"
+   ],
+   "tools": [
+    "aleapp",
+    "ileapp",
+    "andriller",
+    "mvt"
+   ],
+   "workflows": [
+    "iphone-first-look"
+   ],
+   "category": "android"
+  }
+ ]
+}

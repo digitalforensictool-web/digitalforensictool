@@ -1,0 +1,189 @@
+{
+  "reviewed": "2026-11-24",
+  "lead": "Collect and examine data from computers across a network, or from a single computer, using queries. Velociraptor is an open-source endpoint visibility and collection tool, and its queries are written in the Velociraptor Query Language (VQL).",
+  "use_when": [
+    "You must collect the same artifacts from many computers and compare the results.",
+    "You need a quick triage of one Windows, Linux or macOS computer without a full disk image.",
+    "You want to send a ready-made collector to a person on site who is not a forensic expert."
+  ],
+  "features": [
+    {
+      "title": "Collects with artifacts",
+      "items": [
+        "Artifacts are reusable collection definitions written in VQL",
+        "Many built-in artifacts cover common cases",
+        "An Artifact Exchange offers artifacts shared by the community",
+        "You can write and edit your own artifacts in the GUI"
+      ]
+    },
+    {
+      "title": "Works at scale",
+      "items": [
+        "A server controls clients and schedules collections",
+        "Hunts run an artifact across many clients",
+        "A web admin interface manages clients, hunts and results",
+        "The server can run in a cloud virtual machine or in Docker"
+      ]
+    },
+    {
+      "title": "Works without a server",
+      "items": [
+        "The gui command starts a server, a front end and a local client on one computer",
+        "The GUI can build an offline collector with the artifacts you choose",
+        "A collector saves its results in a zip file, so no client is needed on the endpoint",
+        "Results can be imported into a server later"
+      ]
+    },
+    {
+      "title": "Queries and output",
+      "items": [
+        "The query command runs VQL from the command line",
+        "Results show as tables that you can export as CSV or JSON",
+        "Notebooks in the GUI let you query collected data further"
+      ]
+    }
+  ],
+  "requirements": "The server is fully supported on Linux. Other systems are fine for testing, training and development. Release builds exist for 64-bit Linux, macOS and 32-bit and 64-bit Windows. The project supports Windows 7 and later. No outside database is needed, because data is stored in files.",
+  "steps": [
+    {
+      "title": "Download",
+      "text": "Download the binary for your system from the Releases page of the Velocidex/velociraptor repository on GitHub. It is a single program file. Use a test computer or a virtual machine for your first try."
+    },
+    {
+      "title": "Start the instant GUI",
+      "text": "Run the gui command. It starts the server, the web interface and a client on your own computer. Your browser opens to the interface. By default the data goes into a temporary folder.",
+      "cmd": "velociraptor.exe gui"
+    },
+    {
+      "title": "Keep the data (optional)",
+      "text": "Add a datastore folder if you want to keep results after the program stops. This is useful when you work on a case over several days.",
+      "cmd": "velociraptor.exe gui --datastore C:\\vr_data"
+    },
+    {
+      "title": "Look at your own computer",
+      "text": "In the web interface, find the client for your computer, start a new collection and choose an artifact. Run it and open the results table. You can export the table as CSV or JSON."
+    },
+    {
+      "title": "Try a quick command-line query",
+      "text": "Without any server you can run one query and save the result. This one lists running processes and writes JSON lines to a file.",
+      "cmd": "velociraptor.exe query \"SELECT * FROM pslist()\" --format jsonl --output pslist.json"
+    },
+    {
+      "title": "Run a single artifact from the command line",
+      "text": "List artifacts by a name pattern, then collect one. This example uses an artifact named in the project docs.",
+      "cmd": "velociraptor.exe artifacts collect \"Windows.System.AuditPolicy\" --format json --output auditpol.json"
+    },
+    {
+      "title": "Build an offline collector",
+      "text": "In the GUI, open Server Artifacts and use Build Collector. Select your artifacts, build it, and download the collector from the Uploaded Files tab. Run it on the target computer and bring the zip file back. The docs advise using protection for the zip, such as X.509."
+    }
+  ],
+  "options": [
+    {
+      "cmd": "gui",
+      "what": "Starts a local server, front end and client for one-computer use."
+    },
+    {
+      "cmd": "gui --datastore <folder>",
+      "what": "Keeps the data in a folder you choose."
+    },
+    {
+      "cmd": "gui --no-client",
+      "what": "Starts the GUI without the local client."
+    },
+    {
+      "cmd": "query \"<VQL>\"",
+      "what": "Runs one VQL query. Use --format and --output to choose the format and the file."
+    },
+    {
+      "cmd": "artifacts list \".*Audit.*\"",
+      "what": "Lists artifacts whose names match a pattern."
+    },
+    {
+      "cmd": "artifacts show \"Windows.System.AuditPolicy\"",
+      "what": "Shows the definition of an artifact."
+    },
+    {
+      "cmd": "artifacts collect \"<name>\"",
+      "what": "Collects one artifact on the local computer."
+    }
+  ],
+  "cases": [
+    {
+      "title": "Incident response triage",
+      "why": "You can collect key artifacts from affected computers quickly and compare them."
+    },
+    {
+      "title": "Hunting across many computers",
+      "why": "A hunt runs one artifact on all chosen clients, so you can look for one indicator everywhere."
+    },
+    {
+      "title": "Remote or on-site collection",
+      "why": "An offline collector lets a local person run one program, and you get a zip file back."
+    },
+    {
+      "title": "Live system checks",
+      "why": "Queries can read running processes and other live state that a disk image does not hold."
+    },
+    {
+      "title": "Repeatable lab practice",
+      "why": "Artifacts are plain definitions, so students can read them, change them and repeat a collection."
+    }
+  ],
+  "strengths": [
+    "Free and open source, with the source code on GitHub.",
+    "One binary works as server, client, collector and command-line tool.",
+    "Runs on Windows, Linux and macOS, according to the project.",
+    "A large set of built-in artifacts, plus a community exchange, and a published training course and knowledge base."
+  ],
+  "limits": [
+    "VQL is a new language, and beginners need time to read and write it.",
+    "A full server needs planning. The docs say the quick-start setup is for short-term use on a private network, and single sign-on is recommended for production.",
+    "The server is fully supported only on Linux.",
+    "It collects from live systems and files. It is not a disk imaging tool.",
+    "Collecting from a live computer changes that computer a little, so record what you ran and when.",
+    "Offline collectors have size limits, and macOS needs the generic collector, as the project explains.",
+    "Protect collector zip files. Follow the project advice on encryption, because results can hold sensitive data. Keep your version current, because the docs report security fixes in past releases."
+  ],
+  "works_with": [
+    {
+      "id": "kape",
+      "note": "Another way to collect triage artifacts"
+    },
+    {
+      "id": "ez-tools",
+      "note": "Parse collected Windows artifacts further"
+    },
+    {
+      "id": "timesketch",
+      "note": "Explore and share timelines built from results"
+    },
+    {
+      "id": "plaso",
+      "note": "Build timelines from collected files"
+    },
+    {
+      "id": "yara",
+      "note": "Rules used to scan files and memory"
+    }
+  ],
+  "learn": [
+    {
+      "label": "Velociraptor documentation",
+      "url": "https://docs.velociraptor.app/docs/"
+    },
+    {
+      "label": "Deployment overview",
+      "url": "https://docs.velociraptor.app/docs/deployment/"
+    },
+    {
+      "label": "Offline collections",
+      "url": "https://docs.velociraptor.app/docs/deployment/offline_collections/"
+    },
+    {
+      "label": "Velociraptor on GitHub",
+      "url": "https://github.com/Velocidex/velociraptor"
+    }
+  ],
+  "sources_note": "Written in our own words from the Velociraptor project's documentation."
+}

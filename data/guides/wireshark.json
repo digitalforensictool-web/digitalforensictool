@@ -1,0 +1,217 @@
+{
+  "reviewed": "2026-11-24",
+  "lead": "Open a network capture and read every packet, from the raw bytes up to the protocol details. Wireshark is a free packet analyser that can also capture live traffic from a network interface.",
+  "use_when": [
+    "You have a capture file (such as a pcap) and need to see exactly what was sent between which computers.",
+    "You need to rebuild a conversation, such as a web request or a chat, from the packets.",
+    "You want to learn how network protocols work by looking at real traffic."
+  ],
+  "features": [
+    {
+      "title": "Capture and open",
+      "items": [
+        "Captures live traffic from network interfaces on many link types, depending on your hardware and operating system",
+        "Opens files from tcpdump, WinDump and many other capture programs",
+        "Can import a text file that holds a hex dump",
+        "Saves and exports some or all packets in several file formats"
+      ]
+    },
+    {
+      "title": "Find the packets you need",
+      "items": [
+        "Display filters hide everything except the packets that match, for example by address, port or protocol",
+        "Capture filters limit what is recorded in the first place",
+        "Search by many criteria",
+        "Colour rules make important packets easy to spot"
+      ]
+    },
+    {
+      "title": "Understand the traffic",
+      "items": [
+        "Shows each packet layer by layer, with the protocol fields explained",
+        "Follow stream joins the packets of one conversation into readable text",
+        "Export Objects saves files that were sent over some protocols",
+        "Expert Information collects warnings and notes about the capture"
+      ]
+    },
+    {
+      "title": "Statistics",
+      "items": [
+        "Protocol Hierarchy shows which protocols make up the traffic",
+        "Conversations and Endpoints list who talked to whom",
+        "I/O Graphs plot traffic over time"
+      ]
+    },
+    {
+      "title": "Decryption and command line",
+      "items": [
+        "Can decrypt some traffic when you supply keys, including Wi-Fi keys and TLS session keys",
+        "TShark is the command-line version for scripts and very large files"
+      ]
+    }
+  ],
+  "formats": [
+    "pcap",
+    "pcapng",
+    "Microsoft Network Monitor",
+    "Sun snoop",
+    "Endace ERF",
+    "Linux Bluetooth hcidump",
+    "Android Logcat",
+    "systemd journal"
+  ],
+  "requirements": "Wireshark runs on Windows, macOS and Linux or other UNIX systems. Reading an existing capture file needs no special rights. Live capture needs permission to read from the network interface, so you may need to set this up on your system.",
+  "steps": [
+    {
+      "title": "Install Wireshark",
+      "text": "Download the installer for your system from the Wireshark website and run it. Follow the installation chapter of the User's Guide for your operating system, and note any capture components it offers to install."
+    },
+    {
+      "title": "Open a capture file",
+      "text": "Start Wireshark and use File, then Open, to choose your capture file. You can also drag the file onto the main window. Wireshark can detect the file type by itself."
+    },
+    {
+      "title": "Read the three panes",
+      "text": "The top list shows one line per packet. The middle pane shows the layers of the selected packet. The bottom pane shows the raw bytes. Click a packet and look at all three."
+    },
+    {
+      "title": "Filter the packets",
+      "text": "Type a display filter in the bar above the packet list and press Enter. For example, show only packets to or from one address. The bar turns green when the filter is valid and red when it is not.",
+      "cmd": "ip.addr == 192.168.0.1"
+    },
+    {
+      "title": "Follow a conversation",
+      "text": "Right-click a packet from the conversation you care about and choose the Follow option for its protocol. Wireshark joins the packets into one readable view, so you can read a request and its reply."
+    },
+    {
+      "title": "Get the big picture",
+      "text": "Open the Statistics menu and try Protocol Hierarchy, Conversations and Endpoints. They show which protocols and which hosts dominate the capture, and they help you decide where to look first."
+    },
+    {
+      "title": "Save files and record your work",
+      "text": "Use the Export Objects dialog to save files that crossed the network, and export the packets you need to a new capture file. Write down the original file name, its hash and the filters you used."
+    },
+    {
+      "title": "Repeat the work in TShark (optional)",
+      "text": "TShark reads the same files from the command line. This command reads a file and keeps only packets that match a display filter. Use your own file name.",
+      "cmd": "tshark -r capture.pcap -Y \"http.request\""
+    }
+  ],
+  "options": [
+    {
+      "cmd": "tshark -D",
+      "what": "Lists the interfaces TShark can capture on."
+    },
+    {
+      "cmd": "tshark -r capture.pcap -z io,phs -q",
+      "what": "Prints protocol hierarchy statistics for a file and hides the per-packet lines."
+    },
+    {
+      "cmd": "tshark -r capture.pcap -z conv,tcp -q",
+      "what": "Prints a table of TCP conversations."
+    },
+    {
+      "cmd": "tshark -r capture.pcap -T fields -e frame.number -e ip.addr",
+      "what": "Prints only the fields you choose, one line per packet."
+    },
+    {
+      "cmd": "tshark -r capture.pcap --export-objects http,outdir",
+      "what": "Saves the HTTP objects found in the file into the folder outdir. Run --export-objects help to see which protocols are supported."
+    },
+    {
+      "cmd": "tshark -i 1 -f \"port 53\" -w dns.pcapng",
+      "what": "Captures from interface number 1 with a capture filter and writes the packets to a file."
+    }
+  ],
+  "cases": [
+    {
+      "title": "Intrusion and malware investigations",
+      "why": "You can see which host connected to which address, at what time, and read the content of unencrypted exchanges."
+    },
+    {
+      "title": "Data theft",
+      "why": "Conversation and endpoint statistics show large transfers, and Export Objects can save files that were sent over supported protocols."
+    },
+    {
+      "title": "Web and email traffic analysis",
+      "why": "Follow stream lets you read requests and replies in order, and display filters narrow a large file to the relevant requests."
+    },
+    {
+      "title": "Wireless and Bluetooth traces",
+      "why": "Wireshark reads several wireless and Bluetooth capture formats, and it can use Wi-Fi keys that you supply."
+    },
+    {
+      "title": "Voice over IP calls",
+      "why": "The user guide has a telephony chapter for looking at call signalling and related traffic."
+    },
+    {
+      "title": "Teaching and exams",
+      "why": "Sample captures let students practise reading headers and following a handshake step by step."
+    }
+  ],
+  "strengths": [
+    "Free, with the source code published.",
+    "Supports a very large number of protocols, and new ones can be added because the code is open.",
+    "Opens captures from many other tools, not only its own.",
+    "Has both a graphical program and a command-line version, so it suits small and large jobs.",
+    "Detailed official documentation, including a User's Guide and a display filter reference."
+  ],
+  "limits": [
+    "It is not an intrusion detection system. It does not raise alerts about attacks, so you must know what to look for.",
+    "It only watches traffic. Encrypted traffic stays unreadable unless you have the keys.",
+    "A capture shows only what passed the point and time where it was taken. Packets that never reached your capture point are missing.",
+    "Very large files make the graphical program slow and use a lot of memory. Use filters or TShark for those.",
+    "The filter language has a learning curve, and capture filters and display filters use different syntax.",
+    "Live capture needs the right permissions and capture components, which is a common first problem.",
+    "Some file formats cannot hold every link type, so not every capture opens fully."
+  ],
+  "works_with": [
+    {
+      "id": "tcpdump",
+      "note": "Capture traffic on a server, then open the file in Wireshark"
+    },
+    {
+      "id": "networkminer",
+      "note": "A second view that lists hosts and rebuilds files from the same capture"
+    },
+    {
+      "id": "zeek",
+      "note": "Turns a capture into logs that are easier to search at scale"
+    },
+    {
+      "id": "suricata",
+      "note": "Runs detection rules over a capture to point you to suspicious packets"
+    },
+    {
+      "id": "sngrep",
+      "note": "Shows SIP call flows for voice traffic"
+    },
+    {
+      "id": "aircrack-ng",
+      "note": "Wi-Fi capture and key tools that feed wireless analysis"
+    }
+  ],
+  "learn": [
+    {
+      "label": "Wireshark documentation index",
+      "url": "https://www.wireshark.org/docs/"
+    },
+    {
+      "label": "Wireshark User's Guide",
+      "url": "https://www.wireshark.org/docs/wsug_html_chunked/"
+    },
+    {
+      "label": "Command-line manual pages (TShark and others)",
+      "url": "https://www.wireshark.org/docs/man-pages/"
+    },
+    {
+      "label": "Display Filter Reference",
+      "url": "https://www.wireshark.org/docs/dfref/"
+    },
+    {
+      "label": "Wireshark wiki",
+      "url": "https://wiki.wireshark.org/"
+    }
+  ],
+  "sources_note": "Written in our own words from the Wireshark project's documentation."
+}
