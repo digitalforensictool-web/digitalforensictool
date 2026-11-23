@@ -1,8 +1,7 @@
 # Review list
 
-Generated 2026-11-23T20:17:56Z. Items here need a person to look at them.
+Generated 2026-11-23T20:33:14Z. Items here need a person to look at them.
 
-- **agent-ransack**: Website did not respond (may be temporary): https://www.mythicsoft.com/agentransack/
 - **apollo**: GitHub does not report a recognised licence. Confirm the licence by hand and add a "licence" field in tools.json.
 - **audacity**: GitHub does not report a recognised licence. Confirm the licence by hand and add a "licence" field in tools.json.
 - **btcrecover**: Repository is a fork. Confirm it is the official one.
@@ -10,6 +9,7 @@ Generated 2026-11-23T20:17:56Z. Items here need a person to look at them.
 - **can-utils**: GitHub does not report a recognised licence. Confirm the licence by hand and add a "licence" field in tools.json.
 - **capev2**: GitHub does not report a recognised licence. Confirm the licence by hand and add a "licence" field in tools.json.
 - **didier-stevens-suite**: GitHub does not report a recognised licence. Confirm the licence by hand and add a "licence" field in tools.json.
+- **digital-corpora**: Website did not respond (may be temporary): https://digitalcorpora.org/
 - **dnspy**: Repository is a fork. Confirm it is the official one.
 - **ffmpeg**: GitHub does not report a recognised licence. Confirm the licence by hand and add a "licence" field in tools.json.
 - **hashdeep**: GitHub does not report a recognised licence. Confirm the licence by hand and add a "licence" field in tools.json.
