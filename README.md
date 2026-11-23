@@ -33,7 +33,8 @@ Python 3.9 or newer is the only requirement. Nothing else needs installing.
 | File | Purpose |
 | --- | --- |
 | `site.json` | Site name, domain, repository, maintainer, contact email, featured tools. |
-| `categories.json` | The 25 categories and their introductions. |
+| `categories.json` | The categories and their introductions. |
+| `nist-functionalities.json` | Maps the functionality names used by the NIST tool catalog to the categories here. |
 | `tools.json` | One entry per tool. |
 | `commercial-integrations.json` | Cases where a commercial product uses an open-source tool. Every entry must have a vendor source link or the build stops. |
 | `practice.json` | Free practice evidence. |

@@ -1,0 +1,145 @@
+{
+  "draft": true,
+  "reviewed": "2026-11-24",
+  "lead": "Process a whole disk image or phone extraction once, then search everything inside it from one screen. IPED was built by forensic examiners of the Brazilian Federal Police to get through very large cases quickly.",
+  "use_when": [
+    "You have a lot of evidence, such as several disks or phones, and need to find things fast.",
+    "You need to search inside documents, chats, pictures and deleted space by keyword.",
+    "You want to hand a ready-to-browse case to an investigator who has no forensic software."
+  ],
+  "screenshots": [
+    {"file": "iped-processing.png", "caption": "The processing window while an image is being indexed"},
+    {"file": "iped-analysis.png", "caption": "The analysis screen: categories on the left, results table, file viewer below"},
+    {"file": "iped-gallery.png", "caption": "The gallery tab showing picture and video thumbnails"},
+    {"file": "iped-map.png", "caption": "The map tab plotting items that carry GPS coordinates"},
+    {"file": "iped-graph.png", "caption": "The graph tab linking people through calls, emails and messages"},
+    {"file": "iped-timeline.png", "caption": "The timeline view of events across the evidence"}
+  ],
+  "project_screenshots_url": "https://github.com/sepinf-inc/IPED#screenshots",
+  "features": [
+    {
+      "title": "Finds and recovers",
+      "items": [
+        "Indexes the content and metadata of every file, including unknown files and unallocated space, so keyword searches are fast",
+        "Carves deleted files in more than 40 formats, including video",
+        "Reads text in scanned pages and pictures with optical character recognition",
+        "Opens archives and other containers inside containers, as deep as they go"
+      ]
+    },
+    {
+      "title": "Cuts down the noise",
+      "items": [
+        "Computes MD5, SHA-1, SHA-256, SHA-512 and eDonkey hashes and removes duplicates",
+        "Matches files against hash sets such as NIST NSRL, ProjectVIC and Interpol ICSE",
+        "Checks file signatures and sorts files into categories",
+        "Flags encrypted files"
+      ]
+    },
+    {
+      "title": "Understands the content",
+      "items": [
+        "Parses WhatsApp, Telegram and Skype chats, and browser history from Chrome, Firefox, Edge, Internet Explorer and Safari",
+        "Parses file-sharing traces from eMule, Shareaza, Ares and BitTorrent",
+        "Finds patterns such as email addresses, URLs, IP addresses, card numbers and cryptocurrency wallet addresses",
+        "Shows pictures and videos in a gallery, and can search for similar images and similar faces",
+        "Can transcribe audio and detect more than 70 languages"
+      ]
+    },
+    {
+      "title": "Shows the connections",
+      "items": [
+        "Timeline view of events with filtering",
+        "Map of items that carry location data",
+        "Graph of who communicated with whom across calls, emails and messages"
+      ]
+    },
+    {
+      "title": "Reports",
+      "items": [
+        "Bookmarks and tags for items that matter",
+        "HTML and CSV reports built from your bookmarks",
+        "Portable cases that open on another computer without installing anything"
+      ]
+    }
+  ],
+  "formats": ["RAW / DD", "E01", "Ex01", "AFF", "ISO", "VHD", "VHDX", "VMDK", "AD1 (AccessData)", "UFDR (Cellebrite report)"],
+  "requirements": "The project tests it on Windows and Linux. On Windows you download the release, unzip it and run it. On Linux there is extra setup first: Java 11 with JavaFX, and The Sleuth Kit built with Java support. The project recommends a fast SSD for the temporary folder, and large cases need plenty of memory.",
+  "steps": [
+    {
+      "title": "Download and unzip",
+      "text": "Get the latest release from the download button on this page and unzip it to a folder with a short path, for example D:\\IPED."
+    },
+    {
+      "title": "Set the temporary folder (recommended)",
+      "text": "Open LocalConfig.txt in the IPED folder and point indexTemp to a folder on a fast SSD that is not your Windows drive and is not scanned by antivirus. If it is on an SSD, also switch on indexTempOnSSD."
+    },
+    {
+      "title": "Process your evidence",
+      "text": "Open a Command Prompt in the IPED folder and run the command below with your own paths. The output folder must be new or empty.",
+      "cmd": "iped.exe -d D:\\evidence\\image.E01 -o D:\\cases\\case001"
+    },
+    {
+      "title": "Wait for processing to finish",
+      "text": "A window shows progress. Large images can take hours. If the computer stops part-way, run the same command again with --continue added and IPED picks up from its last save point."
+    },
+    {
+      "title": "Open the case",
+      "text": "Go to the output folder and start IPEDSearchApp.exe. On Linux, the project's wiki gives the matching java command."
+    },
+    {
+      "title": "Search, filter and bookmark",
+      "text": "Type keywords in the search box, pick a category on the left, or use the Gallery, Map and Graph tabs. Bookmark every item you want in your report."
+    },
+    {
+      "title": "Create the report",
+      "text": "Click the options button, or right-click the results table, and choose Create Indexed Report. Select the bookmarks to include, fill in the case details and choose an empty output folder."
+    }
+  ],
+  "options": [
+    {"cmd": "-profile forensic", "what": "Adds data carving, file slack and unallocated space. Use it for a full examination."},
+    {"cmd": "-profile fastmode", "what": "A quick preview that lists files without reading their content. Meant for a first look at a scene."},
+    {"cmd": "-d image1.E01 -d image2.E01", "what": "Processes several images into one case."},
+    {"cmd": "--append", "what": "Adds new evidence to a case that already exists."},
+    {"cmd": "--portable", "what": "Stores relative paths so the case can be opened from another computer or drive letter."},
+    {"cmd": "-tz GMT-3", "what": "Sets the time zone for evidence with a FAT file system that was used in a different zone."}
+  ],
+  "cases": [
+    {"title": "Fraud, corruption and financial cases", "why": "Thousands of documents become searchable at once, including scanned pages, and pattern searches pick out email addresses, amounts and account-like numbers."},
+    {"title": "Cases with many seized devices", "why": "Several images can be processed into one case, so one search covers every disk and phone."},
+    {"title": "Mobile phone evidence", "why": "It opens Cellebrite UFDR reports and parses common chat apps, and the graph view shows who talked to whom across devices."},
+    {"title": "Child protection cases", "why": "A dedicated profile combines known-file hash sets, nudity detection, enhanced video carving and file-sharing parsers. Some features are available to law enforcement only."},
+    {"title": "Cryptocurrency traces", "why": "Pattern searches find Bitcoin, Ethereum, Monero and Ripple wallet addresses anywhere in the evidence."},
+    {"title": "Where and when questions", "why": "The map plots items that carry GPS data, and the timeline puts events from all sources in order."},
+    {"title": "Handing results to an investigator", "why": "A portable case lets someone without forensic software browse the bookmarked evidence on their own computer."}
+  ],
+  "strengths": [
+    "Built for speed on very large cases. The project reports up to 400 GB an hour on modern hardware.",
+    "Free, with the full source code published.",
+    "Many analysis features in one place: search, gallery, map, graph and timeline.",
+    "Portable cases and reports are easy to share."
+  ],
+  "limits": [
+    "Processing is started from the command line, so the first run takes a little practice.",
+    "It works on evidence that is already collected. Making the disk image or phone extraction is a separate step with another tool.",
+    "Memory (RAM) analysis is not among its listed features. Use a memory tool for that.",
+    "Large cases need a powerful computer with a fast SSD and plenty of memory.",
+    "Linux setup takes more work than Windows.",
+    "Face recognition, audio transcription and some other features need extra setup.",
+    "Documentation is a wiki, and some sections are still drafts."
+  ],
+  "works_with": [
+    {"id": "ftk-imager", "note": "Create the disk image first"},
+    {"id": "guymager", "note": "Create the disk image on Linux"},
+    {"id": "nsrl", "note": "Hash sets for filtering out known files"},
+    {"id": "aleapp", "note": "Deeper parsing of Android app data"},
+    {"id": "ileapp", "note": "Deeper parsing of iOS app data"},
+    {"id": "autopsy", "note": "A second tool to cross-check important findings"}
+  ],
+  "learn": [
+    {"label": "Beginner's Start Guide (project wiki)", "url": "https://github.com/sepinf-inc/IPED/wiki/Beginner's-Start-Guide"},
+    {"label": "User Manual (project wiki)", "url": "https://github.com/sepinf-inc/IPED/wiki/User-Manual"},
+    {"label": "Troubleshooting (project wiki)", "url": "https://github.com/sepinf-inc/IPED/wiki/Troubleshooting"},
+    {"label": "Running on Linux (project wiki)", "url": "https://github.com/sepinf-inc/IPED/wiki/Linux"}
+  ],
+  "sources_note": "Written in our own words from the IPED project's README and wiki."
+}

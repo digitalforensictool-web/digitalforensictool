@@ -1,27 +1,207 @@
 [
- {"id": "imaging", "name": "Disk imaging and acquisition", "intro": "Every examination starts with a verified copy. These tools image drives, verify hashes and mount images so the original evidence is never touched."},
- {"id": "suites", "name": "Computer and disk forensics suites", "intro": "All-in-one platforms that open a disk image, parse the file system and artifacts, and let you search, bookmark and report in one place."},
- {"id": "recovery", "name": "File recovery and carving", "intro": "When files are deleted or the file system is damaged, carvers rebuild them from raw data using file signatures."},
- {"id": "windows", "name": "Windows artifacts and registry", "intro": "Windows records what users and programs did in the registry, the MFT, prefetch, shellbags and many other places. These tools read them."},
- {"id": "memory", "name": "Memory (RAM) forensics", "intro": "RAM holds what the disk never sees: running processes, network connections, decrypted data and fileless malware. First acquire a memory image, then analyse it."},
- {"id": "android", "name": "Mobile forensics: Android", "intro": "Tools to extract data from Android devices and to parse app databases, logs and backups into something readable."},
- {"id": "ios", "name": "Mobile forensics: iOS", "intro": "Tools to create and read iPhone and iPad backups and to parse the system and app artifacts inside them."},
- {"id": "macos", "name": "macOS forensics", "intro": "Collection and parsing tools for Mac artifacts such as unified logs, pattern-of-life databases and persistence items."},
- {"id": "linux", "name": "Linux forensics", "intro": "Live response collectors and query tools for Linux and other Unix-like systems."},
- {"id": "network", "name": "Network forensics and PCAP", "intro": "Capture traffic, rebuild what was transferred and turn packets into searchable logs."},
- {"id": "logs", "name": "Log and event analysis", "intro": "Tools that parse event logs and hunt through them with detection rules, so thousands of events become a short list of leads."},
- {"id": "timeline", "name": "Timeline analysis", "intro": "Build one ordered timeline from many artifacts, then explore it to see what happened and when."},
- {"id": "incident-response", "name": "Incident response and triage", "intro": "Collect the most important evidence from live systems quickly, across one machine or thousands, and manage the case."},
- {"id": "malware", "name": "Malware analysis and reversing", "intro": "Static and dynamic analysis tools for understanding what a suspicious file does. Always work in an isolated virtual machine."},
- {"id": "cloud", "name": "Cloud forensics", "intro": "Collect and analyse logs and resources from Microsoft 365, Azure, AWS, Google Cloud and containers."},
- {"id": "email", "name": "Email forensics", "intro": "Read mailbox files and analyse message headers to trace where an email really came from."},
- {"id": "browser", "name": "Browser forensics", "intro": "Recover history, downloads, cache, cookies and stored data from web browsers."},
- {"id": "database", "name": "Database and SQLite forensics", "intro": "Most app data lives in SQLite. These tools browse databases and recover deleted records."},
- {"id": "multimedia", "name": "Image, video and audio forensics", "intro": "Inspect metadata, check images for editing and examine audio and video recordings."},
- {"id": "passwords", "name": "Password recovery and decryption", "intro": "Recover passwords and open encrypted volumes when you have the legal authority to do so."},
- {"id": "osint", "name": "OSINT and social media", "intro": "Gather and preserve publicly available information about people, accounts and domains."},
- {"id": "drone-iot", "name": "Drone, vehicle and IoT forensics", "intro": "Decode drone flight logs, analyse device firmware and capture vehicle bus data."},
- {"id": "crypto", "name": "Cryptocurrency forensics", "intro": "Look up transactions and addresses on public blockchains and work with wallet data found in evidence."},
- {"id": "utilities", "name": "Hashing, hex and utilities", "intro": "The small everyday tools: hashing, hex editing, decoding data and converting timestamps."},
- {"id": "distros-practice", "name": "Forensic distros and lab environments", "intro": "Ready-made Linux distributions and lab builds that come with many forensic tools already installed."}
+ {
+  "id": "imaging",
+  "name": "Disk imaging and acquisition",
+  "intro": "Every examination starts with a verified copy. These tools image drives, verify hashes and mount images so the original evidence is never touched."
+ },
+ {
+  "id": "suites",
+  "name": "Computer and disk forensics suites",
+  "intro": "All-in-one platforms that open a disk image, parse the file system and artifacts, and let you search, bookmark and report in one place."
+ },
+ {
+  "id": "recovery",
+  "name": "File recovery and carving",
+  "intro": "When files are deleted or the file system is damaged, carvers rebuild them from raw data using file signatures."
+ },
+ {
+  "id": "windows",
+  "name": "Windows artifacts and registry",
+  "intro": "Windows records what users and programs did in the registry, the MFT, prefetch, shellbags and many other places. These tools read them."
+ },
+ {
+  "id": "memory",
+  "name": "Memory (RAM) forensics",
+  "intro": "RAM holds what the disk never sees: running processes, network connections, decrypted data and fileless malware. First acquire a memory image, then analyse it."
+ },
+ {
+  "id": "android",
+  "name": "Mobile forensics: Android",
+  "intro": "Tools to extract data from Android devices and to parse app databases, logs and backups into something readable."
+ },
+ {
+  "id": "ios",
+  "name": "Mobile forensics: iOS",
+  "intro": "Tools to create and read iPhone and iPad backups and to parse the system and app artifacts inside them."
+ },
+ {
+  "id": "macos",
+  "name": "macOS forensics",
+  "intro": "Collection and parsing tools for Mac artifacts such as unified logs, pattern-of-life databases and persistence items."
+ },
+ {
+  "id": "linux",
+  "name": "Linux forensics",
+  "intro": "Live response collectors and query tools for Linux and other Unix-like systems."
+ },
+ {
+  "id": "network",
+  "name": "Network forensics and PCAP",
+  "intro": "Capture traffic, rebuild what was transferred and turn packets into searchable logs."
+ },
+ {
+  "id": "logs",
+  "name": "Log and event analysis",
+  "intro": "Tools that parse event logs and hunt through them with detection rules, so thousands of events become a short list of leads."
+ },
+ {
+  "id": "timeline",
+  "name": "Timeline analysis",
+  "intro": "Build one ordered timeline from many artifacts, then explore it to see what happened and when."
+ },
+ {
+  "id": "incident-response",
+  "name": "Incident response and triage",
+  "intro": "Collect the most important evidence from live systems quickly, across one machine or thousands, and manage the case."
+ },
+ {
+  "id": "malware",
+  "name": "Malware analysis and reversing",
+  "intro": "Static and dynamic analysis tools for understanding what a suspicious file does. Always work in an isolated virtual machine."
+ },
+ {
+  "id": "cloud",
+  "name": "Cloud forensics",
+  "intro": "Collect and analyse logs and resources from Microsoft 365, Azure, AWS, Google Cloud and containers."
+ },
+ {
+  "id": "email",
+  "name": "Email forensics",
+  "intro": "Read mailbox files and analyse message headers to trace where an email really came from."
+ },
+ {
+  "id": "browser",
+  "name": "Browser forensics",
+  "intro": "Recover history, downloads, cache, cookies and stored data from web browsers."
+ },
+ {
+  "id": "database",
+  "name": "Database and SQLite forensics",
+  "intro": "Most app data lives in SQLite. These tools browse databases and recover deleted records."
+ },
+ {
+  "id": "multimedia",
+  "name": "Image, video and audio forensics",
+  "intro": "Inspect metadata, check images for editing and examine audio and video recordings."
+ },
+ {
+  "id": "passwords",
+  "name": "Password recovery and decryption",
+  "intro": "Recover passwords and open encrypted volumes when you have the legal authority to do so."
+ },
+ {
+  "id": "osint",
+  "name": "OSINT and social media",
+  "intro": "Gather and preserve publicly available information about people, accounts and domains."
+ },
+ {
+  "id": "drone-iot",
+  "name": "Drone and IoT forensics",
+  "intro": "Decode drone flight logs and take apart the firmware of embedded and smart devices."
+ },
+ {
+  "id": "crypto",
+  "name": "Cryptocurrency forensics",
+  "intro": "Look up transactions and addresses on public blockchains and work with wallet data found in evidence."
+ },
+ {
+  "id": "utilities",
+  "name": "Hashing, hex and utilities",
+  "intro": "The small everyday tools: hashing, hex editing, decoding data and converting timestamps."
+ },
+ {
+  "id": "distros-practice",
+  "name": "Forensic distros and lab environments",
+  "intro": "Ready-made Linux distributions and lab builds that come with many forensic tools already installed."
+ },
+ {
+  "id": "forensic-copy",
+  "name": "Forensic file copy and disk cataloguing",
+  "intro": "Copy selected files with their timestamps intact and a log of what was copied, or list what is on a disk without imaging all of it."
+ },
+ {
+  "id": "write-blocking",
+  "name": "Software write blocking",
+  "intro": "A write blocker stops the examination computer from changing the evidence drive. These are software options for when a hardware blocker is not available. Test any write blocker before you trust it."
+ },
+ {
+  "id": "sanitization",
+  "name": "Media sanitisation and drive re-use",
+  "intro": "Wipe drives before re-using them for evidence, so that old data cannot contaminate a new case, and verify that the wipe worked."
+ },
+ {
+  "id": "string-search",
+  "name": "String and keyword search",
+  "intro": "Find words, patterns and readable text inside files, folders and raw data."
+ },
+ {
+  "id": "messaging",
+  "name": "Instant messenger forensics",
+  "intro": "Decrypt, parse and export chats from messaging apps such as WhatsApp, Signal, Discord and Microsoft Teams."
+ },
+ {
+  "id": "steganalysis",
+  "name": "Steganalysis",
+  "intro": "Detect and extract data hidden inside images and audio, and create test files to learn how hiding works."
+ },
+ {
+  "id": "video",
+  "name": "Video analysis and conversion",
+  "intro": "Play, inspect and convert video, including awkward formats exported from CCTV systems."
+ },
+ {
+  "id": "gps",
+  "name": "GPS and location forensics",
+  "intro": "Convert, plot and analyse location data from devices, apps and photos."
+ },
+ {
+  "id": "vehicle",
+  "name": "Vehicle and infotainment forensics",
+  "intro": "Capture and decode vehicle CAN bus data. Free tools for infotainment units themselves are rare."
+ },
+ {
+  "id": "wifi",
+  "name": "Wi-Fi forensics",
+  "intro": "Detect wireless networks and devices, capture wireless traffic and look up where a network has been seen."
+ },
+ {
+  "id": "voip",
+  "name": "VoIP forensics",
+  "intro": "Rebuild and inspect internet phone calls and their signalling from captured traffic."
+ },
+ {
+  "id": "p2p",
+  "name": "Peer-to-peer (P2P) analysis",
+  "intro": "Examine the files and settings left behind by file-sharing clients such as BitTorrent."
+ },
+ {
+  "id": "remote",
+  "name": "Remote forensics",
+  "intro": "Collect evidence from computers over the network instead of visiting each one."
+ },
+ {
+  "id": "case-management",
+  "name": "Case tracking and reporting",
+  "intro": "Keep track of incidents, findings, timelines and notes, and turn them into a report."
+ },
+ {
+  "id": "data-analytics",
+  "name": "Data analytics and visualisation",
+  "intro": "Explore large sets of evidence data, clean them up and turn them into charts, graphs and maps."
+ },
+ {
+  "id": "validation",
+  "name": "Tool testing and validation",
+  "intro": "Reference data sets and published test methods for checking that a forensic tool gives correct results."
+ }
 ]

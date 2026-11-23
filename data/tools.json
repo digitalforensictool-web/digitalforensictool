@@ -7,7 +7,8 @@
   "type": "free-closed",
   "categories": [
    "imaging",
-   "memory"
+   "memory",
+   "forensic-copy"
   ],
   "interface": "GUI",
   "level": "beginner",
@@ -165,7 +166,8 @@
   "type": "open-source",
   "categories": [
    "suites",
-   "recovery"
+   "recovery",
+   "forensic-copy"
   ],
   "interface": "CLI",
   "level": "intermediate",
@@ -184,7 +186,8 @@
   "repo": "sepinf-inc/IPED",
   "type": "open-source",
   "categories": [
-   "suites"
+   "suites",
+   "p2p"
   ],
   "interface": "GUI",
   "level": "intermediate",
@@ -245,7 +248,8 @@
   "type": "open-source",
   "categories": [
    "recovery",
-   "memory"
+   "memory",
+   "string-search"
   ],
   "interface": "CLI",
   "level": "intermediate",
@@ -296,7 +300,8 @@
   "type": "open-source",
   "categories": [
    "recovery",
-   "drone-iot"
+   "drone-iot",
+   "steganalysis"
   ],
   "interface": "CLI",
   "level": "intermediate",
@@ -345,7 +350,8 @@
   "type": "free-closed",
   "categories": [
    "timeline",
-   "windows"
+   "windows",
+   "data-analytics"
   ],
   "interface": "GUI",
   "level": "beginner",
@@ -711,7 +717,8 @@
   "repo": "abrignoni/ALEAPP",
   "type": "open-source",
   "categories": [
-   "android"
+   "android",
+   "messaging"
   ],
   "interface": "Both",
   "level": "beginner",
@@ -900,7 +907,8 @@
   "type": "open-source",
   "categories": [
    "android",
-   "ios"
+   "ios",
+   "messaging"
   ],
   "interface": "CLI",
   "level": "intermediate",
@@ -973,7 +981,8 @@
   "repo": "abrignoni/iLEAPP",
   "type": "open-source",
   "categories": [
-   "ios"
+   "ios",
+   "messaging"
   ],
   "interface": "Both",
   "level": "beginner",
@@ -1252,7 +1261,8 @@
   "categories": [
    "linux",
    "incident-response",
-   "macos"
+   "macos",
+   "remote"
   ],
   "interface": "CLI",
   "level": "intermediate",
@@ -1270,7 +1280,9 @@
   "url": "https://www.wireshark.org/",
   "type": "open-source",
   "categories": [
-   "network"
+   "network",
+   "wifi",
+   "voip"
   ],
   "interface": "GUI",
   "level": "beginner",
@@ -1373,7 +1385,8 @@
   "type": "open-source",
   "categories": [
    "network",
-   "logs"
+   "logs",
+   "data-analytics"
   ],
   "interface": "GUI",
   "level": "intermediate",
@@ -1641,7 +1654,8 @@
   "type": "open-source",
   "categories": [
    "logs",
-   "network"
+   "network",
+   "data-analytics"
   ],
   "interface": "Web",
   "level": "intermediate",
@@ -1727,7 +1741,8 @@
   "repo": "google/timesketch",
   "type": "open-source",
   "categories": [
-   "timeline"
+   "timeline",
+   "data-analytics"
   ],
   "interface": "Web",
   "level": "advanced",
@@ -1762,7 +1777,8 @@
   "repo": "Velocidex/velociraptor",
   "type": "open-source",
   "categories": [
-   "incident-response"
+   "incident-response",
+   "remote"
   ],
   "interface": "Both",
   "level": "advanced",
@@ -1786,7 +1802,8 @@
   "repo": "google/grr",
   "type": "open-source",
   "categories": [
-   "incident-response"
+   "incident-response",
+   "remote"
   ],
   "interface": "Web",
   "level": "advanced",
@@ -1895,7 +1912,8 @@
   "repo": "dfir-iris/iris-web",
   "type": "open-source",
   "categories": [
-   "incident-response"
+   "incident-response",
+   "case-management"
   ],
   "interface": "Web",
   "level": "intermediate",
@@ -1912,7 +1930,8 @@
   "type": "open-source",
   "categories": [
    "incident-response",
-   "windows"
+   "windows",
+   "remote"
   ],
   "interface": "CLI",
   "level": "advanced",
@@ -2058,7 +2077,8 @@
   "repo": "mandiant/flare-floss",
   "type": "open-source",
   "categories": [
-   "malware"
+   "malware",
+   "string-search"
   ],
   "interface": "CLI",
   "level": "intermediate",
@@ -2746,7 +2766,8 @@
   "repo": "exiftool/exiftool",
   "type": "open-source",
   "categories": [
-   "multimedia"
+   "multimedia",
+   "gps"
   ],
   "interface": "CLI",
   "level": "beginner",
@@ -2765,7 +2786,8 @@
   "repo": "FFmpeg/FFmpeg",
   "type": "open-source",
   "categories": [
-   "multimedia"
+   "multimedia",
+   "video"
   ],
   "interface": "CLI",
   "level": "intermediate",
@@ -2784,7 +2806,8 @@
   "repo": "MediaArea/MediaInfo",
   "type": "open-source",
   "categories": [
-   "multimedia"
+   "multimedia",
+   "video"
   ],
   "interface": "Both",
   "level": "beginner",
@@ -3046,7 +3069,8 @@
   "url": "https://www.maltego.com/",
   "type": "free-closed",
   "categories": [
-   "osint"
+   "osint",
+   "data-analytics"
   ],
   "interface": "GUI",
   "level": "intermediate",
@@ -3393,6 +3417,7 @@
   "repo": "linux-can/can-utils",
   "type": "open-source",
   "categories": [
+   "vehicle",
    "drone-iot"
   ],
   "interface": "CLI",
@@ -3409,6 +3434,7 @@
   "repo": "collin80/SavvyCAN",
   "type": "open-source",
   "categories": [
+   "vehicle",
    "drone-iot"
   ],
   "interface": "GUI",
@@ -3666,7 +3692,8 @@
   "repo": "EricZimmerman/bstrings",
   "type": "open-source",
   "categories": [
-   "utilities"
+   "utilities",
+   "string-search"
   ],
   "interface": "CLI",
   "level": "beginner",
@@ -3734,7 +3761,8 @@
   "url": "https://www.nist.gov/itl/ssd/software-quality-group/national-software-reference-library-nsrl",
   "type": "free-closed",
   "categories": [
-   "utilities"
+   "utilities",
+   "validation"
   ],
   "interface": "Data",
   "level": "intermediate",
@@ -3750,7 +3778,8 @@
   "url": "https://www.caine-live.net/",
   "type": "open-source",
   "categories": [
-   "distros-practice"
+   "distros-practice",
+   "write-blocking"
   ],
   "interface": "GUI",
   "level": "beginner",
@@ -3840,5 +3869,946 @@
    "Linux"
   ],
   "summary": "An investigation-focused Linux environment for OSINT, forensics and incident response."
+ },
+ {
+  "id": "linux-write-blocker",
+  "name": "Linux write blocker",
+  "developer": "Maxim Suhanov",
+  "repo": "msuhanov/Linux-write-blocker",
+  "type": "open-source",
+  "categories": [
+   "write-blocking"
+  ],
+  "interface": "CLI",
+  "level": "advanced",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "Kernel patches and helper scripts that make Linux treat attached drives as read-only at the block layer."
+ },
+ {
+  "id": "util-linux",
+  "name": "util-linux (blockdev)",
+  "developer": "util-linux project",
+  "repo": "util-linux/util-linux",
+  "type": "open-source",
+  "categories": [
+   "write-blocking",
+   "linux"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "The standard Linux utility set. Its blockdev command can mark a block device read-only before it is mounted."
+ },
+ {
+  "id": "nwipe",
+  "name": "nwipe",
+  "developer": "Martijn van Brummelen and contributors",
+  "repo": "martijnvanbrummelen/nwipe",
+  "type": "open-source",
+  "categories": [
+   "sanitization"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "Securely erases disks with several overwrite methods and can verify the result."
+ },
+ {
+  "id": "shredos",
+  "name": "ShredOS",
+  "developer": "PartialVolume",
+  "repo": "PartialVolume/shredos.x86_64",
+  "type": "open-source",
+  "categories": [
+   "sanitization"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "A small bootable Linux image that starts nwipe automatically, for wiping drives without an installed operating system."
+ },
+ {
+  "id": "sdelete",
+  "name": "SDelete",
+  "developer": "Microsoft (Sysinternals)",
+  "url": "https://learn.microsoft.com/sysinternals/downloads/sdelete",
+  "type": "free-closed",
+  "categories": [
+   "sanitization"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "Securely deletes files and cleans free space on Windows drives from the command line."
+ },
+ {
+  "id": "eraser",
+  "name": "Eraser",
+  "developer": "Heidi Computers",
+  "url": "https://eraser.heidi.ie/",
+  "type": "open-source",
+  "categories": [
+   "sanitization"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "Securely erases files, folders and unused disk space on Windows using selectable overwrite patterns."
+ },
+ {
+  "id": "bleachbit",
+  "name": "BleachBit",
+  "developer": "Andrew Ziem and contributors",
+  "repo": "bleachbit/bleachbit",
+  "type": "open-source",
+  "categories": [
+   "sanitization"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux"
+  ],
+  "summary": "Cleans free space and application traces and includes a file shredder."
+ },
+ {
+  "id": "nvme-cli",
+  "name": "nvme-cli",
+  "developer": "linux-nvme project",
+  "repo": "linux-nvme/nvme-cli",
+  "type": "open-source",
+  "categories": [
+   "sanitization"
+  ],
+  "interface": "CLI",
+  "level": "advanced",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "Manages NVMe drives, including the format and sanitize commands used to erase them."
+ },
+ {
+  "id": "robocopy",
+  "name": "Robocopy",
+  "developer": "Microsoft",
+  "url": "https://learn.microsoft.com/windows-server/administration/windows-commands/robocopy",
+  "type": "free-closed",
+  "categories": [
+   "forensic-copy"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "The copy tool built into Windows. With the right switches it preserves timestamps and logs every file it copies."
+ },
+ {
+  "id": "rsync",
+  "name": "rsync",
+  "developer": "rsync project",
+  "repo": "RsyncProject/rsync",
+  "type": "open-source",
+  "categories": [
+   "forensic-copy",
+   "linux"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Copies files and directories while preserving timestamps and permissions, and can verify transfers with checksums."
+ },
+ {
+  "id": "rclone",
+  "name": "rclone",
+  "developer": "rclone project",
+  "repo": "rclone/rclone",
+  "type": "open-source",
+  "categories": [
+   "forensic-copy",
+   "cloud"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Copies and verifies data to and from cloud storage, useful for preserving cloud-held files with hashes."
+ },
+ {
+  "id": "teracopy",
+  "name": "TeraCopy",
+  "developer": "Code Sector",
+  "url": "https://www.codesector.com/teracopy",
+  "type": "free-closed",
+  "categories": [
+   "forensic-copy"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "Copies files and verifies each one by hash after the copy. Free for personal use."
+ },
+ {
+  "id": "whapa",
+  "name": "WhaPa",
+  "developer": "B16f00t",
+  "repo": "B16f00t/whapa",
+  "type": "open-source",
+  "categories": [
+   "messaging",
+   "android"
+  ],
+  "interface": "Both",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "A toolset for analysing WhatsApp: parses the message database, merges backups and extracts media."
+ },
+ {
+  "id": "wa-crypt-tools",
+  "name": "wa-crypt-tools",
+  "developer": "ElDavoo",
+  "repo": "ElDavoo/wa-crypt-tools",
+  "type": "open-source",
+  "categories": [
+   "messaging",
+   "android"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Decrypts WhatsApp .crypt12, .crypt14 and .crypt15 backup files when the key is available."
+ },
+ {
+  "id": "signalbackup-tools",
+  "name": "signalbackup-tools",
+  "developer": "bepaald",
+  "repo": "bepaald/signalbackup-tools",
+  "type": "open-source",
+  "categories": [
+   "messaging",
+   "android"
+  ],
+  "interface": "CLI",
+  "level": "advanced",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Reads, repairs and exports Signal for Android backup files."
+ },
+ {
+  "id": "discordchatexporter",
+  "name": "DiscordChatExporter",
+  "developer": "Tyrrrz",
+  "repo": "Tyrrrz/DiscordChatExporter",
+  "type": "open-source",
+  "categories": [
+   "messaging"
+  ],
+  "interface": "Both",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Exports Discord channel and direct message history to HTML, JSON or text."
+ },
+ {
+  "id": "forensicsim",
+  "name": "forensicsim",
+  "developer": "Alexander Bilz",
+  "repo": "lxndrblz/forensicsim",
+  "type": "open-source",
+  "categories": [
+   "messaging",
+   "windows"
+  ],
+  "interface": "CLI",
+  "level": "advanced",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Parses Microsoft Teams IndexedDB data and includes an Autopsy plugin."
+ },
+ {
+  "id": "zsteg",
+  "name": "zsteg",
+  "developer": "zed-0xff",
+  "repo": "zed-0xff/zsteg",
+  "type": "open-source",
+  "categories": [
+   "steganalysis"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Detects data hidden in PNG and BMP images."
+ },
+ {
+  "id": "stegseek",
+  "name": "Stegseek",
+  "developer": "Rick de Jager",
+  "repo": "RickdeJager/stegseek",
+  "type": "open-source",
+  "categories": [
+   "steganalysis",
+   "passwords"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "A very fast cracker for Steghide-protected files that can also detect Steghide content without a password."
+ },
+ {
+  "id": "aletheia",
+  "name": "Aletheia",
+  "developer": "Daniel Lerch",
+  "repo": "daniellerch/aletheia",
+  "type": "open-source",
+  "categories": [
+   "steganalysis"
+  ],
+  "interface": "CLI",
+  "level": "advanced",
+  "platforms": [
+   "Linux",
+   "macOS"
+  ],
+  "summary": "A steganalysis toolbox that uses statistical tests and machine learning to detect hidden messages in images."
+ },
+ {
+  "id": "stegoveritas",
+  "name": "stegoVeritas",
+  "developer": "bannsec",
+  "repo": "bannsec/stegoVeritas",
+  "type": "open-source",
+  "categories": [
+   "steganalysis"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Runs many checks and transformations on an image to reveal hidden data."
+ },
+ {
+  "id": "stegexpose",
+  "name": "StegExpose",
+  "developer": "Benedikt Boehm",
+  "repo": "b3dk7/StegExpose",
+  "type": "open-source",
+  "categories": [
+   "steganalysis"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Detects least-significant-bit steganography in lossless images using several statistical tests."
+ },
+ {
+  "id": "steghide",
+  "name": "Steghide",
+  "developer": "Stefan Hetzl",
+  "url": "https://steghide.sourceforge.net/",
+  "type": "open-source",
+  "categories": [
+   "steganalysis"
+  ],
+  "interface": "CLI",
+  "level": "beginner",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "The classic tool for hiding and extracting data in images and audio, needed to test and understand stego files."
+ },
+ {
+  "id": "openstego",
+  "name": "OpenStego",
+  "developer": "Samir Vaidya",
+  "repo": "syvaidya/openstego",
+  "type": "open-source",
+  "categories": [
+   "steganalysis"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Hides and extracts data in images and adds watermarks, useful for creating test files."
+ },
+ {
+  "id": "ripgrep",
+  "name": "ripgrep",
+  "developer": "Andrew Gallant",
+  "repo": "BurntSushi/ripgrep",
+  "type": "open-source",
+  "categories": [
+   "string-search"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Searches huge folders of files for text or regular expressions very quickly."
+ },
+ {
+  "id": "docfetcher",
+  "name": "DocFetcher",
+  "developer": "DocFetcher project",
+  "url": "https://docfetcher.sourceforge.io/",
+  "type": "open-source",
+  "categories": [
+   "string-search"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Indexes documents and lets you search their contents by keyword."
+ },
+ {
+  "id": "agent-ransack",
+  "name": "Agent Ransack",
+  "developer": "Mythicsoft",
+  "url": "https://www.mythicsoft.com/agentransack/",
+  "type": "free-closed",
+  "categories": [
+   "string-search"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "A free Windows tool for finding files by their content, with a preview of each match."
+ },
+ {
+  "id": "gpsbabel",
+  "name": "GPSBabel",
+  "developer": "Robert Lipe and contributors",
+  "repo": "GPSBabel/gpsbabel",
+  "type": "open-source",
+  "categories": [
+   "gps"
+  ],
+  "interface": "Both",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Converts GPS data between many device and file formats."
+ },
+ {
+  "id": "gpsprune",
+  "name": "GpsPrune",
+  "developer": "Activity Workshop",
+  "repo": "activityworkshop/GpsPrune",
+  "type": "open-source",
+  "categories": [
+   "gps"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Views, edits and converts GPS track data on a map."
+ },
+ {
+  "id": "google-earth-pro",
+  "name": "Google Earth Pro",
+  "developer": "Google",
+  "url": "https://www.google.com/earth/versions/",
+  "type": "free-closed",
+  "categories": [
+   "gps"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "A free desktop globe for plotting KML and GPX tracks and viewing historical imagery."
+ },
+ {
+  "id": "qgis",
+  "name": "QGIS",
+  "developer": "QGIS project",
+  "repo": "qgis/QGIS",
+  "type": "open-source",
+  "categories": [
+   "gps",
+   "data-analytics"
+  ],
+  "interface": "GUI",
+  "level": "advanced",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "An open-source geographic information system for plotting and analysing location data in depth."
+ },
+ {
+  "id": "cantools",
+  "name": "cantools",
+  "developer": "cantools project",
+  "repo": "cantools/cantools",
+  "type": "open-source",
+  "categories": [
+   "vehicle"
+  ],
+  "interface": "CLI",
+  "level": "advanced",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Python tools for decoding CAN bus logs using DBC database files.",
+  "install": "pip install cantools"
+ },
+ {
+  "id": "icsim",
+  "name": "ICSim",
+  "developer": "Craig Smith",
+  "repo": "zombieCraig/ICSim",
+  "type": "open-source",
+  "categories": [
+   "vehicle"
+  ],
+  "interface": "GUI",
+  "level": "intermediate",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "An instrument cluster simulator for practising CAN bus analysis without a real vehicle."
+ },
+ {
+  "id": "kismet",
+  "name": "Kismet",
+  "developer": "Mike Kershaw",
+  "repo": "kismetwireless/kismet",
+  "type": "open-source",
+  "categories": [
+   "wifi",
+   "network"
+  ],
+  "interface": "Web",
+  "level": "advanced",
+  "platforms": [
+   "Linux",
+   "macOS"
+  ],
+  "summary": "A wireless network and device detector, sniffer and logger for Wi-Fi, Bluetooth and more."
+ },
+ {
+  "id": "aircrack-ng",
+  "name": "Aircrack-ng",
+  "developer": "Aircrack-ng project",
+  "repo": "aircrack-ng/aircrack-ng",
+  "type": "open-source",
+  "categories": [
+   "wifi"
+  ],
+  "interface": "CLI",
+  "level": "advanced",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "A suite for capturing and analysing Wi-Fi traffic. Use it only on networks you are authorised to test."
+ },
+ {
+  "id": "hcxtools",
+  "name": "hcxtools",
+  "developer": "ZerBea",
+  "repo": "ZerBea/hcxtools",
+  "type": "open-source",
+  "categories": [
+   "wifi"
+  ],
+  "interface": "CLI",
+  "level": "advanced",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "Converts and analyses captured Wi-Fi handshakes."
+ },
+ {
+  "id": "wigle",
+  "name": "WiGLE",
+  "developer": "WiGLE.net",
+  "url": "https://wigle.net/",
+  "type": "free-closed",
+  "categories": [
+   "wifi",
+   "osint"
+  ],
+  "interface": "Web",
+  "level": "beginner",
+  "platforms": [
+   "Web"
+  ],
+  "summary": "A public database for looking up where a Wi-Fi network name or address has been seen."
+ },
+ {
+  "id": "sngrep",
+  "name": "sngrep",
+  "developer": "Irontec",
+  "repo": "irontec/sngrep",
+  "type": "open-source",
+  "categories": [
+   "voip",
+   "network"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Shows SIP call flows from live traffic or PCAP files in the terminal."
+ },
+ {
+  "id": "homer",
+  "name": "HOMER",
+  "developer": "SIPCAPTURE project",
+  "repo": "sipcapture/homer",
+  "type": "open-source",
+  "categories": [
+   "voip"
+  ],
+  "interface": "Web",
+  "level": "advanced",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "Captures and analyses SIP and RTP signalling at scale."
+ },
+ {
+  "id": "torrent-file-editor",
+  "name": "Torrent File Editor",
+  "developer": "Ivan Romanov",
+  "repo": "torrent-file-editor/torrent-file-editor",
+  "type": "open-source",
+  "categories": [
+   "p2p"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Opens .torrent files and client resume files and shows their contents as a tree."
+ },
+ {
+  "id": "fir",
+  "name": "FIR (Fast Incident Response)",
+  "developer": "CERT Société Générale",
+  "repo": "certsocietegenerale/FIR",
+  "type": "open-source",
+  "categories": [
+   "case-management",
+   "incident-response"
+  ],
+  "interface": "Web",
+  "level": "intermediate",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "A web application for creating, tracking and reporting security incidents."
+ },
+ {
+  "id": "aurora-ir",
+  "name": "Aurora Incident Response",
+  "developer": "Mathias Fuchs",
+  "repo": "cyb3rfox/Aurora-Incident-Response",
+  "type": "open-source",
+  "categories": [
+   "case-management",
+   "incident-response"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "A desktop tool for tracking findings, timelines and affected systems in one case file."
+ },
+ {
+  "id": "catalyst",
+  "name": "Catalyst",
+  "developer": "SecurityBrewery",
+  "repo": "SecurityBrewery/catalyst",
+  "type": "open-source",
+  "categories": [
+   "case-management"
+  ],
+  "interface": "Web",
+  "level": "intermediate",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "An incident response platform with ticketing, templates and playbooks."
+ },
+ {
+  "id": "cherrytree",
+  "name": "CherryTree",
+  "developer": "Giuseppe Penone",
+  "repo": "giuspen/cherrytree",
+  "type": "open-source",
+  "categories": [
+   "case-management"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "A hierarchical note-taking app, handy for keeping structured examination notes."
+ },
+ {
+  "id": "gephi",
+  "name": "Gephi",
+  "developer": "Gephi Consortium",
+  "repo": "gephi/gephi",
+  "type": "open-source",
+  "categories": [
+   "data-analytics"
+  ],
+  "interface": "GUI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Visualises and explores networks and graphs, such as who contacted whom."
+ },
+ {
+  "id": "openrefine",
+  "name": "OpenRefine",
+  "developer": "OpenRefine project",
+  "repo": "OpenRefine/OpenRefine",
+  "type": "open-source",
+  "categories": [
+   "data-analytics"
+  ],
+  "interface": "Web",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Cleans and transforms messy tabular data before analysis."
+ },
+ {
+  "id": "jupyter",
+  "name": "Jupyter Notebook",
+  "developer": "Project Jupyter",
+  "repo": "jupyter/notebook",
+  "type": "open-source",
+  "categories": [
+   "data-analytics"
+  ],
+  "interface": "Web",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Interactive notebooks for analysing evidence data with Python.",
+  "install": "pip install notebook"
+ },
+ {
+  "id": "datasette",
+  "name": "Datasette",
+  "developer": "Simon Willison",
+  "repo": "simonw/datasette",
+  "type": "open-source",
+  "categories": [
+   "data-analytics",
+   "database"
+  ],
+  "interface": "Web",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Opens SQLite databases in a browser so they can be explored, filtered and queried.",
+  "install": "pip install datasette"
+ },
+ {
+  "id": "handbrake",
+  "name": "HandBrake",
+  "developer": "HandBrake team",
+  "repo": "HandBrake/HandBrake",
+  "type": "open-source",
+  "categories": [
+   "video"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Converts video between formats."
+ },
+ {
+  "id": "vlc",
+  "name": "VLC media player",
+  "developer": "VideoLAN",
+  "url": "https://www.videolan.org/vlc/",
+  "type": "open-source",
+  "categories": [
+   "video",
+   "multimedia"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Plays almost any video format and can step through footage frame by frame."
+ },
+ {
+  "id": "cftt",
+  "name": "NIST Computer Forensics Tool Testing (CFTT)",
+  "developer": "NIST",
+  "url": "https://www.nist.gov/itl/ssd/software-quality-group/computer-forensics-tool-testing-program-cftt",
+  "type": "free-closed",
+  "categories": [
+   "validation"
+  ],
+  "interface": "Data",
+  "level": "intermediate",
+  "platforms": [
+   "Any"
+  ],
+  "summary": "NIST's programme that publishes test methods and test reports for forensic tools."
+ },
+ {
+  "id": "cfreds",
+  "name": "NIST CFReDS",
+  "developer": "NIST",
+  "url": "https://cfreds.nist.gov/",
+  "type": "free-closed",
+  "categories": [
+   "validation"
+  ],
+  "interface": "Data",
+  "level": "beginner",
+  "platforms": [
+   "Any"
+  ],
+  "summary": "Reference data sets with documented contents, for checking that a tool finds what it should."
+ },
+ {
+  "id": "digital-corpora",
+  "name": "Digital Corpora",
+  "developer": "Digital Corpora project",
+  "url": "https://digitalcorpora.org/",
+  "type": "free-closed",
+  "categories": [
+   "validation"
+  ],
+  "interface": "Data",
+  "level": "beginner",
+  "platforms": [
+   "Any"
+  ],
+  "summary": "Disk images, memory dumps and network captures for testing tools and for teaching."
+ },
+ {
+  "id": "dfir-artifact-museum",
+  "name": "DFIR Artifact Museum",
+  "developer": "Andrew Rathbun and contributors",
+  "repo": "AndrewRathbun/DFIRArtifactMuseum",
+  "type": "open-source",
+  "categories": [
+   "validation"
+  ],
+  "interface": "Data",
+  "level": "intermediate",
+  "platforms": [
+   "Any"
+  ],
+  "summary": "A community archive of sample artifacts from many operating systems, for testing parsers."
  }
 ]

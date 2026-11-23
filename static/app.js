@@ -1,6 +1,43 @@
 (function () {
   "use strict";
 
+  // Main menu button on small screens.
+  var menuBtn = document.querySelector(".menu-btn");
+  var nav = document.getElementById("site-nav");
+  if (menuBtn && nav) {
+    menuBtn.addEventListener("click", function () {
+      var open = nav.classList.toggle("open");
+      menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    document.addEventListener("keydown", function (ev) {
+      if (ev.key === "Escape" && nav.classList.contains("open")) {
+        nav.classList.remove("open");
+        menuBtn.setAttribute("aria-expanded", "false");
+        menuBtn.focus();
+      }
+    });
+  }
+
+  // Back-to-top button on long pages.
+  if (document.documentElement.scrollHeight > window.innerHeight * 3) {
+    var top = document.createElement("a");
+    top.href = "#top";
+    top.className = "to-top";
+    top.hidden = true;
+    top.setAttribute("aria-label", "Back to top");
+    top.innerHTML = '<svg aria-hidden="true" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 16V4M4.5 9.5L10 4l5.5 5.5"/></svg>';
+    document.body.appendChild(top);
+    var ticking = false;
+    window.addEventListener("scroll", function () {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(function () {
+        top.hidden = window.pageYOffset < window.innerHeight * 1.5;
+        ticking = false;
+      });
+    }, { passive: true });
+  }
+
   // Filterable lists: a [data-list] container holds [data-item] cards.
   document.querySelectorAll("[data-filters]").forEach(function (panel) {
     var list = document.querySelector(panel.getAttribute("data-filters"));
@@ -11,6 +48,13 @@
     var empty = document.querySelector("[data-empty]");
     var sortSel = panel.querySelector("select[data-sort]");
     var state = {};
+    var toggle = panel.querySelector(".filter-toggle");
+    if (toggle) {
+      toggle.addEventListener("click", function () {
+        var open = panel.classList.toggle("open");
+        toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+    }
 
     function apply() {
       var q = input ? input.value.toLowerCase().trim() : "";
@@ -32,6 +76,11 @@
         el.hidden = !ok;
         if (ok) shown++;
       });
+      if (toggle) {
+        var active = 0;
+        for (var k in state) { if (state[k] !== "all") active++; }
+        toggle.textContent = active ? "Filters (" + active + ")" : "Filters";
+      }
       if (count) count.textContent = shown + (shown === 1 ? " tool shown" : " tools shown");
       if (empty) empty.hidden = shown !== 0;
     }

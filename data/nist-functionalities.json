@@ -1,0 +1,331 @@
+{
+ "source": "https://toolcatalog.nist.gov/",
+ "functionalities": [
+  {
+   "name": "Cloud Services",
+   "nist_id": 20,
+   "categories": [
+    "cloud"
+   ],
+   "note": ""
+  },
+  {
+   "name": "Data Analytics",
+   "nist_id": 35,
+   "categories": [
+    "data-analytics"
+   ],
+   "note": ""
+  },
+  {
+   "name": "Database Forensics",
+   "nist_id": 30,
+   "categories": [
+    "database"
+   ],
+   "note": ""
+  },
+  {
+   "name": "Deleted File Recovery",
+   "nist_id": 2,
+   "categories": [
+    "recovery"
+   ],
+   "note": ""
+  },
+  {
+   "name": "Disk Cataloging",
+   "nist_id": 33,
+   "categories": [
+    "forensic-copy"
+   ],
+   "note": ""
+  },
+  {
+   "name": "Disk Imaging",
+   "nist_id": 1,
+   "categories": [
+    "imaging"
+   ],
+   "note": ""
+  },
+  {
+   "name": "Drone Forensics",
+   "nist_id": 31,
+   "categories": [
+    "drone-iot"
+   ],
+   "note": ""
+  },
+  {
+   "name": "Email Parsing",
+   "nist_id": 15,
+   "categories": [
+    "email"
+   ],
+   "note": ""
+  },
+  {
+   "name": "File Carving",
+   "nist_id": 22,
+   "categories": [
+    "recovery"
+   ],
+   "note": ""
+  },
+  {
+   "name": "Forensics Boot Environment",
+   "nist_id": 11,
+   "categories": [
+    "distros-practice"
+   ],
+   "note": ""
+  },
+  {
+   "name": "Forensic File Copy",
+   "nist_id": 34,
+   "categories": [
+    "forensic-copy"
+   ],
+   "note": ""
+  },
+  {
+   "name": "Forensic Tool Suite (Mac Investigations)",
+   "nist_id": 16,
+   "categories": [
+    "macos"
+   ],
+   "note": ""
+  },
+  {
+   "name": "Forensic Tool Suite (Windows Investigations)",
+   "nist_id": 17,
+   "categories": [
+    "suites",
+    "windows"
+   ],
+   "note": ""
+  },
+  {
+   "name": "GPS Forensics",
+   "nist_id": 24,
+   "categories": [
+    "gps"
+   ],
+   "note": ""
+  },
+  {
+   "name": "Hardware Write Block",
+   "nist_id": 3,
+   "categories": [
+    "write-blocking"
+   ],
+   "note": "Hardware write blockers are physical devices, so there is nothing to download. The link shows software options."
+  },
+  {
+   "name": "Hash Analysis",
+   "nist_id": 8,
+   "categories": [
+    "utilities"
+   ],
+   "note": ""
+  },
+  {
+   "name": "Image Analysis (Video & Graphics Files)",
+   "nist_id": 23,
+   "categories": [
+    "multimedia"
+   ],
+   "note": ""
+  },
+  {
+   "name": "Incident Response Forensic Tracking & Reporting",
+   "nist_id": 37,
+   "categories": [
+    "case-management"
+   ],
+   "note": ""
+  },
+  {
+   "name": "Infotainment & Vehicle Forensics",
+   "nist_id": 25,
+   "categories": [
+    "vehicle"
+   ],
+   "note": ""
+  },
+  {
+   "name": "Instant Messenger",
+   "nist_id": 21,
+   "categories": [
+    "messaging"
+   ],
+   "note": ""
+  },
+  {
+   "name": "Live Response",
+   "nist_id": 36,
+   "categories": [
+    "incident-response"
+   ],
+   "note": ""
+  },
+  {
+   "name": "Media Sanitization/Drive Re-use",
+   "nist_id": 4,
+   "categories": [
+    "sanitization"
+   ],
+   "note": ""
+  },
+  {
+   "name": "Memory Capture and Analysis",
+   "nist_id": 7,
+   "categories": [
+    "memory"
+   ],
+   "note": ""
+  },
+  {
+   "name": "Mobile Device Acquisition, Analysis and Triage",
+   "nist_id": 5,
+   "categories": [
+    "android",
+    "ios"
+   ],
+   "note": ""
+  },
+  {
+   "name": "P2P Analysis",
+   "nist_id": 14,
+   "categories": [
+    "p2p"
+   ],
+   "note": ""
+  },
+  {
+   "name": "Password Recovery",
+   "nist_id": 26,
+   "categories": [
+    "passwords"
+   ],
+   "note": ""
+  },
+  {
+   "name": "Remote Capabilities / Remote Forensics",
+   "nist_id": 12,
+   "categories": [
+    "remote"
+   ],
+   "note": ""
+  },
+  {
+   "name": "Social Media",
+   "nist_id": 18,
+   "categories": [
+    "osint"
+   ],
+   "note": ""
+  },
+  {
+   "name": "Software Write Block",
+   "nist_id": 9,
+   "categories": [
+    "write-blocking"
+   ],
+   "note": ""
+  },
+  {
+   "name": "Steganalysis",
+   "nist_id": 13,
+   "categories": [
+    "steganalysis"
+   ],
+   "note": ""
+  },
+  {
+   "name": "String Search",
+   "nist_id": 6,
+   "categories": [
+    "string-search"
+   ],
+   "note": ""
+  },
+  {
+   "name": "Tool Validation",
+   "nist_id": 38,
+   "categories": [
+    "validation"
+   ],
+   "note": ""
+  },
+  {
+   "name": "Video Analytics",
+   "nist_id": 29,
+   "categories": [
+    "video"
+   ],
+   "note": ""
+  },
+  {
+   "name": "Video Format Conversion",
+   "nist_id": 32,
+   "categories": [
+    "video"
+   ],
+   "note": ""
+  },
+  {
+   "name": "VoIP Forensics",
+   "nist_id": 27,
+   "categories": [
+    "voip"
+   ],
+   "note": ""
+  },
+  {
+   "name": "Web Browser Forensics",
+   "nist_id": 19,
+   "categories": [
+    "browser"
+   ],
+   "note": ""
+  },
+  {
+   "name": "WiFi Forensics",
+   "nist_id": 28,
+   "categories": [
+    "wifi"
+   ],
+   "note": ""
+  },
+  {
+   "name": "Windows Registry Analysis",
+   "nist_id": 10,
+   "categories": [
+    "windows"
+   ],
+   "note": ""
+  },
+  {
+   "name": "Open Source Intelligent Tool",
+   "nist_id": 39,
+   "categories": [
+    "osint"
+   ],
+   "note": ""
+  },
+  {
+   "name": "Smartwatch Extraction/Analysis",
+   "nist_id": 40,
+   "categories": [],
+   "note": "No free dedicated tool is listed here yet."
+  },
+  {
+   "name": "Mobile Device Sanitization",
+   "nist_id": 41,
+   "categories": [],
+   "note": "No free dedicated tool is listed here yet. A factory reset from the device settings is the usual method."
+  }
+ ]
+}

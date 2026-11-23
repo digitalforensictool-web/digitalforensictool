@@ -35,8 +35,28 @@ TOOLS = load("tools.json")
 INTEG = load("commercial-integrations.json")
 LEARN = load("learn-sources.json")
 PRACTICE = load("practice.json")
+NIST = load("nist-functionalities.json", {"source": "", "functionalities": []})
 RELDATA = load("releases.json", {"generated": None, "tools": {}})
 REL = RELDATA.get("tools", {})
+
+PREVIEW = "--preview" in sys.argv
+
+
+def load_folder(name):
+    """Optional content folders. Entries marked "draft": true are built only with --preview."""
+    found = {}
+    if (DATA / name).is_dir():
+        for p in sorted((DATA / name).glob("*.json")):
+            with open(p, encoding="utf-8") as fh:
+                item = json.load(fh)
+            if item.get("draft") and not PREVIEW:
+                continue
+            found[p.stem] = item
+    return found
+
+
+GUIDES = load_folder("guides")
+WORKFLOWS = load_folder("workflows")
 
 CAT = {c["id"]: c for c in CATS}
 TOOL = {t["id"]: t for t in TOOLS}
@@ -146,9 +166,14 @@ FAVICON = "data:image/svg+xml," + urllib.parse.quote(
     '<circle cx="12.5" cy="12.5" r="5" fill="none" stroke="#FFD84A" stroke-width="2.5"/>'
     '<path d="M16.5 16.5l5 5" stroke="#FFD84A" stroke-width="2.5"/></svg>')
 
+ICON_MENU = ('<svg aria-hidden="true" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" '
+             'stroke-width="2" stroke-linecap="round"><path d="M3 5.5h14M3 10h14M3 14.5h14"/></svg>')
+
 NAV = [("categories", "Categories", "index.html#categories"), ("tools", "All tools", "tools.html"),
-       ("alternatives", "Free alternatives", "alternatives.html"), ("inside", "Inside commercial tools", "inside.html"),
+       ("alternatives", "Alternatives", "alternatives.html"), ("inside", "Inside commercial tools", "inside.html"),
        ("practice", "Practice", "practice.html"), ("learn", "Learn", "learn.html"), ("about", "About", "about.html")]
+if WORKFLOWS:
+    NAV.insert(2, ("workflows", "Workflows", "workflows.html"))
 
 
 def page(path, title, desc, body, current=""):
@@ -173,28 +198,31 @@ def page(path, title, desc, body, current=""):
 <meta property="og:description" content="{desc}">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#1437C8">
+<meta name="format-detection" content="telephone=no">
+<script>document.documentElement.className="js"</script>
 {canonical}
 <link rel="icon" href="{favicon}">
 <link rel="stylesheet" href="{px}assets/style.css">
 </head>
-<body>
+<body id="top">
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-head"><div class="wrap">
 <a class="brand" href="{px}index.html">{logo}<span>{name}</span></a>
-<nav class="nav" aria-label="Main">{nav}<a class="btn primary small" href="{suggest}">Suggest a tool</a></nav>
+<button type="button" class="menu-btn" aria-expanded="false" aria-controls="site-nav">{menu_icon}<span>Menu</span></button>
+<nav class="nav" id="site-nav" aria-label="Main">{nav}<a class="btn primary small" href="{suggest}">Suggest a tool</a></nav>
 </div></header>
 <main id="main">
 {body}
 </main>
 <footer class="site-foot"><div class="wrap">
 <p class="about">{name} is an independent educational resource. It is not affiliated with, sponsored by or endorsed by any vendor or project listed here. Credit for every tool belongs to its developers. Product names are trademarks of their owners. Downloads come from third parties: validate every tool yourself before using it on real evidence.</p>
-<nav aria-label="Footer"><a href="{px}about.html">About and disclaimer</a><a href="{px}about.html#corrections">Corrections and removal requests</a><a href="{px}about.html#privacy">Privacy</a>{maint}</nav>
+<nav aria-label="Footer"><a href="{px}nist.html">Browse by NIST functionality</a><a href="{px}about.html">About and disclaimer</a><a href="{px}about.html#corrections">Corrections and removal requests</a><a href="{px}about.html#privacy">Privacy</a>{maint}</nav>
 </div></footer>
 <script src="{px}assets/app.js" defer></script>
 </body>
 </html>
 """.format(title=e(full_title), desc=e(desc), canonical=canonical, favicon=FAVICON, px=px, logo=ICON_LOGO,
-           name=e(NAME), nav=nav, suggest=e(suggest), body=body,
+           name=e(NAME), nav=nav, suggest=e(suggest), body=body, menu_icon=ICON_MENU,
            maint=('<span style="padding:10px 0">Maintained by %s</span>' % e(maint)) if maint else "")
     target = OUT / path
     target.parent.mkdir(parents=True, exist_ok=True)
@@ -238,14 +266,18 @@ def filters(target, placeholder, platforms=True):
             '<input id="q" type="search" placeholder="%s" autocomplete="off">'
             '<label class="label" for="sort" style="flex:0 0 auto">Sort</label>'
             '<select id="sort" data-sort><option value="name">Name</option><option value="stars">Most starred</option>'
-            '<option value="updated">Recently updated</option></select></div>' % e(placeholder),
+            '<option value="updated">Recently updated</option></select>'
+            '<button type="button" class="chip filter-toggle" aria-expanded="false" aria-controls="more-filters">Filters</button></div>'
+            % e(placeholder)]
+    more = [
             group("type", "Licence", [("all", "All"), ("open-source", "Open source"),
                                       ("source-published", "Source published"), ("free-closed", "Free, closed source")]),
             group("level", "Level", [("all", "All"), ("beginner", "Beginner"), ("intermediate", "Intermediate"),
                                      ("advanced", "Advanced")])]
     if platforms:
-        rows.append(group("plat", "Runs on", [("all", "All"), ("windows", "Windows"), ("linux", "Linux"),
+        more.append(group("plat", "Runs on", [("all", "All"), ("windows", "Windows"), ("linux", "Linux"),
                                               ("macos", "macOS"), ("web", "Web")]))
+    rows.append('<div class="more" id="more-filters">%s</div>' % "".join(more))
     return '<div class="filters" data-filters="%s">%s</div>' % (target, "".join(rows))
 
 
@@ -291,7 +323,7 @@ def build_home():
 <div class="stats"><span><b>{n}</b> tools</span><span><b>{oss}</b> open source</span><span><b>{ncat}</b> categories</span>{checked}</div>
 </section>
 <section class="section" id="categories">
-<div class="section-head"><h2>Browse by category</h2><span class="mono muted" style="font-size:13px">{ncat} categories · offset 0x00 – 0x{last:02X}</span></div>
+<div class="section-head"><h2>Browse by category</h2><span class="mono muted" style="font-size:13px">{ncat} categories · offset 0x00 – 0x{last:02X} · <a href="nist.html">browse by NIST functionality</a></span></div>
 <div class="grid cats">{cats}</div>
 </section>
 </div>
@@ -400,6 +432,86 @@ def download_block(t):
     return '<div class="dl"><div class="label y">Get it</div>%s</div>' % "".join(parts)
 
 
+def guide_sections(t, g):
+    """Extra sections for a tool that has a full guide in data/guides/<id>.json."""
+    out, jump = [], []
+
+    def section(anchor, title, inner):
+        jump.append('<a href="#%s">%s</a>' % (anchor, e(title)))
+        out.append('<section id="%s"><h2>%s</h2>%s</section>' % (anchor, e(title), inner))
+
+    use = "".join("<li>%s</li>" % e(x) for x in g.get("use_when", []))
+    section("about", "What it is",
+            '<p style="font-size:17px;color:var(--soft)">%s</p>%s'
+            % (e(g.get("lead") or t["summary"]),
+               ('<div class="note" style="margin-top:14px"><strong>Use it when</strong><ul class="tight">%s</ul></div>' % use) if use else ""))
+
+    figs = []
+    for sh in g.get("screenshots", []):
+        if (ROOT / "static" / "screenshots" / sh["file"]).exists():
+            figs.append('<figure class="shot"><a href="../assets/screenshots/%s"><img src="../assets/screenshots/%s" alt="%s" loading="lazy"></a>'
+                        '<figcaption>%s</figcaption></figure>' % (e(sh["file"]), e(sh["file"]), e(sh["caption"]), e(sh["caption"])))
+        elif PREVIEW:
+            figs.append('<figure class="shot"><div class="shot-empty">Screenshot to add<br><span class="mono">%s</span></div>'
+                        '<figcaption>%s</figcaption></figure>' % (e(sh["file"]), e(sh["caption"])))
+    more = ('<p style="margin-top:12px"><a href="%s" rel="noopener">See the project\'s own screenshots</a></p>'
+            % e(g["project_screenshots_url"])) if g.get("project_screenshots_url") else ""
+    if figs or more:
+        section("screens", "What it looks like", ('<div class="shots">%s</div>' % "".join(figs) if figs else "") + more)
+
+    if g.get("features"):
+        cards = "".join('<div class="card"><h3>%s</h3><ul class="tight">%s</ul></div>'
+                        % (e(f["title"]), "".join("<li>%s</li>" % e(i) for i in f["items"])) for f in g["features"])
+        section("features", "What it can do", '<div class="grid">%s</div>' % cards)
+
+    if g.get("formats") or g.get("requirements"):
+        inner = ""
+        if g.get("formats"):
+            inner += '<div class="tags on-blue" style="font-size:13px">%s</div>' % "".join('<span class="tag">%s</span>' % e(f) for f in g["formats"])
+        if g.get("requirements"):
+            inner += '<p class="muted" style="margin-top:12px"><strong style="color:var(--text)">What you need.</strong> %s</p>' % e(g["requirements"])
+        section("evidence", "Evidence it opens", inner)
+
+    if g.get("steps"):
+        steps = []
+        for n, st in enumerate(g["steps"], 1):
+            cmd = ('<div class="cmd-row" style="margin-top:8px"><pre class="cmd">%s</pre>'
+                   '<button type="button" class="btn small" data-copy="%s">Copy</button></div>' % (e(st["cmd"]), e(st["cmd"]))) if st.get("cmd") else ""
+            steps.append('<li><span class="num">%d</span><div><h3>%s</h3><p>%s</p>%s</div></li>' % (n, e(st["title"]), e(st["text"]), cmd))
+        inner = '<ol class="steps">%s</ol>' % "".join(steps)
+        if g.get("options"):
+            inner += ('<h3 style="margin:22px 0 10px;font-size:18px">Useful options</h3><div class="opts">%s</div>'
+                      % "".join('<div><code>%s</code><span>%s</span></div>' % (e(o["cmd"]), e(o["what"])) for o in g["options"]))
+        section("howto", "How to use it", inner)
+
+    if g.get("cases"):
+        section("cases", "Cases where it helps",
+                '<div class="grid">%s</div>' % "".join('<div class="card"><h3>%s</h3><p class="sum">%s</p></div>'
+                                                      % (e(c["title"]), e(c["why"])) for c in g["cases"]))
+
+    if g.get("strengths") or g.get("limits"):
+        def col(title, items, cls):
+            return ('<div class="card %s"><h3>%s</h3><ul class="tight">%s</ul></div>'
+                    % (cls, title, "".join("<li>%s</li>" % e(i) for i in items)))
+        section("limits", "Strengths and limits",
+                '<div class="grid two">%s%s</div>' % (col("Strengths", g.get("strengths", []), ""), col("Limits to know", g.get("limits", []), "")))
+
+    pairs = [(TOOL[w["id"]], w.get("note", "")) for w in g.get("works_with", []) if w["id"] in TOOL]
+    if pairs:
+        section("with", "Works well with",
+                '<ul class="list-plain">%s</ul>' % "".join('<li><a href="%s.html" style="font-weight:600">%s</a> <span class="muted">%s</span></li>'
+                                                          % (x["id"], e(x["name"]), e(note)) for x, note in pairs))
+
+    if g.get("learn"):
+        note = ('<p class="muted" style="font-size:13px;margin-top:12px">%s Last reviewed %s.</p>'
+                % (e(g.get("sources_note", "")), fmt_date(g.get("reviewed")))) if g.get("reviewed") else ""
+        section("learn", "Learn more",
+                '<ul class="list-plain">%s</ul>%s' % ("".join('<li><a href="%s" rel="noopener">%s</a></li>' % (e(l["url"]), e(l["label"])) for l in g["learn"]), note))
+
+    nav = '<nav class="jump" aria-label="On this page"><span class="label">On this page</span>%s</nav>' % "".join(jump)
+    return [draft_banner(g), nav] + out
+
+
 def build_tool_pages():
     by_tool = {}
     for it in INTEG["integrations"] + INTEG.get("open_on_open", []):
@@ -413,7 +525,10 @@ def build_tool_pages():
         if t["interface"] == "Web" and "repo" not in t:
             notes.append("This is an online service run by a third party. Do not upload real case evidence to it.")
         main = [download_block(t)]
-        main.append('<section><h2>What it does</h2><p style="font-size:17px;color:var(--soft)">%s</p></section>' % e(t["summary"]))
+        if t["id"] in GUIDES:
+            main += guide_sections(t, GUIDES[t["id"]])
+        else:
+            main.append('<section><h2>What it does</h2><p style="font-size:17px;color:var(--soft)">%s</p></section>' % e(t["summary"]))
         if notes:
             main.append('<section>%s</section>' % "".join('<p class="note" style="margin-bottom:10px">%s</p>' % e(n) for n in notes))
         related = [x for x in TOOLS if x["id"] != t["id"] and primary["id"] in x["categories"]]
@@ -430,6 +545,10 @@ def build_tool_pages():
                         '<div class="src-line">Source: <a href="%s" rel="noopener">%s</a>, checked %s</div></div>'
                         % (e(it["product"]), e(it["relation"]), e(it["open_source"]), e(it["statement"]),
                            e(it["source_url"]), e(it["source_label"]), fmt_date(it.get("checked"))))
+        used = [(wid, w) for wid, w in WORKFLOWS.items() if any(t["id"] in st.get("tools", []) for st in w.get("steps", []))]
+        if used:
+            side.append('<div class="card"><div class="label">Used in workflows</div><ul class="list-plain">%s</ul></div>'
+                        % "".join('<li><a href="../workflows/%s.html">%s</a></li>' % (wid, e(w["title"])) for wid, w in used))
         facts = [("Developer", e(t["developer"])), ("Licence", e(lic_long)), ("Interface", e(t["interface"])),
                  ("Runs on", e(", ".join(t["platforms"]))), ("Level", LEVELS[t["level"]]),
                  ("Category", ", ".join('<a href="../categories/%s.html">%s</a>' % (c, e(CAT[c]["name"])) for c in t["categories"])),
@@ -464,6 +583,97 @@ def build_tool_pages():
                    "".join('<span class="tag">%s</span>' % e(x) for x in [LEVELS[t["level"]], t["interface"]] + t["platforms"]),
                    "".join(main), "".join(side)))
         page("tools/%s.html" % t["id"], t["name"], "%s by %s. %s" % (t["name"], t["developer"], t["summary"]), body, "tools")
+
+
+def draft_banner(item):
+    if not item.get("draft"):
+        return ""
+    return '<p class="note" style="border-color:var(--yellow);color:var(--yellow)">Draft preview. This page is not on the live site yet.</p>'
+
+
+def build_workflows():
+    if not WORKFLOWS:
+        return
+    cards = []
+    for wid, w in WORKFLOWS.items():
+        cards.append('<article class="card"><h3><a href="workflows/%s.html">%s</a></h3><p class="sum">%s</p>'
+                     '<div class="tags"><span class="tag">%s</span><span class="tag">%s</span><span class="tag">%d steps</span></div></article>'
+                     % (wid, e(w["title"]), e(w["lead"]), e(w["level"]), e(w["evidence"]), len(w["steps"])))
+    body = ('<div class="wrap"><div class="page-head"><h1>Case workflows</h1>'
+            '<p class="lead">Start from the question you need to answer. Each workflow gives the steps in order, the free tool for each step, '
+            'where the evidence is stored, and a public practice image to try it on.</p></div>'
+            '<section class="section" style="padding-top:8px"><div class="grid">%s</div></section></div>' % "".join(cards))
+    page("workflows.html", "Case workflows", "Step-by-step forensic workflows for students, using free and open-source tools and public practice data.", body, "workflows")
+
+    for wid, w in WORKFLOWS.items():
+        main, jump = [], []
+
+        def section(anchor, title, inner):
+            jump.append('<a href="#%s">%s</a>' % (anchor, e(title)))
+            main.append('<section id="%s"><h2>%s</h2>%s</section>' % (anchor, e(title), inner))
+
+        section("answers", "What you will be able to answer",
+                '<ul class="tight on-blue">%s</ul>' % "".join("<li>%s</li>" % e(a) for a in w["answers"]))
+        section("need", "What you need",
+                '<ul class="tight on-blue">%s</ul>' % "".join("<li>%s</li>" % e(a) for a in w["need"]))
+
+        steps = []
+        for n, st in enumerate(w["steps"], 1):
+            extra = ""
+            if st.get("paths"):
+                extra += '<div class="paths">%s</div>' % "".join("<code>%s</code>" % e(p) for p in st["paths"])
+            if st.get("note"):
+                extra += '<p class="step-note">%s</p>' % e(st["note"])
+            chips = "".join('<a class="tool-chip" href="../tools/%s.html">%s</a>' % (tid, e(TOOL[tid]["name"]))
+                            for tid in st.get("tools", []) if tid in TOOL)
+            if chips:
+                extra += '<div class="tool-chips"><span class="label">Tools</span>%s</div>' % chips
+            steps.append('<li><span class="num">%d</span><div><h3>%s</h3><p>%s</p>%s</div></li>' % (n, e(st["title"]), e(st["text"]), extra))
+        section("steps", "Steps", '<ol class="steps">%s</ol>' % "".join(steps))
+
+        if w.get("artifacts"):
+            section("artifacts", "Where the evidence is stored",
+                    '<div class="opts arts">%s</div>' % "".join(
+                        '<div><code>%s</code><span><strong>%s</strong><br>%s</span></div>' % (e(a["name"]), e(a["where"]), e(a["tells"]))
+                        for a in w["artifacts"]))
+        if w.get("limits"):
+            section("limits", "What this does not prove",
+                    '<div class="card"><ul class="tight" style="margin-top:0">%s</ul></div>' % "".join("<li>%s</li>" % e(x) for x in w["limits"]))
+        pr = w.get("practice")
+        if pr:
+            ans = (' <a class="btn small on-card" href="%s" rel="noopener">Published answers</a>' % e(pr["answers_url"])) if pr.get("answers_url") else ""
+            section("practice", "Practise on public data",
+                    '<div class="card hl"><h3>%s</h3><div class="by">by %s</div><p class="sum">%s</p><p class="sum"><strong>Your task.</strong> %s</p>%s'
+                    '<div class="card-btns"><a class="btn small on-card solid" href="%s" rel="noopener">Open the data set</a>%s</div></div>'
+                    % (e(pr["name"]), e(pr["by"]), e(pr["text"]), e(pr["task"]),
+                       ('<p class="sum" style="font-size:13.5px">%s</p>' % e(pr["note"])) if pr.get("note") else "", e(pr["url"]), ans))
+        if w.get("learn"):
+            section("learn", "Sources and further reading",
+                    '<ul class="list-plain">%s</ul><p class="muted" style="font-size:13px;margin-top:12px">%s Last reviewed %s.</p>'
+                    % ("".join('<li><a href="%s" rel="noopener">%s</a></li>' % (e(l["url"]), e(l["label"])) for l in w["learn"]),
+                       e(w.get("sources_note", "")), fmt_date(w.get("reviewed"))))
+
+        tool_ids = []
+        for st in w["steps"]:
+            for tid in st.get("tools", []):
+                if tid in TOOL and tid not in tool_ids:
+                    tool_ids.append(tid)
+        side = ['<div class="card"><div class="label">At a glance</div><dl class="facts">%s</dl></div>'
+                % "".join("<div><dt>%s</dt><dd>%s</dd></div>" % (k, e(v)) for k, v in
+                          [("Evidence", w["evidence"]), ("Level", w["level"]), ("Time", w["time"]), ("Steps", str(len(w["steps"])))]),
+                '<div class="card"><div class="label">Tools in this workflow</div><ul class="list-plain">%s</ul></div>'
+                % "".join('<li><a href="../tools/%s.html">%s</a> <span style="color:var(--ink-muted);font-size:13px">%s</span></li>'
+                          % (tid, e(TOOL[tid]["name"]), e(licence(TOOL[tid])[1])) for tid in tool_ids)]
+        rep_url = issue_url("report-problem", "Problem on page: " + w["title"]) or "../about.html#corrections"
+        side.append('<p style="font-size:14px"><a href="%s">Report a problem with this page</a></p>' % e(rep_url))
+
+        nav = '<nav class="jump" aria-label="On this page"><span class="label">On this page</span>%s</nav>' % "".join(jump)
+        body = ('<div class="wrap"><div class="page-head">'
+                '<div class="crumbs"><a href="../index.html">Home</a> / <a href="../workflows.html">Workflows</a> / %s</div>'
+                '<div class="label y">Case workflow</div><h1>%s</h1><p class="lead">%s</p>%s</div>'
+                '<div class="tool-layout"><div class="tool-main">%s%s</div><aside class="tool-side" aria-label="Workflow facts">%s</aside></div></div>'
+                % (e(w.get("short", w["title"])), e(w["title"]), e(w["lead"]), draft_banner(w), nav, "".join(main), "".join(side)))
+        page("workflows/%s.html" % wid, w["title"], w["lead"], body, "workflows")
 
 
 def build_alternatives():
@@ -520,6 +730,26 @@ def simple_list(items, who_key=None):
         out.append('<article class="card"><h3><a href="%s" rel="noopener">%s</a></h3>%s<p class="sum">%s</p></article>'
                    % (e(it["url"]), e(it["name"]), by, e(it["what"])))
     return '<div class="grid">%s</div>' % "".join(out)
+
+
+def build_nist():
+    rows = []
+    for f in NIST["functionalities"]:
+        links = []
+        for cid in f["categories"]:
+            n = sum(1 for t in TOOLS if cid in t["categories"])
+            links.append('<a href="categories/%s.html">%s</a> (%d)' % (cid, e(CAT[cid]["name"]), n))
+        where = ", ".join(links) if links else "Not covered yet"
+        note = ('<p class="sum" style="font-size:13px">%s</p>' % e(f["note"])) if f.get("note") else ""
+        rows.append('<div class="card row-card"><div class="v"><div class="t">%s</div><p class="sum">Here: %s</p>%s'
+                    '<div class="src-line"><a href="https://toolcatalog.nist.gov/search/index.php?ff_id=%d" rel="noopener">Same functionality in the NIST catalog</a></div></div></div>'
+                    % (e(f["name"]), where, note, f["nist_id"]))
+    body = ('<div class="wrap"><div class="page-head"><h1>Browse by NIST functionality</h1>'
+            '<p class="lead">The NIST Computer Forensics Tools and Techniques Catalog groups tools by what they do. If you know that list, use it here: each functionality links to the matching category, which lists free and open-source tools only.</p>'
+            '<p class="note">The functionality names are the ones NIST uses. The tool lists, descriptions and categories on this site are our own. This site is independent and is not affiliated with NIST.</p></div>'
+            '<section class="section" style="padding-top:8px"><div style="display:flex;flex-direction:column;gap:12px">%s</div></section></div>' % "".join(rows))
+    page("nist.html", "Browse by NIST functionality",
+         "Find free and open-source forensic tools using the functionality names of the NIST Computer Forensics Tools and Techniques Catalog.", body, "categories")
 
 
 def build_practice():
@@ -596,7 +826,7 @@ def main():
     assets = OUT / "assets"
     shutil.copytree(ROOT / "static", assets, dirs_exist_ok=True)
     build_home(); build_tools_index(); build_categories(); build_tool_pages()
-    build_alternatives(); build_inside(); build_practice(); build_learn(); build_about(); build_404()
+    build_workflows(); build_alternatives(); build_inside(); build_nist(); build_practice(); build_learn(); build_about(); build_404()
     (OUT / ".nojekyll").write_text("", encoding="utf-8")
     domain = SITE.get("domain", "").strip()
     if domain:
