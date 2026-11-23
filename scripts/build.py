@@ -7,6 +7,7 @@ Uses only the Python standard library. Run from anywhere:
 import datetime
 import html
 import json
+import os
 import shutil
 import sys
 import urllib.parse
@@ -14,7 +15,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
-OUT = ROOT / "site"
+OUT = Path(os.environ["SITE_OUT"]) if os.environ.get("SITE_OUT") else ROOT / "site"
 
 e = html.escape
 
@@ -216,7 +217,7 @@ def page(path, title, desc, body, current=""):
 </main>
 <footer class="site-foot"><div class="wrap">
 <p class="about">{name} is an independent educational resource. It is not affiliated with, sponsored by or endorsed by any vendor or project listed here. Credit for every tool belongs to its developers. Product names are trademarks of their owners. Downloads come from third parties: validate every tool yourself before using it on real evidence.</p>
-<nav aria-label="Footer"><a href="{px}nist.html">Browse by NIST functionality</a><a href="{px}about.html">About and disclaimer</a><a href="{px}about.html#corrections">Corrections and removal requests</a><a href="{px}about.html#privacy">Privacy</a>{maint}</nav>
+<nav aria-label="Footer"><a href="{px}compare.html">Compare tools</a><a href="{px}nist.html">Browse by NIST functionality</a><a href="{px}about.html">About and disclaimer</a><a href="{px}about.html#corrections">Corrections and removal requests</a><a href="{px}about.html#privacy">Privacy</a>{maint}</nav>
 </div></footer>
 <script src="{px}assets/app.js" defer></script>
 </body>
@@ -351,11 +352,16 @@ def build_home():
 <div class="grid">{featured}</div>
 </section>
 <section class="section">
+<div class="section-head"><h2>Compare tools side by side</h2><a href="compare.html" style="font-weight:600">Open the compare page</a></div>
+<p class="muted" style="max-width:760px;margin-bottom:16px">Pick two or three tools and see what each one does, which functions it is listed under, its licence, platforms and project activity. Facts only, no scores.</p>
+<div class="chips">{cmp}</div>
+</section>
+<section class="section">
 <div class="section-head"><h2>Know a paid tool? Find a free one.</h2><a href="alternatives.html" style="font-weight:600">Open the alternative finder</a></div>
 <p class="muted" style="max-width:760px">Type the name of a commercial product and see free tools that do a similar job, with honest notes on what "similar" means.</p>
 </section>
 </div>
-""".format(wf=wf_home, tagline=e(SITE["tagline"]), icon=ICON_SEARCH, n=len(TOOLS), oss=oss, ncat=len(CATS), last=len(CATS) - 1,
+""".format(wf=wf_home, cmp="".join(compare_presets("")), tagline=e(SITE["tagline"]), icon=ICON_SEARCH, n=len(TOOLS), oss=oss, ncat=len(CATS), last=len(CATS) - 1,
            checked=('<span>links checked <b>%s</b></span>' % checked) if checked else "",
            cats="".join(cat_cards), rows="".join(rows), featured=featured)
     page("index.html", NAME, SITE["description"], body, "")
@@ -363,7 +369,8 @@ def build_home():
 
 def build_tools_index():
     body = ('<div class="wrap"><div class="page-head"><h1>All tools</h1>'
-            '<p class="lead">%d free and open-source tools. Search by name, artifact or task, then narrow by licence, level and platform.</p></div>'
+            '<p class="lead">%d free and open-source tools. Search by name, artifact or task, then narrow by licence, level and platform.</p>'
+            '<p><a class="btn small" href="compare.html">Compare tools side by side</a></p></div>'
             '%s</div>' % (len(TOOLS), tool_list(TOOLS, "", "Name, artifact or task, for example prefetch")))
     page("tools.html", "All tools", "Search every free and open-source digital forensics tool in the directory.", body, "tools")
 
@@ -376,8 +383,9 @@ def build_categories():
             note = '<p class="note">%s</p>' % e(SENSITIVE[c["id"]])
         body = ('<div class="wrap"><div class="page-head">'
                 '<div class="crumbs"><a href="../index.html">Home</a> / <a href="../index.html#categories">Categories</a> / %s</div>'
-                '<div class="mono" style="color:var(--yellow);font-size:13px">0x%02X</div><h1>%s</h1><p class="lead">%s</p>%s</div>%s</div>'
+                '<div class="mono" style="color:var(--yellow);font-size:13px">0x%02X</div><h1>%s</h1><p class="lead">%s</p>%s%s</div>%s</div>'
                 % (e(c["name"]), i, e(c["name"]), e(c["intro"]), note,
+                   ('<p><a class="btn small" href="../compare.html?c=%s">Compare tools in this category</a></p>' % c["id"]) if len(members) > 1 else "",
                    tool_list(members, "../", "Search this category")))
         page("categories/%s.html" % c["id"], c["name"],
              "%s: free and open-source tools. %s" % (c["name"], c["intro"]), body, "categories")
@@ -582,6 +590,7 @@ def build_tool_pages():
         side.append('<div class="card"><div class="label">Credit</div><p class="sum">Built and maintained by <strong>%s</strong>. '
                     'If this tool helps your studies, cite it in your reports%s.</p></div>'
                     % (e(t["developer"]), " and star the project" if "repo" in t else ""))
+        side.append('<p><a class="btn small" href="../compare.html?t=%s">Compare with another tool</a></p>' % t["id"])
         rep = issue_url("report-problem", "Problem on page: " + t["name"]) or "../about.html#corrections"
         side.append('<p style="font-size:14px"><a href="%s">Report a problem with this page</a></p>' % e(rep))
 
@@ -690,6 +699,61 @@ def build_workflows():
                 '<div class="tool-layout"><div class="tool-main">%s%s</div><aside class="tool-side" aria-label="Workflow facts">%s</aside></div></div>'
                 % (e(w.get("short", w["title"])), e(w["title"]), e(w["lead"]), draft_banner(w), nav, "".join(main), "".join(side)))
         page("workflows/%s.html" % wid, w["title"], w["lead"], body, "workflows")
+
+
+COMPARE_PRESETS = [("autopsy", "iped"), ("hayabusa", "chainsaw"), ("volatility3", "memprocfs"),
+                   ("ftk-imager", "guymager"), ("aleapp", "andriller"), ("registry-explorer", "regripper")]
+
+
+def compare_presets(px):
+    links = []
+    for pair in COMPARE_PRESETS:
+        if all(i in TOOL for i in pair):
+            links.append('<a href="%scompare.html?t=%s">%s</a>' % (px, ",".join(pair), e(" and ".join(TOOL[i]["name"] for i in pair))))
+    return links
+
+
+def build_compare():
+    data = {"cats": {c["id"]: c["name"] for c in CATS}, "tools": []}
+    for t in sorted(TOOLS, key=lambda x: x["name"].lower()):
+        r = rel_of(t) or {}
+        release = r.get("release") or {}
+        item = {"id": t["id"], "name": t["name"], "dev": t["developer"], "lic": licence(t)[2], "iface": t["interface"],
+                "level": LEVELS[t["level"]], "plat": t["platforms"], "cats": t["categories"], "sum": t["summary"],
+                "sim": t.get("similar_to", []), "guide": t["id"] in GUIDES,
+                "wf": [[wid, w.get("short", w["title"])] for wid, w in WORKFLOWS.items()
+                       if any(t["id"] in st.get("tools", []) for st in w.get("steps", []))]}
+        if release.get("tag"):
+            item["rel"] = release["tag"]
+            item["reldate"] = fmt_date(release.get("published_at") or release.get("published"))
+        if r.get("pushed_at"):
+            item["upd"] = fmt_date(r["pushed_at"])
+        if r.get("stars") is not None:
+            item["stars"] = fmt_count(r["stars"])
+        act = activity(t)
+        if act:
+            item["act"] = act
+        data["tools"].append(item)
+    blob = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+    checked = fmt_date(RELDATA.get("generated"))
+    presets = "".join(compare_presets(""))
+    body = ('<div class="wrap"><div class="page-head"><h1>Compare tools</h1>'
+            '<p class="lead">Pick two or three tools and see their facts side by side: what each one does, which functions it is listed under, licence, platforms and how active the project is.</p>'
+            '<p class="note" style="max-width:820px"><strong>Facts only, no scores.</strong> This page does not rank tools or say which one is best. '
+            '"Not listed" means this directory does not list the tool under that function. It does not mean the tool cannot do it. '
+            'Always check the project\'s own documentation before you rely on a tool.</p></div>'
+            '<section class="section" style="padding-top:8px">'
+            '<div class="filters" id="cmp" data-checked="%s">'
+            '<div class="row"><label class="label" for="cmp-cat">Show tools from</label><select id="cmp-cat"><option value="">All categories</option>%s</select></div>'
+            '<div class="row cmp-picks"><span class="label">Tools</span>'
+            '<select id="cmp-a" aria-label="First tool"></select><select id="cmp-b" aria-label="Second tool"></select>'
+            '<select id="cmp-c" aria-label="Third tool (optional)"></select></div></div>'
+            '<noscript><p class="note">The compare table needs JavaScript. Every tool page lists the same facts.</p></noscript>'
+            '<div id="cmp-out" aria-live="polite"></div>'
+            '<div class="chips" style="margin-top:22px"><span class="muted">Try:</span>%s</div>'
+            '</section></div><script type="application/json" id="cmp-data">%s</script>'
+            % (e(checked), "".join('<option value="%s">%s</option>' % (c["id"], e(c["name"])) for c in CATS), presets, blob))
+    page("compare.html", "Compare tools", "Compare free and open-source digital forensics tools side by side: functions, licence, platforms and project activity.", body, "compare")
 
 
 def build_alternatives():
@@ -847,7 +911,7 @@ def main():
     assets = OUT / "assets"
     shutil.copytree(ROOT / "static", assets, dirs_exist_ok=True)
     build_home(); build_tools_index(); build_categories(); build_tool_pages()
-    build_workflows(); build_alternatives(); build_inside(); build_nist(); build_practice(); build_learn(); build_about(); build_404()
+    build_workflows(); build_compare(); build_alternatives(); build_inside(); build_nist(); build_practice(); build_learn(); build_about(); build_404()
     (OUT / ".nojekyll").write_text("", encoding="utf-8")
     domain = SITE.get("domain", "").strip()
     if domain:

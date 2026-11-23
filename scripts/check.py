@@ -6,13 +6,14 @@ Exits with an error if anything is wrong, so a bad build is never published.
 """
 import html.parser
 import json
+import os
 import re
 import sys
 from pathlib import Path
 from urllib.parse import urldefrag, urlparse
 
 ROOT = Path(__file__).resolve().parent.parent
-SITE = ROOT / "site"
+SITE = Path(os.environ["SITE_OUT"]) if os.environ.get("SITE_OUT") else ROOT / "site"
 BASE = json.load(open(ROOT / "data" / "site.json", encoding="utf-8")).get("base_url", "").strip().rstrip("/")
 
 # Wording the site must never use about tools or vendors.
