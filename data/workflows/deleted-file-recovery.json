@@ -1,0 +1,101 @@
+{
+  "draft": true,
+  "reviewed": "2026-11-24",
+  "title": "Can deleted files be recovered from this drive?",
+  "short": "Recovering deleted files",
+  "lead": "When a file is deleted, its data often stays on the drive for a while. This workflow shows two ways to get it back from a disk image: reading the file system's own records, and searching the raw data for known file patterns.",
+  "level": "Beginner to intermediate",
+  "time": "1 to 2 hours on the practice image",
+  "evidence": "A disk image of a drive, USB stick or memory card",
+  "answers": [
+    "Which deleted files still have a name, date and size in the file system",
+    "Whether the content of a deleted file can be recovered",
+    "Which files can only be found by carving (without name or date)",
+    "Whether a recovered file is complete and opens correctly",
+    "Why a file could not be recovered"
+  ],
+  "need": [
+    "A forensic image of the drive, or a practice image (see the practice section on this page)",
+    "A second drive or folder with free space, to save recovered files",
+    "Autopsy, and PhotoRec if you want to carve outside Autopsy"
+  ],
+  "steps": [
+    {
+      "title": "Work on an image, never the original",
+      "text": "If you start from a real drive, make a forensic image through a write blocker and write down its hash value (a fixed-length fingerprint of the data). Recovery tools read a lot of data, so use only the image. Save recovered files on a different drive from the evidence, never back onto it.",
+      "tools": ["ftk-imager", "guymager", "dc3dd"]
+    },
+    {
+      "title": "Start with the file system records",
+      "text": "Create a case in Autopsy and add the image as a data source. In the tree, open File Views and then Deleted Files. These are files that were deleted but whose names could still be read from the file system. Name, size, dates and folder are often still there, and the content may be too. Right-click a file and choose Extract File(s). Also check the Recycle Bin: a file deleted in Windows may only have been moved there.",
+      "tools": ["autopsy"],
+      "paths": ["$Recycle.Bin"]
+    },
+    {
+      "title": "Repeat it from the command line",
+      "text": "The Sleuth Kit is the library under Autopsy. The fls command lists directory entries, and with the options below it shows deleted ones. The first number on each line is the entry's address. The icat command then writes the content of that entry to a file. Doing it once by hand shows you what Autopsy does for you.",
+      "tools": ["sleuthkit"],
+      "cmd": "fls -r -d image.dd"
+    },
+    {
+      "title": "Carve by file signature",
+      "text": "Carving ignores the file system. It scans the data for the first bytes that mark a known file type, such as a JPEG, and cuts out what follows. Use PhotoRec on the image, or the PhotoRec Carver module in Autopsy, which works on unallocated space (space the file system says is free). Autopsy lists the results under $CarvedFiles. Foremost is another carver, and bulk_extractor finds items such as email addresses and URLs in the raw data.",
+      "tools": ["testdisk", "autopsy", "foremost", "bulk-extractor"],
+      "note": "Carved files lose their original name, folder and dates. Do not claim when or where a carved file was created from the carving alone."
+    },
+    {
+      "title": "Check what you recovered",
+      "text": "A recovered file can be empty, partly overwritten or mixed with other data. Open each file in a safe viewer and check that its type matches its extension. Look at the first bytes in a hex editor and read the metadata with ExifTool. A photo that shows grey blocks or stops halfway is probably damaged, not hidden.",
+      "tools": ["exiftool", "hxd"]
+    },
+    {
+      "title": "Hash the recovered files",
+      "text": "Calculate a hash for every recovered file and keep the list with your notes. Do this once right after recovery, so you can show later that the files did not change. Also write down the hash of the image before and after your work: the two must match.",
+      "tools": ["hashdeep", "quickhash", "autopsy"]
+    },
+    {
+      "title": "If a file is missing, find out why",
+      "text": "Not finding a file does not mean it never existed. Check whether the file system entry was reused, whether the drive is an SSD or a flash device that cleans free space, whether the volume is encrypted, and whether the file was large and stored in pieces. Note which reason fits and which cannot be tested on this evidence.",
+      "tools": ["autopsy", "sleuthkit"]
+    },
+    {
+      "title": "Cross-check and write it down",
+      "text": "Confirm important files by two routes, for example the same file found in Autopsy and by the command line, or a carved file matched to a file system entry by its hash. In your notes, record the tool names and versions, the image hash, where each recovered file came from and the time zone of any dates.",
+      "tools": ["autopsy", "sleuthkit"]
+    }
+  ],
+  "artifacts": [
+    {"name": "Deleted file entries", "where": "File system records of the volume (for example the NTFS Master File Table or FAT directory entries)", "tells": "Name, size, dates and folder of a deleted file, and where its data was stored"},
+    {"name": "Unallocated space", "where": "Free space of each volume in the image", "tells": "Old data that is not yet overwritten, which is the source for carving"},
+    {"name": "Carved files", "where": "$CarvedFiles in Autopsy, or the output folder you chose in PhotoRec", "tells": "File content found by signature, without name or dates"},
+    {"name": "Recycle Bin", "where": "$Recycle.Bin on the Windows volume", "tells": "Files deleted in Windows that were moved, with the original name and deletion time kept in a small companion file"},
+    {"name": "bulk_extractor output", "where": "The output folder you choose when you run it", "tells": "Text files listing items such as email addresses and URLs found in raw data"},
+    {"name": "Hash list of recovered files", "where": "Your own case notes", "tells": "Proof that the recovered files stayed the same after recovery"}
+  ],
+  "limits": [
+    "Recovery can fail. Once the space of a deleted file is used by new data, the old content is gone or only partly there.",
+    "Many SSDs and flash devices erase free blocks soon after deletion (the TRIM command), so deleted data may already be gone from them.",
+    "If the drive is encrypted and you do not have the key, recovered data is unreadable.",
+    "Large files are often stored in pieces. A carver may join the wrong pieces or stop early, so the file can be damaged.",
+    "Carved files lose their name, folder and dates. A carved file alone does not show who created it or when.",
+    "A recovered file shows that data existed on the drive. It does not show which person created, opened or deleted it. That needs other evidence, such as user accounts and activity records.",
+    "Each tool supports a limited list of file types. A file type that is not on the list will not be carved."
+  ],
+  "practice": {
+    "name": "NIST CFReDS: Data Leakage Case (USB drive RM#2)",
+    "by": "NIST",
+    "url": "https://cfreds-archive.nist.gov/data_leakage_case/data-leakage-case.html",
+    "answers_url": "https://cfreds-archive.nist.gov/data_leakage_case/leakage-answers.pdf",
+    "text": "A simulated company data leak with images of a PC and of several removable media. The image of the USB drive called RM#2 is small: about 219 MB as a compressed DD file, or about 243 MB in E01 format. The page also publishes an answer document, so you can check your result.",
+    "task": "Do question 53 of the case: recover the deleted files from the USB drive RM#2. Use steps 2 and 4, save the files on another drive, then compare your list with the published answers.",
+    "note": "Read the case page first for the exact download names and the file system on RM#2. Check the page's own documentation before you rely on any detail not given here."
+  },
+  "learn": [
+    {"label": "NIST CFReDS: Data Leakage Case", "url": "https://cfreds-archive.nist.gov/data_leakage_case/data-leakage-case.html"},
+    {"label": "Autopsy user documentation: PhotoRec Carver module", "url": "https://www.sleuthkit.org/autopsy/docs/user-docs/4.22.1/photorec_carver_page.html"},
+    {"label": "Autopsy user documentation: the tree viewer and file views", "url": "https://www.sleuthkit.org/autopsy/docs/user-docs/4.22.1/tree_viewer_page.html"},
+    {"label": "CGSecurity: PhotoRec", "url": "https://www.cgsecurity.org/wiki/PhotoRec"},
+    {"label": "bulk_extractor on GitHub", "url": "https://github.com/simsong/bulk_extractor"}
+  ],
+  "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases."
+}

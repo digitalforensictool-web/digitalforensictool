@@ -1,0 +1,101 @@
+{
+  "draft": true,
+  "reviewed": "2026-11-24",
+  "title": "What happened in this network capture?",
+  "short": "First look at a PCAP file",
+  "lead": "A packet capture (PCAP) file is a recording of network traffic. This workflow is a first pass over one: who talked to whom, which protocols were used, what can be read, and which files were sent.",
+  "level": "Beginner to intermediate",
+  "time": "2 hours on a practice capture",
+  "evidence": "A packet capture (PCAP) file",
+  "answers": [
+    "When the capture started and ended, and how big it is",
+    "Which addresses talked to each other, and how much data they exchanged",
+    "Which protocols were used",
+    "What a plain-text conversation said",
+    "Which files were sent over HTTP and can be saved for study"
+  ],
+  "need": [
+    "A PCAP or PCAPNG file, or a practice capture (see the practice section on this page)",
+    "Wireshark installed. NetworkMiner and Zeek are optional",
+    "A virtual machine with no access to your own files, for opening anything exported from the capture"
+  ],
+  "steps": [
+    {
+      "title": "Hash the file first",
+      "text": "Before you open the capture, calculate its hash value (a fixed-length fingerprint of the file) and write it down with the file name and where it came from. Work on a copy and keep the original untouched. Compare your hash with the one published by the data source, if there is one.",
+      "tools": ["quickhash", "hashdeep"]
+    },
+    {
+      "title": "Get the overview",
+      "text": "Open the file in Wireshark. Go to Statistics, then Capture File Properties. Note the first and last packet times, the number of packets, the file format and the link type. This tells you how long the recording is and how much you have to read.",
+      "tools": ["wireshark"]
+    },
+    {
+      "title": "See who talked to whom",
+      "text": "Go to Statistics, then Conversations. Each row is a pair of endpoints, with packet and byte counts. Sort by bytes to find the busiest pairs. Then open Statistics, then Protocol Hierarchy to see which protocols make up the traffic. Write down the top conversations and any protocol you did not expect.",
+      "tools": ["wireshark"],
+      "cmd": "tshark -r capture.pcap -q -z conv,tcp"
+    },
+    {
+      "title": "Narrow down with display filters",
+      "text": "A display filter hides all packets that do not match. Type it in the bar above the packet list. Two simple examples: ip.addr == 192.0.2.10 shows every packet to or from that address, and http.request shows only web requests. Change the address to one you found in step 3.",
+      "tools": ["wireshark"]
+    },
+    {
+      "title": "Follow a stream",
+      "text": "Right-click a packet, or open the Analyze menu, and choose Follow, then TCP Stream. Wireshark joins the packets of one conversation and shows the data in order. You can read it only if the protocol is plain text, such as HTTP. Note the stream number and the packet numbers for your report.",
+      "tools": ["wireshark"]
+    },
+    {
+      "title": "Export files sent over HTTP",
+      "text": "Go to File, then Export Objects, then HTTP. The list shows each file that was sent in a web transfer, with the host name and size. Save the ones you need, calculate their hash values and record them. Do not open an exported file on your normal computer. Use a virtual machine.",
+      "tools": ["wireshark", "hashdeep"],
+      "cmd": "tshark -r capture.pcap --export-objects http,exported_files",
+      "note": "A file saved from a capture can be harmful. Handle it only inside an isolated virtual machine."
+    },
+    {
+      "title": "Get a second view with NetworkMiner and Zeek",
+      "text": "NetworkMiner reads the capture and builds tabs for Hosts and Files, so you can browse the extracted files and the machines it saw. The free edition does not read PCAPNG files, so use a PCAP file or convert it. Zeek, run on the capture, writes text logs such as conn.log for connections, dns.log for name lookups and http.log for web requests.",
+      "tools": ["networkminer", "zeek"],
+      "cmd": "zeek -r capture.pcap"
+    },
+    {
+      "title": "Cross-check and write it down",
+      "text": "Confirm each important fact in two tools, for example a connection in Wireshark and the same one in Zeek conn.log, or an exported file in Wireshark and in NetworkMiner. In your notes, record tool names and versions, the capture hash, packet numbers, and whether times are in UTC or local time.",
+      "tools": ["wireshark", "zeek"]
+    }
+  ],
+  "artifacts": [
+    {"name": "Capture File Properties", "where": "Wireshark, Statistics menu", "tells": "Start and end time, packet count, file format and link type"},
+    {"name": "Conversations", "where": "Wireshark, Statistics menu", "tells": "Pairs of endpoints with packet counts, byte counts and duration"},
+    {"name": "Protocol Hierarchy", "where": "Wireshark, Statistics menu", "tells": "Which protocols make up the traffic, by packets and bytes"},
+    {"name": "Followed stream", "where": "Wireshark, Analyze menu, Follow", "tells": "The data of one conversation in order, readable if it is not encrypted"},
+    {"name": "Exported HTTP objects", "where": "Wireshark, File menu, Export Objects", "tells": "Files sent over HTTP, with host name and size"},
+    {"name": "Zeek logs", "where": "Output folder of the zeek command", "tells": "Connections, name lookups and web requests as text logs"},
+    {"name": "NetworkMiner Hosts and Files tabs", "where": "NetworkMiner window", "tells": "Machines seen in the traffic and files rebuilt from it"}
+  ],
+  "limits": [
+    "Encrypted traffic, such as TLS (HTTPS), hides the content. You can see who talked and how much, but not what was said, unless you have the keys.",
+    "A capture may be incomplete. The recording may have started late, stopped early, missed packets, or been taken at a point that does not see all traffic.",
+    "An IP address is not a person. It can belong to a shared router, a VPN or an open Wi-Fi network, and many devices can sit behind one address (NAT).",
+    "Times come from the clock of the capturing device. If that clock was wrong, the times are wrong, so write down what you know about it.",
+    "An exported file shows that the data crossed the network. It does not show that anyone opened or ran it.",
+    "Tools can disagree on odd or damaged traffic. If two tools give different answers, say so in your notes and explain which one you trust and why."
+  ],
+  "practice": {
+    "name": "Nitroba University Harassment Scenario",
+    "by": "Digital Corpora",
+    "url": "https://digitalcorpora.org/corpora/scenarios/nitroba-university-harassment-scenario/",
+    "text": "A teaching scenario set at a fictional university. A teacher receives harassing emails, and the address in the email headers points to a dorm room that shares an unsecured Wi-Fi router. The page offers one capture, nitroba.pcap, about 60 MB, taken at a network tap, with its MD5, SHA1 and SHA256 hashes listed. Solutions exist, but they are password protected and given only to teachers at accredited schools, so there is no public answer key.",
+    "task": "Download nitroba.pcap and check its SHA256 hash against the page. Then record the start and end time and the packet count, and list the three biggest conversations by bytes. Say in one sentence why the address alone does not tell you who sent the email.",
+    "note": "Read the scenario page and its Terms of Use before you start. The page does not say what kinds of traffic the capture holds, so treat any exported file as untrusted and open it only inside an isolated virtual machine."
+  },
+  "learn": [
+    {"label": "Digital Corpora: Nitroba University Harassment Scenario", "url": "https://digitalcorpora.org/corpora/scenarios/nitroba-university-harassment-scenario/"},
+    {"label": "Wireshark User's Guide: Protocol Hierarchy", "url": "https://www.wireshark.org/docs/wsug_html_chunked/ChStatHierarchy.html"},
+    {"label": "Wireshark User's Guide: Conversations", "url": "https://www.wireshark.org/docs/wsug_html_chunked/ChStatConversations.html"},
+    {"label": "tshark manual page", "url": "https://www.wireshark.org/docs/man-pages/tshark.html"},
+    {"label": "Netresec: NetworkMiner", "url": "https://www.netresec.com/?page=NetworkMiner"}
+  ],
+  "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases."
+}

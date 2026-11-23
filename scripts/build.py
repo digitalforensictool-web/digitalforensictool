@@ -41,6 +41,7 @@ RELDATA = load("releases.json", {"generated": None, "tools": {}})
 REL = RELDATA.get("tools", {})
 
 PREVIEW = "--preview" in sys.argv
+MAX_PER_CATEGORY = 10
 
 
 def load_folder(name):
@@ -899,6 +900,10 @@ def main():
         for c in t["categories"]:
             if c not in CAT:
                 sys.exit("Tool %s uses unknown category %s" % (t["id"], c))
+    for c in CATS:
+        n = sum(1 for t in TOOLS if c["id"] in t["categories"])
+        if n > MAX_PER_CATEGORY:
+            sys.exit("Category %s lists %d tools. The limit is %d, to keep the lists short for students." % (c["id"], n, MAX_PER_CATEGORY))
     for it in INTEG["integrations"] + INTEG.get("open_on_open", []):
         if not it.get("source_url"):
             sys.exit("Integration entry for %s has no source_url. Entries without a source are not published." % it.get("product"))

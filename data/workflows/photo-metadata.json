@@ -1,0 +1,106 @@
+{
+  "draft": true,
+  "reviewed": "2026-11-24",
+  "title": "Where and when was this photo taken?",
+  "short": "Photo location and time (EXIF)",
+  "lead": "Most photos from cameras and phones carry hidden notes inside the file, called metadata. This workflow shows how to read the camera, time and GPS position from a photo, and how to judge how far to trust them.",
+  "level": "Beginner",
+  "time": "1 hour on the practice images",
+  "evidence": "One or more image files (for example JPEG)",
+  "answers": [
+    "Which camera or phone model took the photo",
+    "What date and time the photo says it was taken",
+    "Whether the photo has a GPS position, and where it is on a map",
+    "Which software last saved the file",
+    "Whether there are signs that the picture was edited"
+  ],
+  "need": [
+    "One or more image files, or the practice images described in the practice section",
+    "ExifTool installed (it runs from the command line)",
+    "A map tool such as Google Earth Pro, which is free"
+  ],
+  "steps": [
+    {
+      "title": "Hash the file and work on a copy",
+      "text": "Calculate the hash value of the original file first and write it down. Then copy the file and work only on the copy. After your work, hash the original again. If the two hashes match, you did not change it. Reading metadata does not change a file, but a mistake with a write option could.",
+      "tools": ["quickhash", "hashdeep"]
+    },
+    {
+      "title": "Read all the metadata",
+      "text": "ExifTool prints every tag it can find. The option -a also shows tags that appear more than once, -G1 shows the group each tag comes from, and -s shows short tag names. Save the output to a text file and keep it with your notes. The groups tell you where a value is stored, for example in the EXIF block, the XMP block or the file system.",
+      "tools": ["exiftool"],
+      "cmd": "exiftool -a -G1 -s photo.jpg"
+    },
+    {
+      "title": "Look at the key tags",
+      "text": "Look for Make and Model (the camera or phone), DateTimeOriginal (when the picture was taken), CreateDate and ModifyDate, Software (the program that last saved the file), and the GPS tags such as GPSLatitude and GPSLongitude. Some phones also write OffsetTimeOriginal, which is the time zone offset. Not every file has every tag.",
+      "tools": ["exiftool", "sherloq"]
+    },
+    {
+      "title": "Separate EXIF times from file system times",
+      "text": "EXIF times are written into the file by the camera. File system times, such as created and modified, belong to the file on a disk, and they change when the file is copied, downloaded or saved again. If the two disagree, that is normal. The EXIF time describes the picture. The file system time describes what happened to the file.",
+      "tools": ["exiftool"],
+      "note": "ExifTool shows file system times in its File group. Do not mix them up with the EXIF group."
+    },
+    {
+      "title": "Think about time zones",
+      "text": "DateTimeOriginal usually has no time zone. It shows the time on the camera clock, which may be local time or may be wrong. GPS time tags (GPSDateStamp and GPSTimeStamp) are in UTC, the world time standard. If a photo has both, compare them to estimate the time zone and the clock error. Write your reasoning in your notes.",
+      "tools": ["exiftool"],
+      "cmd": "exiftool -n -GPSLatitude -GPSLongitude -GPSDateStamp -GPSTimeStamp photo.jpg"
+    },
+    {
+      "title": "Check the embedded thumbnail",
+      "text": "Many photos contain a small preview picture inside the file. Some editing programs change the main picture and leave the old thumbnail. If the thumbnail shows something different from the full picture, the main image may have been edited. Extract the thumbnail with ExifTool and look at it next to the photo.",
+      "tools": ["exiftool"],
+      "cmd": "exiftool -b -ThumbnailImage photo.jpg > thumb.jpg"
+    },
+    {
+      "title": "Put the GPS position on a map",
+      "text": "Copy the latitude and longitude as decimal numbers. Negative values mean south or west. Type them into Google Earth Pro and look at the place. GPSBabel can convert GPS data between formats, which helps when you have many photos and want to see them all on one map. Check whether the place makes sense for the scene in the picture.",
+      "tools": ["google-earth-pro", "gpsbabel"]
+    },
+    {
+      "title": "Look for signs of editing",
+      "text": "A Software tag with an editing program, a ModifyDate later than DateTimeOriginal, or a missing thumbnail are hints, not proof. Image analysis tools can add more hints. Error level analysis highlights areas that were saved a different number of times. Clone detection looks for copied areas. These tools give leads that you must explain in your own words.",
+      "tools": ["sherloq", "forensically", "fotoforensics"],
+      "note": "FotoForensics is a web service. Do not upload evidence from a real case to a public website."
+    },
+    {
+      "title": "Cross-check and write it down",
+      "text": "Compare the metadata with other facts: the picture itself, other photos from the same device, and the place on the map. Where possible, read the metadata with a second tool as well. In your notes, record the tool names and versions, the file name and hash, the time zone you assumed, and what you could not confirm.",
+      "tools": ["exiftool", "sherloq"]
+    }
+  ],
+  "artifacts": [
+    {"name": "Make and Model", "where": "EXIF block of the image file", "tells": "The camera or phone that wrote the file"},
+    {"name": "DateTimeOriginal", "where": "EXIF block", "tells": "Camera clock time when the picture was taken, usually without a time zone"},
+    {"name": "GPSLatitude and GPSLongitude", "where": "EXIF GPS block", "tells": "The position the device recorded, if location was on"},
+    {"name": "GPSDateStamp and GPSTimeStamp", "where": "EXIF GPS block", "tells": "The date and time from the GPS receiver, in UTC"},
+    {"name": "Software", "where": "EXIF block", "tells": "The program or firmware that last saved the file"},
+    {"name": "Embedded thumbnail", "where": "EXIF block (ThumbnailImage)", "tells": "A small preview that may differ from the main image if it was edited"},
+    {"name": "File system times", "where": "The disk that holds the file", "tells": "When the file was created, changed or copied on that disk"}
+  ],
+  "limits": [
+    "Metadata is easy to edit or remove. A tag you read is what the file says, not proof of what happened.",
+    "Messaging apps and social networks often remove metadata or change it when a photo is uploaded or sent. A copy from such a source may show nothing.",
+    "The camera clock may be wrong, or set to another time zone. A correct-looking time is not proof that the clock was right.",
+    "Metadata shows a device, not the person who took the photo or who owned the device.",
+    "A missing GPS position or missing tags prove nothing. Location may have been switched off, or the data may have been removed.",
+    "A GPS position can be off by many metres, and it can be a stored position from earlier rather than one fixed at the moment of the shot.",
+    "Editing hints from error level analysis can be wrong. Treat them as leads."
+  ],
+  "practice": {
+    "name": "exif-samples (sample images for Exif testing)",
+    "by": "ianare and contributors, on GitHub",
+    "url": "https://github.com/ianare/exif-samples",
+    "text": "A public repository of sample images made to test Exif metadata readers. It is archived, so it is read-only, and its README says that contributed images are under the CC BY-SA 4.0 licence. The jpg folder holds files from many camera makers, and a gps folder described as holding images with GPS Exif information. The jpg folder README says the pictures were scaled down and that the Exif data was left unchanged except for the Software field. No answer sheet is published.",
+    "task": "Download a few files from the jpg/gps folder. For each, run the ExifTool command from step 2, then write down the camera make and model, the original date and time, and the GPS position. Plot one position in Google Earth Pro. Then compare the Canon_40D.jpg file with Canon_40D_photoshop_import.jpg and note which tags differ.",
+    "note": "Check the repository's own README files for what each sample contains. Not every file has GPS data."
+  },
+  "learn": [
+    {"label": "ExifTool documentation", "url": "https://exiftool.org/exiftool_pod.html"},
+    {"label": "ExifTool sample images page", "url": "https://exiftool.org/sample_images.html"},
+    {"label": "exif-samples on GitHub", "url": "https://github.com/ianare/exif-samples"}
+  ],
+  "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases."
+}

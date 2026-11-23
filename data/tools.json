@@ -403,7 +403,6 @@
   "url": "https://www.nirsoft.net/",
   "type": "free-closed",
   "categories": [
-   "windows",
    "browser"
   ],
   "interface": "GUI",
@@ -420,8 +419,6 @@
   "url": "https://learn.microsoft.com/sysinternals/",
   "type": "free-closed",
   "categories": [
-   "windows",
-   "malware",
    "incident-response"
   ],
   "interface": "GUI",
@@ -512,8 +509,7 @@
   "type": "open-source",
   "categories": [
    "memory",
-   "linux",
-   "android"
+   "linux"
   ],
   "interface": "CLI",
   "level": "advanced",
@@ -657,8 +653,7 @@
   "type": "open-source",
   "categories": [
    "android",
-   "ios",
-   "malware"
+   "ios"
   ],
   "interface": "Web",
   "level": "intermediate",
@@ -676,8 +671,7 @@
   "repo": "skylot/jadx",
   "type": "open-source",
   "categories": [
-   "android",
-   "malware"
+   "android"
   ],
   "interface": "Both",
   "level": "intermediate",
@@ -888,8 +882,7 @@
   "repo": "jamf/aftermath",
   "type": "open-source",
   "categories": [
-   "macos",
-   "incident-response"
+   "macos"
   ],
   "interface": "CLI",
   "level": "intermediate",
@@ -905,8 +898,7 @@
   "repo": "objective-see/KnockKnock",
   "type": "open-source",
   "categories": [
-   "macos",
-   "malware"
+   "macos"
   ],
   "interface": "GUI",
   "level": "beginner",
@@ -1107,8 +1099,7 @@
   "repo": "WithSecureOpenSource/chainsaw",
   "type": "open-source",
   "categories": [
-   "logs",
-   "windows"
+   "logs"
   ],
   "interface": "CLI",
   "level": "intermediate",
@@ -1160,8 +1151,7 @@
   "repo": "sans-blue-team/DeepBlueCLI",
   "type": "open-source",
   "categories": [
-   "logs",
-   "windows"
+   "logs"
   ],
   "interface": "CLI",
   "level": "beginner",
@@ -1271,8 +1261,7 @@
   "repo": "Neo23x0/Loki",
   "type": "open-source",
   "categories": [
-   "incident-response",
-   "malware"
+   "incident-response"
   ],
   "interface": "CLI",
   "level": "intermediate",
@@ -1290,7 +1279,6 @@
   "repo": "dfir-iris/iris-web",
   "type": "open-source",
   "categories": [
-   "incident-response",
    "case-management"
   ],
   "interface": "Web",
@@ -1384,7 +1372,6 @@
   "repo": "mandiant/flare-floss",
   "type": "open-source",
   "categories": [
-   "malware",
    "string-search"
   ],
   "interface": "CLI",
@@ -1395,28 +1382,6 @@
    "macOS"
   ],
   "summary": "Extracts obfuscated and stack strings from malware that the normal strings tool misses."
- },
- {
-  "id": "cutter",
-  "name": "Cutter",
-  "developer": "Rizin project",
-  "repo": "rizinorg/cutter",
-  "type": "open-source",
-  "categories": [
-   "malware"
-  ],
-  "interface": "GUI",
-  "level": "intermediate",
-  "platforms": [
-   "Windows",
-   "Linux",
-   "macOS"
-  ],
-  "summary": "A graphical reverse engineering platform built on Rizin, with an integrated decompiler.",
-  "similar_to": [
-   "IDA Pro",
-   "Binary Ninja"
-  ]
  },
  {
   "id": "x64dbg",
@@ -1453,26 +1418,6 @@
   "summary": "Identifies file types, compilers and packers."
  },
  {
-  "id": "capev2",
-  "name": "CAPEv2",
-  "developer": "Kevin O'Reilly and community",
-  "repo": "kevoreilly/CAPEv2",
-  "type": "open-source",
-  "categories": [
-   "malware"
-  ],
-  "interface": "Web",
-  "level": "advanced",
-  "platforms": [
-   "Linux"
-  ],
-  "summary": "A malware sandbox that runs samples, records behaviour and extracts configurations.",
-  "similar_to": [
-   "Joe Sandbox",
-   "ANY.RUN"
-  ]
- },
- {
   "id": "oletools",
   "name": "oletools",
   "developer": "Philippe Lagadec",
@@ -1491,57 +1436,6 @@
   ],
   "summary": "Analyses Microsoft Office documents for macros, embedded objects and other risky content.",
   "install": "pip install oletools"
- },
- {
-  "id": "didier-stevens-suite",
-  "name": "Didier Stevens Suite",
-  "developer": "Didier Stevens",
-  "repo": "DidierStevens/DidierStevensSuite",
-  "type": "open-source",
-  "categories": [
-   "malware"
-  ],
-  "interface": "CLI",
-  "level": "intermediate",
-  "platforms": [
-   "Windows",
-   "Linux",
-   "macOS"
-  ],
-  "summary": "A collection of small tools for analysing PDFs, Office documents and other suspicious files."
- },
- {
-  "id": "system-informer",
-  "name": "System Informer",
-  "developer": "Winsider Seminars & Solutions",
-  "repo": "winsiderss/systeminformer",
-  "type": "open-source",
-  "categories": [
-   "malware",
-   "windows"
-  ],
-  "interface": "GUI",
-  "level": "intermediate",
-  "platforms": [
-   "Windows"
-  ],
-  "summary": "A detailed process and system monitor, formerly known as Process Hacker."
- },
- {
-  "id": "dnspy",
-  "name": "dnSpyEx",
-  "developer": "dnSpyEx project",
-  "repo": "dnSpyEx/dnSpy",
-  "type": "open-source",
-  "categories": [
-   "malware"
-  ],
-  "interface": "GUI",
-  "level": "advanced",
-  "platforms": [
-   "Windows"
-  ],
-  "summary": "A decompiler and debugger for .NET programs."
  },
  {
   "id": "pestudio",
@@ -1764,7 +1658,6 @@
   "type": "open-source",
   "categories": [
    "database",
-   "android",
    "ios"
   ],
   "interface": "GUI",
@@ -2001,8 +1894,7 @@
   "repo": "bee-san/Name-That-Hash",
   "type": "open-source",
   "categories": [
-   "passwords",
-   "utilities"
+   "passwords"
   ],
   "interface": "CLI",
   "level": "beginner",
@@ -2400,8 +2292,7 @@
   "repo": "WerWolv/ImHex",
   "type": "open-source",
   "categories": [
-   "utilities",
-   "malware"
+   "utilities"
   ],
   "interface": "GUI",
   "level": "intermediate",
@@ -2437,8 +2328,7 @@
   "repo": "ssdeep-project/ssdeep",
   "type": "open-source",
   "categories": [
-   "utilities",
-   "malware"
+   "utilities"
   ],
   "interface": "CLI",
   "level": "intermediate",
@@ -2791,8 +2681,7 @@
   "repo": "bepaald/signalbackup-tools",
   "type": "open-source",
   "categories": [
-   "messaging",
-   "android"
+   "messaging"
   ],
   "interface": "CLI",
   "level": "advanced",
@@ -3020,8 +2909,7 @@
   "repo": "cyb3rfox/Aurora-Incident-Response",
   "type": "open-source",
   "categories": [
-   "case-management",
-   "incident-response"
+   "case-management"
   ],
   "interface": "GUI",
   "level": "beginner",
