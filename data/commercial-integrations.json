@@ -1,0 +1,83 @@
+{
+  "rule": "An entry is published only with a link to the vendor's own page. Wording stays neutral and describes only what the source says.",
+  "integrations": [
+    {
+      "product": "Magnet AXIOM",
+      "vendor": "Magnet Forensics",
+      "relation": "runs",
+      "open_source": "Volatility",
+      "tool_ids": ["volatility3", "volatility2"],
+      "statement": "Since AXIOM 2.0, memory analysis integrates core Volatility plugins behind the AXIOM interface.",
+      "source_label": "Magnet Forensics blog",
+      "source_url": "https://www.magnetforensics.com/blog/magnet-axiom-memory-analysis-faq/",
+      "checked": "2026-11-23"
+    },
+    {
+      "product": "Magnet AXIOM Cyber",
+      "vendor": "Magnet Forensics",
+      "relation": "runs",
+      "open_source": "YARA rules",
+      "tool_ids": ["yara"],
+      "statement": "AXIOM Cyber processes evidence with YARA rules, ships with a set of common rules and can sync rule repositories from Git.",
+      "source_label": "Magnet Forensics blog",
+      "source_url": "https://www.magnetforensics.com/blog/yara-rule-processing-in-magnet-axiom-cyber/",
+      "checked": "2026-11-23"
+    },
+    {
+      "product": "Belkasoft X",
+      "vendor": "Belkasoft",
+      "relation": "accepts",
+      "open_source": "YARA and Sigma rules",
+      "tool_ids": ["yara", "sigma"],
+      "statement": "Standard YARA and Sigma rules can be imported and run against evidence. The vendor lists YARA under the X Corporate edition.",
+      "source_label": "Belkasoft walkthrough",
+      "source_url": "https://belkasoft.com/walkthrough-sigma-rules-in-belkasoft-x",
+      "checked": "2026-11-23"
+    },
+    {
+      "product": "Binalyze AIR",
+      "vendor": "Binalyze",
+      "relation": "runs",
+      "open_source": "YARA, Sigma and osquery",
+      "tool_ids": ["yara", "sigma", "osquery"],
+      "statement": "AIR performs triage across many assets using YARA, Sigma and osquery rules.",
+      "source_label": "Binalyze knowledge base",
+      "source_url": "https://kb.binalyze.com/",
+      "checked": "2026-11-23"
+    },
+    {
+      "product": "Rapid7 InsightIDR",
+      "vendor": "Rapid7",
+      "relation": "includes",
+      "open_source": "Velociraptor",
+      "tool_ids": ["velociraptor"],
+      "statement": "InsightIDR Ultimate customers get a version of the open-source Velociraptor tool integrated with the Rapid7 agent.",
+      "source_label": "Rapid7 documentation",
+      "source_url": "https://docs.rapid7.com/insightidr/velociraptor-integration/",
+      "checked": "2026-11-23"
+    },
+    {
+      "product": "KAPE",
+      "vendor": "Kroll",
+      "relation": "ships with",
+      "open_source": "Eric Zimmerman's command-line tools",
+      "tool_ids": ["ez-tools", "mftecmd", "recmd", "evtxecmd", "pecmd", "sqlecmd"],
+      "statement": "KAPE keeps the EZ Tools binaries in its Modules folder and runs them as modules to parse what it collects. KAPE itself is free for many uses but is not open source.",
+      "source_label": "Kroll KAPE quarterly update",
+      "source_url": "https://www.kroll.com/en/publications/cyber/kape-quarterly-update-q4-2021",
+      "checked": "2026-11-23"
+    }
+  ],
+  "open_on_open": [
+    {
+      "product": "Autopsy",
+      "relation": "builds on",
+      "open_source": "The Sleuth Kit, Plaso and iLEAPP",
+      "tool_ids": ["sleuthkit", "plaso", "ileapp", "aleapp"],
+      "statement": "Autopsy describes itself as a graphical platform for The Sleuth Kit and other tools. Its standard ingest modules include a Plaso module for timelines and an iOS analyser based on iLEAPP.",
+      "source_label": "Autopsy user documentation",
+      "source_url": "https://sleuthkit.org/autopsy/docs/user-docs/4.23.0/quick_start_guide.html",
+      "checked": "2026-11-23"
+    }
+  ]
+}

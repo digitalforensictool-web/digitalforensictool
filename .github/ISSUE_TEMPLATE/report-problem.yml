@@ -1,0 +1,30 @@
+name: Report a problem
+description: A broken link, a wrong fact, or a request to correct or remove an entry
+title: "Problem on page: "
+labels: ["correction"]
+body:
+  - type: input
+    id: page
+    attributes:
+      label: Which tool or page?
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of problem?
+      options:
+        - Broken or wrong download link
+        - Wrong fact (developer, licence, description)
+        - Wrong statement about a commercial product
+        - I own this tool or trademark and want the entry changed or removed
+        - Something else
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: What is wrong, and what is correct?
+      description: A link to an official source helps us fix it quickly.
+    validations:
+      required: true

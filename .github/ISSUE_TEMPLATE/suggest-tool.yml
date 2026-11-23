@@ -1,0 +1,49 @@
+name: Suggest a tool
+description: Propose a free or open-source forensic tool for the directory
+title: "Tool suggestion: "
+labels: ["tool-suggestion"]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Tool name
+    validations:
+      required: true
+  - type: input
+    id: link
+    attributes:
+      label: Official repository or website
+      description: The developer's own page, not a mirror or a blog post.
+      placeholder: https://github.com/owner/project
+    validations:
+      required: true
+  - type: dropdown
+    id: licence
+    attributes:
+      label: Licence
+      options:
+        - Open source
+        - Free, closed source
+        - Not sure
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What does it do, in one or two sentences?
+    validations:
+      required: true
+  - type: input
+    id: category
+    attributes:
+      label: Which category fits best?
+      placeholder: For example, Memory forensics
+  - type: checkboxes
+    id: rules
+    attributes:
+      label: Checks
+      options:
+        - label: It is free to download and use for learning.
+          required: true
+        - label: It is not malware, an exploit kit, cracked software or a licence-bypass tool.
+          required: true

@@ -1,0 +1,9 @@
+[
+  {"name": "NIST CFReDS", "by": "NIST", "url": "https://cfreds.nist.gov/", "what": "Reference data sets with documented contents, made for testing tools and practising examinations."},
+  {"name": "Digital Corpora", "by": "Digital Corpora project", "url": "https://digitalcorpora.org/", "what": "Disk images, memory dumps, network captures and scenario data sets for education and research."},
+  {"name": "MemLabs", "by": "stuxnet999", "url": "https://github.com/stuxnet999/MemLabs", "what": "A series of capture-the-flag style labs for learning memory forensics."},
+  {"name": "DFIR Artifact Museum", "by": "Andrew Rathbun and contributors", "url": "https://github.com/AndrewRathbun/DFIRArtifactMuseum", "what": "A community archive of sample artifacts from many operating systems."},
+  {"name": "EVTX-ATTACK-SAMPLES", "by": "Samir Bousseaden", "url": "https://github.com/sbousseaden/EVTX-ATTACK-SAMPLES", "what": "Windows event log samples for known attack techniques, good for testing log hunting tools."},
+  {"name": "CyberDefenders", "by": "CyberDefenders", "url": "https://cyberdefenders.org/", "what": "Blue-team challenges with downloadable evidence. Some labs are free."},
+  {"name": "NIST Computer Forensics Tool Testing (CFTT)", "by": "NIST", "url": "https://www.nist.gov/itl/ssd/software-quality-group/computer-forensics-tool-testing-program-cftt", "what": "Test reports and methods for validating forensic tools. Read these before trusting any tool in a real case."}
+]

@@ -1,0 +1,18 @@
+{
+  "name": "Digital Forensic Tools",
+  "tagline": "Free directory for digital forensics students",
+  "description": "A free, category-wise directory of open-source and free digital forensics tools: what each one does, who built it, where to download it, and which commercial product does a similar job.",
+  "domain": "digitalforensictool.org",
+  "base_url": "https://digitalforensictool.org",
+  "github_repo": "digitalforensictool-web/digitalforensictool",
+  "maintainer": "",
+  "contact_email": "",
+  "featured": [
+    "autopsy",
+    "volatility3",
+    "iped",
+    "aleapp",
+    "ez-tools",
+    "wireshark"
+  ]
+}

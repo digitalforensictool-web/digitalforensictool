@@ -1,0 +1,21 @@
+name: Keep scheduled updates running
+
+# GitHub pauses scheduled workflows on repositories with no activity for 60 days.
+# This re-enables the daily update once a month so it never stops silently.
+
+on:
+  schedule:
+    - cron: "41 3 1 * *"
+  workflow_dispatch:
+
+permissions:
+  actions: write
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Re-enable the update workflow
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh api -X PUT "repos/${{ github.repository }}/actions/workflows/update.yml/enable"

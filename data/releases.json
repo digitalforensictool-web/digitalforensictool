@@ -1,0 +1,610 @@
+{
+ "generated": "2026-11-23T18:26:33Z",
+ "tools": {
+  "aleapp": {
+   "repo": "abrignoni/ALEAPP",
+   "full_name": "abrignoni/ALEAPP",
+   "repo_mismatch": false,
+   "stars": 1055,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T18:11:59Z",
+   "checked": "2026-11-23T18:26:33Z",
+   "release": {
+    "tag": "v2026.4.5",
+    "name": "ALEAPP v2026.4.5",
+    "published_at": "2026-11-03T07:22:49Z",
+    "url": "https://github.com/abrignoni/ALEAPP/releases/tag/v2026.4.5",
+    "assets": {
+     "windows": {
+      "name": "ALEAPP-2026.4.5-windows-x64-portable.zip",
+      "url": "https://github.com/abrignoni/ALEAPP/releases/download/v2026.4.5/ALEAPP-2026.4.5-windows-x64-portable.zip",
+      "size": 57358460
+     },
+     "macos": {
+      "name": "ALEAPP-2026.4.5-macos-x64.dmg",
+      "url": "https://github.com/abrignoni/ALEAPP/releases/download/v2026.4.5/ALEAPP-2026.4.5-macos-x64.dmg",
+      "size": 54638745
+     },
+     "linux": {
+      "name": "ALEAPP-2026.4.5-linux-x64.AppImage",
+      "url": "https://github.com/abrignoni/ALEAPP/releases/download/v2026.4.5/ALEAPP-2026.4.5-linux-x64.AppImage",
+      "size": 81660408
+     }
+    }
+   }
+  },
+  "arsenal-image-mounter": {
+   "repo": "ArsenalRecon/Arsenal-Image-Mounter",
+   "full_name": "ArsenalRecon/Arsenal-Image-Mounter",
+   "repo_mismatch": false,
+   "stars": 821,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-17T15:40:29Z",
+   "checked": "2026-11-23T18:22:23Z",
+   "release": null
+  },
+  "autopsy": {
+   "repo": "sleuthkit/autopsy",
+   "full_name": "sleuthkit/autopsy",
+   "repo_mismatch": false,
+   "stars": 3462,
+   "license": null,
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-06-20T05:43:47Z",
+   "checked": "2026-11-23T18:26:33Z",
+   "release": {
+    "tag": "autopsy-4.23.1",
+    "name": "Autopsy 4.23.1",
+    "published_at": "2026-05-07T15:23:27Z",
+    "url": "https://github.com/sleuthkit/autopsy/releases/tag/autopsy-4.23.1",
+    "assets": {
+     "windows": {
+      "name": "autopsy-4.23.1-64bit.msi",
+      "url": "https://github.com/sleuthkit/autopsy/releases/download/autopsy-4.23.1/autopsy-4.23.1-64bit.msi",
+      "size": 1289204224
+     }
+    }
+   }
+  },
+  "avml": {
+   "repo": "microsoft/avml",
+   "full_name": "microsoft/avml",
+   "repo_mismatch": false,
+   "stars": 1137,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-20T22:22:44Z",
+   "checked": "2026-11-23T18:26:33Z",
+   "release": {
+    "tag": "v0.21.0",
+    "name": "v0.21.0",
+    "published_at": "2026-10-09T18:56:06Z",
+    "url": "https://github.com/microsoft/avml/releases/tag/v0.21.0",
+    "assets": {
+     "windows": {
+      "name": "avml.exe",
+      "url": "https://github.com/microsoft/avml/releases/download/v0.21.0/avml.exe",
+      "size": 1290752
+     }
+    }
+   }
+  },
+  "chainsaw": {
+   "repo": "WithSecureOpenSource/chainsaw",
+   "full_name": "WithSecureOpenSource/chainsaw",
+   "repo_mismatch": false,
+   "stars": 3734,
+   "license": "GPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-15T13:59:27Z",
+   "checked": "2026-11-23T18:26:33Z",
+   "release": {
+    "tag": "v2.18.0",
+    "name": "v2.18.0",
+    "published_at": "2026-11-15T14:01:23Z",
+    "url": "https://github.com/WithSecureOpenSource/chainsaw/releases/tag/v2.18.0",
+    "assets": {
+     "windows": {
+      "name": "chainsaw_x86_64-pc-windows-msvc.zip",
+      "url": "https://github.com/WithSecureOpenSource/chainsaw/releases/download/v2.18.0/chainsaw_x86_64-pc-windows-msvc.zip",
+      "size": 3594680
+     },
+     "macos": {
+      "name": "chainsaw_x86_64-apple-darwin.zip",
+      "url": "https://github.com/WithSecureOpenSource/chainsaw/releases/download/v2.18.0/chainsaw_x86_64-apple-darwin.zip",
+      "size": 3331421
+     },
+     "linux": {
+      "name": "chainsaw_x86_64-unknown-linux-gnu.tar.gz",
+      "url": "https://github.com/WithSecureOpenSource/chainsaw/releases/download/v2.18.0/chainsaw_x86_64-unknown-linux-gnu.tar.gz",
+      "size": 3735220
+     }
+    }
+   }
+  },
+  "cyberchef": {
+   "repo": "gchq/CyberChef",
+   "full_name": "gchq/CyberChef",
+   "repo_mismatch": false,
+   "stars": 36508,
+   "license": "Apache-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-20T17:23:18Z",
+   "checked": "2026-11-23T18:26:33Z",
+   "release": {
+    "tag": "v11.6.0",
+    "name": "",
+    "published_at": "2026-11-20T17:36:54Z",
+    "url": "https://github.com/gchq/CyberChef/releases/tag/v11.6.0",
+    "assets": {}
+   }
+  },
+  "db4s": {
+   "repo": "sqlitebrowser/sqlitebrowser",
+   "full_name": "sqlitebrowser/sqlitebrowser",
+   "repo_mismatch": false,
+   "stars": 24827,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T00:18:05Z",
+   "checked": "2026-11-23T18:26:33Z",
+   "release": {
+    "tag": "v3.13.1",
+    "name": "DB Browser for SQLite v3.13.1",
+    "published_at": "2024-10-16T08:42:55Z",
+    "url": "https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/v3.13.1",
+    "assets": {
+     "windows": {
+      "name": "DB.Browser.for.SQLite-v3.13.1-win64.msi",
+      "url": "https://github.com/sqlitebrowser/sqlitebrowser/releases/download/v3.13.1/DB.Browser.for.SQLite-v3.13.1-win64.msi",
+      "size": 19857408
+     },
+     "macos": {
+      "name": "DB.Browser.for.SQLite-v3.13.1.dmg",
+      "url": "https://github.com/sqlitebrowser/sqlitebrowser/releases/download/v3.13.1/DB.Browser.for.SQLite-v3.13.1.dmg",
+      "size": 45618256
+     },
+     "linux": {
+      "name": "DB.Browser.for.SQLite-v3.13.1-x86.64-v2.AppImage",
+      "url": "https://github.com/sqlitebrowser/sqlitebrowser/releases/download/v3.13.1/DB.Browser.for.SQLite-v3.13.1-x86.64-v2.AppImage",
+      "size": 36705472
+     }
+    }
+   }
+  },
+  "dcfldd": {
+   "repo": "resurrecting-open-source-projects/dcfldd",
+   "full_name": "resurrecting-open-source-projects/dcfldd",
+   "repo_mismatch": false,
+   "stars": 130,
+   "license": "GPL-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2025-06-01T23:55:07Z",
+   "checked": "2026-11-23T18:22:23Z",
+   "release": {
+    "tag": "v1.9.3",
+    "name": "",
+    "published_at": "2025-06-02T00:07:22Z",
+    "url": "https://github.com/resurrecting-open-source-projects/dcfldd/releases/tag/v1.9.3",
+    "assets": {}
+   }
+  },
+  "exiftool": {
+   "repo": "exiftool/exiftool",
+   "full_name": "exiftool/exiftool",
+   "repo_mismatch": false,
+   "stars": 5298,
+   "license": "GPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-16T15:33:33Z",
+   "checked": "2026-11-23T18:26:33Z",
+   "release": null
+  },
+  "ghidra": {
+   "repo": "NationalSecurityAgency/ghidra",
+   "full_name": "NationalSecurityAgency/ghidra",
+   "repo_mismatch": false,
+   "stars": 101087,
+   "license": "Apache-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T12:41:40Z",
+   "checked": "2026-11-23T18:26:33Z",
+   "release": {
+    "tag": "Ghidra_12.2_build",
+    "name": "Ghidra 12.2",
+    "published_at": "2026-10-22T08:31:12Z",
+    "url": "https://github.com/NationalSecurityAgency/ghidra/releases/tag/Ghidra_12.2_build",
+    "assets": {}
+   }
+  },
+  "hashcat": {
+   "repo": "hashcat/hashcat",
+   "full_name": "hashcat/hashcat",
+   "repo_mismatch": false,
+   "stars": 27407,
+   "license": null,
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T18:10:42Z",
+   "checked": "2026-11-23T18:26:33Z",
+   "release": {
+    "tag": "v8.0.0",
+    "name": "hashcat v8.0.0",
+    "published_at": "2026-10-25T20:09:20Z",
+    "url": "https://github.com/hashcat/hashcat/releases/tag/v8.0.0",
+    "assets": {}
+   }
+  },
+  "hayabusa": {
+   "repo": "Yamato-Security/hayabusa",
+   "full_name": "Yamato-Security/hayabusa",
+   "repo_mismatch": false,
+   "stars": 3509,
+   "license": "AGPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-10T12:24:39Z",
+   "checked": "2026-11-23T18:26:33Z",
+   "release": {
+    "tag": "v4.4.0",
+    "name": "v4.4.0 - CODE BLUE Release",
+    "published_at": "2026-11-10T10:39:02Z",
+    "url": "https://github.com/Yamato-Security/hayabusa/releases/tag/v4.4.0",
+    "assets": {
+     "windows": {
+      "name": "hayabusa-4.4.0-win-x64.zip",
+      "url": "https://github.com/Yamato-Security/hayabusa/releases/download/v4.4.0/hayabusa-4.4.0-win-x64.zip",
+      "size": 16472955
+     },
+     "macos": {
+      "name": "hayabusa-4.4.0-mac-x64.zip",
+      "url": "https://github.com/Yamato-Security/hayabusa/releases/download/v4.4.0/hayabusa-4.4.0-mac-x64.zip",
+      "size": 17557244
+     },
+     "linux": {
+      "name": "hayabusa-4.4.0-lin-x64-gnu.zip",
+      "url": "https://github.com/Yamato-Security/hayabusa/releases/download/v4.4.0/hayabusa-4.4.0-lin-x64-gnu.zip",
+      "size": 18476382
+     }
+    }
+   }
+  },
+  "ileapp": {
+   "repo": "abrignoni/iLEAPP",
+   "full_name": "abrignoni/iLEAPP",
+   "repo_mismatch": false,
+   "stars": 1472,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T18:22:08Z",
+   "checked": "2026-11-23T18:26:33Z",
+   "release": {
+    "tag": "v2026.4.6",
+    "name": "iLEAPP v2026.4.6",
+    "published_at": "2026-11-03T07:12:50Z",
+    "url": "https://github.com/abrignoni/iLEAPP/releases/tag/v2026.4.6",
+    "assets": {
+     "windows": {
+      "name": "iLEAPP-2026.4.6-windows-x64-portable.zip",
+      "url": "https://github.com/abrignoni/iLEAPP/releases/download/v2026.4.6/iLEAPP-2026.4.6-windows-x64-portable.zip",
+      "size": 74060588
+     },
+     "macos": {
+      "name": "iLEAPP-2026.4.6-macos-x64.dmg",
+      "url": "https://github.com/abrignoni/iLEAPP/releases/download/v2026.4.6/iLEAPP-2026.4.6-macos-x64.dmg",
+      "size": 70401621
+     },
+     "linux": {
+      "name": "iLEAPP-2026.4.6-linux-x64.AppImage",
+      "url": "https://github.com/abrignoni/iLEAPP/releases/download/v2026.4.6/iLEAPP-2026.4.6-linux-x64.AppImage",
+      "size": 94149112
+     }
+    }
+   }
+  },
+  "imhex": {
+   "repo": "WerWolv/ImHex",
+   "full_name": "WerWolv/ImHex",
+   "repo_mismatch": false,
+   "stars": 56023,
+   "license": "GPL-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T16:58:23Z",
+   "checked": "2026-11-23T18:26:33Z",
+   "release": {
+    "tag": "v1.38.1",
+    "name": "Windows installer, data inspector edit and updater fixes",
+    "published_at": "2025-12-21T18:57:18Z",
+    "url": "https://github.com/WerWolv/ImHex/releases/tag/v1.38.1",
+    "assets": {
+     "windows": {
+      "name": "imhex-1.38.1-Windows-x86_64.msi",
+      "url": "https://github.com/WerWolv/ImHex/releases/download/v1.38.1/imhex-1.38.1-Windows-x86_64.msi",
+      "size": 38244352
+     },
+     "macos": {
+      "name": "imhex-1.38.1-macOS-x86_64.dmg",
+      "url": "https://github.com/WerWolv/ImHex/releases/download/v1.38.1/imhex-1.38.1-macOS-x86_64.dmg",
+      "size": 41642477
+     },
+     "linux": {
+      "name": "imhex-1.38.1-x86_64.AppImage",
+      "url": "https://github.com/WerWolv/ImHex/releases/download/v1.38.1/imhex-1.38.1-x86_64.AppImage",
+      "size": 189676024
+     }
+    }
+   }
+  },
+  "iped": {
+   "repo": "sepinf-inc/IPED",
+   "full_name": "sepinf-inc/IPED",
+   "repo_mismatch": false,
+   "stars": 3107,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T16:31:59Z",
+   "checked": "2026-11-23T18:26:33Z",
+   "release": {
+    "tag": "4.3.1",
+    "name": "Minor release",
+    "published_at": "2026-03-29T01:03:02Z",
+    "url": "https://github.com/sepinf-inc/IPED/releases/tag/4.3.1",
+    "assets": {}
+   }
+  },
+  "jadx": {
+   "repo": "skylot/jadx",
+   "full_name": "skylot/jadx",
+   "repo_mismatch": false,
+   "stars": 51967,
+   "license": "Apache-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-20T22:40:54Z",
+   "checked": "2026-11-23T18:26:33Z",
+   "release": {
+    "tag": "v1.5.7",
+    "name": "1.5.7",
+    "published_at": "2026-11-18T20:44:35Z",
+    "url": "https://github.com/skylot/jadx/releases/tag/v1.5.7",
+    "assets": {
+     "windows": {
+      "name": "jadx-gui-1.5.7.msi",
+      "url": "https://github.com/skylot/jadx/releases/download/v1.5.7/jadx-gui-1.5.7.msi",
+      "size": 97857173
+     },
+     "macos": {
+      "name": "jadx-gui-1.5.7-mac-x86_64.dmg",
+      "url": "https://github.com/skylot/jadx/releases/download/v1.5.7/jadx-gui-1.5.7-mac-x86_64.dmg",
+      "size": 106608317
+     }
+    }
+   }
+  },
+  "libewf": {
+   "repo": "libyal/libewf",
+   "full_name": "libyal/libewf",
+   "repo_mismatch": false,
+   "stars": 320,
+   "license": "LGPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-17T18:27:21Z",
+   "checked": "2026-11-23T18:22:23Z",
+   "release": null
+  },
+  "memprocfs": {
+   "repo": "ufrisk/MemProcFS",
+   "full_name": "ufrisk/MemProcFS",
+   "repo_mismatch": false,
+   "stars": 4431,
+   "license": "AGPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-14T23:00:55Z",
+   "checked": "2026-11-23T18:26:33Z",
+   "release": {
+    "tag": "v5.19",
+    "name": "Version 5.19",
+    "published_at": "2026-10-05T17:38:01Z",
+    "url": "https://github.com/ufrisk/MemProcFS/releases/tag/v5.19",
+    "assets": {
+     "macos": {
+      "name": "MemProcFS_files_and_binaries_v5.19.4-macOS-20261114.zip",
+      "url": "https://github.com/ufrisk/MemProcFS/releases/download/v5.19/MemProcFS_files_and_binaries_v5.19.4-macOS-20261114.zip",
+      "size": 11875614
+     },
+     "linux": {
+      "name": "MemProcFS_files_and_binaries_v5.19.4-linux_x64-20261114.tar.gz",
+      "url": "https://github.com/ufrisk/MemProcFS/releases/download/v5.19/MemProcFS_files_and_binaries_v5.19.4-linux_x64-20261114.tar.gz",
+      "size": 5974334
+     }
+    }
+   }
+  },
+  "mftecmd": {
+   "repo": "EricZimmerman/MFTECmd",
+   "full_name": "EricZimmerman/MFTECmd",
+   "repo_mismatch": false,
+   "stars": 346,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-21T19:57:45Z",
+   "checked": "2026-11-23T18:26:33Z",
+   "release": {
+    "tag": "2026.10.1",
+    "name": "2026.10.1",
+    "published_at": "2026-10-16T13:50:40Z",
+    "url": "https://github.com/EricZimmerman/MFTECmd/releases/tag/2026.10.1",
+    "assets": {}
+   }
+  },
+  "testdisk": {
+   "repo": "cgsecurity/testdisk",
+   "full_name": "cgsecurity/testdisk",
+   "repo_mismatch": false,
+   "stars": 2697,
+   "license": "GPL-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-15T18:52:44Z",
+   "checked": "2026-11-23T18:26:33Z",
+   "release": null
+  },
+  "velociraptor": {
+   "repo": "Velocidex/velociraptor",
+   "full_name": "Velocidex/velociraptor",
+   "repo_mismatch": false,
+   "stars": 4508,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T00:20:26Z",
+   "checked": "2026-11-23T18:26:33Z",
+   "release": {
+    "tag": "v0.77.4",
+    "name": "Release 0.77.4",
+    "published_at": "2026-11-23T00:20:26Z",
+    "url": "https://github.com/Velocidex/velociraptor/releases/tag/v0.77.4",
+    "assets": {
+     "windows": {
+      "name": "velociraptor-v0.77.4-windows-amd64.msi",
+      "url": "https://github.com/Velocidex/velociraptor/releases/download/v0.77.4/velociraptor-v0.77.4-windows-amd64.msi",
+      "size": 29097984
+     },
+     "macos": {
+      "name": "velociraptor-v0.77.4-darwin-amd64.gz",
+      "url": "https://github.com/Velocidex/velociraptor/releases/download/v0.77.4/velociraptor-v0.77.4-darwin-amd64.gz",
+      "size": 28754067
+     },
+     "linux": {
+      "name": "velociraptor-v0.77.4-linux-amd64.gz",
+      "url": "https://github.com/Velocidex/velociraptor/releases/download/v0.77.4/velociraptor-v0.77.4-linux-amd64.gz",
+      "size": 30819627
+     }
+    }
+   }
+  },
+  "volatility3": {
+   "repo": "volatilityfoundation/volatility3",
+   "full_name": "volatilityfoundation/volatility3",
+   "repo_mismatch": false,
+   "stars": 4619,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-22T11:42:33Z",
+   "checked": "2026-11-23T18:26:33Z",
+   "release": {
+    "tag": "v2.28.2",
+    "name": "Volatility 3 2.28.2",
+    "published_at": "2026-09-17T19:47:09Z",
+    "url": "https://github.com/volatilityfoundation/volatility3/releases/tag/v2.28.2",
+    "assets": {
+     "windows": {
+      "name": "volatility3-win-exes-2.28.2.zip",
+      "url": "https://github.com/volatilityfoundation/volatility3/releases/download/v2.28.2/volatility3-win-exes-2.28.2.zip",
+      "size": 43727508
+     }
+    }
+   }
+  },
+  "winpmem": {
+   "repo": "Velocidex/WinPmem",
+   "full_name": "Velocidex/WinPmem",
+   "repo_mismatch": false,
+   "stars": 1080,
+   "license": "Apache-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-10-21T10:43:02Z",
+   "checked": "2026-11-23T18:26:33Z",
+   "release": {
+    "tag": "v4.0.rc1",
+    "name": "Release 4.0 RC2",
+    "published_at": "2020-10-12T01:09:16Z",
+    "url": "https://github.com/Velocidex/WinPmem/releases/tag/v4.0.rc1",
+    "assets": {}
+   }
+  },
+  "zircolite": {
+   "repo": "wagga40/Zircolite",
+   "full_name": "wagga40/Zircolite",
+   "repo_mismatch": false,
+   "stars": 880,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T09:27:45Z",
+   "checked": "2026-11-23T18:26:33Z",
+   "release": {
+    "tag": "v4.8.0",
+    "name": "v4.8.0",
+    "published_at": "2026-11-22T18:44:12Z",
+    "url": "https://github.com/wagga40/Zircolite/releases/tag/v4.8.0",
+    "assets": {
+     "windows": {
+      "name": "Zircolite-4.8.0-windows-x64.zip",
+      "url": "https://github.com/wagga40/Zircolite/releases/download/v4.8.0/Zircolite-4.8.0-windows-x64.zip",
+      "size": 78741174
+     },
+     "macos": {
+      "name": "Zircolite-4.8.0-macos-arm64.zip",
+      "url": "https://github.com/wagga40/Zircolite/releases/download/v4.8.0/Zircolite-4.8.0-macos-arm64.zip",
+      "size": 79993363
+     },
+     "linux": {
+      "name": "Zircolite-4.8.0-linux-x64.zip",
+      "url": "https://github.com/wagga40/Zircolite/releases/download/v4.8.0/Zircolite-4.8.0-linux-x64.zip",
+      "size": 96588259
+     }
+    }
+   }
+  },
+  "zui": {
+   "repo": "superdb/zui",
+   "full_name": "superdb/zui",
+   "repo_mismatch": false,
+   "stars": 1985,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-08-22T19:09:57Z",
+   "checked": "2026-11-23T18:26:33Z",
+   "release": {
+    "tag": "v1.18.0",
+    "name": "v1.18.0",
+    "published_at": "2024-09-23T20:44:34Z",
+    "url": "https://github.com/superdb/zui/releases/tag/v1.18.0",
+    "assets": {
+     "windows": {
+      "name": "Zui-Setup-1.18.0.exe",
+      "url": "https://github.com/superdb/zui/releases/download/v1.18.0/Zui-Setup-1.18.0.exe",
+      "size": 164721960
+     },
+     "macos": {
+      "name": "Zui-1.18.0-x64.dmg",
+      "url": "https://github.com/superdb/zui/releases/download/v1.18.0/Zui-1.18.0-x64.dmg",
+      "size": 260701478
+     }
+    }
+   }
+  }
+ }
+}
