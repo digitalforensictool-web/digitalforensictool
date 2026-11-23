@@ -1,6 +1,48 @@
 {
- "generated": "2026-11-23T18:26:33Z",
+ "generated": "2026-11-23T18:50:40Z",
  "tools": {
+  "acquire": {
+   "repo": "fox-it/acquire",
+   "full_name": "fox-it/acquire",
+   "repo_mismatch": false,
+   "stars": 122,
+   "license": "AGPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-08-12T10:24:34Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "3.22",
+    "name": "3.22",
+    "published_at": "2026-02-26T12:30:23Z",
+    "url": "https://github.com/fox-it/acquire/releases/tag/3.22",
+    "assets": {}
+   }
+  },
+  "aftermath": {
+   "repo": "jamf/aftermath",
+   "full_name": "jamf/aftermath",
+   "repo_mismatch": false,
+   "stars": 604,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2025-09-25T20:43:46Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v2.3.0",
+    "name": "2.3.0",
+    "published_at": "2025-09-25T20:43:46Z",
+    "url": "https://github.com/jamf/aftermath/releases/tag/v2.3.0",
+    "assets": {
+     "macos": {
+      "name": "aftermath-2.3.0.pkg",
+      "url": "https://github.com/jamf/aftermath/releases/download/v2.3.0/aftermath-2.3.0.pkg",
+      "size": 576385
+     }
+    }
+   }
+  },
   "aleapp": {
    "repo": "abrignoni/ALEAPP",
    "full_name": "abrignoni/ALEAPP",
@@ -10,7 +52,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-23T18:11:59Z",
-   "checked": "2026-11-23T18:26:33Z",
+   "checked": "2026-11-23T18:50:40Z",
    "release": {
     "tag": "v2026.4.5",
     "name": "ALEAPP v2026.4.5",
@@ -35,6 +77,196 @@
     }
    }
   },
+  "alex": {
+   "repo": "prosch88/ALEX",
+   "full_name": "prosch88/ALEX",
+   "repo_mismatch": false,
+   "stars": 132,
+   "license": "GPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-21T15:55:54Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v0.7",
+    "name": "ALEX 0.7",
+    "published_at": "2026-10-16T19:24:56Z",
+    "url": "https://github.com/prosch88/ALEX/releases/tag/v0.7",
+    "assets": {
+     "windows": {
+      "name": "ALEX_0.7_win_x64.zip",
+      "url": "https://github.com/prosch88/ALEX/releases/download/v0.7/ALEX_0.7_win_x64.zip",
+      "size": 89085206
+     },
+     "macos": {
+      "name": "ALEX_0.7_mac_x64.zip",
+      "url": "https://github.com/prosch88/ALEX/releases/download/v0.7/ALEX_0.7_mac_x64.zip",
+      "size": 103881387
+     },
+     "linux": {
+      "name": "ALEX_0.7_lin_x64.zip",
+      "url": "https://github.com/prosch88/ALEX/releases/download/v0.7/ALEX_0.7_lin_x64.zip",
+      "size": 123772174
+     }
+    }
+   }
+  },
+  "analyzemft": {
+   "repo": "rowingdude/analyzeMFT",
+   "full_name": "rowingdude/analyzeMFT",
+   "repo_mismatch": false,
+   "stars": 537,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-07-06T01:24:00Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v3.1.1.0",
+    "name": "v3.1.1.0",
+    "published_at": "2025-08-13T15:44:07Z",
+    "url": "https://github.com/rowingdude/analyzeMFT/releases/tag/v3.1.1.0",
+    "assets": {}
+   }
+  },
+  "andriller": {
+   "repo": "den4uk/andriller",
+   "full_name": "den4uk/andriller",
+   "repo_mismatch": false,
+   "stars": 1630,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2022-06-27T22:00:44Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "3.6.3",
+    "name": "3.6.3",
+    "published_at": "2022-04-30T14:57:06Z",
+    "url": "https://github.com/den4uk/andriller/releases/tag/3.6.3",
+    "assets": {}
+   }
+  },
+  "android-triage": {
+   "repo": "RealityNet/android_triage",
+   "full_name": "RealityNet/android_triage",
+   "repo_mismatch": false,
+   "stars": 312,
+   "license": null,
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2022-10-28T14:43:33Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
+  "apktool": {
+   "repo": "iBotPeaches/Apktool",
+   "full_name": "iBotPeaches/Apktool",
+   "repo_mismatch": false,
+   "stars": 27349,
+   "license": "Apache-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T09:04:23Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v3.0.3",
+    "name": "v3.0.3",
+    "published_at": "2026-07-20T10:37:54Z",
+    "url": "https://github.com/iBotPeaches/Apktool/releases/tag/v3.0.3",
+    "assets": {}
+   }
+  },
+  "apollo": {
+   "repo": "mac4n6/APOLLO",
+   "full_name": "mac4n6/APOLLO",
+   "repo_mismatch": false,
+   "stars": 652,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2024-02-25T01:12:28Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
+  "apple-cloud-notes-parser": {
+   "repo": "threeplanetssoftware/apple_cloud_notes_parser",
+   "full_name": "threeplanetssoftware/apple_cloud_notes_parser",
+   "repo_mismatch": false,
+   "stars": 546,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-07-25T12:25:27Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v0.24",
+    "name": "Apple Cloud Notes Parser v0.24",
+    "published_at": "2026-07-25T12:19:52Z",
+    "url": "https://github.com/threeplanetssoftware/apple_cloud_notes_parser/releases/tag/v0.24",
+    "assets": {}
+   }
+  },
+  "apt-hunter": {
+   "repo": "ahmedkhlief/APT-Hunter",
+   "full_name": "ahmedkhlief/APT-Hunter",
+   "repo_mismatch": false,
+   "stars": 1435,
+   "license": "GPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-09-20T13:51:23Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "V4.0",
+    "name": "APT-Hunter V4.0",
+    "published_at": "2026-09-20T13:51:23Z",
+    "url": "https://github.com/ahmedkhlief/APT-Hunter/releases/tag/V4.0",
+    "assets": {
+     "windows": {
+      "name": "APT-Hunter.exe",
+      "url": "https://github.com/ahmedkhlief/APT-Hunter/releases/download/V4.0/APT-Hunter.exe",
+      "size": 41241903
+     }
+    }
+   }
+  },
+  "archivebox": {
+   "repo": "ArchiveBox/ArchiveBox",
+   "full_name": "ArchiveBox/ArchiveBox",
+   "repo_mismatch": false,
+   "stars": 29083,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T18:50:50Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v0.9.77",
+    "name": "v0.9.77: Reliable setup, extension updates, and faster browsing",
+    "published_at": "2026-10-27T22:10:48Z",
+    "url": "https://github.com/ArchiveBox/ArchiveBox/releases/tag/v0.9.77",
+    "assets": {}
+   }
+  },
+  "arkime": {
+   "repo": "arkime/arkime",
+   "full_name": "arkime/arkime",
+   "repo_mismatch": false,
+   "stars": 7585,
+   "license": "Apache-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-22T00:00:19Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v6.9.2",
+    "name": "v6.9.2",
+    "published_at": "2026-11-12T14:58:26Z",
+    "url": "https://github.com/arkime/arkime/releases/tag/v6.9.2",
+    "assets": {}
+   }
+  },
   "arsenal-image-mounter": {
    "repo": "ArsenalRecon/Arsenal-Image-Mounter",
    "full_name": "ArsenalRecon/Arsenal-Image-Mounter",
@@ -44,8 +276,37 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-17T15:40:29Z",
-   "checked": "2026-11-23T18:22:23Z",
+   "checked": "2026-11-23T18:50:40Z",
    "release": null
+  },
+  "audacity": {
+   "repo": "audacity/audacity",
+   "full_name": "audacity/audacity",
+   "repo_mismatch": false,
+   "stars": 19151,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T12:51:09Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "Audacity-4.0.2",
+    "name": "Audacity 4.0.2",
+    "published_at": "2026-11-02T10:01:34Z",
+    "url": "https://github.com/audacity/audacity/releases/tag/Audacity-4.0.2",
+    "assets": {
+     "windows": {
+      "name": "audacity-win-4.0.2-x86_64.msi",
+      "url": "https://github.com/audacity/audacity/releases/download/Audacity-4.0.2/audacity-win-4.0.2-x86_64.msi",
+      "size": 49823744
+     },
+     "linux": {
+      "name": "audacity-linux-4.0.2-x86_64.AppImage",
+      "url": "https://github.com/audacity/audacity/releases/download/Audacity-4.0.2/audacity-linux-4.0.2-x86_64.AppImage",
+      "size": 73726456
+     }
+    }
+   }
   },
   "autopsy": {
    "repo": "sleuthkit/autopsy",
@@ -56,7 +317,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-06-20T05:43:47Z",
-   "checked": "2026-11-23T18:26:33Z",
+   "checked": "2026-11-23T18:50:40Z",
    "release": {
     "tag": "autopsy-4.23.1",
     "name": "Autopsy 4.23.1",
@@ -71,6 +332,24 @@
     }
    }
   },
+  "avilla": {
+   "repo": "AvillaDaniel/AvillaForensics",
+   "full_name": "AvillaDaniel/AvillaForensics",
+   "repo_mismatch": false,
+   "stars": 1159,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-04-04T18:02:34Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "FREE",
+    "name": "AVILLA FORENSICS FREE",
+    "published_at": "2026-04-04T18:04:10Z",
+    "url": "https://github.com/AvillaDaniel/AvillaForensics/releases/tag/FREE",
+    "assets": {}
+   }
+  },
   "avml": {
    "repo": "microsoft/avml",
    "full_name": "microsoft/avml",
@@ -80,7 +359,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-20T22:22:44Z",
-   "checked": "2026-11-23T18:26:33Z",
+   "checked": "2026-11-23T18:50:40Z",
    "release": {
     "tag": "v0.21.0",
     "name": "v0.21.0",
@@ -95,6 +374,195 @@
     }
    }
   },
+  "binwalk": {
+   "repo": "ReFirmLabs/binwalk",
+   "full_name": "ReFirmLabs/binwalk",
+   "repo_mismatch": false,
+   "stars": 14735,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-08-11T15:27:34Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v3.1.0",
+    "name": "Binwalk v3.1.0",
+    "published_at": "2024-10-31T14:54:21Z",
+    "url": "https://github.com/ReFirmLabs/binwalk/releases/tag/v3.1.0",
+    "assets": {}
+   }
+  },
+  "bip39": {
+   "repo": "iancoleman/bip39",
+   "full_name": "iancoleman/bip39",
+   "repo_mismatch": false,
+   "stars": 4374,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2024-04-28T01:42:14Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "0.5.6",
+    "name": "0.5.6",
+    "published_at": "2023-08-01T04:00:06Z",
+    "url": "https://github.com/iancoleman/bip39/releases/tag/0.5.6",
+    "assets": {}
+   }
+  },
+  "bitcracker": {
+   "repo": "e-ago/bitcracker",
+   "full_name": "e-ago/bitcracker",
+   "repo_mismatch": false,
+   "stars": 982,
+   "license": "GPL-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2024-05-31T07:22:11Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
+  "bstrings": {
+   "repo": "EricZimmerman/bstrings",
+   "full_name": "EricZimmerman/bstrings",
+   "repo_mismatch": false,
+   "stars": 152,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-21T13:58:58Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
+  "btcrecover": {
+   "repo": "3rdIteration/btcrecover",
+   "full_name": "3rdIteration/btcrecover",
+   "repo_mismatch": false,
+   "stars": 911,
+   "license": "GPL-2.0",
+   "archived": false,
+   "fork": true,
+   "pushed_at": "2026-11-03T00:19:46Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "1.12.0",
+    "name": "1.12 - Routine Release",
+    "published_at": "2023-06-19T15:31:59Z",
+    "url": "https://github.com/3rdIteration/btcrecover/releases/tag/1.12.0",
+    "assets": {}
+   }
+  },
+  "bulk-extractor": {
+   "repo": "simsong/bulk_extractor",
+   "full_name": "simsong/bulk_extractor",
+   "repo_mismatch": false,
+   "stars": 1451,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-10-12T00:57:41Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v2.2.0",
+    "name": "BE v2.2.0",
+    "published_at": "2026-08-18T10:20:24Z",
+    "url": "https://github.com/simsong/bulk_extractor/releases/tag/v2.2.0",
+    "assets": {
+     "windows": {
+      "name": "bulk_extractor64.exe",
+      "url": "https://github.com/simsong/bulk_extractor/releases/download/v2.2.0/bulk_extractor64.exe",
+      "size": 97268659
+     },
+     "linux": {
+      "name": "bulk-extractor_2.2.0_amd64.snap",
+      "url": "https://github.com/simsong/bulk_extractor/releases/download/v2.2.0/bulk-extractor_2.2.0_amd64.snap",
+      "size": 17244160
+     }
+    }
+   }
+  },
+  "can-utils": {
+   "repo": "linux-can/can-utils",
+   "full_name": "linux-can/can-utils",
+   "repo_mismatch": false,
+   "stars": 2964,
+   "license": null,
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-10-14T19:27:44Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v2025.01",
+    "name": "can-utils v2025.01 ",
+    "published_at": "2025-01-28T13:20:19Z",
+    "url": "https://github.com/linux-can/can-utils/releases/tag/v2025.01",
+    "assets": {}
+   }
+  },
+  "capa": {
+   "repo": "mandiant/capa",
+   "full_name": "mandiant/capa",
+   "repo_mismatch": false,
+   "stars": 6357,
+   "license": "Apache-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-10T16:01:01Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v10.0.0",
+    "name": "v10.0.0",
+    "published_at": "2026-10-16T14:03:38Z",
+    "url": "https://github.com/mandiant/capa/releases/tag/v10.0.0",
+    "assets": {
+     "windows": {
+      "name": "capa-v10.0.0-windows.zip",
+      "url": "https://github.com/mandiant/capa/releases/download/v10.0.0/capa-v10.0.0-windows.zip",
+      "size": 36108928
+     },
+     "macos": {
+      "name": "capa-v10.0.0-macos-arm64.zip",
+      "url": "https://github.com/mandiant/capa/releases/download/v10.0.0/capa-v10.0.0-macos-arm64.zip",
+      "size": 35952584
+     },
+     "linux": {
+      "name": "capa-v10.0.0-linux.zip",
+      "url": "https://github.com/mandiant/capa/releases/download/v10.0.0/capa-v10.0.0-linux.zip",
+      "size": 47594454
+     }
+    }
+   }
+  },
+  "capev2": {
+   "repo": "kevoreilly/CAPEv2",
+   "full_name": "kevoreilly/CAPEv2",
+   "repo_mismatch": false,
+   "stars": 3702,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T18:18:43Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
+  "ccl-chromium-reader": {
+   "repo": "cclgroupltd/ccl_chromium_reader",
+   "full_name": "cclgroupltd/ccl_chromium_reader",
+   "repo_mismatch": false,
+   "stars": 262,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T17:18:21Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "0.3.19b",
+    "name": "v0.3.19",
+    "published_at": "2026-10-28T11:31:20Z",
+    "url": "https://github.com/cclgroupltd/ccl_chromium_reader/releases/tag/0.3.19b",
+    "assets": {}
+   }
+  },
   "chainsaw": {
    "repo": "WithSecureOpenSource/chainsaw",
    "full_name": "WithSecureOpenSource/chainsaw",
@@ -104,7 +572,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-15T13:59:27Z",
-   "checked": "2026-11-23T18:26:33Z",
+   "checked": "2026-11-23T18:50:40Z",
    "release": {
     "tag": "v2.18.0",
     "name": "v2.18.0",
@@ -129,22 +597,124 @@
     }
    }
   },
+  "cloudgrep": {
+   "repo": "cado-security/cloudgrep",
+   "full_name": "cado-security/cloudgrep",
+   "repo_mismatch": false,
+   "stars": 337,
+   "license": "Apache-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-03-14T12:41:34Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v105",
+    "name": "v1.0.5",
+    "published_at": "2023-12-04T14:14:50Z",
+    "url": "https://github.com/cado-security/cloudgrep/releases/tag/v105",
+    "assets": {
+     "windows": {
+      "name": "dist-windows.zip",
+      "url": "https://github.com/cado-security/cloudgrep/releases/download/v105/dist-windows.zip",
+      "size": 24303468
+     },
+     "macos": {
+      "name": "dist-osx.zip",
+      "url": "https://github.com/cado-security/cloudgrep/releases/download/v105/dist-osx.zip",
+      "size": 24511600
+     },
+     "linux": {
+      "name": "dist-linux.zip",
+      "url": "https://github.com/cado-security/cloudgrep/releases/download/v105/dist-linux.zip",
+      "size": 35095840
+     }
+    }
+   }
+  },
+  "cutter": {
+   "repo": "rizinorg/cutter",
+   "full_name": "rizinorg/cutter",
+   "repo_mismatch": false,
+   "stars": 20255,
+   "license": "GPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T14:16:07Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v2.5.0",
+    "name": "2.5.0",
+    "published_at": "2026-06-30T18:37:00Z",
+    "url": "https://github.com/rizinorg/cutter/releases/tag/v2.5.0",
+    "assets": {
+     "windows": {
+      "name": "Cutter-v2.5.0-Windows-x86_64.zip",
+      "url": "https://github.com/rizinorg/cutter/releases/download/v2.5.0/Cutter-v2.5.0-Windows-x86_64.zip",
+      "size": 140530846
+     },
+     "macos": {
+      "name": "Cutter-v2.5.0-macOS-x86_64.dmg",
+      "url": "https://github.com/rizinorg/cutter/releases/download/v2.5.0/Cutter-v2.5.0-macOS-x86_64.dmg",
+      "size": 124647134
+     },
+     "linux": {
+      "name": "Cutter-v2.5.0-Linux-x86_64.AppImage",
+      "url": "https://github.com/rizinorg/cutter/releases/download/v2.5.0/Cutter-v2.5.0-Linux-x86_64.AppImage",
+      "size": 144423416
+     }
+    }
+   }
+  },
   "cyberchef": {
    "repo": "gchq/CyberChef",
    "full_name": "gchq/CyberChef",
    "repo_mismatch": false,
-   "stars": 36508,
+   "stars": 36509,
    "license": "Apache-2.0",
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-20T17:23:18Z",
-   "checked": "2026-11-23T18:26:33Z",
+   "checked": "2026-11-23T18:50:40Z",
    "release": {
     "tag": "v11.6.0",
     "name": "",
     "published_at": "2026-11-20T17:36:54Z",
     "url": "https://github.com/gchq/CyberChef/releases/tag/v11.6.0",
     "assets": {}
+   }
+  },
+  "cylr": {
+   "repo": "orlikoski/CyLR",
+   "full_name": "orlikoski/CyLR",
+   "repo_mismatch": false,
+   "stars": 747,
+   "license": "GPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2022-06-01T23:24:42Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "2.2.0",
+    "name": "CyLR 3.0",
+    "published_at": "2021-02-03T16:50:54Z",
+    "url": "https://github.com/orlikoski/CyLR/releases/tag/2.2.0",
+    "assets": {
+     "windows": {
+      "name": "CyLR_win-x64.zip",
+      "url": "https://github.com/orlikoski/CyLR/releases/download/2.2.0/CyLR_win-x64.zip",
+      "size": 22357214
+     },
+     "macos": {
+      "name": "CyLR_osx-x64.zip",
+      "url": "https://github.com/orlikoski/CyLR/releases/download/2.2.0/CyLR_osx-x64.zip",
+      "size": 23837466
+     },
+     "linux": {
+      "name": "CyLR_linux-x64.zip",
+      "url": "https://github.com/orlikoski/CyLR/releases/download/2.2.0/CyLR_linux-x64.zip",
+      "size": 24322807
+     }
+    }
    }
   },
   "db4s": {
@@ -156,7 +726,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-23T00:18:05Z",
-   "checked": "2026-11-23T18:26:33Z",
+   "checked": "2026-11-23T18:50:40Z",
    "release": {
     "tag": "v3.13.1",
     "name": "DB Browser for SQLite v3.13.1",
@@ -181,6 +751,35 @@
     }
    }
   },
+  "dbeaver": {
+   "repo": "dbeaver/dbeaver",
+   "full_name": "dbeaver/dbeaver",
+   "repo_mismatch": false,
+   "stars": 52513,
+   "license": "Apache-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T18:04:50Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "26.2.5",
+    "name": "26.2.5",
+    "published_at": "2026-11-15T18:39:18Z",
+    "url": "https://github.com/dbeaver/dbeaver/releases/tag/26.2.5",
+    "assets": {
+     "windows": {
+      "name": "dbeaver-ce-26.2.5-windows-x86_64.exe",
+      "url": "https://github.com/dbeaver/dbeaver/releases/download/26.2.5/dbeaver-ce-26.2.5-windows-x86_64.exe",
+      "size": 114998288
+     },
+     "macos": {
+      "name": "dbeaver-ce-26.2.5-macos-x86_64.dmg",
+      "url": "https://github.com/dbeaver/dbeaver/releases/download/26.2.5/dbeaver-ce-26.2.5-macos-x86_64.dmg",
+      "size": 125824381
+     }
+    }
+   }
+  },
   "dcfldd": {
    "repo": "resurrecting-open-source-projects/dcfldd",
    "full_name": "resurrecting-open-source-projects/dcfldd",
@@ -190,12 +789,321 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2025-06-01T23:55:07Z",
-   "checked": "2026-11-23T18:22:23Z",
+   "checked": "2026-11-23T18:50:40Z",
    "release": {
     "tag": "v1.9.3",
     "name": "",
     "published_at": "2025-06-02T00:07:22Z",
     "url": "https://github.com/resurrecting-open-source-projects/dcfldd/releases/tag/v1.9.3",
+    "assets": {}
+   }
+  },
+  "deepbluecli": {
+   "repo": "sans-blue-team/DeepBlueCLI",
+   "full_name": "sans-blue-team/DeepBlueCLI",
+   "repo_mismatch": false,
+   "stars": 2446,
+   "license": "GPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2023-10-14T17:06:57Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
+  "detect-it-easy": {
+   "repo": "horsicq/Detect-It-Easy",
+   "full_name": "horsicq/Detect-It-Easy",
+   "repo_mismatch": false,
+   "stars": 11994,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T16:07:43Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
+  "dfir-orc": {
+   "repo": "DFIR-ORC/dfir-orc",
+   "full_name": "DFIR-ORC/dfir-orc",
+   "repo_mismatch": false,
+   "stars": 456,
+   "license": "LGPL-2.1",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-10-08T16:54:41Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v10.4.0",
+    "name": "v10.4.0",
+    "published_at": "2026-10-08T17:28:34Z",
+    "url": "https://github.com/DFIR-ORC/dfir-orc/releases/tag/v10.4.0",
+    "assets": {}
+   }
+  },
+  "dfirtriage": {
+   "repo": "travisfoley/dfirtriage",
+   "full_name": "travisfoley/dfirtriage",
+   "repo_mismatch": false,
+   "stars": 347,
+   "license": "Unlicense",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2024-05-07T13:55:15Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "6.0",
+    "name": "DFIRtriage v6.0:  December 2023",
+    "published_at": "2024-05-07T13:55:15Z",
+    "url": "https://github.com/travisfoley/dfirtriage/releases/tag/6.0",
+    "assets": {}
+   }
+  },
+  "dftimewolf": {
+   "repo": "log2timeline/dftimewolf",
+   "full_name": "log2timeline/dftimewolf",
+   "repo_mismatch": false,
+   "stars": 362,
+   "license": "Apache-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T01:48:44Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
+  "didier-stevens-suite": {
+   "repo": "DidierStevens/DidierStevensSuite",
+   "full_name": "DidierStevens/DidierStevensSuite",
+   "repo_mismatch": false,
+   "stars": 2581,
+   "license": null,
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-10-13T16:35:12Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
+  "dislocker": {
+   "repo": "Aorimn/dislocker",
+   "full_name": "Aorimn/dislocker",
+   "repo_mismatch": false,
+   "stars": 1960,
+   "license": "GPL-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-10-21T12:00:55Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
+  "dissect": {
+   "repo": "fox-it/dissect",
+   "full_name": "fox-it/dissect",
+   "repo_mismatch": false,
+   "stars": 1188,
+   "license": "AGPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-01T12:49:11Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "3.22",
+    "name": "3.22",
+    "published_at": "2026-02-26T16:12:00Z",
+    "url": "https://github.com/fox-it/dissect/releases/tag/3.22",
+    "assets": {}
+   }
+  },
+  "dji-log-parser": {
+   "repo": "lvauvillier/dji-log-parser",
+   "full_name": "lvauvillier/dji-log-parser",
+   "repo_mismatch": false,
+   "stars": 125,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2025-06-07T10:02:17Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v0.5.7",
+    "name": "v0.5.7",
+    "published_at": "2025-04-26T13:02:12Z",
+    "url": "https://github.com/lvauvillier/dji-log-parser/releases/tag/v0.5.7",
+    "assets": {
+     "windows": {
+      "name": "dji-log-x86_64-pc-windows-msvc.zip",
+      "url": "https://github.com/lvauvillier/dji-log-parser/releases/download/v0.5.7/dji-log-x86_64-pc-windows-msvc.zip",
+      "size": 1431617
+     },
+     "linux": {
+      "name": "dji-log-x86_64-unknown-linux-gnu.tar.gz",
+      "url": "https://github.com/lvauvillier/dji-log-parser/releases/download/v0.5.7/dji-log-x86_64-unknown-linux-gnu.tar.gz",
+      "size": 1635967
+     }
+    }
+   }
+  },
+  "dnspy": {
+   "repo": "dnSpyEx/dnSpy",
+   "full_name": "dnSpyEx/dnSpy",
+   "repo_mismatch": false,
+   "stars": 11522,
+   "license": "GPL-3.0",
+   "archived": false,
+   "fork": true,
+   "pushed_at": "2026-11-21T13:55:07Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v6.6.0",
+    "name": "v6.6.0",
+    "published_at": "2026-06-20T17:07:02Z",
+    "url": "https://github.com/dnSpyEx/dnSpy/releases/tag/v6.6.0",
+    "assets": {
+     "windows": {
+      "name": "dnSpy-net-win64.zip",
+      "url": "https://github.com/dnSpyEx/dnSpy/releases/download/v6.6.0/dnSpy-net-win64.zip",
+      "size": 99558585
+     }
+    }
+   }
+  },
+  "docker-explorer": {
+   "repo": "google/docker-explorer",
+   "full_name": "google/docker-explorer",
+   "repo_mismatch": false,
+   "stars": 553,
+   "license": "Apache-2.0",
+   "archived": true,
+   "fork": false,
+   "pushed_at": "2024-10-04T07:44:31Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
+  "drop": {
+   "repo": "BiTLab-BaggiliTruthLab/DROP",
+   "full_name": "BiTLab-BaggiliTruthLab/DROP",
+   "repo_mismatch": false,
+   "stars": 55,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2022-08-30T09:53:09Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
+  "dumpzilla": {
+   "repo": "Busindre/dumpzilla",
+   "full_name": "Busindre/dumpzilla",
+   "repo_mismatch": false,
+   "stars": 149,
+   "license": null,
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2025-12-09T15:28:51Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
+  "emba": {
+   "repo": "e-m-b-a/emba",
+   "full_name": "e-m-b-a/emba",
+   "repo_mismatch": false,
+   "stars": 3782,
+   "license": "GPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T08:10:17Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v2.0.5-ice-edt",
+    "name": "EMBA v2.0.5 - Iced latte edt.",
+    "published_at": "2026-11-03T09:20:59Z",
+    "url": "https://github.com/e-m-b-a/emba/releases/tag/v2.0.5-ice-edt",
+    "assets": {}
+   }
+  },
+  "eml-analyzer": {
+   "repo": "wahlflo/eml_analyzer",
+   "full_name": "wahlflo/eml_analyzer",
+   "repo_mismatch": false,
+   "stars": 123,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2023-08-04T20:33:40Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v3.0.0",
+    "name": "v3.0.0",
+    "published_at": "2023-08-04T18:57:30Z",
+    "url": "https://github.com/wahlflo/eml_analyzer/releases/tag/v3.0.0",
+    "assets": {}
+   }
+  },
+  "esplora": {
+   "repo": "Blockstream/esplora",
+   "full_name": "Blockstream/esplora",
+   "repo_mismatch": false,
+   "stars": 1277,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T14:23:50Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "esplora_v3.0.0",
+    "name": "esplora_v3.0.0",
+    "published_at": "2026-08-24T19:49:04Z",
+    "url": "https://github.com/Blockstream/esplora/releases/tag/esplora_v3.0.0",
+    "assets": {}
+   }
+  },
+  "evtx-rs": {
+   "repo": "omerbenamram/evtx",
+   "full_name": "omerbenamram/evtx",
+   "repo_mismatch": false,
+   "stars": 982,
+   "license": "Apache-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-14T21:35:00Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v0.15.1",
+    "name": "v0.15.1",
+    "published_at": "2026-11-01T07:38:51Z",
+    "url": "https://github.com/omerbenamram/evtx/releases/tag/v0.15.1",
+    "assets": {
+     "windows": {
+      "name": "evtx_dump-v0.15.1.exe",
+      "url": "https://github.com/omerbenamram/evtx/releases/download/v0.15.1/evtx_dump-v0.15.1.exe",
+      "size": 2400768
+     },
+     "macos": {
+      "name": "evtx_dump-v0.15.1-x86_64-apple-darwin",
+      "url": "https://github.com/omerbenamram/evtx/releases/download/v0.15.1/evtx_dump-v0.15.1-x86_64-apple-darwin",
+      "size": 2950616
+     },
+     "linux": {
+      "name": "evtx_dump-v0.15.1-x86_64-unknown-linux-gnu",
+      "url": "https://github.com/omerbenamram/evtx/releases/download/v0.15.1/evtx_dump-v0.15.1-x86_64-unknown-linux-gnu",
+      "size": 3363448
+     }
+    }
+   }
+  },
+  "evtxecmd": {
+   "repo": "EricZimmerman/evtx",
+   "full_name": "EricZimmerman/evtx",
+   "repo_mismatch": false,
+   "stars": 380,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-21T13:59:03Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "2026.11.1",
+    "name": "2026.11.1",
+    "published_at": "2026-11-21T01:32:15Z",
+    "url": "https://github.com/EricZimmerman/evtx/releases/tag/2026.11.1",
     "assets": {}
    }
   },
@@ -208,24 +1116,243 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-16T15:33:33Z",
-   "checked": "2026-11-23T18:26:33Z",
+   "checked": "2026-11-23T18:50:40Z",
    "release": null
+  },
+  "fact": {
+   "repo": "fkie-cad/FACT_core",
+   "full_name": "fkie-cad/FACT_core",
+   "repo_mismatch": false,
+   "stars": 1477,
+   "license": "GPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-18T12:34:31Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v4.4.1",
+    "name": "FACT_core v4.4.1",
+    "published_at": "2026-09-14T15:03:03Z",
+    "url": "https://github.com/fkie-cad/FACT_core/releases/tag/v4.4.1",
+    "assets": {}
+   }
+  },
+  "fakenet-ng": {
+   "repo": "mandiant/flare-fakenet-ng",
+   "full_name": "mandiant/flare-fakenet-ng",
+   "repo_mismatch": false,
+   "stars": 2227,
+   "license": "Apache-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-10-30T08:05:36Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v3.5",
+    "name": "FakeNet-NG 3.5",
+    "published_at": "2025-04-09T15:52:48Z",
+    "url": "https://github.com/mandiant/flare-fakenet-ng/releases/tag/v3.5",
+    "assets": {}
+   }
+  },
+  "ffmpeg": {
+   "repo": "FFmpeg/FFmpeg",
+   "full_name": "FFmpeg/FFmpeg",
+   "repo_mismatch": false,
+   "stars": 68080,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T13:19:59Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
+  "flare-vm": {
+   "repo": "mandiant/flare-vm",
+   "full_name": "mandiant/flare-vm",
+   "repo_mismatch": false,
+   "stars": 9351,
+   "license": "Apache-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-10-07T14:43:37Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "vbox-1.0.0",
+    "name": "",
+    "published_at": "2025-08-13T16:58:51Z",
+    "url": "https://github.com/mandiant/flare-vm/releases/tag/vbox-1.0.0",
+    "assets": {}
+   }
+  },
+  "flashrom": {
+   "repo": "flashrom/flashrom",
+   "full_name": "flashrom/flashrom",
+   "repo_mismatch": false,
+   "stars": 1198,
+   "license": "GPL-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T15:08:35Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
+  "flight-review": {
+   "repo": "PX4/flight_review",
+   "full_name": "PX4/flight_review",
+   "repo_mismatch": false,
+   "stars": 281,
+   "license": "BSD-3-Clause",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-16T13:18:13Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
+  "floss": {
+   "repo": "mandiant/flare-floss",
+   "full_name": "mandiant/flare-floss",
+   "repo_mismatch": false,
+   "stars": 4237,
+   "license": "Apache-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-15T02:12:31Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v3.2.0",
+    "name": "v3.2.0",
+    "published_at": "2026-10-16T10:51:32Z",
+    "url": "https://github.com/mandiant/flare-floss/releases/tag/v3.2.0",
+    "assets": {
+     "windows": {
+      "name": "floss-v3.2.0-windows.zip",
+      "url": "https://github.com/mandiant/flare-floss/releases/download/v3.2.0/floss-v3.2.0-windows.zip",
+      "size": 33134130
+     },
+     "macos": {
+      "name": "floss-v3.2.0-macos.zip",
+      "url": "https://github.com/mandiant/flare-floss/releases/download/v3.2.0/floss-v3.2.0-macos.zip",
+      "size": 33598560
+     },
+     "linux": {
+      "name": "floss-v3.2.0-linux.zip",
+      "url": "https://github.com/mandiant/flare-floss/releases/download/v3.2.0/floss-v3.2.0-linux.zip",
+      "size": 44286277
+     }
+    }
+   }
+  },
+  "fqlite": {
+   "repo": "pawlaszczyk/fqlite",
+   "full_name": "pawlaszczyk/fqlite",
+   "repo_mismatch": false,
+   "stars": 191,
+   "license": "Apache-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T14:58:22Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "5.3",
+    "name": "5.3",
+    "published_at": "2026-11-22T08:24:07Z",
+    "url": "https://github.com/pawlaszczyk/fqlite/releases/tag/5.3",
+    "assets": {
+     "windows": {
+      "name": "fqlite-5.3-windows.exe",
+      "url": "https://github.com/pawlaszczyk/fqlite/releases/download/5.3/fqlite-5.3-windows.exe",
+      "size": 439863808
+     },
+     "macos": {
+      "name": "fqlite-5.3-macOS-x86_64.dmg",
+      "url": "https://github.com/pawlaszczyk/fqlite/releases/download/5.3/fqlite-5.3-macOS-x86_64.dmg",
+      "size": 446998561
+     }
+    }
+   }
+  },
+  "frida": {
+   "repo": "frida/frida",
+   "full_name": "frida/frida",
+   "repo_mismatch": false,
+   "stars": 22914,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-20T10:03:12Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "17.27.4",
+    "name": "Frida 17.27.4",
+    "published_at": "2026-11-20T10:59:00Z",
+    "url": "https://github.com/frida/frida/releases/tag/17.27.4",
+    "assets": {}
+   }
   },
   "ghidra": {
    "repo": "NationalSecurityAgency/ghidra",
    "full_name": "NationalSecurityAgency/ghidra",
    "repo_mismatch": false,
-   "stars": 101087,
+   "stars": 101094,
    "license": "Apache-2.0",
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-23T12:41:40Z",
-   "checked": "2026-11-23T18:26:33Z",
+   "checked": "2026-11-23T18:50:40Z",
    "release": {
     "tag": "Ghidra_12.2_build",
     "name": "Ghidra 12.2",
     "published_at": "2026-10-22T08:31:12Z",
     "url": "https://github.com/NationalSecurityAgency/ghidra/releases/tag/Ghidra_12.2_build",
+    "assets": {}
+   }
+  },
+  "ghunt": {
+   "repo": "mxrch/GHunt",
+   "full_name": "mxrch/GHunt",
+   "repo_mismatch": false,
+   "stars": 19892,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-04-10T02:29:16Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v2.2.0",
+    "name": "v2.2.0",
+    "published_at": "2024-06-06T01:54:02Z",
+    "url": "https://github.com/mxrch/GHunt/releases/tag/v2.2.0",
+    "assets": {}
+   }
+  },
+  "goaccess": {
+   "repo": "allinurl/goaccess",
+   "full_name": "allinurl/goaccess",
+   "repo_mismatch": false,
+   "stars": 21151,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-20T18:27:39Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
+  "grr": {
+   "repo": "google/grr",
+   "full_name": "google/grr",
+   "repo_mismatch": false,
+   "stars": 5115,
+   "license": "Apache-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-10-01T16:04:33Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v.4.0.0.0-release",
+    "name": "GRR release 4.0.0.0",
+    "published_at": "2025-12-15T17:12:33Z",
+    "url": "https://github.com/google/grr/releases/tag/v.4.0.0.0-release",
     "assets": {}
    }
   },
@@ -238,7 +1365,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-23T18:10:42Z",
-   "checked": "2026-11-23T18:26:33Z",
+   "checked": "2026-11-23T18:50:40Z",
    "release": {
     "tag": "v8.0.0",
     "name": "hashcat v8.0.0",
@@ -246,6 +1373,36 @@
     "url": "https://github.com/hashcat/hashcat/releases/tag/v8.0.0",
     "assets": {}
    }
+  },
+  "hashdeep": {
+   "repo": "jessek/hashdeep",
+   "full_name": "jessek/hashdeep",
+   "repo_mismatch": false,
+   "stars": 792,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2025-09-20T21:28:41Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v4.4",
+    "name": "Release 4.4",
+    "published_at": "2014-01-29T20:34:58Z",
+    "url": "https://github.com/jessek/hashdeep/releases/tag/v4.4",
+    "assets": {}
+   }
+  },
+  "hawk": {
+   "repo": "T0pCyber/hawk",
+   "full_name": "T0pCyber/hawk",
+   "repo_mismatch": false,
+   "stars": 963,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-06-10T23:58:51Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
   },
   "hayabusa": {
    "repo": "Yamato-Security/hayabusa",
@@ -256,7 +1413,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-10T12:24:39Z",
-   "checked": "2026-11-23T18:26:33Z",
+   "checked": "2026-11-23T18:50:40Z",
    "release": {
     "tag": "v4.4.0",
     "name": "v4.4.0 - CODE BLUE Release",
@@ -281,6 +1438,52 @@
     }
    }
   },
+  "hindsight": {
+   "repo": "RyanDFIR/hindsight",
+   "full_name": "RyanDFIR/hindsight",
+   "repo_mismatch": false,
+   "stars": 1566,
+   "license": "Apache-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-19T04:08:06Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v2026.11",
+    "name": "v2026.11",
+    "published_at": "2026-11-16T15:13:01Z",
+    "url": "https://github.com/RyanDFIR/hindsight/releases/tag/v2026.11",
+    "assets": {
+     "windows": {
+      "name": "hindsight.exe",
+      "url": "https://github.com/RyanDFIR/hindsight/releases/download/v2026.11/hindsight.exe",
+      "size": 19806635
+     },
+     "macos": {
+      "name": "hindsight-macos-x86_64",
+      "url": "https://github.com/RyanDFIR/hindsight/releases/download/v2026.11/hindsight-macos-x86_64",
+      "size": 17957392
+     },
+     "linux": {
+      "name": "hindsight-linux-x86_64",
+      "url": "https://github.com/RyanDFIR/hindsight/releases/download/v2026.11/hindsight-linux-x86_64",
+      "size": 41189136
+     }
+    }
+   }
+  },
+  "holehe": {
+   "repo": "megadose/holehe",
+   "full_name": "megadose/holehe",
+   "repo_mismatch": false,
+   "stars": 15743,
+   "license": "GPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2024-09-10T20:24:32Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
   "ileapp": {
    "repo": "abrignoni/iLEAPP",
    "full_name": "abrignoni/iLEAPP",
@@ -290,7 +1493,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-23T18:22:08Z",
-   "checked": "2026-11-23T18:26:33Z",
+   "checked": "2026-11-23T18:50:40Z",
    "release": {
     "tag": "v2026.4.6",
     "name": "iLEAPP v2026.4.6",
@@ -324,7 +1527,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-23T16:58:23Z",
-   "checked": "2026-11-23T18:26:33Z",
+   "checked": "2026-11-23T18:50:40Z",
    "release": {
     "tag": "v1.38.1",
     "name": "Windows installer, data inspector edit and updater fixes",
@@ -349,6 +1552,54 @@
     }
    }
   },
+  "instaloader": {
+   "repo": "instaloader/instaloader",
+   "full_name": "instaloader/instaloader",
+   "repo_mismatch": false,
+   "stars": 13991,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-01T19:20:46Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v4.16",
+    "name": "Version 4.16",
+    "published_at": "2026-10-26T21:41:37Z",
+    "url": "https://github.com/instaloader/instaloader/releases/tag/v4.16",
+    "assets": {
+     "windows": {
+      "name": "instaloader-v4.16-windows-standalone.zip",
+      "url": "https://github.com/instaloader/instaloader/releases/download/v4.16/instaloader-v4.16-windows-standalone.zip",
+      "size": 14809412
+     }
+    }
+   }
+  },
+  "invictus-aws": {
+   "repo": "invictus-ir/Invictus-AWS",
+   "full_name": "invictus-ir/Invictus-AWS",
+   "repo_mismatch": false,
+   "stars": 208,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-08-11T08:06:13Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
+  "ios-triage": {
+   "repo": "RealityNet/ios_triage",
+   "full_name": "RealityNet/ios_triage",
+   "repo_mismatch": false,
+   "stars": 168,
+   "license": null,
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2020-06-07T16:57:17Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
   "iped": {
    "repo": "sepinf-inc/IPED",
    "full_name": "sepinf-inc/IPED",
@@ -357,14 +1608,56 @@
    "license": "NOASSERTION",
    "archived": false,
    "fork": false,
-   "pushed_at": "2026-11-23T16:31:59Z",
-   "checked": "2026-11-23T18:26:33Z",
+   "pushed_at": "2026-11-23T18:26:33Z",
+   "checked": "2026-11-23T18:50:40Z",
    "release": {
     "tag": "4.3.1",
     "name": "Minor release",
     "published_at": "2026-03-29T01:03:02Z",
     "url": "https://github.com/sepinf-inc/IPED/releases/tag/4.3.1",
     "assets": {}
+   }
+  },
+  "iris": {
+   "repo": "dfir-iris/iris-web",
+   "full_name": "dfir-iris/iris-web",
+   "repo_mismatch": false,
+   "stars": 1633,
+   "license": "LGPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-10T13:03:45Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v2.4.29",
+    "name": "v2.4.29",
+    "published_at": "2026-08-10T08:13:13Z",
+    "url": "https://github.com/dfir-iris/iris-web/releases/tag/v2.4.29",
+    "assets": {}
+   }
+  },
+  "itunes-backup-reader": {
+   "repo": "jfarley248/iTunes_Backup_Reader",
+   "full_name": "jfarley248/iTunes_Backup_Reader",
+   "repo_mismatch": false,
+   "stars": 193,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2023-10-16T22:49:46Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v4.0.1",
+    "name": "iTunes_Backup_Reader_v4.0.1",
+    "published_at": "2021-01-01T21:23:38Z",
+    "url": "https://github.com/jfarley248/iTunes_Backup_Reader/releases/tag/v4.0.1",
+    "assets": {
+     "windows": {
+      "name": "iTunes_Backup_Reader.exe",
+      "url": "https://github.com/jfarley248/iTunes_Backup_Reader/releases/download/v4.0.1/iTunes_Backup_Reader.exe",
+      "size": 46022186
+     }
+    }
    }
   },
   "jadx": {
@@ -376,7 +1669,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-20T22:40:54Z",
-   "checked": "2026-11-23T18:26:33Z",
+   "checked": "2026-11-23T18:50:40Z",
    "release": {
     "tag": "v1.5.7",
     "name": "1.5.7",
@@ -396,6 +1689,126 @@
     }
    }
   },
+  "john": {
+   "repo": "openwall/john",
+   "full_name": "openwall/john",
+   "repo_mismatch": false,
+   "stars": 13962,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-16T04:20:24Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
+  "jpegsnoop": {
+   "repo": "ImpulseAdventure/JPEGsnoop",
+   "full_name": "ImpulseAdventure/JPEGsnoop",
+   "repo_mismatch": false,
+   "stars": 627,
+   "license": "GPL-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2023-08-09T22:23:17Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v1.8.0",
+    "name": "v1.8.0 - Major code fixes / cleanup",
+    "published_at": "2017-06-28T05:38:50Z",
+    "url": "https://github.com/ImpulseAdventure/JPEGsnoop/releases/tag/v1.8.0",
+    "assets": {}
+   }
+  },
+  "kansa": {
+   "repo": "davehull/Kansa",
+   "full_name": "davehull/Kansa",
+   "repo_mismatch": false,
+   "stars": 1669,
+   "license": "Apache-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2022-11-22T02:14:29Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
+  "knockknock": {
+   "repo": "objective-see/KnockKnock",
+   "full_name": "objective-see/KnockKnock",
+   "repo_mismatch": false,
+   "stars": 843,
+   "license": "GPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-09-15T08:53:55Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v4.1.0",
+    "name": "Version 4.1.0",
+    "published_at": "2026-09-15T08:53:55Z",
+    "url": "https://github.com/objective-see/KnockKnock/releases/tag/v4.1.0",
+    "assets": {}
+   }
+  },
+  "kuiper": {
+   "repo": "DFIRKuiper/Kuiper",
+   "full_name": "DFIRKuiper/Kuiper",
+   "repo_mismatch": false,
+   "stars": 915,
+   "license": null,
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2024-10-12T07:48:11Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v2.3.5",
+    "name": "v2.3.5",
+    "published_at": "2023-11-18T20:08:08Z",
+    "url": "https://github.com/DFIRKuiper/Kuiper/releases/tag/v2.3.5",
+    "assets": {}
+   }
+  },
+  "libbde": {
+   "repo": "libyal/libbde",
+   "full_name": "libyal/libbde",
+   "repo_mismatch": false,
+   "stars": 264,
+   "license": "LGPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-01T07:15:47Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
+  "libcloudforensics": {
+   "repo": "google/cloud-forensics-utils",
+   "full_name": "google/cloud-forensics-utils",
+   "repo_mismatch": false,
+   "stars": 511,
+   "license": "Apache-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-20T06:00:59Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "20260917",
+    "name": "v20260917",
+    "published_at": "2026-09-17T03:08:57Z",
+    "url": "https://github.com/google/cloud-forensics-utils/releases/tag/20260917",
+    "assets": {}
+   }
+  },
+  "libesedb": {
+   "repo": "libyal/libesedb",
+   "full_name": "libyal/libesedb",
+   "repo_mismatch": false,
+   "stars": 382,
+   "license": "LGPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-07T03:38:55Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
   "libewf": {
    "repo": "libyal/libewf",
    "full_name": "libyal/libewf",
@@ -405,8 +1818,279 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-17T18:27:21Z",
-   "checked": "2026-11-23T18:22:23Z",
+   "checked": "2026-11-23T18:50:40Z",
    "release": null
+  },
+  "libimobiledevice": {
+   "repo": "libimobiledevice/libimobiledevice",
+   "full_name": "libimobiledevice/libimobiledevice",
+   "repo_mismatch": false,
+   "stars": 8375,
+   "license": "LGPL-2.1",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-18T00:29:27Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "1.4.0",
+    "name": "1.4.0",
+    "published_at": "2025-10-10T16:28:03Z",
+    "url": "https://github.com/libimobiledevice/libimobiledevice/releases/tag/1.4.0",
+    "assets": {}
+   }
+  },
+  "libpff": {
+   "repo": "libyal/libpff",
+   "full_name": "libyal/libpff",
+   "repo_mismatch": false,
+   "stars": 375,
+   "license": "LGPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-08T12:51:30Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
+  "lime": {
+   "repo": "jtsylve/LiME",
+   "full_name": "jtsylve/LiME",
+   "repo_mismatch": false,
+   "stars": 2062,
+   "license": "GPL-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-04-05T13:42:51Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v1.12.0",
+    "name": "v1.12.0",
+    "published_at": "2026-03-31T14:21:08Z",
+    "url": "https://github.com/jtsylve/LiME/releases/tag/v1.12.0",
+    "assets": {}
+   }
+  },
+  "linuxcatscale": {
+   "repo": "WithSecureLabs/LinuxCatScale",
+   "full_name": "WithSecureLabs/LinuxCatScale",
+   "repo_mismatch": false,
+   "stars": 338,
+   "license": "GPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2024-06-25T08:39:49Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
+  "lnav": {
+   "repo": "tstack/lnav",
+   "full_name": "tstack/lnav",
+   "repo_mismatch": false,
+   "stars": 10815,
+   "license": "BSD-2-Clause",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T03:02:21Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v0.14.1",
+    "name": "v0.14.1",
+    "published_at": "2026-09-05T04:26:42Z",
+    "url": "https://github.com/tstack/lnav/releases/tag/v0.14.1",
+    "assets": {
+     "windows": {
+      "name": "lnav-0.14.1-windows-x86_64.zip",
+      "url": "https://github.com/tstack/lnav/releases/download/v0.14.1/lnav-0.14.1-windows-x86_64.zip",
+      "size": 19680338
+     },
+     "macos": {
+      "name": "lnav-0.14.1-aarch64-macos.zip",
+      "url": "https://github.com/tstack/lnav/releases/download/v0.14.1/lnav-0.14.1-aarch64-macos.zip",
+      "size": 16199552
+     },
+     "linux": {
+      "name": "lnav-0.14.1-linux-musl-x86_64.zip",
+      "url": "https://github.com/tstack/lnav/releases/download/v0.14.1/lnav-0.14.1-linux-musl-x86_64.zip",
+      "size": 42423829
+     }
+    }
+   }
+  },
+  "logontracer": {
+   "repo": "JPCERTCC/LogonTracer",
+   "full_name": "JPCERTCC/LogonTracer",
+   "repo_mismatch": false,
+   "stars": 3306,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-08-02T02:31:38Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v2.0.0",
+    "name": "v2.0.0",
+    "published_at": "2026-04-22T15:21:00Z",
+    "url": "https://github.com/JPCERTCC/LogonTracer/releases/tag/v2.0.0",
+    "assets": {}
+   }
+  },
+  "loki": {
+   "repo": "Neo23x0/Loki",
+   "full_name": "Neo23x0/Loki",
+   "repo_mismatch": false,
+   "stars": 3807,
+   "license": "GPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-01-12T08:00:47Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v0.51.0",
+    "name": "LOKI version 0.51.0",
+    "published_at": "2023-05-18T18:16:57Z",
+    "url": "https://github.com/Neo23x0/Loki/releases/tag/v0.51.0",
+    "assets": {}
+   }
+  },
+  "mac-apt": {
+   "repo": "ydkhatri/mac_apt",
+   "full_name": "ydkhatri/mac_apt",
+   "repo_mismatch": false,
+   "stars": 1106,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-09T10:37:49Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v.1.39.0",
+    "name": "20261106",
+    "published_at": "2026-11-06T12:38:21Z",
+    "url": "https://github.com/ydkhatri/mac_apt/releases/tag/v.1.39.0",
+    "assets": {
+     "windows": {
+      "name": "ios_apt-windows-x64.exe",
+      "url": "https://github.com/ydkhatri/mac_apt/releases/download/v.1.39.0/ios_apt-windows-x64.exe",
+      "size": 32766517
+     },
+     "macos": {
+      "name": "mac_apt-macos-x64.zip",
+      "url": "https://github.com/ydkhatri/mac_apt/releases/download/v.1.39.0/mac_apt-macos-x64.zip",
+      "size": 47632302
+     }
+    }
+   }
+  },
+  "macos-unifiedlogs": {
+   "repo": "mandiant/macos-UnifiedLogs",
+   "full_name": "mandiant/macos-UnifiedLogs",
+   "repo_mismatch": false,
+   "stars": 393,
+   "license": "Apache-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-20T20:38:07Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v0.7.0",
+    "name": " v0.7.0- Released!",
+    "published_at": "2026-09-14T00:33:09Z",
+    "url": "https://github.com/mandiant/macos-UnifiedLogs/releases/tag/v0.7.0",
+    "assets": {
+     "windows": {
+      "name": "unifiedlog_iterator-v0.7.0-x86_64-pc-windows-msvc.zip",
+      "url": "https://github.com/mandiant/macos-UnifiedLogs/releases/download/v0.7.0/unifiedlog_iterator-v0.7.0-x86_64-pc-windows-msvc.zip",
+      "size": 1243382
+     },
+     "macos": {
+      "name": "unifiedlog_iterator-v0.7.0-x86_64-apple-darwin.tar.gz",
+      "url": "https://github.com/mandiant/macos-UnifiedLogs/releases/download/v0.7.0/unifiedlog_iterator-v0.7.0-x86_64-apple-darwin.tar.gz",
+      "size": 1470082
+     },
+     "linux": {
+      "name": "unifiedlog_iterator-v0.7.0-x86_64-unknown-linux-gnu.tar.gz",
+      "url": "https://github.com/mandiant/macos-UnifiedLogs/releases/download/v0.7.0/unifiedlog_iterator-v0.7.0-x86_64-unknown-linux-gnu.tar.gz",
+      "size": 1582297
+     }
+    }
+   }
+  },
+  "maigret": {
+   "repo": "soxoj/maigret",
+   "full_name": "soxoj/maigret",
+   "repo_mismatch": false,
+   "stars": 41205,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-22T06:14:07Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v0.6.7",
+    "name": "v0.6.7",
+    "published_at": "2026-11-21T13:45:03Z",
+    "url": "https://github.com/soxoj/maigret/releases/tag/v0.6.7",
+    "assets": {
+     "windows": {
+      "name": "maigret_standalone.exe",
+      "url": "https://github.com/soxoj/maigret/releases/download/v0.6.7/maigret_standalone.exe",
+      "size": 53349905
+     }
+    }
+   }
+  },
+  "malcolm": {
+   "repo": "cisagov/Malcolm",
+   "full_name": "cisagov/Malcolm",
+   "repo_mismatch": false,
+   "stars": 2614,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-19T22:21:31Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v26.10.0",
+    "name": "Malcolm v26.10.0",
+    "published_at": "2026-10-29T19:43:06Z",
+    "url": "https://github.com/cisagov/Malcolm/releases/tag/v26.10.0",
+    "assets": {}
+   }
+  },
+  "mediainfo": {
+   "repo": "MediaArea/MediaInfo",
+   "full_name": "MediaArea/MediaInfo",
+   "repo_mismatch": false,
+   "stars": 2076,
+   "license": "BSD-2-Clause",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T08:58:45Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v26.10",
+    "name": "26.10",
+    "published_at": "2026-10-06T06:55:03Z",
+    "url": "https://github.com/MediaArea/MediaInfo/releases/tag/v26.10",
+    "assets": {}
+   }
+  },
+  "mempool": {
+   "repo": "mempool/mempool",
+   "full_name": "mempool/mempool",
+   "repo_mismatch": false,
+   "stars": 2899,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T09:10:20Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v3.3.2",
+    "name": "v3.3.2",
+    "published_at": "2026-10-23T01:08:38Z",
+    "url": "https://github.com/mempool/mempool/releases/tag/v3.3.2",
+    "assets": {}
+   }
   },
   "memprocfs": {
    "repo": "ufrisk/MemProcFS",
@@ -417,7 +2101,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-14T23:00:55Z",
-   "checked": "2026-11-23T18:26:33Z",
+   "checked": "2026-11-23T18:50:40Z",
    "release": {
     "tag": "v5.19",
     "name": "Version 5.19",
@@ -446,7 +2130,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-21T19:57:45Z",
-   "checked": "2026-11-23T18:26:33Z",
+   "checked": "2026-11-23T18:50:40Z",
    "release": {
     "tag": "2026.10.1",
     "name": "2026.10.1",
@@ -454,6 +2138,926 @@
     "url": "https://github.com/EricZimmerman/MFTECmd/releases/tag/2026.10.1",
     "assets": {}
    }
+  },
+  "mha": {
+   "repo": "microsoft/MHA",
+   "full_name": "microsoft/MHA",
+   "repo_mismatch": false,
+   "stars": 389,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T16:14:02Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "release-2026.01.14-baeb1253-v1e7192e0",
+    "name": "",
+    "published_at": "2026-03-09T18:29:50Z",
+    "url": "https://github.com/microsoft/MHA/releases/tag/release-2026.01.14-baeb1253-v1e7192e0",
+    "assets": {}
+   }
+  },
+  "microsoft-analyzer-suite": {
+   "repo": "LETHAL-FORENSICS/Microsoft-Analyzer-Suite",
+   "full_name": "LETHAL-FORENSICS/Microsoft-Analyzer-Suite",
+   "repo_mismatch": false,
+   "stars": 692,
+   "license": "GPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-10-26T18:14:01Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v1.9.0",
+    "name": "Microsoft-Analyzer-Suite v1.9.0",
+    "published_at": "2026-07-06T14:06:22Z",
+    "url": "https://github.com/LETHAL-FORENSICS/Microsoft-Analyzer-Suite/releases/tag/v1.9.0",
+    "assets": {}
+   }
+  },
+  "microsoft-extractor-suite": {
+   "repo": "invictus-ir/Microsoft-Extractor-Suite",
+   "full_name": "invictus-ir/Microsoft-Extractor-Suite",
+   "repo_mismatch": false,
+   "stars": 872,
+   "license": "GPL-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-17T08:55:15Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "V4.1.0",
+    "name": "Update V4.1.0 - New Features",
+    "published_at": "2026-05-06T07:08:27Z",
+    "url": "https://github.com/invictus-ir/Microsoft-Extractor-Suite/releases/tag/V4.1.0",
+    "assets": {}
+   }
+  },
+  "mission-planner": {
+   "repo": "ArduPilot/MissionPlanner",
+   "full_name": "ArduPilot/MissionPlanner",
+   "repo_mismatch": false,
+   "stars": 2424,
+   "license": "GPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-19T09:17:36Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "MissionPlanner1.3.83",
+    "name": "Mission Planner 1.3.83",
+    "published_at": "2025-09-10T14:33:08Z",
+    "url": "https://github.com/ArduPilot/MissionPlanner/releases/tag/MissionPlanner1.3.83",
+    "assets": {
+     "windows": {
+      "name": "MissionPlanner-1.3.83.msi",
+      "url": "https://github.com/ArduPilot/MissionPlanner/releases/download/MissionPlanner1.3.83/MissionPlanner-1.3.83.msi",
+      "size": 119841133
+     }
+    }
+   }
+  },
+  "mitmproxy": {
+   "repo": "mitmproxy/mitmproxy",
+   "full_name": "mitmproxy/mitmproxy",
+   "repo_mismatch": false,
+   "stars": 47154,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T11:00:13Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v12.3.1",
+    "name": "mitmproxy 12.3.1",
+    "published_at": "2026-10-25T23:25:13Z",
+    "url": "https://github.com/mitmproxy/mitmproxy/releases/tag/v12.3.1",
+    "assets": {}
+   }
+  },
+  "mobsf": {
+   "repo": "MobSF/Mobile-Security-Framework-MobSF",
+   "full_name": "MobSF/Mobile-Security-Framework-MobSF",
+   "repo_mismatch": false,
+   "stars": 22307,
+   "license": "GPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-18T17:27:08Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v4.6.9",
+    "name": "v4.6.9",
+    "published_at": "2026-11-18T17:27:09Z",
+    "url": "https://github.com/MobSF/Mobile-Security-Framework-MobSF/releases/tag/v4.6.9",
+    "assets": {}
+   }
+  },
+  "msg-extractor": {
+   "repo": "TeamMsgExtractor/msg-extractor",
+   "full_name": "TeamMsgExtractor/msg-extractor",
+   "repo_mismatch": false,
+   "stars": 858,
+   "license": "GPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T05:58:31Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v0.58.3",
+    "name": "Version 0.58.3",
+    "published_at": "2026-11-23T05:58:31Z",
+    "url": "https://github.com/TeamMsgExtractor/msg-extractor/releases/tag/v0.58.3",
+    "assets": {}
+   }
+  },
+  "mvt": {
+   "repo": "mvt-project/mvt",
+   "full_name": "mvt-project/mvt",
+   "repo_mismatch": false,
+   "stars": 16173,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T09:02:49Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v2026.11.23",
+    "name": "v2026.11.23",
+    "published_at": "2026-11-23T09:02:49Z",
+    "url": "https://github.com/mvt-project/mvt/releases/tag/v2026.11.23",
+    "assets": {}
+   }
+  },
+  "name-that-hash": {
+   "repo": "bee-san/Name-That-Hash",
+   "full_name": "bee-san/Name-That-Hash",
+   "repo_mismatch": false,
+   "stars": 1674,
+   "license": "GPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2025-12-19T01:31:42Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "1.11.0",
+    "name": "New hashes + Better Verification of existing hashes",
+    "published_at": "2022-11-17T20:09:05Z",
+    "url": "https://github.com/bee-san/Name-That-Hash/releases/tag/1.11.0",
+    "assets": {}
+   }
+  },
+  "oletools": {
+   "repo": "decalage2/oletools",
+   "full_name": "decalage2/oletools",
+   "repo_mismatch": false,
+   "stars": 3457,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-02-14T19:42:44Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v0.60.2",
+    "name": "oletools v0.60.2",
+    "published_at": "2024-07-02T14:57:56Z",
+    "url": "https://github.com/decalage2/oletools/releases/tag/v0.60.2",
+    "assets": {}
+   }
+  },
+  "osint-framework": {
+   "repo": "lockfale/osint-framework",
+   "full_name": "lockfale/OSINT-Framework",
+   "repo_mismatch": false,
+   "stars": 12504,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-10-31T06:32:06Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
+  "osquery": {
+   "repo": "osquery/osquery",
+   "full_name": "osquery/osquery",
+   "repo_mismatch": false,
+   "stars": 23797,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-20T03:26:45Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "5.24.1",
+    "name": "5.24.1",
+    "published_at": "2026-10-29T01:21:49Z",
+    "url": "https://github.com/osquery/osquery/releases/tag/5.24.1",
+    "assets": {
+     "macos": {
+      "name": "osquery-5.24.1.pkg",
+      "url": "https://github.com/osquery/osquery/releases/download/5.24.1/osquery-5.24.1.pkg",
+      "size": 16877491
+     }
+    }
+   }
+  },
+  "pcapdroid": {
+   "repo": "emanuele-f/PCAPdroid",
+   "full_name": "emanuele-f/PCAPdroid",
+   "repo_mismatch": false,
+   "stars": 5254,
+   "license": "GPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T17:56:51Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v2.0.5",
+    "name": "v2.0.5",
+    "published_at": "2026-11-23T17:50:00Z",
+    "url": "https://github.com/emanuele-f/PCAPdroid/releases/tag/v2.0.5",
+    "assets": {}
+   }
+  },
+  "pe-bear": {
+   "repo": "hasherezade/pe-bear",
+   "full_name": "hasherezade/pe-bear",
+   "repo_mismatch": false,
+   "stars": 3899,
+   "license": "GPL-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-08T00:14:21Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v0.7.2",
+    "name": "",
+    "published_at": "2026-06-05T20:23:57Z",
+    "url": "https://github.com/hasherezade/pe-bear/releases/tag/v0.7.2",
+    "assets": {
+     "macos": {
+      "name": "PE-bear_0.7.2_qt6_x64_macos.app.zip",
+      "url": "https://github.com/hasherezade/pe-bear/releases/download/v0.7.2/PE-bear_0.7.2_qt6_x64_macos.app.zip",
+      "size": 112432455
+     },
+     "linux": {
+      "name": "PE-bear_0.7.2_qt6_x86_64_linux.AppImage",
+      "url": "https://github.com/hasherezade/pe-bear/releases/download/v0.7.2/PE-bear_0.7.2_qt6_x86_64_linux.AppImage",
+      "size": 30546424
+     }
+    }
+   }
+  },
+  "pecmd": {
+   "repo": "EricZimmerman/PECmd",
+   "full_name": "EricZimmerman/PECmd",
+   "repo_mismatch": false,
+   "stars": 315,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-21T14:00:30Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "2026.10.1",
+    "name": "2026.10.1",
+    "published_at": "2026-10-16T14:00:52Z",
+    "url": "https://github.com/EricZimmerman/PECmd/releases/tag/2026.10.1",
+    "assets": {}
+   }
+  },
+  "plaso": {
+   "repo": "log2timeline/plaso",
+   "full_name": "log2timeline/plaso",
+   "repo_mismatch": false,
+   "stars": 2202,
+   "license": "Apache-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T04:32:12Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "20261027",
+    "name": "plaso-20261027",
+    "published_at": "2026-10-27T10:23:33Z",
+    "url": "https://github.com/log2timeline/plaso/releases/tag/20261027",
+    "assets": {}
+   }
+  },
+  "praat": {
+   "repo": "praat/praat.github.io",
+   "full_name": "praat/praat.github.io",
+   "repo_mismatch": false,
+   "stars": 2036,
+   "license": null,
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-17T14:12:54Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v7.0.03",
+    "name": "version 7.0.03, November 8, 2026",
+    "published_at": "2026-11-08T02:36:43Z",
+    "url": "https://github.com/praat/praat.github.io/releases/tag/v7.0.03",
+    "assets": {
+     "macos": {
+      "name": "praat7003_mac.dmg",
+      "url": "https://github.com/praat/praat.github.io/releases/download/v7.0.03/praat7003_mac.dmg",
+      "size": 109507834
+     },
+     "linux": {
+      "name": "praat7003_linux-x64v3.tar.gz",
+      "url": "https://github.com/praat/praat.github.io/releases/download/v7.0.03/praat7003_linux-x64v3.tar.gz",
+      "size": 62894165
+     }
+    }
+   }
+  },
+  "pymobiledevice3": {
+   "repo": "doronz88/pymobiledevice3",
+   "full_name": "doronz88/pymobiledevice3",
+   "repo_mismatch": false,
+   "stars": 3090,
+   "license": "GPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-22T22:50:00Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v11.63.1",
+    "name": "v11.63.1",
+    "published_at": "2026-11-22T22:45:36Z",
+    "url": "https://github.com/doronz88/pymobiledevice3/releases/tag/v11.63.1",
+    "assets": {}
+   }
+  },
+  "python-evtx": {
+   "repo": "williballenthin/python-evtx",
+   "full_name": "williballenthin/python-evtx",
+   "repo_mismatch": false,
+   "stars": 787,
+   "license": "Apache-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-16T15:03:09Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v0.8.1",
+    "name": "v0.8.1",
+    "published_at": "2025-05-02T08:24:00Z",
+    "url": "https://github.com/williballenthin/python-evtx/releases/tag/v0.8.1",
+    "assets": {}
+   }
+  },
+  "quickhash": {
+   "repo": "tedsmith/quickhash",
+   "full_name": "tedsmith/quickhash",
+   "repo_mismatch": false,
+   "stars": 443,
+   "license": "GPL-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-05-20T15:29:30Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v3.3.4",
+    "name": "Version 3.3.4 has been released",
+    "published_at": "2023-11-01T20:58:51Z",
+    "url": "https://github.com/tedsmith/quickhash/releases/tag/v3.3.4",
+    "assets": {
+     "windows": {
+      "name": "Quickhash-GUI-Windows-v3.3.4.zip",
+      "url": "https://github.com/tedsmith/quickhash/releases/download/v3.3.4/Quickhash-GUI-Windows-v3.3.4.zip",
+      "size": 11739514
+     },
+     "linux": {
+      "name": "Quickhash-GUI-Linux-v3.3.4.zip",
+      "url": "https://github.com/tedsmith/quickhash/releases/download/v3.3.4/Quickhash-GUI-Linux-v3.3.4.zip",
+      "size": 10624836
+     }
+    }
+   }
+  },
+  "radare2": {
+   "repo": "radareorg/radare2",
+   "full_name": "radareorg/radare2",
+   "repo_mismatch": false,
+   "stars": 25495,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T18:41:12Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "6.2.6",
+    "name": "6.2.6",
+    "published_at": "2026-11-05T18:32:14Z",
+    "url": "https://github.com/radareorg/radare2/releases/tag/6.2.6",
+    "assets": {
+     "macos": {
+      "name": "radare2-x64-6.2.6.pkg",
+      "url": "https://github.com/radareorg/radare2/releases/download/6.2.6/radare2-x64-6.2.6.pkg",
+      "size": 12088755
+     },
+     "linux": {
+      "name": "radare2_6.2.6_amd64.deb",
+      "url": "https://github.com/radareorg/radare2/releases/download/6.2.6/radare2_6.2.6_amd64.deb",
+      "size": 8886404
+     }
+    }
+   }
+  },
+  "recmd": {
+   "repo": "EricZimmerman/RECmd",
+   "full_name": "EricZimmerman/RECmd",
+   "repo_mismatch": false,
+   "stars": 189,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-21T13:59:39Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
+  "recon-ng": {
+   "repo": "lanmaster53/recon-ng",
+   "full_name": "lanmaster53/recon-ng",
+   "repo_mismatch": false,
+   "stars": 6067,
+   "license": "GPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-10-05T14:10:08Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
+  "regipy": {
+   "repo": "mkorman90/regipy",
+   "full_name": "mkorman90/regipy",
+   "repo_mismatch": false,
+   "stars": 279,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-12T00:43:07Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "regipy-rs-0.1.0a3",
+    "name": "regipy-rs 0.1.0a3",
+    "published_at": "2026-10-13T13:51:01Z",
+    "url": "https://github.com/mkorman90/regipy/releases/tag/regipy-rs-0.1.0a3",
+    "assets": {}
+   }
+  },
+  "regripper": {
+   "repo": "keydet89/RegRipper3.0",
+   "full_name": "keydet89/RegRipper3.0",
+   "repo_mismatch": false,
+   "stars": 731,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-05-27T13:22:58Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
+  "rita": {
+   "repo": "activecm/rita",
+   "full_name": "activecm/rita",
+   "repo_mismatch": false,
+   "stars": 678,
+   "license": "GPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-17T06:10:30Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v5.1.2",
+    "name": "v5.1.2",
+    "published_at": "2026-05-07T00:12:08Z",
+    "url": "https://github.com/activecm/rita/releases/tag/v5.1.2",
+    "assets": {}
+   }
+  },
+  "savvycan": {
+   "repo": "collin80/SavvyCAN",
+   "full_name": "collin80/SavvyCAN",
+   "repo_mismatch": false,
+   "stars": 1940,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-17T02:16:13Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "V220",
+    "name": "V220",
+    "published_at": "2025-05-09T00:48:21Z",
+    "url": "https://github.com/collin80/SavvyCAN/releases/tag/V220",
+    "assets": {
+     "windows": {
+      "name": "SavvyCAN-Windows_x64_CIBuild.zip",
+      "url": "https://github.com/collin80/SavvyCAN/releases/download/V220/SavvyCAN-Windows_x64_CIBuild.zip",
+      "size": 21195603
+     },
+     "macos": {
+      "name": "SavvyCAN_x64.dmg",
+      "url": "https://github.com/collin80/SavvyCAN/releases/download/V220/SavvyCAN_x64.dmg",
+      "size": 27959013
+     },
+     "linux": {
+      "name": "SavvyCAN-7c576c5-x86_64.AppImage",
+      "url": "https://github.com/collin80/SavvyCAN/releases/download/V220/SavvyCAN-7c576c5-x86_64.AppImage",
+      "size": 45884608
+     }
+    }
+   }
+  },
+  "scalpel": {
+   "repo": "sleuthkit/scalpel",
+   "full_name": "sleuthkit/scalpel",
+   "repo_mismatch": false,
+   "stars": 691,
+   "license": null,
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2024-03-27T20:39:48Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
+  "scrcpy": {
+   "repo": "Genymobile/scrcpy",
+   "full_name": "Genymobile/scrcpy",
+   "repo_mismatch": false,
+   "stars": 155489,
+   "license": "Apache-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-22T20:14:36Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v5.0.1",
+    "name": "scrcpy 5.0.1",
+    "published_at": "2026-10-08T06:44:27Z",
+    "url": "https://github.com/Genymobile/scrcpy/releases/tag/v5.0.1",
+    "assets": {
+     "windows": {
+      "name": "scrcpy-win64-v5.0.1.zip",
+      "url": "https://github.com/Genymobile/scrcpy/releases/download/v5.0.1/scrcpy-win64-v5.0.1.zip",
+      "size": 11264634
+     },
+     "macos": {
+      "name": "scrcpy-macos-x86_64-v5.0.1.tar.gz",
+      "url": "https://github.com/Genymobile/scrcpy/releases/download/v5.0.1/scrcpy-macos-x86_64-v5.0.1.tar.gz",
+      "size": 13478118
+     },
+     "linux": {
+      "name": "scrcpy-linux-x86_64-v5.0.1.tar.gz",
+      "url": "https://github.com/Genymobile/scrcpy/releases/download/v5.0.1/scrcpy-linux-x86_64-v5.0.1.tar.gz",
+      "size": 17883742
+     }
+    }
+   }
+  },
+  "security-onion": {
+   "repo": "Security-Onion-Solutions/securityonion",
+   "full_name": "Security-Onion-Solutions/securityonion",
+   "repo_mismatch": false,
+   "stars": 5000,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-20T22:50:18Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "3.4.0-20261102",
+    "name": "3.4.0-20261102",
+    "published_at": "2026-11-02T16:41:48Z",
+    "url": "https://github.com/Security-Onion-Solutions/securityonion/releases/tag/3.4.0-20261102",
+    "assets": {}
+   }
+  },
+  "sherlock": {
+   "repo": "sherlock-project/sherlock",
+   "full_name": "sherlock-project/sherlock",
+   "repo_mismatch": false,
+   "stars": 116232,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T05:15:35Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v0.16.2",
+    "name": "v0.16.2",
+    "published_at": "2026-09-08T20:54:15Z",
+    "url": "https://github.com/sherlock-project/sherlock/releases/tag/v0.16.2",
+    "assets": {}
+   }
+  },
+  "sherloq": {
+   "repo": "GuidoBartoli/sherloq",
+   "full_name": "GuidoBartoli/sherloq",
+   "repo_mismatch": false,
+   "stars": 3269,
+   "license": "GPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-07-16T11:39:56Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
+  "sift": {
+   "repo": "teamdfir/sift",
+   "full_name": "teamdfir/sift",
+   "repo_mismatch": false,
+   "stars": 556,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2024-02-14T21:38:23Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
+  "sigma": {
+   "repo": "SigmaHQ/sigma",
+   "full_name": "SigmaHQ/sigma",
+   "repo_mismatch": false,
+   "stars": 11556,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T13:57:12Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "r2026-07-01",
+    "name": "Release r2026-07-01",
+    "published_at": "2026-07-09T14:51:34Z",
+    "url": "https://github.com/SigmaHQ/sigma/releases/tag/r2026-07-01",
+    "assets": {}
+   }
+  },
+  "sleuthkit": {
+   "repo": "sleuthkit/sleuthkit",
+   "full_name": "sleuthkit/sleuthkit",
+   "repo_mismatch": false,
+   "stars": 3203,
+   "license": null,
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-19T17:12:06Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "sleuthkit-4.15.0",
+    "name": "Sleuth Kit 4.15.0",
+    "published_at": "2026-04-15T18:09:44Z",
+    "url": "https://github.com/sleuthkit/sleuthkit/releases/tag/sleuthkit-4.15.0",
+    "assets": {
+     "windows": {
+      "name": "sleuthkit-4.15.0-win32.zip",
+      "url": "https://github.com/sleuthkit/sleuthkit/releases/download/sleuthkit-4.15.0/sleuthkit-4.15.0-win32.zip",
+      "size": 17728689
+     }
+    }
+   }
+  },
+  "snort": {
+   "repo": "snort3/snort3",
+   "full_name": "snort3/snort3",
+   "repo_mismatch": false,
+   "stars": 3483,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-05T20:23:20Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "3.13.2.0",
+    "name": "Snort v3.13.2.0",
+    "published_at": "2026-11-05T20:32:58Z",
+    "url": "https://github.com/snort3/snort3/releases/tag/3.13.2.0",
+    "assets": {}
+   }
+  },
+  "sof-elk": {
+   "repo": "philhagen/sof-elk",
+   "full_name": "philhagen/sof-elk",
+   "repo_mismatch": false,
+   "stars": 1766,
+   "license": "GPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-07T09:54:52Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
+  "spiderfoot": {
+   "repo": "smicallef/spiderfoot",
+   "full_name": "smicallef/spiderfoot",
+   "repo_mismatch": false,
+   "stars": 24879,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-04-13T19:43:06Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v4.0",
+    "name": "v4.0",
+    "published_at": "2022-04-07T06:55:29Z",
+    "url": "https://github.com/smicallef/spiderfoot/releases/tag/v4.0",
+    "assets": {}
+   }
+  },
+  "sqlecmd": {
+   "repo": "EricZimmerman/SQLECmd",
+   "full_name": "EricZimmerman/SQLECmd",
+   "repo_mismatch": false,
+   "stars": 61,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-21T13:59:50Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "2026.11.0",
+    "name": "2026.11.0",
+    "published_at": "2026-11-21T01:32:11Z",
+    "url": "https://github.com/EricZimmerman/SQLECmd/releases/tag/2026.11.0",
+    "assets": {}
+   }
+  },
+  "sqlite-deleted-records-parser": {
+   "repo": "mdegrazia/SQLite-Deleted-Records-Parser",
+   "full_name": "mdegrazia/SQLite-Deleted-Records-Parser",
+   "repo_mismatch": false,
+   "stars": 198,
+   "license": null,
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2016-04-12T13:34:34Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v.1.1",
+    "name": "sqlparse v.1.1",
+    "published_at": "2014-09-02T03:17:12Z",
+    "url": "https://github.com/mdegrazia/SQLite-Deleted-Records-Parser/releases/tag/v.1.1",
+    "assets": {
+     "windows": {
+      "name": "sqlparse_CLI.exe",
+      "url": "https://github.com/mdegrazia/SQLite-Deleted-Records-Parser/releases/download/v.1.1/sqlparse_CLI.exe",
+      "size": 4136995
+     }
+    }
+   }
+  },
+  "srum-dump": {
+   "repo": "MarkBaggett/srum-dump",
+   "full_name": "MarkBaggett/srum-dump",
+   "repo_mismatch": false,
+   "stars": 767,
+   "license": "GPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-07-28T20:49:33Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v3.2",
+    "name": "SRUM-DUMP 3.2",
+    "published_at": "2025-06-05T14:18:51Z",
+    "url": "https://github.com/MarkBaggett/srum-dump/releases/tag/v3.2",
+    "assets": {
+     "windows": {
+      "name": "srum_dump.exe",
+      "url": "https://github.com/MarkBaggett/srum-dump/releases/download/v3.2/srum_dump.exe",
+      "size": 19055752
+     }
+    }
+   }
+  },
+  "ssdeep": {
+   "repo": "ssdeep-project/ssdeep",
+   "full_name": "ssdeep-project/ssdeep",
+   "repo_mismatch": false,
+   "stars": 804,
+   "license": "GPL-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-08-13T03:34:06Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "release-2.14.1",
+    "name": "Version 2.14.1",
+    "published_at": "2017-11-07T02:40:32Z",
+    "url": "https://github.com/ssdeep-project/ssdeep/releases/tag/release-2.14.1",
+    "assets": {
+     "windows": {
+      "name": "ssdeep-2.14.1-win32-binary.zip",
+      "url": "https://github.com/ssdeep-project/ssdeep/releases/download/release-2.14.1/ssdeep-2.14.1-win32-binary.zip",
+      "size": 331210
+     }
+    }
+   }
+  },
+  "suricata": {
+   "repo": "OISF/suricata",
+   "full_name": "OISF/suricata",
+   "repo_mismatch": false,
+   "stars": 6929,
+   "license": "GPL-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-19T08:14:15Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "suricata-8.0.8",
+    "name": "8.0.8",
+    "published_at": "2026-10-29T21:12:24Z",
+    "url": "https://github.com/OISF/suricata/releases/tag/suricata-8.0.8",
+    "assets": {}
+   }
+  },
+  "sysdiagnose": {
+   "repo": "EC-DIGIT-CSIRC/sysdiagnose",
+   "full_name": "EC-DIGIT-CSIRC/sysdiagnose",
+   "repo_mismatch": false,
+   "stars": 291,
+   "license": "EUPL-1.2",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-12T13:00:55Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
+  "system-informer": {
+   "repo": "winsiderss/systeminformer",
+   "full_name": "winsiderss/systeminformer",
+   "repo_mismatch": false,
+   "stars": 16558,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T18:21:40Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v4.0.26241.138",
+    "name": "4.0.26241.138",
+    "published_at": "2026-08-29T01:54:13Z",
+    "url": "https://github.com/winsiderss/systeminformer/releases/tag/v4.0.26241.138",
+    "assets": {
+     "windows": {
+      "name": "systeminformer-4.0.26241.138-release-setup.exe",
+      "url": "https://github.com/winsiderss/systeminformer/releases/download/v4.0.26241.138/systeminformer-4.0.26241.138-release-setup.exe",
+      "size": 30354960
+     }
+    }
+   }
+  },
+  "takajo": {
+   "repo": "Yamato-Security/takajo",
+   "full_name": "Yamato-Security/takajo",
+   "repo_mismatch": false,
+   "stars": 170,
+   "license": "AGPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-10-25T03:05:35Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v2.16.1",
+    "name": "v2.16.1 - Golden Week Release",
+    "published_at": "2026-05-11T01:09:14Z",
+    "url": "https://github.com/Yamato-Security/takajo/releases/tag/v2.16.1",
+    "assets": {
+     "windows": {
+      "name": "takajo-2.16.1-win-x64.zip",
+      "url": "https://github.com/Yamato-Security/takajo/releases/download/v2.16.1/takajo-2.16.1-win-x64.zip",
+      "size": 15752662
+     },
+     "macos": {
+      "name": "takajo-2.16.1-mac-x64.zip",
+      "url": "https://github.com/Yamato-Security/takajo/releases/download/v2.16.1/takajo-2.16.1-mac-x64.zip",
+      "size": 2111525
+     },
+     "linux": {
+      "name": "takajo-2.16.1-lin-x64-gnu.zip",
+      "url": "https://github.com/Yamato-Security/takajo/releases/download/v2.16.1/takajo-2.16.1-lin-x64-gnu.zip",
+      "size": 2427417
+     }
+    }
+   }
+  },
+  "tcpdump": {
+   "repo": "the-tcpdump-group/tcpdump",
+   "full_name": "the-tcpdump-group/tcpdump",
+   "repo_mismatch": false,
+   "stars": 3272,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-20T18:27:03Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
   },
   "testdisk": {
    "repo": "cgsecurity/testdisk",
@@ -464,8 +3068,186 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-15T18:52:44Z",
-   "checked": "2026-11-23T18:26:33Z",
+   "checked": "2026-11-23T18:50:40Z",
    "release": null
+  },
+  "theharvester": {
+   "repo": "laramies/theHarvester",
+   "full_name": "laramies/theHarvester",
+   "repo_mismatch": false,
+   "stars": 18395,
+   "license": "GPL-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-22T13:48:10Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "4.11.1",
+    "name": "4.11.1",
+    "published_at": "2026-06-03T22:29:25Z",
+    "url": "https://github.com/laramies/theHarvester/releases/tag/4.11.1",
+    "assets": {}
+   }
+  },
+  "time-decode": {
+   "repo": "digitalsleuth/time_decode",
+   "full_name": "digitalsleuth/time_decode",
+   "repo_mismatch": false,
+   "stars": 44,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-15T19:01:53Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v11.0.0",
+    "name": "v11.0.0",
+    "published_at": "2026-10-12T03:40:10Z",
+    "url": "https://github.com/digitalsleuth/time_decode/releases/tag/v11.0.0",
+    "assets": {
+     "windows": {
+      "name": "Time.Decode.v11.0.0.exe",
+      "url": "https://github.com/digitalsleuth/time_decode/releases/download/v11.0.0/Time.Decode.v11.0.0.exe",
+      "size": 32480674
+     }
+    }
+   }
+  },
+  "timesketch": {
+   "repo": "google/timesketch",
+   "full_name": "google/timesketch",
+   "repo_mismatch": false,
+   "stars": 3454,
+   "license": "Apache-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-12T16:17:30Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "20261014",
+    "name": "20261014",
+    "published_at": "2026-10-14T15:06:04Z",
+    "url": "https://github.com/google/timesketch/releases/tag/20261014",
+    "assets": {}
+   }
+  },
+  "turbinia": {
+   "repo": "google/turbinia",
+   "full_name": "google/turbinia",
+   "repo_mismatch": false,
+   "stars": 796,
+   "license": "Apache-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-15T06:49:18Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "20250131",
+    "name": "20250131",
+    "published_at": "2025-02-05T23:01:15Z",
+    "url": "https://github.com/google/turbinia/releases/tag/20250131",
+    "assets": {}
+   }
+  },
+  "uac": {
+   "repo": "tclahr/uac",
+   "full_name": "tclahr/uac",
+   "repo_mismatch": false,
+   "stars": 1531,
+   "license": "Apache-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-18T21:42:52Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v3.4.0",
+    "name": "uac-3.4.0",
+    "published_at": "2026-09-09T11:12:55Z",
+    "url": "https://github.com/tclahr/uac/releases/tag/v3.4.0",
+    "assets": {}
+   }
+  },
+  "ufade": {
+   "repo": "prosch88/UFADE",
+   "full_name": "prosch88/UFADE",
+   "repo_mismatch": false,
+   "stars": 606,
+   "license": "GPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-18T14:54:39Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v1.0.5",
+    "name": "UFADE 1.0.5",
+    "published_at": "2026-10-16T19:07:22Z",
+    "url": "https://github.com/prosch88/UFADE/releases/tag/v1.0.5",
+    "assets": {
+     "windows": {
+      "name": "UFADE_1.0.5_win_x64.zip",
+      "url": "https://github.com/prosch88/UFADE/releases/download/v1.0.5/UFADE_1.0.5_win_x64.zip",
+      "size": 1114916417
+     },
+     "macos": {
+      "name": "UFADE_1.0.5_mac_x64.zip",
+      "url": "https://github.com/prosch88/UFADE/releases/download/v1.0.5/UFADE_1.0.5_mac_x64.zip",
+      "size": 1133543427
+     },
+     "linux": {
+      "name": "UFADE_1.0.5_lin_x64.zip",
+      "url": "https://github.com/prosch88/UFADE/releases/download/v1.0.5/UFADE_1.0.5_lin_x64.zip",
+      "size": 1216724286
+     }
+    }
+   }
+  },
+  "undark": {
+   "repo": "inflex/undark",
+   "full_name": "inflex/undark",
+   "repo_mismatch": false,
+   "stars": 67,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2016-06-30T14:59:12Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": null
+  },
+  "unfurl": {
+   "repo": "RyanDFIR/unfurl",
+   "full_name": "RyanDFIR/unfurl",
+   "repo_mismatch": false,
+   "stars": 787,
+   "license": "Apache-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-22T23:24:56Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v2026.11",
+    "name": "v2026.11",
+    "published_at": "2026-10-29T04:06:06Z",
+    "url": "https://github.com/RyanDFIR/unfurl/releases/tag/v2026.11",
+    "assets": {}
+   }
+  },
+  "untitled-goose-tool": {
+   "repo": "cisagov/untitledgoosetool",
+   "full_name": "cisagov/untitledgoosetool",
+   "repo_mismatch": false,
+   "stars": 970,
+   "license": "CC0-1.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-10-13T14:52:27Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v2.1.0",
+    "name": "v2.1.0",
+    "published_at": "2025-02-19T17:43:19Z",
+    "url": "https://github.com/cisagov/untitledgoosetool/releases/tag/v2.1.0",
+    "assets": {}
+   }
   },
   "velociraptor": {
    "repo": "Velocidex/velociraptor",
@@ -476,7 +3258,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-23T00:20:26Z",
-   "checked": "2026-11-23T18:26:33Z",
+   "checked": "2026-11-23T18:50:40Z",
    "release": {
     "tag": "v0.77.4",
     "name": "Release 0.77.4",
@@ -501,16 +3283,40 @@
     }
    }
   },
+  "volatility2": {
+   "repo": "volatilityfoundation/volatility",
+   "full_name": "volatilityfoundation/volatility",
+   "repo_mismatch": false,
+   "stars": 8059,
+   "license": "GPL-2.0",
+   "archived": true,
+   "fork": false,
+   "pushed_at": "2025-05-16T13:40:55Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "2.6.1",
+    "name": "Volatility 2.6: December 2016 ",
+    "published_at": "2024-04-09T20:04:28Z",
+    "url": "https://github.com/volatilityfoundation/volatility/releases/tag/2.6.1",
+    "assets": {
+     "windows": {
+      "name": "volatility_2.6_win64_standalone.zip",
+      "url": "https://github.com/volatilityfoundation/volatility/releases/download/2.6.1/volatility_2.6_win64_standalone.zip",
+      "size": 15565657
+     }
+    }
+   }
+  },
   "volatility3": {
    "repo": "volatilityfoundation/volatility3",
    "full_name": "volatilityfoundation/volatility3",
    "repo_mismatch": false,
-   "stars": 4619,
+   "stars": 4621,
    "license": "NOASSERTION",
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-22T11:42:33Z",
-   "checked": "2026-11-23T18:26:33Z",
+   "checked": "2026-11-23T18:50:40Z",
    "release": {
     "tag": "v2.28.2",
     "name": "Volatility 3 2.28.2",
@@ -525,6 +3331,40 @@
     }
    }
   },
+  "whatsapp-chat-exporter": {
+   "repo": "KnugiHK/WhatsApp-Chat-Exporter",
+   "full_name": "KnugiHK/WhatsApp-Chat-Exporter",
+   "repo_mismatch": false,
+   "stars": 1321,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T05:33:51Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "0.13.1",
+    "name": "Security Release (2026/10/12)",
+    "published_at": "2026-10-11T17:15:49Z",
+    "url": "https://github.com/KnugiHK/WhatsApp-Chat-Exporter/releases/tag/0.13.1",
+    "assets": {
+     "windows": {
+      "name": "wtsexporter_win_x64.exe",
+      "url": "https://github.com/KnugiHK/WhatsApp-Chat-Exporter/releases/download/0.13.1/wtsexporter_win_x64.exe",
+      "size": 10505216
+     },
+     "macos": {
+      "name": "wtsexporter_macos_x64",
+      "url": "https://github.com/KnugiHK/WhatsApp-Chat-Exporter/releases/download/0.13.1/wtsexporter_macos_x64",
+      "size": 11888752
+     },
+     "linux": {
+      "name": "wtsexporter_linux_x64",
+      "url": "https://github.com/KnugiHK/WhatsApp-Chat-Exporter/releases/download/0.13.1/wtsexporter_linux_x64",
+      "size": 22614073
+     }
+    }
+   }
+  },
   "winpmem": {
    "repo": "Velocidex/WinPmem",
    "full_name": "Velocidex/WinPmem",
@@ -534,12 +3374,140 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-10-21T10:43:02Z",
-   "checked": "2026-11-23T18:26:33Z",
+   "checked": "2026-11-23T18:50:40Z",
    "release": {
     "tag": "v4.0.rc1",
     "name": "Release 4.0 RC2",
     "published_at": "2020-10-12T01:09:16Z",
     "url": "https://github.com/Velocidex/WinPmem/releases/tag/v4.0.rc1",
+    "assets": {}
+   }
+  },
+  "x64dbg": {
+   "repo": "x64dbg/x64dbg",
+   "full_name": "x64dbg/x64dbg",
+   "repo_mismatch": false,
+   "stars": 50373,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-22T15:39:51Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "2026.05.27",
+    "name": "2026.05.27",
+    "published_at": "2026-05-27T13:04:55Z",
+    "url": "https://github.com/x64dbg/x64dbg/releases/tag/2026.05.27",
+    "assets": {}
+   }
+  },
+  "yara": {
+   "repo": "VirusTotal/yara",
+   "full_name": "VirusTotal/yara",
+   "repo_mismatch": false,
+   "stars": 10056,
+   "license": "BSD-3-Clause",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T10:03:06Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v4.6.0",
+    "name": "YARA v4.6.0",
+    "published_at": "2026-10-27T12:10:10Z",
+    "url": "https://github.com/VirusTotal/yara/releases/tag/v4.6.0",
+    "assets": {
+     "windows": {
+      "name": "yara-4.6.0-2443-win64.zip",
+      "url": "https://github.com/VirusTotal/yara/releases/download/v4.6.0/yara-4.6.0-2443-win64.zip",
+      "size": 2238893
+     }
+    }
+   }
+  },
+  "yara-x": {
+   "repo": "VirusTotal/yara-x",
+   "full_name": "VirusTotal/yara-x",
+   "repo_mismatch": false,
+   "stars": 1379,
+   "license": "BSD-3-Clause",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T12:22:57Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v1.24.0",
+    "name": "v1.24.0",
+    "published_at": "2026-11-20T18:45:26Z",
+    "url": "https://github.com/VirusTotal/yara-x/releases/tag/v1.24.0",
+    "assets": {
+     "windows": {
+      "name": "yara-x-v1.24.0-x86_64-pc-windows-msvc.zip",
+      "url": "https://github.com/VirusTotal/yara-x/releases/download/v1.24.0/yara-x-v1.24.0-x86_64-pc-windows-msvc.zip",
+      "size": 9102014
+     },
+     "macos": {
+      "name": "yara-x-v1.24.0-x86_64-apple-darwin.tar.gz",
+      "url": "https://github.com/VirusTotal/yara-x/releases/download/v1.24.0/yara-x-v1.24.0-x86_64-apple-darwin.tar.gz",
+      "size": 9506401
+     },
+     "linux": {
+      "name": "yara-x-v1.24.0-x86_64-unknown-linux-gnu.tar.gz",
+      "url": "https://github.com/VirusTotal/yara-x/releases/download/v1.24.0/yara-x-v1.24.0-x86_64-unknown-linux-gnu.tar.gz",
+      "size": 10387870
+     }
+    }
+   }
+  },
+  "yt-dlp": {
+   "repo": "yt-dlp/yt-dlp",
+   "full_name": "yt-dlp/yt-dlp",
+   "repo_mismatch": false,
+   "stars": 210186,
+   "license": "Unlicense",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T16:12:47Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "2026.10.26",
+    "name": "yt-dlp 2026.10.26",
+    "published_at": "2026-10-26T22:25:26Z",
+    "url": "https://github.com/yt-dlp/yt-dlp/releases/tag/2026.10.26",
+    "assets": {
+     "windows": {
+      "name": "yt-dlp.exe",
+      "url": "https://github.com/yt-dlp/yt-dlp/releases/download/2026.10.26/yt-dlp.exe",
+      "size": 23575744
+     },
+     "macos": {
+      "name": "yt-dlp_macos.zip",
+      "url": "https://github.com/yt-dlp/yt-dlp/releases/download/2026.10.26/yt-dlp_macos.zip",
+      "size": 54165284
+     },
+     "linux": {
+      "name": "yt-dlp_linux.zip",
+      "url": "https://github.com/yt-dlp/yt-dlp/releases/download/2026.10.26/yt-dlp_linux.zip",
+      "size": 41236547
+     }
+    }
+   }
+  },
+  "zeek": {
+   "repo": "zeek/zeek",
+   "full_name": "zeek/zeek",
+   "repo_mismatch": false,
+   "stars": 8277,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T18:42:17Z",
+   "checked": "2026-11-23T18:50:40Z",
+   "release": {
+    "tag": "v9.0.1",
+    "name": "v9.0.1",
+    "published_at": "2026-10-26T17:44:08Z",
+    "url": "https://github.com/zeek/zeek/releases/tag/v9.0.1",
     "assets": {}
    }
   },
@@ -552,7 +3520,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-23T09:27:45Z",
-   "checked": "2026-11-23T18:26:33Z",
+   "checked": "2026-11-23T18:50:40Z",
    "release": {
     "tag": "v4.8.0",
     "name": "v4.8.0",
@@ -586,7 +3554,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-08-22T19:09:57Z",
-   "checked": "2026-11-23T18:26:33Z",
+   "checked": "2026-11-23T18:50:40Z",
    "release": {
     "tag": "v1.18.0",
     "name": "v1.18.0",
