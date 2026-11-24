@@ -173,11 +173,9 @@ FAVICON = "data:image/svg+xml," + urllib.parse.quote(
 ICON_MENU = ('<svg aria-hidden="true" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" '
              'stroke-width="2" stroke-linecap="round"><path d="M3 5.5h14M3 10h14M3 14.5h14"/></svg>')
 
-NAV = [("categories", "Categories", "index.html#categories"), ("tools", "All tools", "tools.html"),
-       ("alternatives", "Alternatives", "alternatives.html"), ("inside", "Inside commercial tools", "inside.html"),
-       ("practice", "Practice", "practice.html"), ("learn", "Learn", "learn.html"), ("about", "About", "about.html")]
+NAV = [("tools", "Tools", "tools.html"), ("practice", "Practice", "practice.html"), ("about", "About", "about.html")]
 if WORKFLOWS:
-    NAV.insert(2, ("workflows", "Workflows", "workflows.html"))
+    NAV.insert(1, ("workflows", "Workflows", "workflows.html"))
 if BASICS:
     NAV.insert(0, ("basics", "Basics", "basics.html"))
 
@@ -222,7 +220,7 @@ def page(path, title, desc, body, current=""):
 </main>
 <footer class="site-foot"><div class="wrap">
 <p class="about">{name} is an independent educational resource. It is not affiliated with, sponsored by or endorsed by any vendor or project listed here. Credit for every tool belongs to its developers. Product names are trademarks of their owners. Downloads come from third parties: validate every tool yourself before using it on real evidence.</p>
-<nav aria-label="Footer">{basics_link}<a href="{px}compare.html">Compare tools</a><a href="{px}lab.html">Evidence lab</a><a href="{px}toolbox.html">Pocket toolbox</a><a href="{px}nist.html">Browse by NIST functionality</a><a href="{px}about.html">About and disclaimer</a><a href="{px}about.html#corrections">Corrections and removal requests</a><a href="{px}about.html#privacy">Privacy</a>{maint}</nav>
+<nav aria-label="Footer">{basics_link}<a href="{px}index.html#categories">Categories</a><a href="{px}alternatives.html">Alternatives</a><a href="{px}inside.html">Inside commercial tools</a><a href="{px}learn.html">Learn</a><a href="{px}compare.html">Compare tools</a><a href="{px}lab.html">Evidence lab</a><a href="{px}toolbox.html">Pocket toolbox</a><a href="{px}nist.html">Browse by NIST functionality</a><a href="{px}about.html">About and disclaimer</a><a href="{px}about.html#corrections">Corrections and removal requests</a><a href="{px}about.html#privacy">Privacy</a>{maint}</nav>
 </div></footer>
 <script src="{px}assets/app.js" defer></script>
 </body>
