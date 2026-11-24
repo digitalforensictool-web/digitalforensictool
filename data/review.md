@@ -1,8 +1,7 @@
 # Review list
 
-Generated 2026-11-24T18:36:43Z. Items here need a person to look at them.
+Generated 2026-11-24T19:44:51Z. Items here need a person to look at them.
 
-- **agent-ransack**: Website did not respond (may be temporary): https://www.mythicsoft.com/agentransack/
 - **apollo**: GitHub does not report a recognised licence. Confirm the licence by hand and add a "licence" field in tools.json.
 - **audacity**: GitHub does not report a recognised licence. Confirm the licence by hand and add a "licence" field in tools.json.
 - **btcrecover**: Repository is a fork. Confirm it is the official one.
@@ -13,7 +12,6 @@ Generated 2026-11-24T18:36:43Z. Items here need a person to look at them.
 - **john**: GitHub does not report a recognised licence. Confirm the licence by hand and add a "licence" field in tools.json.
 - **kismet**: GitHub does not report a recognised licence. Confirm the licence by hand and add a "licence" field in tools.json.
 - **mempool**: GitHub does not report a recognised licence. Confirm the licence by hand and add a "licence" field in tools.json.
-- **mvt**: GitHub does not report a recognised licence. Confirm the licence by hand and add a "licence" field in tools.json.
 - **oletools**: GitHub does not report a recognised licence. Confirm the licence by hand and add a "licence" field in tools.json.
 - **osquery**: GitHub does not report a recognised licence. Confirm the licence by hand and add a "licence" field in tools.json.
 - **regripper**: GitHub does not report a recognised licence. Confirm the licence by hand and add a "licence" field in tools.json.

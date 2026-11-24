@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-24T18:36:43Z",
+ "generated": "2026-11-24T19:44:51Z",
  "tools": {
   "aftermath": {
    "repo": "jamf/aftermath",
@@ -10,7 +10,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2025-09-25T20:43:46Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v2.3.0",
     "name": "2.3.0",
@@ -34,7 +34,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-10-09T16:45:03Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "1.7",
     "name": "Aircrack-ng 1.7",
@@ -51,28 +51,28 @@
    "license": "MIT",
    "archived": false,
    "fork": false,
-   "pushed_at": "2026-11-24T18:34:48Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "pushed_at": "2026-11-24T19:02:55Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
-    "tag": "v2026.4.5",
-    "name": "ALEAPP v2026.4.5",
-    "published_at": "2026-11-03T07:22:49Z",
-    "url": "https://github.com/abrignoni/ALEAPP/releases/tag/v2026.4.5",
+    "tag": "v2026.4.6",
+    "name": "ALEAPP v2026.4.6",
+    "published_at": "2026-11-24T18:52:27Z",
+    "url": "https://github.com/abrignoni/ALEAPP/releases/tag/v2026.4.6",
     "assets": {
      "windows": {
-      "name": "ALEAPP-2026.4.5-windows-x64-portable.zip",
-      "url": "https://github.com/abrignoni/ALEAPP/releases/download/v2026.4.5/ALEAPP-2026.4.5-windows-x64-portable.zip",
-      "size": 57358460
+      "name": "ALEAPP-2026.4.6-windows-x64-portable.zip",
+      "url": "https://github.com/abrignoni/ALEAPP/releases/download/v2026.4.6/ALEAPP-2026.4.6-windows-x64-portable.zip",
+      "size": 62489545
      },
      "macos": {
-      "name": "ALEAPP-2026.4.5-macos-x64.dmg",
-      "url": "https://github.com/abrignoni/ALEAPP/releases/download/v2026.4.5/ALEAPP-2026.4.5-macos-x64.dmg",
-      "size": 54638745
+      "name": "ALEAPP-2026.4.6-macos-x64.dmg",
+      "url": "https://github.com/abrignoni/ALEAPP/releases/download/v2026.4.6/ALEAPP-2026.4.6-macos-x64.dmg",
+      "size": 61195492
      },
      "linux": {
-      "name": "ALEAPP-2026.4.5-linux-x64.AppImage",
-      "url": "https://github.com/abrignoni/ALEAPP/releases/download/v2026.4.5/ALEAPP-2026.4.5-linux-x64.AppImage",
-      "size": 81660408
+      "name": "ALEAPP-2026.4.6-linux-x64.AppImage",
+      "url": "https://github.com/abrignoni/ALEAPP/releases/download/v2026.4.6/ALEAPP-2026.4.6-linux-x64.AppImage",
+      "size": 86559224
      }
     }
    }
@@ -86,12 +86,64 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2022-06-27T22:00:44Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "3.6.3",
     "name": "3.6.3",
     "published_at": "2022-04-30T14:57:06Z",
     "url": "https://github.com/den4uk/andriller/releases/tag/3.6.3",
+    "assets": {}
+   }
+  },
+  "androidqf": {
+   "repo": "mvt-project/androidqf",
+   "full_name": "mvt-project/androidqf",
+   "repo_mismatch": false,
+   "stars": 397,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T19:53:24Z",
+   "checked": "2026-11-24T19:44:51Z",
+   "release": {
+    "tag": "v1.8.3",
+    "name": "androidqf 1.8.3",
+    "published_at": "2026-05-12T15:37:41Z",
+    "url": "https://github.com/mvt-project/androidqf/releases/tag/v1.8.3",
+    "assets": {
+     "windows": {
+      "name": "androidqf_windows_amd64_1.8.3_unsigned.exe",
+      "url": "https://github.com/mvt-project/androidqf/releases/download/v1.8.3/androidqf_windows_amd64_1.8.3_unsigned.exe",
+      "size": 10819072
+     },
+     "macos": {
+      "name": "androidqf_macos_universal_1.8.3_signed",
+      "url": "https://github.com/mvt-project/androidqf/releases/download/v1.8.3/androidqf_macos_universal_1.8.3_signed",
+      "size": 61647840
+     },
+     "linux": {
+      "name": "androidqf_linux_amd64_1.8.3",
+      "url": "https://github.com/mvt-project/androidqf/releases/download/v1.8.3/androidqf_linux_amd64_1.8.3",
+      "size": 11144276
+     }
+    }
+   }
+  },
+  "apktool": {
+   "repo": "iBotPeaches/Apktool",
+   "full_name": "iBotPeaches/Apktool",
+   "repo_mismatch": false,
+   "stars": 27357,
+   "license": "Apache-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T09:04:23Z",
+   "checked": "2026-11-24T19:44:51Z",
+   "release": {
+    "tag": "v3.0.3",
+    "name": "v3.0.3",
+    "published_at": "2026-07-20T10:37:54Z",
+    "url": "https://github.com/iBotPeaches/Apktool/releases/tag/v3.0.3",
     "assets": {}
    }
   },
@@ -104,8 +156,26 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2024-02-25T01:12:28Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": null
+  },
+  "arkime": {
+   "repo": "arkime/arkime",
+   "full_name": "arkime/arkime",
+   "repo_mismatch": false,
+   "stars": 7588,
+   "license": "Apache-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-24T17:12:11Z",
+   "checked": "2026-11-24T19:44:51Z",
+   "release": {
+    "tag": "v6.9.2",
+    "name": "v6.9.2",
+    "published_at": "2026-11-12T14:58:26Z",
+    "url": "https://github.com/arkime/arkime/releases/tag/v6.9.2",
+    "assets": {}
+   }
   },
   "arsenal-image-mounter": {
    "repo": "ArsenalRecon/Arsenal-Image-Mounter",
@@ -116,7 +186,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-24T17:53:13Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": null
   },
   "audacity": {
@@ -128,7 +198,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-24T09:27:27Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "Audacity-4.0.2",
     "name": "Audacity 4.0.2",
@@ -157,7 +227,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2023-10-05T18:43:26Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "0.6.6",
     "name": "v0.6.6",
@@ -191,7 +261,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-06-20T05:43:47Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "autopsy-4.23.1",
     "name": "Autopsy 4.23.1",
@@ -215,7 +285,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-04-04T18:02:34Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "FREE",
     "name": "AVILLA FORENSICS FREE",
@@ -233,7 +303,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-23T22:23:05Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v0.21.0",
     "name": "v0.21.0",
@@ -257,7 +327,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-08-11T15:27:34Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v3.1.0",
     "name": "Binwalk v3.1.0",
@@ -275,7 +345,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2024-04-28T01:42:14Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "0.5.6",
     "name": "0.5.6",
@@ -293,7 +363,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-21T13:58:58Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": null
   },
   "btcrecover": {
@@ -304,8 +374,8 @@
    "license": "GPL-2.0",
    "archived": false,
    "fork": true,
-   "pushed_at": "2026-11-03T00:19:46Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "pushed_at": "2026-11-24T19:44:33Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "1.12.0",
     "name": "1.12 - Routine Release",
@@ -323,7 +393,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-10-12T00:57:41Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v2.2.0",
     "name": "BE v2.2.0",
@@ -352,7 +422,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-10-14T19:27:44Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v2025.01",
     "name": "can-utils v2025.01 ",
@@ -370,7 +440,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-24T15:12:48Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v10.0.0",
     "name": "v10.0.0",
@@ -399,12 +469,12 @@
    "repo": "WithSecureOpenSource/chainsaw",
    "full_name": "WithSecureOpenSource/chainsaw",
    "repo_mismatch": false,
-   "stars": 3736,
+   "stars": 3737,
    "license": "GPL-3.0",
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-15T13:59:27Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v2.18.0",
     "name": "v2.18.0",
@@ -429,16 +499,79 @@
     }
    }
   },
+  "clamav": {
+   "repo": "Cisco-Talos/clamav",
+   "full_name": "Cisco-Talos/clamav",
+   "repo_mismatch": false,
+   "stars": 7718,
+   "license": "GPL-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-22T18:30:30Z",
+   "checked": "2026-11-24T19:44:51Z",
+   "release": {
+    "tag": "clamav-1.5.5",
+    "name": "ClamAV 1.5.5",
+    "published_at": "2026-11-18T16:09:58Z",
+    "url": "https://github.com/Cisco-Talos/clamav/releases/tag/clamav-1.5.5",
+    "assets": {
+     "windows": {
+      "name": "clamav-1.5.5.win.x64.msi",
+      "url": "https://github.com/Cisco-Talos/clamav/releases/download/clamav-1.5.5/clamav-1.5.5.win.x64.msi",
+      "size": 224510215
+     },
+     "macos": {
+      "name": "clamav-1.5.5.macos.universal.pkg",
+      "url": "https://github.com/Cisco-Talos/clamav/releases/download/clamav-1.5.5/clamav-1.5.5.macos.universal.pkg",
+      "size": 153556707
+     }
+    }
+   }
+  },
+  "cutter": {
+   "repo": "rizinorg/cutter",
+   "full_name": "rizinorg/cutter",
+   "repo_mismatch": false,
+   "stars": 20262,
+   "license": "GPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T19:46:21Z",
+   "checked": "2026-11-24T19:44:51Z",
+   "release": {
+    "tag": "v2.5.0",
+    "name": "2.5.0",
+    "published_at": "2026-06-30T18:37:00Z",
+    "url": "https://github.com/rizinorg/cutter/releases/tag/v2.5.0",
+    "assets": {
+     "windows": {
+      "name": "Cutter-v2.5.0-Windows-x86_64.zip",
+      "url": "https://github.com/rizinorg/cutter/releases/download/v2.5.0/Cutter-v2.5.0-Windows-x86_64.zip",
+      "size": 140530846
+     },
+     "macos": {
+      "name": "Cutter-v2.5.0-macOS-x86_64.dmg",
+      "url": "https://github.com/rizinorg/cutter/releases/download/v2.5.0/Cutter-v2.5.0-macOS-x86_64.dmg",
+      "size": 124647134
+     },
+     "linux": {
+      "name": "Cutter-v2.5.0-Linux-x86_64.AppImage",
+      "url": "https://github.com/rizinorg/cutter/releases/download/v2.5.0/Cutter-v2.5.0-Linux-x86_64.AppImage",
+      "size": 144423416
+     }
+    }
+   }
+  },
   "cyberchef": {
    "repo": "gchq/CyberChef",
    "full_name": "gchq/CyberChef",
    "repo_mismatch": false,
-   "stars": 36520,
+   "stars": 36519,
    "license": "Apache-2.0",
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-24T14:18:57Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v11.6.0",
     "name": "",
@@ -456,7 +589,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-23T00:18:05Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v3.13.1",
     "name": "DB Browser for SQLite v3.13.1",
@@ -490,7 +623,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2023-10-14T17:06:57Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": null
   },
   "detect-it-easy": {
@@ -502,7 +635,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-24T05:02:57Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": null
   },
   "dfir-artifact-museum": {
@@ -514,8 +647,26 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-11T20:49:07Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": null
+  },
+  "dfir-orc": {
+   "repo": "DFIR-ORC/dfir-orc",
+   "full_name": "DFIR-ORC/dfir-orc",
+   "repo_mismatch": false,
+   "stars": 456,
+   "license": "LGPL-2.1",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-10-08T16:54:41Z",
+   "checked": "2026-11-24T19:44:51Z",
+   "release": {
+    "tag": "v10.4.0",
+    "name": "v10.4.0",
+    "published_at": "2026-10-08T17:28:34Z",
+    "url": "https://github.com/DFIR-ORC/dfir-orc/releases/tag/v10.4.0",
+    "assets": {}
+   }
   },
   "discordchatexporter": {
    "repo": "Tyrrrz/DiscordChatExporter",
@@ -526,7 +677,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-14T18:24:01Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "2.48",
     "name": "2.48",
@@ -560,7 +711,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-10-21T12:00:55Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": null
   },
   "dissect": {
@@ -572,7 +723,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-01T12:49:11Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "3.22",
     "name": "3.22",
@@ -590,7 +741,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2025-06-07T10:02:17Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v0.5.7",
     "name": "v0.5.7",
@@ -619,7 +770,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-23T08:10:17Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v2.0.5-ice-edt",
     "name": "EMBA v2.0.5 - Iced latte edt.",
@@ -637,7 +788,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-21T13:59:03Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "2026.11.1",
     "name": "2026.11.1",
@@ -655,19 +806,19 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-16T15:33:33Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": null
   },
   "ffmpeg": {
    "repo": "FFmpeg/FFmpeg",
    "full_name": "FFmpeg/FFmpeg",
    "repo_mismatch": false,
-   "stars": 68069,
+   "stars": 68070,
    "license": "NOASSERTION",
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-24T17:42:57Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": null
   },
   "flare-vm": {
@@ -679,7 +830,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-10-07T14:43:37Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "vbox-1.0.0",
     "name": "",
@@ -697,7 +848,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-15T02:12:31Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v3.2.0",
     "name": "v3.2.0",
@@ -731,7 +882,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-23T14:58:22Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "5.3",
     "name": "5.3",
@@ -751,16 +902,34 @@
     }
    }
   },
+  "frida": {
+   "repo": "frida/frida",
+   "full_name": "frida/frida",
+   "repo_mismatch": false,
+   "stars": 22925,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-23T22:34:21Z",
+   "checked": "2026-11-24T19:44:51Z",
+   "release": {
+    "tag": "17.27.5",
+    "name": "Frida 17.27.5",
+    "published_at": "2026-11-23T23:26:08Z",
+    "url": "https://github.com/frida/frida/releases/tag/17.27.5",
+    "assets": {}
+   }
+  },
   "ghidra": {
    "repo": "NationalSecurityAgency/ghidra",
    "full_name": "NationalSecurityAgency/ghidra",
    "repo_mismatch": false,
-   "stars": 101201,
+   "stars": 101204,
    "license": "Apache-2.0",
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-24T14:44:35Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "Ghidra_12.2_build",
     "name": "Ghidra 12.2",
@@ -778,8 +947,26 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-18T22:17:51Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": null
+  },
+  "grr": {
+   "repo": "google/grr",
+   "full_name": "google/grr",
+   "repo_mismatch": false,
+   "stars": 5116,
+   "license": "Apache-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-10-01T16:04:33Z",
+   "checked": "2026-11-24T19:44:51Z",
+   "release": {
+    "tag": "v.4.0.0.0-release",
+    "name": "GRR release 4.0.0.0",
+    "published_at": "2025-12-15T17:12:33Z",
+    "url": "https://github.com/google/grr/releases/tag/v.4.0.0.0-release",
+    "assets": {}
+   }
   },
   "hashcat": {
    "repo": "hashcat/hashcat",
@@ -789,8 +976,8 @@
    "license": null,
    "archived": false,
    "fork": false,
-   "pushed_at": "2026-11-24T07:33:48Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "pushed_at": "2026-11-24T19:44:40Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v8.0.0",
     "name": "hashcat v8.0.0",
@@ -808,7 +995,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2025-09-20T21:28:41Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v4.4",
     "name": "Release 4.4",
@@ -826,7 +1013,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-24T10:45:19Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v4.4.0",
     "name": "v4.4.0 - CODE BLUE Release",
@@ -860,7 +1047,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-19T04:08:06Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v2026.11",
     "name": "v2026.11",
@@ -893,28 +1080,28 @@
    "license": "MIT",
    "archived": false,
    "fork": false,
-   "pushed_at": "2026-11-24T18:30:12Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "pushed_at": "2026-11-24T18:49:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
-    "tag": "v2026.4.6",
-    "name": "iLEAPP v2026.4.6",
-    "published_at": "2026-11-03T07:12:50Z",
-    "url": "https://github.com/abrignoni/iLEAPP/releases/tag/v2026.4.6",
+    "tag": "v2026.4.7",
+    "name": "iLEAPP v2026.4.7",
+    "published_at": "2026-11-24T18:43:59Z",
+    "url": "https://github.com/abrignoni/iLEAPP/releases/tag/v2026.4.7",
     "assets": {
      "windows": {
-      "name": "iLEAPP-2026.4.6-windows-x64-portable.zip",
-      "url": "https://github.com/abrignoni/iLEAPP/releases/download/v2026.4.6/iLEAPP-2026.4.6-windows-x64-portable.zip",
-      "size": 74060588
+      "name": "iLEAPP-2026.4.7-windows-x64-portable.zip",
+      "url": "https://github.com/abrignoni/iLEAPP/releases/download/v2026.4.7/iLEAPP-2026.4.7-windows-x64-portable.zip",
+      "size": 70912358
      },
      "macos": {
-      "name": "iLEAPP-2026.4.6-macos-x64.dmg",
-      "url": "https://github.com/abrignoni/iLEAPP/releases/download/v2026.4.6/iLEAPP-2026.4.6-macos-x64.dmg",
-      "size": 70401621
+      "name": "iLEAPP-2026.4.7-macos-x64.dmg",
+      "url": "https://github.com/abrignoni/iLEAPP/releases/download/v2026.4.7/iLEAPP-2026.4.7-macos-x64.dmg",
+      "size": 69275077
      },
      "linux": {
-      "name": "iLEAPP-2026.4.6-linux-x64.AppImage",
-      "url": "https://github.com/abrignoni/iLEAPP/releases/download/v2026.4.6/iLEAPP-2026.4.6-linux-x64.AppImage",
-      "size": 94149112
+      "name": "iLEAPP-2026.4.7-linux-x64.AppImage",
+      "url": "https://github.com/abrignoni/iLEAPP/releases/download/v2026.4.7/iLEAPP-2026.4.7-linux-x64.AppImage",
+      "size": 91236856
      }
     }
    }
@@ -928,7 +1115,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-24T00:28:25Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v1.38.1",
     "name": "Windows installer, data inspector edit and updater fixes",
@@ -962,7 +1149,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-08-11T08:06:13Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": null
   },
   "iped": {
@@ -973,8 +1160,8 @@
    "license": "NOASSERTION",
    "archived": false,
    "fork": false,
-   "pushed_at": "2026-11-24T18:20:51Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "pushed_at": "2026-11-24T19:01:33Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "4.3.1",
     "name": "Minor release",
@@ -992,7 +1179,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-10T13:03:45Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v2.4.29",
     "name": "v2.4.29",
@@ -1010,7 +1197,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-23T23:51:13Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v1.5.7",
     "name": "1.5.7",
@@ -1039,7 +1226,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-16T04:20:24Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": null
   },
   "kismet": {
@@ -1051,7 +1238,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-23T18:53:17Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": null
   },
   "knockknock": {
@@ -1063,7 +1250,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-09-15T08:53:55Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v4.1.0",
     "name": "Version 4.1.0",
@@ -1081,19 +1268,19 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-17T18:27:21Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": null
   },
   "libimobiledevice": {
    "repo": "libimobiledevice/libimobiledevice",
    "full_name": "libimobiledevice/libimobiledevice",
    "repo_mismatch": false,
-   "stars": 8376,
+   "stars": 8377,
    "license": "LGPL-2.1",
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-18T00:29:27Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "1.4.0",
     "name": "1.4.0",
@@ -1111,7 +1298,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-08T12:51:30Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": null
   },
   "lime": {
@@ -1123,7 +1310,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-04-05T13:42:51Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v1.12.0",
     "name": "v1.12.0",
@@ -1141,7 +1328,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2020-05-25T17:22:26Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v1.0.4",
     "name": "",
@@ -1159,13 +1346,47 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-01-12T08:00:47Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v0.51.0",
     "name": "LOKI version 0.51.0",
     "published_at": "2023-05-18T18:16:57Z",
     "url": "https://github.com/Neo23x0/Loki/releases/tag/v0.51.0",
     "assets": {}
+   }
+  },
+  "loki-rs": {
+   "repo": "Neo23x0/Loki-RS",
+   "full_name": "Neo23x0/Loki-RS",
+   "repo_mismatch": false,
+   "stars": 372,
+   "license": "GPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-09-27T08:35:41Z",
+   "checked": "2026-11-24T19:44:51Z",
+   "release": {
+    "tag": "v2.13.1",
+    "name": "Loki-RS 2.13.1",
+    "published_at": "2026-09-27T08:54:49Z",
+    "url": "https://github.com/Neo23x0/Loki-RS/releases/tag/v2.13.1",
+    "assets": {
+     "windows": {
+      "name": "loki-windows-x86_64-v2.13.1.zip",
+      "url": "https://github.com/Neo23x0/Loki-RS/releases/download/v2.13.1/loki-windows-x86_64-v2.13.1.zip",
+      "size": 19615758
+     },
+     "macos": {
+      "name": "loki-macos-x86_64-v2.13.1.tar.gz",
+      "url": "https://github.com/Neo23x0/Loki-RS/releases/download/v2.13.1/loki-macos-x86_64-v2.13.1.tar.gz",
+      "size": 18693934
+     },
+     "linux": {
+      "name": "loki-linux-x86_64-v2.13.1.tar.gz",
+      "url": "https://github.com/Neo23x0/Loki-RS/releases/download/v2.13.1/loki-linux-x86_64-v2.13.1.tar.gz",
+      "size": 19630378
+     }
+    }
    }
   },
   "mac-apt": {
@@ -1177,7 +1398,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-09T10:37:49Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v.1.39.0",
     "name": "20261106",
@@ -1185,9 +1406,9 @@
     "url": "https://github.com/ydkhatri/mac_apt/releases/tag/v.1.39.0",
     "assets": {
      "windows": {
-      "name": "ios_apt-windows-x64.exe",
-      "url": "https://github.com/ydkhatri/mac_apt/releases/download/v.1.39.0/ios_apt-windows-x64.exe",
-      "size": 32766517
+      "name": "mac_apt-windows-x64.exe",
+      "url": "https://github.com/ydkhatri/mac_apt/releases/download/v.1.39.0/mac_apt-windows-x64.exe",
+      "size": 36731716
      },
      "macos": {
       "name": "mac_apt-macos-x64.zip",
@@ -1206,7 +1427,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-20T20:38:07Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v0.7.0",
     "name": " v0.7.0- Released!",
@@ -1231,6 +1452,30 @@
     }
    }
   },
+  "maigret": {
+   "repo": "soxoj/maigret",
+   "full_name": "soxoj/maigret",
+   "repo_mismatch": false,
+   "stars": 41237,
+   "license": "MIT",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-24T15:53:39Z",
+   "checked": "2026-11-24T19:44:51Z",
+   "release": {
+    "tag": "v0.6.7",
+    "name": "v0.6.7",
+    "published_at": "2026-11-21T13:45:03Z",
+    "url": "https://github.com/soxoj/maigret/releases/tag/v0.6.7",
+    "assets": {
+     "windows": {
+      "name": "maigret_standalone.exe",
+      "url": "https://github.com/soxoj/maigret/releases/download/v0.6.7/maigret_standalone.exe",
+      "size": 53349905
+     }
+    }
+   }
+  },
   "mediainfo": {
    "repo": "MediaArea/MediaInfo",
    "full_name": "MediaArea/MediaInfo",
@@ -1240,7 +1485,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-24T12:51:05Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v26.10",
     "name": "26.10",
@@ -1258,7 +1503,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-24T09:26:26Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v3.3.2",
     "name": "v3.3.2",
@@ -1276,13 +1521,18 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-23T22:59:32Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v5.19",
     "name": "Version 5.19",
     "published_at": "2026-10-05T17:38:01Z",
     "url": "https://github.com/ufrisk/MemProcFS/releases/tag/v5.19",
     "assets": {
+     "windows": {
+      "name": "MemProcFS_files_and_binaries_v5.19.5-win_x64-20261123.zip",
+      "url": "https://github.com/ufrisk/MemProcFS/releases/download/v5.19/MemProcFS_files_and_binaries_v5.19.5-win_x64-20261123.zip",
+      "size": 6816766
+     },
      "macos": {
       "name": "MemProcFS_files_and_binaries_v5.19.5-macOS-20261123.zip",
       "url": "https://github.com/ufrisk/MemProcFS/releases/download/v5.19/MemProcFS_files_and_binaries_v5.19.5-macOS-20261123.zip",
@@ -1305,7 +1555,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-21T19:57:45Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "2026.10.1",
     "name": "2026.10.1",
@@ -1323,7 +1573,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-24T15:44:04Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "release-2026.01.14-baeb1253-v1e7192e0",
     "name": "",
@@ -1341,7 +1591,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-10-26T18:14:01Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v1.9.0",
     "name": "Microsoft-Analyzer-Suite v1.9.0",
@@ -1359,7 +1609,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-17T08:55:15Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "V4.1.0",
     "name": "Update V4.1.0 - New Features",
@@ -1368,16 +1618,34 @@
     "assets": {}
    }
   },
+  "misp": {
+   "repo": "MISP/MISP",
+   "full_name": "MISP/MISP",
+   "repo_mismatch": false,
+   "stars": 6705,
+   "license": "AGPL-3.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-24T10:35:45Z",
+   "checked": "2026-11-24T19:44:51Z",
+   "release": {
+    "tag": "v2.5.53",
+    "name": "MISP 2.5.53 - a quick hotfix release",
+    "published_at": "2026-11-23T13:59:37Z",
+    "url": "https://github.com/MISP/MISP/releases/tag/v2.5.53",
+    "assets": {}
+   }
+  },
   "mission-planner": {
    "repo": "ArduPilot/MissionPlanner",
    "full_name": "ArduPilot/MissionPlanner",
    "repo_mismatch": false,
-   "stars": 2424,
+   "stars": 2425,
    "license": "GPL-3.0",
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-19T09:17:36Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "MissionPlanner1.3.83",
     "name": "Mission Planner 1.3.83",
@@ -1396,12 +1664,12 @@
    "repo": "MobSF/Mobile-Security-Framework-MobSF",
    "full_name": "MobSF/Mobile-Security-Framework-MobSF",
    "repo_mismatch": false,
-   "stars": 22326,
+   "stars": 22327,
    "license": "GPL-3.0",
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-18T17:27:08Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v4.6.9",
     "name": "v4.6.9",
@@ -1419,7 +1687,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-23T05:58:31Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v0.58.3",
     "name": "Version 0.58.3",
@@ -1436,8 +1704,8 @@
    "license": "NOASSERTION",
    "archived": false,
    "fork": false,
-   "pushed_at": "2026-11-24T18:27:57Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "pushed_at": "2026-11-24T18:56:19Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v2026.11.23",
     "name": "v2026.11.23",
@@ -1455,7 +1723,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2025-12-19T01:31:42Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "1.11.0",
     "name": "New hashes + Better Verification of existing hashes",
@@ -1473,7 +1741,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-15T12:43:09Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v0.43",
     "name": "V0.43",
@@ -1491,7 +1759,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-02-14T19:42:44Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v0.60.2",
     "name": "oletools v0.60.2",
@@ -1509,7 +1777,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-10-31T06:32:06Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": null
   },
   "osquery": {
@@ -1521,17 +1789,27 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-24T18:08:09Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "5.24.1",
     "name": "5.24.1",
     "published_at": "2026-10-29T01:21:49Z",
     "url": "https://github.com/osquery/osquery/releases/tag/5.24.1",
     "assets": {
+     "windows": {
+      "name": "osquery-5.24.1.msi",
+      "url": "https://github.com/osquery/osquery/releases/download/5.24.1/osquery-5.24.1.msi",
+      "size": 20844544
+     },
      "macos": {
       "name": "osquery-5.24.1.pkg",
       "url": "https://github.com/osquery/osquery/releases/download/5.24.1/osquery-5.24.1.pkg",
       "size": 16877491
+     },
+     "linux": {
+      "name": "osquery_5.24.1-1.linux_amd64.deb",
+      "url": "https://github.com/osquery/osquery/releases/download/5.24.1/osquery_5.24.1-1.linux_amd64.deb",
+      "size": 29865994
      }
     }
    }
@@ -1545,7 +1823,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-21T14:00:30Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "2026.10.1",
     "name": "2026.10.1",
@@ -1563,12 +1841,30 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-23T04:32:12Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "20261027",
     "name": "plaso-20261027",
     "published_at": "2026-10-27T10:23:33Z",
     "url": "https://github.com/log2timeline/plaso/releases/tag/20261027",
+    "assets": {}
+   }
+  },
+  "prowler": {
+   "repo": "prowler-cloud/prowler",
+   "full_name": "prowler-cloud/prowler",
+   "repo_mismatch": false,
+   "stars": 15321,
+   "license": "Apache-2.0",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-24T16:02:39Z",
+   "checked": "2026-11-24T19:44:51Z",
+   "release": {
+    "tag": "5.52.0",
+    "name": "Prowler 5.52.0",
+    "published_at": "2026-11-23T14:53:07Z",
+    "url": "https://github.com/prowler-cloud/prowler/releases/tag/5.52.0",
     "assets": {}
    }
   },
@@ -1581,7 +1877,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-22T22:50:00Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v11.63.1",
     "name": "v11.63.1",
@@ -1599,7 +1895,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-05-20T15:29:30Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v3.3.4",
     "name": "Version 3.3.4 has been released",
@@ -1619,16 +1915,45 @@
     }
    }
   },
+  "radare2": {
+   "repo": "radareorg/radare2",
+   "full_name": "radareorg/radare2",
+   "repo_mismatch": false,
+   "stars": 25501,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-24T19:29:52Z",
+   "checked": "2026-11-24T19:44:51Z",
+   "release": {
+    "tag": "6.2.6",
+    "name": "6.2.6",
+    "published_at": "2026-11-05T18:32:14Z",
+    "url": "https://github.com/radareorg/radare2/releases/tag/6.2.6",
+    "assets": {
+     "macos": {
+      "name": "radare2-x64-6.2.6.pkg",
+      "url": "https://github.com/radareorg/radare2/releases/download/6.2.6/radare2-x64-6.2.6.pkg",
+      "size": 12088755
+     },
+     "linux": {
+      "name": "radare2_6.2.6_amd64.deb",
+      "url": "https://github.com/radareorg/radare2/releases/download/6.2.6/radare2_6.2.6_amd64.deb",
+      "size": 8886404
+     }
+    }
+   }
+  },
   "rclone": {
    "repo": "rclone/rclone",
    "full_name": "rclone/rclone",
    "repo_mismatch": false,
-   "stars": 61237,
+   "stars": 61239,
    "license": "MIT",
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-23T17:43:43Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v1.76.0",
     "name": "rclone v1.76.0",
@@ -1648,16 +1973,34 @@
     }
    }
   },
-  "regripper": {
-   "repo": "keydet89/RegRipper3.0",
-   "full_name": "keydet89/RegRipper3.0",
+  "recuperabit": {
+   "repo": "Lazza/RecuperaBit",
+   "full_name": "Lazza/RecuperaBit",
    "repo_mismatch": false,
-   "stars": 731,
-   "license": "NOASSERTION",
+   "stars": 625,
+   "license": "GPL-3.0",
    "archived": false,
    "fork": false,
-   "pushed_at": "2026-05-27T13:22:58Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "pushed_at": "2026-07-26T20:05:07Z",
+   "checked": "2026-11-24T19:44:51Z",
+   "release": {
+    "tag": "v1.1.6",
+    "name": "Version 1.1.6",
+    "published_at": "2022-01-02T16:17:18Z",
+    "url": "https://github.com/Lazza/RecuperaBit/releases/tag/v1.1.6",
+    "assets": {}
+   }
+  },
+  "regripper": {
+   "repo": "keydet89/RegRipper4.0",
+   "full_name": "keydet89/RegRipper4.0",
+   "repo_mismatch": false,
+   "stars": 112,
+   "license": null,
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-03T22:24:06Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": null
   },
   "savvycan": {
@@ -1669,7 +2012,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-17T02:16:13Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "V220",
     "name": "V220",
@@ -1694,16 +2037,28 @@
     }
    }
   },
+  "scalpel": {
+   "repo": "sleuthkit/scalpel",
+   "full_name": "sleuthkit/scalpel",
+   "repo_mismatch": false,
+   "stars": 691,
+   "license": null,
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2024-03-27T20:39:48Z",
+   "checked": "2026-11-24T19:44:51Z",
+   "release": null
+  },
   "scrcpy": {
    "repo": "Genymobile/scrcpy",
    "full_name": "Genymobile/scrcpy",
    "repo_mismatch": false,
-   "stars": 155574,
+   "stars": 155578,
    "license": "Apache-2.0",
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-24T00:19:58Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v5.0.1",
     "name": "scrcpy 5.0.1",
@@ -1737,7 +2092,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-24T14:37:07Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "3.4.0-20261102",
     "name": "3.4.0-20261102",
@@ -1750,12 +2105,12 @@
    "repo": "sherlock-project/sherlock",
    "full_name": "sherlock-project/sherlock",
    "repo_mismatch": false,
-   "stars": 116922,
+   "stars": 116934,
    "license": "MIT",
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-24T05:14:19Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v0.16.2",
     "name": "v0.16.2",
@@ -1773,7 +2128,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-07-16T11:39:56Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": null
   },
   "shredos": {
@@ -1785,7 +2140,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-21T23:59:16Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v2025.11_32_x86-64_0.43.1",
     "name": "v2025.11_32_x86-64_0.43.1",
@@ -1803,7 +2158,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2024-02-14T21:38:23Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": null
   },
   "sigma": {
@@ -1815,7 +2170,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-23T13:57:12Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "r2026-07-01",
     "name": "Release r2026-07-01",
@@ -1833,7 +2188,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-03T07:15:55Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "20261102-1",
     "name": "Windows executable",
@@ -1857,7 +2212,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-19T17:12:06Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "sleuthkit-4.15.0",
     "name": "Sleuth Kit 4.15.0",
@@ -1881,12 +2236,30 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-24T11:20:23Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v1.9.0",
     "name": "sngrep 1.9.0",
     "published_at": "2026-10-05T18:33:42Z",
     "url": "https://github.com/irontec/sngrep/releases/tag/v1.9.0",
+    "assets": {}
+   }
+  },
+  "snort": {
+   "repo": "snort3/snort3",
+   "full_name": "snort3/snort3",
+   "repo_mismatch": false,
+   "stars": 3484,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-05T20:23:20Z",
+   "checked": "2026-11-24T19:44:51Z",
+   "release": {
+    "tag": "3.13.2.0",
+    "name": "Snort v3.13.2.0",
+    "published_at": "2026-11-05T20:32:58Z",
+    "url": "https://github.com/snort3/snort3/releases/tag/3.13.2.0",
     "assets": {}
    }
   },
@@ -1899,19 +2272,19 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-07T09:54:52Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": null
   },
   "spiderfoot": {
    "repo": "smicallef/spiderfoot",
    "full_name": "smicallef/spiderfoot",
    "repo_mismatch": false,
-   "stars": 24921,
+   "stars": 24924,
    "license": "MIT",
    "archived": false,
    "fork": false,
    "pushed_at": "2026-04-13T19:43:06Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v4.0",
     "name": "v4.0",
@@ -1929,7 +2302,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-07-28T20:49:33Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v3.2",
     "name": "SRUM-DUMP 3.2",
@@ -1953,7 +2326,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-08-13T03:34:06Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "release-2.14.1",
     "name": "Version 2.14.1",
@@ -1977,7 +2350,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2023-10-10T12:20:59Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v0.6",
     "name": "Stegseek v0.6",
@@ -2001,7 +2374,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-24T12:00:37Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "suricata-8.0.8",
     "name": "8.0.8",
@@ -2019,7 +2392,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-20T18:27:03Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": null
   },
   "testdisk": {
@@ -2031,19 +2404,19 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-15T18:52:44Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": null
   },
   "theharvester": {
    "repo": "laramies/theHarvester",
    "full_name": "laramies/theHarvester",
    "repo_mismatch": false,
-   "stars": 18402,
+   "stars": 18401,
    "license": "GPL-2.0",
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-22T13:48:10Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "4.11.1",
     "name": "4.11.1",
@@ -2061,7 +2434,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-12T16:17:30Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "20261014",
     "name": "20261014",
@@ -2079,7 +2452,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-10-27T15:42:30Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v1.0.3",
     "name": "Torrent File Editor 1.0.3",
@@ -2108,7 +2481,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-18T21:42:52Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v3.4.0",
     "name": "uac-3.4.0",
@@ -2126,7 +2499,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-18T14:54:39Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v1.0.5",
     "name": "UFADE 1.0.5",
@@ -2160,7 +2533,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-22T23:24:56Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v2026.11",
     "name": "v2026.11",
@@ -2178,7 +2551,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-10-13T14:52:27Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v2.1.0",
     "name": "v2.1.0",
@@ -2196,7 +2569,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-24T09:35:39Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": null
   },
   "velociraptor": {
@@ -2208,7 +2581,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-23T00:20:26Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v0.77.4",
     "name": "Release 0.77.4",
@@ -2242,7 +2615,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-22T11:42:33Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v2.28.2",
     "name": "Volatility 3 2.28.2",
@@ -2266,12 +2639,30 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-09T08:24:24Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v0.1.0",
     "name": "Release v0.1.0",
     "published_at": "2024-08-23T22:24:00Z",
     "url": "https://github.com/ElDavoo/wa-crypt-tools/releases/tag/v0.1.0",
+    "assets": {}
+   }
+  },
+  "wazuh": {
+   "repo": "wazuh/wazuh",
+   "full_name": "wazuh/wazuh",
+   "repo_mismatch": false,
+   "stars": 17892,
+   "license": "NOASSERTION",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-24T19:42:24Z",
+   "checked": "2026-11-24T19:44:51Z",
+   "release": {
+    "tag": "v4.14.10",
+    "name": "Wazuh v4.14.10",
+    "published_at": "2026-11-09T10:33:53Z",
+    "url": "https://github.com/wazuh/wazuh/releases/tag/v4.14.10",
     "assets": {}
    }
   },
@@ -2284,7 +2675,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-23T05:33:51Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "0.13.1",
     "name": "Security Release (2026/10/12)",
@@ -2318,25 +2709,31 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-10-21T10:43:02Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v4.0.rc1",
     "name": "Release 4.0 RC2",
     "published_at": "2020-10-12T01:09:16Z",
     "url": "https://github.com/Velocidex/WinPmem/releases/tag/v4.0.rc1",
-    "assets": {}
+    "assets": {
+     "windows": {
+      "name": "winpmem_mini_x64_rc2.exe",
+      "url": "https://github.com/Velocidex/WinPmem/releases/download/v4.0.rc1/winpmem_mini_x64_rc2.exe",
+      "size": 527640
+     }
+    }
    }
   },
   "x64dbg": {
    "repo": "x64dbg/x64dbg",
    "full_name": "x64dbg/x64dbg",
    "repo_mismatch": false,
-   "stars": 50384,
+   "stars": 50383,
    "license": "NOASSERTION",
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-22T15:39:51Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "2026.05.27",
     "name": "2026.05.27",
@@ -2354,7 +2751,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-24T16:18:04Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v4.6.0",
     "name": "YARA v4.6.0",
@@ -2369,16 +2766,50 @@
     }
    }
   },
+  "yara-x": {
+   "repo": "VirusTotal/yara-x",
+   "full_name": "VirusTotal/yara-x",
+   "repo_mismatch": false,
+   "stars": 1381,
+   "license": "BSD-3-Clause",
+   "archived": false,
+   "fork": false,
+   "pushed_at": "2026-11-24T15:48:51Z",
+   "checked": "2026-11-24T19:44:51Z",
+   "release": {
+    "tag": "v1.24.0",
+    "name": "v1.24.0",
+    "published_at": "2026-11-20T18:45:26Z",
+    "url": "https://github.com/VirusTotal/yara-x/releases/tag/v1.24.0",
+    "assets": {
+     "windows": {
+      "name": "yara-x-v1.24.0-x86_64-pc-windows-msvc.zip",
+      "url": "https://github.com/VirusTotal/yara-x/releases/download/v1.24.0/yara-x-v1.24.0-x86_64-pc-windows-msvc.zip",
+      "size": 9102014
+     },
+     "macos": {
+      "name": "yara-x-v1.24.0-x86_64-apple-darwin.tar.gz",
+      "url": "https://github.com/VirusTotal/yara-x/releases/download/v1.24.0/yara-x-v1.24.0-x86_64-apple-darwin.tar.gz",
+      "size": 9506401
+     },
+     "linux": {
+      "name": "yara-x-v1.24.0-x86_64-unknown-linux-gnu.tar.gz",
+      "url": "https://github.com/VirusTotal/yara-x/releases/download/v1.24.0/yara-x-v1.24.0-x86_64-unknown-linux-gnu.tar.gz",
+      "size": 10387870
+     }
+    }
+   }
+  },
   "yt-dlp": {
    "repo": "yt-dlp/yt-dlp",
    "full_name": "yt-dlp/yt-dlp",
    "repo_mismatch": false,
-   "stars": 210414,
+   "stars": 210422,
    "license": "Unlicense",
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-24T18:07:09Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "2026.11.23",
     "name": "yt-dlp 2026.11.23",
@@ -2412,7 +2843,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-24T18:16:29Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v9.0.1",
     "name": "v9.0.1",
@@ -2430,7 +2861,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-11-23T09:27:45Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v4.8.0",
     "name": "v4.8.0",
@@ -2464,7 +2895,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-01-28T08:51:42Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": null
   },
   "zui": {
@@ -2476,7 +2907,7 @@
    "archived": false,
    "fork": false,
    "pushed_at": "2026-08-22T19:09:57Z",
-   "checked": "2026-11-24T18:36:43Z",
+   "checked": "2026-11-24T19:44:51Z",
    "release": {
     "tag": "v1.18.0",
     "name": "v1.18.0",
