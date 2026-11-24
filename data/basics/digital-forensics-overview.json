@@ -3,7 +3,7 @@
  "id": "digital-forensics-overview",
  "branch": "foundations",
  "title": "What is digital forensics?",
- "quick": "Digital forensics is the careful collection, examination and reporting of data from digital devices, so that the findings are reliable and can be checked by others.",
+ "quick": "Digital forensics is the careful identification, collection, preservation, examination, analysis and reporting of data from digital devices, done so that its integrity is protected and others can check and repeat the findings.",
  "sections": [
   {
    "title": "What it covers",

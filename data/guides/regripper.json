@@ -147,7 +147,7 @@
   }
  ],
  "strengths": [
-  "Free and open source, released under the MIT licence.",
+  "Version 4.0 is free for personal and academic (college or university) use only, and its terms do not allow it to be included in vendor products, vendor training or any distribution. Read the terms in the project README.",
   "Plugins keep each check small, readable and easy to extend.",
   "Output is plain text, so it is easy to save, search and compare.",
   "Runs on Windows and, with Perl, on Linux."
@@ -192,7 +192,7 @@
    "url": "https://github.com/keydet89/RegRipper4.0"
   },
   {
-   "label": "RegRipper 3.0 (legacy, MIT)",
+   "label": "RegRipper 3.0 (earlier version)",
    "url": "https://github.com/keydet89/RegRipper3.0"
   },
   {

@@ -15,10 +15,7 @@
   "platforms": [
    "Windows"
   ],
-  "summary": "Creates forensic images of drives and folders, previews their contents and can capture RAM from a running Windows system.",
-  "similar_to": [
-   "OpenText Tableau"
-  ]
+  "summary": "Creates forensic images of drives and folders, previews their contents and can capture RAM from a running Windows system."
  },
  {
   "id": "guymager",
@@ -34,11 +31,7 @@
   "platforms": [
    "Linux"
   ],
-  "summary": "Fast multi-threaded imager for Linux that writes raw and EWF images and verifies them with hashes.",
-  "similar_to": [
-   "Atola TaskForce",
-   "OpenText Tableau"
-  ]
+  "summary": "Fast multi-threaded imager for Linux that writes raw and EWF images and verifies them with hashes."
  },
  {
   "id": "dc3dd",
@@ -54,11 +47,7 @@
   "platforms": [
    "Linux"
   ],
-  "summary": "A forensic version of dd that hashes while it copies and logs progress and errors.",
-  "similar_to": [
-   "Atola TaskForce",
-   "OpenText Tableau"
-  ]
+  "summary": "A forensic version of dd that hashes while it copies and logs progress and errors."
  },
  {
   "id": "ddrescue",
@@ -75,10 +64,7 @@
   "platforms": [
    "Linux"
   ],
-  "summary": "Copies data from failing drives, reading the good areas first and retrying the damaged ones later.",
-  "similar_to": [
-   "Atola TaskForce"
-  ]
+  "summary": "Copies data from failing drives, reading the good areas first and retrying the damaged ones later."
  },
  {
   "id": "libewf",
@@ -115,10 +101,7 @@
   "summary": "Mounts forensic disk images as real disks in Windows so other tools can read them. Has a free mode.",
   "download_url": "https://arsenalrecon.com/downloads",
   "licence": "AGPL-3.0 or commercial (dual licence)",
-  "licence_note": "Source code is dual-licensed (AGPL v3 or commercial). Free Mode is free to use; some features need the paid Professional Mode.",
-  "similar_to": [
-   "GetData Forensic Explorer"
-  ]
+  "licence_note": "Source code is dual-licensed (AGPL v3 or commercial). Free Mode is free to use; some features need the paid Professional Mode."
  },
  {
   "id": "autopsy",
@@ -142,12 +125,9 @@
    "EnCase Forensic",
    "FTK",
    "GetData Forensic Explorer",
-   "Griffeye Analyze DI",
    "Magnet AXIOM",
-   "Nuix Workstation",
    "Paraben E3",
    "Sumuri RECON",
-   "Vound Intella",
    "X-Ways Forensics"
   ],
   "licence": "Apache-2.0"
@@ -404,7 +384,7 @@
   "name": "RegRipper",
   "developer": "Harlan Carvey",
   "repo": "keydet89/RegRipper4.0",
-  "type": "open-source",
+  "type": "source-published",
   "categories": [
    "windows"
   ],
@@ -414,7 +394,8 @@
    "Windows"
   ],
   "summary": "Extracts and interprets forensic data from registry hives using a large set of plugins.",
-  "licence_note": "RegRipper 4.0 terms say it may not be included in vendor products or vendor training. RegRipper 3.0 (MIT) remains available at github.com/keydet89/RegRipper3.0."
+  "licence_note": "RegRipper 4.0 is free for personal and academic (college or university) use only. Its terms say it may not be included in vendor products, vendor training or any distribution. Check the README before use in a company.",
+  "licence": "RegRipper 4.0 terms (personal and academic use only)"
  },
  {
   "id": "srum-dump",
@@ -509,7 +490,7 @@
   ],
   "install": "pip install volatility3",
   "licence": "Volatility Software License",
-  "licence_note": "Source code is public under the Volatility Software License (VSL) 1.0, which is not OSI-approved."
+  "licence_note": "Source code is public under the Volatility Software License (VSL) 1.0, a custom licence with copyleft-style terms: changes and additions you share must be released."
  },
  {
   "id": "memprocfs",
@@ -638,7 +619,6 @@
   "summary": "Parses logs, events and app data from Android extractions into an HTML report.",
   "similar_to": [
    "Belkasoft X",
-   "Cellebrite Inseyets",
    "Cellebrite Physical Analyzer",
    "Magnet AXIOM",
    "MOBILedit Forensic",
@@ -704,7 +684,7 @@
   "summary": "Checks Android and iOS backups and file systems for traces of known spyware.",
   "install": "pip install mvt",
   "licence": "MVT License 1.1",
-  "licence_note": "Source code is public under the MVT License 1.1, which adds use restrictions and is not an OSI-approved open-source licence."
+  "licence_note": "Source code is public under the MVT License 1.1, which allows use only with the explicit, informed consent of the device owner."
  },
  {
   "id": "mobsf",
@@ -824,7 +804,6 @@
   "summary": "Parses logs, events and app data from iOS extractions and backups into an HTML report.",
   "similar_to": [
    "Belkasoft X",
-   "Cellebrite Inseyets",
    "Cellebrite Physical Analyzer",
    "Magnet AXIOM",
    "MOBILedit Forensic",
@@ -1214,9 +1193,7 @@
   ],
   "summary": "Fast Windows event log timeline generator and threat hunter driven by Sigma rules.",
   "similar_to": [
-   "Magnet AXIOM Cyber",
-   "Microsoft Sentinel",
-   "Splunk"
+   "Magnet AXIOM Cyber"
   ]
  },
  {
@@ -1269,11 +1246,7 @@
   "platforms": [
    "Any"
   ],
-  "summary": "The open, vendor-neutral rule format for log detections, with thousands of community rules.",
-  "similar_to": [
-   "Microsoft Sentinel",
-   "Splunk"
-  ]
+  "summary": "The open, vendor-neutral rule format for log detections, with thousands of community rules."
  },
  {
   "id": "deepbluecli",
@@ -1329,10 +1302,7 @@
    "Linux",
    "macOS"
   ],
-  "summary": "Extracts timestamps from hundreds of artifact types and builds one super timeline.",
-  "similar_to": [
-   "Magnet AXIOM"
-  ]
+  "summary": "Extracts timestamps from hundreds of artifact types and builds one super timeline."
  },
  {
   "id": "timesketch",
@@ -1411,7 +1381,7 @@
   "summary": "A simple scanner that checks files and processes against YARA rules and other indicators of compromise.",
   "notice": {
    "level": "deprecated",
-   "text": "The developer has officially deprecated LOKI (Python) and marks it Not Maintained.",
+   "text": "The developer has officially deprecated LOKI (Python); it is in inactive maintenance mode, with no new features.",
    "successor": "loki-rs",
    "source": "https://github.com/Neo23x0/Loki"
   }
@@ -1475,14 +1445,10 @@
   "summary": "Pattern-matching rules for identifying and classifying malware in files and memory.",
   "notice": {
    "level": "maintenance",
-   "text": "YARA is in maintenance mode. New development happens in YARA-X, which runs most existing rules.",
+   "text": "YARA is in maintenance mode, receiving only critical fixes. All future development happens in YARA-X.",
    "successor": "yara-x",
    "source": "https://github.com/VirusTotal/yara"
-  },
-  "similar_to": [
-   "Belkasoft X",
-   "Magnet AXIOM Cyber"
-  ]
+  }
  },
  {
   "id": "capa",
@@ -2703,7 +2669,7 @@
    "Linux"
   ],
   "summary": "An investigation-focused Linux environment for OSINT, forensics and incident response.",
-  "licence_note": "The project describes CSI Linux as an open-source operating system; paid training and certifications are offered separately. Bundled tools keep their own licences."
+  "licence_note": "The project describes CSI Linux as an open-source operating system. The site also lists certifications (CSIL courses) in a separate shop. Bundled tools keep their own licences."
  },
  {
   "id": "linux-write-blocker",
@@ -3449,7 +3415,7 @@
    "Linux",
    "macOS"
   ],
-  "summary": "The Rust rewrite and successor of YARA, largely compatible with existing YARA rules.",
+  "summary": "A new version of YARA written in Rust, from the same developers. Read its \"differences with YARA\" page before moving old rules.",
   "licence": "BSD-3-Clause",
   "similar_to": [
    "Magnet AXIOM Cyber",
@@ -3491,14 +3457,14 @@
    "Linux"
   ],
   "summary": "Open-source SIEM and XDR platform: agents on Windows, Linux and macOS send logs and file-integrity events to a central server.",
-  "licence": "GPL-2.0 (engine AGPL-3.0)",
+  "licence": "GPL-2.0",
   "download_url": "https://wazuh.com/",
   "similar_to": [
    "Splunk",
    "IBM QRadar",
    "Microsoft Sentinel"
   ],
-  "licence_note": "Mostly GPL-2.0; the engine is AGPL-3.0. Wazuh Cloud is a paid hosted service."
+  "licence_note": "The main licence is GPL-2.0, with an OpenSSL linking exception for some files."
  },
  {
   "id": "misp",
@@ -3533,8 +3499,8 @@
   "platforms": [
    "Linux"
   ],
-  "summary": "Security incident case management. Current TheHive 5 is closed source; the Community Edition is free for non-commercial use. The old open-source TheHive 3/4 repository is archived.",
-  "licence_note": "TheHive 5 Community Edition: free licence with limited capabilities for non-commercial use. TheHive 3/4 (open source) are archived and no longer distributed."
+  "summary": "Security incident case management. The current TheHive is a commercial product; the Community Edition is free for non-commercial use. The old open-source TheHive 3/4 repository is archived.",
+  "licence_note": "Community Edition: a free licence with limited capabilities (two users) for non-commercial use. TheHive 3 and 4 (open source) are no longer distributed and the GitHub repository is archived."
  },
  {
   "id": "paladin",
@@ -3551,8 +3517,8 @@
   "platforms": [
    "Linux"
   ],
-  "summary": "A bootable Linux forensic environment for imaging and triage. Offered as 'name your price' under SUMURI's EULA; SUMURI states corporate users must donate at least $25.",
-  "licence_note": "Name-your-price download under the PALADIN EULA. SUMURI states corporate users must donate at least USD 25. PALADIN PRO is paid."
+  "summary": "A bootable Linux forensic environment for imaging and triage. Offered as name-your-price; SUMURI says corporate users must donate at least $25.",
+  "licence_note": "Name-your-price download. SUMURI says corporate users must donate at least USD 25. PALADIN PRO is a paid edition (USD 99 on its page)."
  },
  {
   "id": "scalpel",

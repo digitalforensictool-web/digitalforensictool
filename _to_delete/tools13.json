@@ -1,0 +1,3608 @@
+[
+ {
+  "id": "ftk-imager",
+  "name": "FTK Imager",
+  "developer": "Exterro",
+  "url": "https://www.exterro.com/digital-forensics-software/ftk-imager",
+  "type": "free-closed",
+  "categories": [
+   "imaging",
+   "memory",
+   "forensic-copy"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "Creates forensic images of drives and folders, previews their contents and can capture RAM from a running Windows system."
+ },
+ {
+  "id": "guymager",
+  "name": "Guymager",
+  "developer": "Guy Voncken",
+  "url": "https://guymager.sourceforge.io/",
+  "type": "open-source",
+  "categories": [
+   "imaging"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "Fast multi-threaded imager for Linux that writes raw and EWF images and verifies them with hashes."
+ },
+ {
+  "id": "dc3dd",
+  "name": "dc3dd",
+  "developer": "DoD Cyber Crime Center",
+  "url": "https://sourceforge.net/projects/dc3dd/",
+  "type": "open-source",
+  "categories": [
+   "imaging"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "A forensic version of dd that hashes while it copies and logs progress and errors."
+ },
+ {
+  "id": "ddrescue",
+  "name": "GNU ddrescue",
+  "developer": "Antonio Diaz Diaz (GNU Project)",
+  "url": "https://www.gnu.org/software/ddrescue/",
+  "type": "open-source",
+  "categories": [
+   "imaging",
+   "recovery"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "Copies data from failing drives, reading the good areas first and retrying the damaged ones later."
+ },
+ {
+  "id": "libewf",
+  "name": "libewf and ewf-tools",
+  "developer": "Joachim Metz",
+  "repo": "libyal/libewf",
+  "type": "open-source",
+  "categories": [
+   "imaging"
+  ],
+  "interface": "CLI",
+  "level": "advanced",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Library and command-line tools to create, verify, export and mount Expert Witness (E01) images."
+ },
+ {
+  "id": "arsenal-image-mounter",
+  "name": "Arsenal Image Mounter",
+  "developer": "Arsenal Recon",
+  "repo": "ArsenalRecon/Arsenal-Image-Mounter",
+  "type": "open-source",
+  "categories": [
+   "imaging"
+  ],
+  "interface": "GUI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "Mounts forensic disk images as real disks in Windows so other tools can read them. Has a free mode.",
+  "download_url": "https://arsenalrecon.com/downloads",
+  "licence": "AGPL-3.0 or commercial (dual licence)",
+  "licence_note": "Source code is dual-licensed (AGPL v3 or commercial). Free Mode is free to use; some features need the paid Professional Mode."
+ },
+ {
+  "id": "autopsy",
+  "name": "Autopsy",
+  "developer": "Sleuth Kit Labs (Brian Carrier)",
+  "repo": "sleuthkit/autopsy",
+  "type": "open-source",
+  "categories": [
+   "suites"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "A full graphical case tool for disk images: file browsing, keyword search, timelines, web and mobile artifacts.",
+  "similar_to": [
+   "Belkasoft X",
+   "EnCase Forensic",
+   "FTK",
+   "GetData Forensic Explorer",
+   "Magnet AXIOM",
+   "Paraben E3",
+   "Sumuri RECON",
+   "X-Ways Forensics"
+  ],
+  "licence": "Apache-2.0"
+ },
+ {
+  "id": "sleuthkit",
+  "name": "The Sleuth Kit",
+  "developer": "Brian Carrier and Sleuth Kit Labs",
+  "repo": "sleuthkit/sleuthkit",
+  "type": "open-source",
+  "categories": [
+   "suites",
+   "recovery",
+   "forensic-copy"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Command-line tools and a library for examining disk images and file systems. Autopsy is built on it.",
+  "licence": "several open-source licences",
+  "similar_to": [
+   "EnCase Forensic",
+   "FTK",
+   "X-Ways Forensics"
+  ]
+ },
+ {
+  "id": "iped",
+  "name": "IPED",
+  "developer": "Brazilian Federal Police",
+  "repo": "sepinf-inc/IPED",
+  "type": "open-source",
+  "categories": [
+   "suites",
+   "p2p"
+  ],
+  "interface": "GUI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux"
+  ],
+  "summary": "Processes and indexes very large evidence sets quickly, with search, galleries and case review.",
+  "similar_to": [
+   "FTK",
+   "Nuix Workstation"
+  ],
+  "licence": "GPL-3.0"
+ },
+ {
+  "id": "dissect",
+  "name": "Dissect",
+  "developer": "Fox-IT (NCC Group)",
+  "repo": "fox-it/dissect",
+  "type": "open-source",
+  "categories": [
+   "suites",
+   "incident-response"
+  ],
+  "interface": "CLI",
+  "level": "advanced",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "A Python framework that reads disk images, file systems and artifacts from many platforms through one interface."
+ },
+ {
+  "id": "testdisk",
+  "name": "TestDisk and PhotoRec",
+  "developer": "Christophe Grenier",
+  "repo": "cgsecurity/testdisk",
+  "type": "open-source",
+  "categories": [
+   "recovery"
+  ],
+  "interface": "CLI",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "TestDisk repairs lost partitions; PhotoRec carves deleted files from disks and memory cards.",
+  "download_url": "https://www.cgsecurity.org/wiki/TestDisk_Download",
+  "similar_to": [
+   "R-Studio"
+  ]
+ },
+ {
+  "id": "bulk-extractor",
+  "name": "bulk_extractor",
+  "developer": "Simson Garfinkel",
+  "repo": "simsong/bulk_extractor",
+  "type": "open-source",
+  "categories": [
+   "recovery",
+   "memory",
+   "string-search"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Scans raw data without parsing file systems and extracts email addresses, URLs, card numbers and other features."
+ },
+ {
+  "id": "foremost",
+  "name": "Foremost",
+  "developer": "Jesse Kornblum, Kris Kendall and Nick Mikus",
+  "url": "https://foremost.sourceforge.net/",
+  "type": "open-source",
+  "categories": [
+   "recovery"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "A classic file carver that recovers files from images based on their headers, footers and structure."
+ },
+ {
+  "id": "binwalk",
+  "name": "Binwalk",
+  "developer": "ReFirm Labs",
+  "repo": "ReFirmLabs/binwalk",
+  "type": "open-source",
+  "categories": [
+   "recovery",
+   "drone-iot",
+   "steganalysis"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "Finds and extracts files and file systems embedded inside firmware and other binary blobs."
+ },
+ {
+  "id": "ez-tools",
+  "name": "Eric Zimmerman's Tools",
+  "developer": "Eric Zimmerman",
+  "url": "https://ericzimmerman.github.io/",
+  "type": "free-closed",
+  "categories": [
+   "windows"
+  ],
+  "interface": "Both",
+  "level": "intermediate",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "A suite of fast, precise parsers for the registry, MFT, event logs, prefetch, shellbags and more.",
+  "licence_note": "Mixed: most command-line tools (for example MFTECmd, EvtxECmd, PECmd, bstrings) are open source under MIT on GitHub; some GUI tools such as Registry Explorer and Timeline Explorer are free but closed source."
+ },
+ {
+  "id": "registry-explorer",
+  "name": "Registry Explorer",
+  "developer": "Eric Zimmerman",
+  "url": "https://ericzimmerman.github.io/",
+  "type": "free-closed",
+  "categories": [
+   "windows"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "A registry hive viewer with bookmarks for forensic keys, deleted key recovery and plugins."
+ },
+ {
+  "id": "timeline-explorer",
+  "name": "Timeline Explorer",
+  "developer": "Eric Zimmerman",
+  "url": "https://ericzimmerman.github.io/",
+  "type": "free-closed",
+  "categories": [
+   "timeline",
+   "windows",
+   "data-analytics"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "A viewer for large CSV timelines and tool output with fast filtering, grouping and search."
+ },
+ {
+  "id": "mftecmd",
+  "name": "MFTECmd",
+  "developer": "Eric Zimmerman",
+  "repo": "EricZimmerman/MFTECmd",
+  "type": "open-source",
+  "categories": [
+   "windows"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "Parses the NTFS $MFT, $J, $LogFile and related files into CSV for timeline analysis.",
+  "download_url": "https://ericzimmerman.github.io/"
+ },
+ {
+  "id": "evtxecmd",
+  "name": "EvtxECmd",
+  "developer": "Eric Zimmerman",
+  "repo": "EricZimmerman/evtx",
+  "type": "open-source",
+  "categories": [
+   "windows",
+   "logs"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "Parses Windows event logs into CSV or JSON using maps that normalise each event type.",
+  "download_url": "https://ericzimmerman.github.io/"
+ },
+ {
+  "id": "pecmd",
+  "name": "PECmd",
+  "developer": "Eric Zimmerman",
+  "repo": "EricZimmerman/PECmd",
+  "type": "open-source",
+  "categories": [
+   "windows"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "Parses Windows Prefetch files to show which programs ran, when and how often.",
+  "download_url": "https://ericzimmerman.github.io/"
+ },
+ {
+  "id": "regripper",
+  "name": "RegRipper",
+  "developer": "Harlan Carvey",
+  "repo": "keydet89/RegRipper4.0",
+  "type": "source-published",
+  "categories": [
+   "windows"
+  ],
+  "interface": "Both",
+  "level": "intermediate",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "Extracts and interprets forensic data from registry hives using a large set of plugins.",
+  "licence_note": "RegRipper 4.0 is free for personal and academic (college or university) use only. Its terms say it may not be included in vendor products, vendor training or any distribution. Check the README before use in a company.",
+  "licence": "RegRipper 4.0 terms (personal and academic use only)"
+ },
+ {
+  "id": "srum-dump",
+  "name": "SRUM Dump",
+  "developer": "Mark Baggett",
+  "repo": "MarkBaggett/srum-dump",
+  "type": "open-source",
+  "categories": [
+   "windows"
+  ],
+  "interface": "Both",
+  "level": "intermediate",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "Extracts the System Resource Usage Monitor database, showing application and network usage history."
+ },
+ {
+  "id": "nirsoft",
+  "name": "NirSoft utilities",
+  "developer": "Nir Sofer",
+  "url": "https://www.nirsoft.net/",
+  "type": "free-closed",
+  "categories": [
+   "browser"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "A large collection of small viewers for browser history, USB devices, network activity and Windows artifacts."
+ },
+ {
+  "id": "sysinternals",
+  "name": "Sysinternals Suite",
+  "developer": "Microsoft",
+  "url": "https://learn.microsoft.com/sysinternals/",
+  "type": "free-closed",
+  "categories": [
+   "incident-response"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "Microsoft's utilities for inspecting processes, autoruns, handles and system activity on live Windows systems."
+ },
+ {
+  "id": "kape",
+  "name": "KAPE",
+  "developer": "Kroll (Eric Zimmerman)",
+  "url": "https://www.kroll.com/kape",
+  "type": "free-closed",
+  "categories": [
+   "incident-response",
+   "windows"
+  ],
+  "interface": "Both",
+  "level": "intermediate",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "Collects key artifacts from a live system or image in minutes, then runs parsers over them. Free for many uses; paid engagements need a licence.",
+  "licence_note": "Free for government agencies, education and research, and internal company use. Paid engagements and use on third-party networks need an enterprise licence.",
+  "similar_to": [
+   "Binalyze AIR",
+   "Magnet AXIOM Cyber"
+  ]
+ },
+ {
+  "id": "volatility3",
+  "name": "Volatility 3",
+  "developer": "The Volatility Foundation",
+  "repo": "volatilityfoundation/volatility3",
+  "type": "source-published",
+  "categories": [
+   "memory"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "The standard framework for analysing RAM dumps: processes, network connections, injected code, registry hives and more.",
+  "similar_to": [
+   "Belkasoft X",
+   "Magnet AXIOM"
+  ],
+  "install": "pip install volatility3",
+  "licence": "Volatility Software License",
+  "licence_note": "Source code is public under the Volatility Software License (VSL) 1.0, a custom licence with copyleft-style terms: changes and additions you share must be released."
+ },
+ {
+  "id": "memprocfs",
+  "name": "MemProcFS",
+  "developer": "Ulf Frisk",
+  "repo": "ufrisk/MemProcFS",
+  "type": "open-source",
+  "categories": [
+   "memory"
+  ],
+  "interface": "Both",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Mounts a memory image as a virtual file system, so processes, modules and files can be browsed with ordinary file tools.",
+  "asset_prefer": {
+   "windows": "_v[0-9.]+-win_x64-[0-9]+\\.zip$",
+   "linux": "linux_x64"
+  }
+ },
+ {
+  "id": "winpmem",
+  "name": "WinPmem",
+  "developer": "Velocidex",
+  "repo": "Velocidex/WinPmem",
+  "type": "open-source",
+  "categories": [
+   "memory"
+  ],
+  "interface": "CLI",
+  "level": "beginner",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "Small command-line tool that captures physical memory from a running Windows machine.",
+  "asset_prefer": {
+   "windows": "^winpmem_mini_x64_rc2\\.exe$"
+  }
+ },
+ {
+  "id": "lime",
+  "name": "LiME",
+  "developer": "Joe Sylve (originally 504ENSICS Labs)",
+  "repo": "jtsylve/LiME",
+  "type": "open-source",
+  "categories": [
+   "memory",
+   "linux"
+  ],
+  "interface": "CLI",
+  "level": "advanced",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "Loadable kernel module that dumps memory from Linux and Android devices, to disk or over the network."
+ },
+ {
+  "id": "avml",
+  "name": "AVML",
+  "developer": "Microsoft",
+  "repo": "microsoft/avml",
+  "type": "open-source",
+  "categories": [
+   "memory",
+   "linux"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "A single portable binary that acquires Linux memory without building a kernel module for each target."
+ },
+ {
+  "id": "magnet-dumpit",
+  "name": "Magnet DumpIt and RAM Capture",
+  "developer": "Magnet Forensics",
+  "url": "https://www.magnetforensics.com/free-tools/",
+  "type": "free-closed",
+  "categories": [
+   "memory"
+  ],
+  "interface": "Both",
+  "level": "beginner",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "Free memory acquisition tools for Windows from Magnet Forensics."
+ },
+ {
+  "id": "belkasoft-ram-capturer",
+  "name": "Belkasoft RAM Capturer",
+  "developer": "Belkasoft",
+  "url": "https://belkasoft.com/ram-capturer",
+  "type": "free-closed",
+  "categories": [
+   "memory"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "A small free utility that dumps Windows memory and can run from a USB stick."
+ },
+ {
+  "id": "aleapp",
+  "name": "ALEAPP",
+  "developer": "Alexis Brignoni and community",
+  "repo": "abrignoni/ALEAPP",
+  "type": "open-source",
+  "categories": [
+   "android",
+   "messaging"
+  ],
+  "interface": "Both",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Parses logs, events and app data from Android extractions into an HTML report.",
+  "similar_to": [
+   "Belkasoft X",
+   "Cellebrite Physical Analyzer",
+   "Magnet AXIOM",
+   "MOBILedit Forensic",
+   "MSAB XAMN",
+   "Oxygen Forensic Detective",
+   "Paraben E3"
+  ]
+ },
+ {
+  "id": "andriller",
+  "name": "Andriller CE",
+  "developer": "Denis Sazonov",
+  "repo": "den4uk/andriller",
+  "type": "open-source",
+  "categories": [
+   "android"
+  ],
+  "interface": "GUI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Extracts and decodes data from Android devices and backups, with lock pattern cracking and database decoders.",
+  "notice": {
+   "level": "unmaintained",
+   "text": "No code changes since June 2022. It may not support current Android versions; consider ALEAPP for parsing. Based on the last code update recorded on 24 Nov 2026."
+  }
+ },
+ {
+  "id": "avilla",
+  "name": "Avilla Forensics",
+  "developer": "Daniel Avilla",
+  "repo": "AvillaDaniel/AvillaForensics",
+  "type": "source-published",
+  "categories": [
+   "android"
+  ],
+  "interface": "GUI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "A free Windows toolkit for logical extraction and conversion of data from Android devices."
+ },
+ {
+  "id": "mvt",
+  "name": "Mobile Verification Toolkit",
+  "developer": "Amnesty International Security Lab",
+  "repo": "mvt-project/mvt",
+  "type": "source-published",
+  "categories": [
+   "android",
+   "ios"
+  ],
+  "interface": "CLI",
+  "level": "advanced",
+  "platforms": [
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Checks Android and iOS backups and file systems for traces of known spyware.",
+  "install": "pip install mvt",
+  "licence": "MVT License 1.1",
+  "licence_note": "Source code is public under the MVT License 1.1, which allows use only with the explicit, informed consent of the device owner."
+ },
+ {
+  "id": "mobsf",
+  "name": "MobSF",
+  "developer": "Ajin Abraham and contributors",
+  "repo": "MobSF/Mobile-Security-Framework-MobSF",
+  "type": "open-source",
+  "categories": [
+   "android",
+   "ios"
+  ],
+  "interface": "Web",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Automated static and dynamic analysis of Android and iOS apps, useful for understanding what an app stores and sends."
+ },
+ {
+  "id": "jadx",
+  "name": "jadx",
+  "developer": "skylot",
+  "repo": "skylot/jadx",
+  "type": "open-source",
+  "categories": [
+   "android"
+  ],
+  "interface": "Both",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Decompiles Android APK and DEX files into readable Java code."
+ },
+ {
+  "id": "adb",
+  "name": "Android Debug Bridge (platform-tools)",
+  "developer": "Google",
+  "url": "https://developer.android.com/tools/releases/platform-tools",
+  "type": "open-source",
+  "categories": [
+   "android"
+  ],
+  "interface": "CLI",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Google's official command-line bridge to Android devices, the basis of most logical acquisitions.",
+  "licence_note": "The adb source is open source (Apache-2.0) in AOSP; the Platform-Tools binaries are downloaded under the Android SDK licence terms.",
+  "similar_to": [
+   "Cellebrite Inseyets",
+   "MSAB XRY"
+  ]
+ },
+ {
+  "id": "whatsapp-chat-exporter",
+  "name": "WhatsApp Chat Exporter",
+  "developer": "KnugiHK",
+  "repo": "KnugiHK/WhatsApp-Chat-Exporter",
+  "type": "open-source",
+  "categories": [
+   "android",
+   "ios",
+   "messaging"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Converts WhatsApp databases from Android and iOS backups into readable HTML chats."
+ },
+ {
+  "id": "scrcpy",
+  "name": "scrcpy",
+  "developer": "Genymobile",
+  "repo": "Genymobile/scrcpy",
+  "type": "open-source",
+  "categories": [
+   "android"
+  ],
+  "interface": "Both",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Mirrors and records an Android screen on a computer, useful for documenting a device's state."
+ },
+ {
+  "id": "ileapp",
+  "name": "iLEAPP",
+  "developer": "Alexis Brignoni and community",
+  "repo": "abrignoni/iLEAPP",
+  "type": "open-source",
+  "categories": [
+   "ios",
+   "messaging"
+  ],
+  "interface": "Both",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Parses logs, events and app data from iOS extractions and backups into an HTML report.",
+  "similar_to": [
+   "Belkasoft X",
+   "Cellebrite Physical Analyzer",
+   "Magnet AXIOM",
+   "MOBILedit Forensic",
+   "MSAB XAMN",
+   "Oxygen Forensic Detective",
+   "Paraben E3"
+  ]
+ },
+ {
+  "id": "libimobiledevice",
+  "name": "libimobiledevice",
+  "developer": "libimobiledevice project",
+  "repo": "libimobiledevice/libimobiledevice",
+  "type": "open-source",
+  "categories": [
+   "ios"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Talks to iOS devices natively: backups, device information, logs and file access without iTunes.",
+  "similar_to": [
+   "Cellebrite Inseyets",
+   "MSAB XRY",
+   "iMazing"
+  ]
+ },
+ {
+  "id": "pymobiledevice3",
+  "name": "pymobiledevice3",
+  "developer": "doronz88",
+  "repo": "doronz88/pymobiledevice3",
+  "type": "open-source",
+  "categories": [
+   "ios"
+  ],
+  "interface": "CLI",
+  "level": "advanced",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "A pure Python implementation of iOS device protocols for backups, logs, crash reports and more.",
+  "install": "pip install pymobiledevice3",
+  "similar_to": [
+   "Cellebrite Inseyets"
+  ]
+ },
+ {
+  "id": "ufade",
+  "name": "UFADE",
+  "developer": "prosch88",
+  "repo": "prosch88/UFADE",
+  "type": "open-source",
+  "categories": [
+   "ios"
+  ],
+  "interface": "GUI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Universal Forensic Apple Device Extractor: creates backups and logical extractions from Apple devices.",
+  "similar_to": [
+   "Cellebrite Inseyets",
+   "MOBILedit Forensic",
+   "MSAB XRY",
+   "iMazing"
+  ]
+ },
+ {
+  "id": "apollo",
+  "name": "APOLLO",
+  "developer": "Sarah Edwards",
+  "repo": "mac4n6/APOLLO",
+  "type": "open-source",
+  "categories": [
+   "ios",
+   "macos"
+  ],
+  "interface": "CLI",
+  "level": "advanced",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Correlates Apple pattern-of-life databases into one timeline of device and user activity.",
+  "notice": {
+   "level": "unmaintained",
+   "text": "No code changes since February 2024; check that the modules still match current iOS versions. Based on the last code update recorded on 24 Nov 2026."
+  }
+ },
+ {
+  "id": "mac-apt",
+  "name": "mac_apt",
+  "developer": "Yogesh Khatri",
+  "repo": "ydkhatri/mac_apt",
+  "type": "open-source",
+  "categories": [
+   "macos",
+   "ios"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Processes macOS and iOS disk images and extracts artifacts through a plugin system.",
+  "asset_prefer": {
+   "windows": "^mac_apt-windows-x64\\.exe$",
+   "macos": "^mac_apt-macos-x64\\.zip$"
+  },
+  "similar_to": [
+   "BlackBag MacQuisition",
+   "Sumuri RECON"
+  ]
+ },
+ {
+  "id": "macos-unifiedlogs",
+  "name": "macos-UnifiedLogs",
+  "developer": "Mandiant",
+  "repo": "mandiant/macos-UnifiedLogs",
+  "type": "open-source",
+  "categories": [
+   "macos",
+   "logs"
+  ],
+  "interface": "CLI",
+  "level": "advanced",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Parses Apple unified logs on any platform, without needing a Mac."
+ },
+ {
+  "id": "aftermath",
+  "name": "Aftermath",
+  "developer": "Jamf",
+  "repo": "jamf/aftermath",
+  "type": "open-source",
+  "categories": [
+   "macos"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "macOS"
+  ],
+  "summary": "A Swift-based collection and analysis framework for macOS incident response."
+ },
+ {
+  "id": "knockknock",
+  "name": "KnockKnock",
+  "developer": "Objective-See (Patrick Wardle)",
+  "repo": "objective-see/KnockKnock",
+  "type": "open-source",
+  "categories": [
+   "macos"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "macOS"
+  ],
+  "summary": "Lists everything set to start automatically on a Mac, to reveal persistent malware."
+ },
+ {
+  "id": "uac",
+  "name": "UAC",
+  "developer": "Thiago Canozzo Lahr",
+  "repo": "tclahr/uac",
+  "type": "open-source",
+  "categories": [
+   "linux",
+   "incident-response",
+   "macos"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Collects live response artifacts from Linux, macOS and other Unix-like systems using only built-in tools."
+ },
+ {
+  "id": "osquery",
+  "name": "osquery",
+  "developer": "osquery project (Linux Foundation)",
+  "repo": "osquery/osquery",
+  "type": "open-source",
+  "categories": [
+   "linux",
+   "incident-response",
+   "macos",
+   "remote"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Exposes an operating system as SQL tables so you can query processes, users, sockets and more.",
+  "asset_prefer": {
+   "windows": "\\.msi$",
+   "linux": "_amd64\\.deb$"
+  }
+ },
+ {
+  "id": "wireshark",
+  "name": "Wireshark",
+  "developer": "Wireshark Foundation",
+  "url": "https://www.wireshark.org/",
+  "type": "open-source",
+  "categories": [
+   "network",
+   "wifi",
+   "voip"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Captures and inspects network traffic packet by packet, with decoders for thousands of protocols.",
+  "similar_to": [
+   "NetWitness",
+   "NetworkMiner Professional"
+  ]
+ },
+ {
+  "id": "zeek",
+  "name": "Zeek",
+  "developer": "The Zeek Project",
+  "repo": "zeek/zeek",
+  "type": "open-source",
+  "categories": [
+   "network"
+  ],
+  "interface": "CLI",
+  "level": "advanced",
+  "platforms": [
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Turns network traffic into structured logs of connections, DNS, HTTP, files and more.",
+  "similar_to": [
+   "Corelight",
+   "NetWitness"
+  ]
+ },
+ {
+  "id": "networkminer",
+  "name": "NetworkMiner",
+  "developer": "Netresec",
+  "url": "https://www.netresec.com/?page=NetworkMiner",
+  "type": "open-source",
+  "categories": [
+   "network"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux"
+  ],
+  "summary": "Rebuilds files, images, emails, credentials and host details from PCAP files or live capture. The Free Edition is open source; NetworkMiner Professional is a paid edition.",
+  "licence": "GPL-2.0",
+  "licence_note": "Open source (Free Edition, GPLv2); NetworkMiner Professional is paid and closed source.",
+  "similar_to": [
+   "NetWitness",
+   "NetworkMiner Professional"
+  ]
+ },
+ {
+  "id": "suricata",
+  "name": "Suricata",
+  "developer": "Open Information Security Foundation",
+  "repo": "OISF/suricata",
+  "type": "open-source",
+  "categories": [
+   "network"
+  ],
+  "interface": "CLI",
+  "level": "advanced",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Network threat detection engine that can also replay PCAP files against rule sets."
+ },
+ {
+  "id": "tcpdump",
+  "name": "tcpdump",
+  "developer": "The Tcpdump Group",
+  "repo": "the-tcpdump-group/tcpdump",
+  "type": "open-source",
+  "categories": [
+   "network"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Linux",
+   "macOS"
+  ],
+  "summary": "The standard command-line packet capture tool on Unix-like systems."
+ },
+ {
+  "id": "zui",
+  "name": "Zui",
+  "developer": "SuperDB (formerly Brim Data)",
+  "repo": "superdb/zui",
+  "type": "open-source",
+  "categories": [
+   "network",
+   "logs",
+   "data-analytics"
+  ],
+  "interface": "GUI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "A desktop app for exploring large PCAP and log files with fast search and Zeek integration."
+ },
+ {
+  "id": "security-onion",
+  "name": "Security Onion",
+  "developer": "Security Onion Solutions",
+  "repo": "Security-Onion-Solutions/securityonion",
+  "type": "source-published",
+  "categories": [
+   "network",
+   "distros-practice"
+  ],
+  "interface": "Web",
+  "level": "advanced",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "A Linux platform that bundles network monitoring, log management and case tools.",
+  "licence": "Elastic License 2.0",
+  "licence_note": "Security Onion 2.4 and later is distributed under the Elastic License 2.0 (source available, not OSI open source). Paid support and appliances are available from Security Onion Solutions.",
+  "similar_to": [
+   "Corelight",
+   "IBM QRadar",
+   "NetWitness"
+  ]
+ },
+ {
+  "id": "hayabusa",
+  "name": "Hayabusa",
+  "developer": "Yamato Security",
+  "repo": "Yamato-Security/hayabusa",
+  "type": "open-source",
+  "categories": [
+   "logs",
+   "windows",
+   "incident-response"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Fast Windows event log timeline generator and threat hunter driven by Sigma rules.",
+  "similar_to": [
+   "Magnet AXIOM Cyber"
+  ]
+ },
+ {
+  "id": "chainsaw",
+  "name": "Chainsaw",
+  "developer": "WithSecure",
+  "repo": "WithSecureOpenSource/chainsaw",
+  "type": "open-source",
+  "categories": [
+   "logs"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Searches and hunts through Windows event logs and other artifacts using Sigma and custom rules."
+ },
+ {
+  "id": "zircolite",
+  "name": "Zircolite",
+  "developer": "wagga40",
+  "repo": "wagga40/Zircolite",
+  "type": "open-source",
+  "categories": [
+   "logs"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Runs Sigma rules directly against EVTX, Auditd, Sysmon for Linux and other logs, without a SIEM."
+ },
+ {
+  "id": "sigma",
+  "name": "Sigma rules",
+  "developer": "SigmaHQ community",
+  "repo": "SigmaHQ/sigma",
+  "type": "source-published",
+  "categories": [
+   "logs"
+  ],
+  "interface": "Rules",
+  "level": "intermediate",
+  "platforms": [
+   "Any"
+  ],
+  "summary": "The open, vendor-neutral rule format for log detections, with thousands of community rules."
+ },
+ {
+  "id": "deepbluecli",
+  "name": "DeepBlueCLI",
+  "developer": "SANS Blue Team (Eric Conrad)",
+  "repo": "sans-blue-team/DeepBlueCLI",
+  "type": "open-source",
+  "categories": [
+   "logs"
+  ],
+  "interface": "CLI",
+  "level": "beginner",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "A PowerShell module that flags suspicious events in Windows event logs.",
+  "notice": {
+   "level": "unmaintained",
+   "text": "No code changes since October 2023; for current detection rules consider Hayabusa or Chainsaw. Based on the last code update recorded on 24 Nov 2026."
+  }
+ },
+ {
+  "id": "sof-elk",
+  "name": "SOF-ELK",
+  "developer": "Phil Hagen",
+  "repo": "philhagen/sof-elk",
+  "type": "open-source",
+  "categories": [
+   "logs",
+   "network",
+   "data-analytics"
+  ],
+  "interface": "Web",
+  "level": "intermediate",
+  "platforms": [
+   "Virtual machine"
+  ],
+  "summary": "A ready-made virtual machine with the Elastic Stack tuned for forensic log and NetFlow analysis."
+ },
+ {
+  "id": "plaso",
+  "name": "Plaso (log2timeline)",
+  "developer": "log2timeline project",
+  "repo": "log2timeline/plaso",
+  "type": "open-source",
+  "categories": [
+   "timeline"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Extracts timestamps from hundreds of artifact types and builds one super timeline."
+ },
+ {
+  "id": "timesketch",
+  "name": "Timesketch",
+  "developer": "Google and contributors",
+  "repo": "google/timesketch",
+  "type": "open-source",
+  "categories": [
+   "timeline",
+   "data-analytics"
+  ],
+  "interface": "Web",
+  "level": "advanced",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "A collaborative web tool for exploring, tagging and analysing forensic timelines."
+ },
+ {
+  "id": "velociraptor",
+  "name": "Velociraptor",
+  "developer": "Rapid7 (Mike Cohen and community)",
+  "repo": "Velocidex/velociraptor",
+  "type": "open-source",
+  "categories": [
+   "incident-response",
+   "remote"
+  ],
+  "interface": "Both",
+  "level": "advanced",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Endpoint visibility and collection tool that hunts for artifacts across many machines at once.",
+  "similar_to": [
+   "Binalyze AIR",
+   "F-Response",
+   "Magnet AXIOM Cyber"
+  ],
+  "licence": "AGPL-3.0"
+ },
+ {
+  "id": "magnet-response",
+  "name": "Magnet RESPONSE",
+  "developer": "Magnet Forensics",
+  "url": "https://www.magnetforensics.com/free-tools/",
+  "type": "free-closed",
+  "categories": [
+   "incident-response"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "A free tool that collects volatile data and key files from a Windows system for incident response."
+ },
+ {
+  "id": "loki",
+  "name": "Loki",
+  "developer": "Florian Roth",
+  "repo": "Neo23x0/Loki",
+  "type": "open-source",
+  "categories": [
+   "incident-response"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "A simple scanner that checks files and processes against YARA rules and other indicators of compromise.",
+  "notice": {
+   "level": "deprecated",
+   "text": "The developer has officially deprecated LOKI (Python); it is in inactive maintenance mode, with no new features.",
+   "successor": "loki-rs",
+   "source": "https://github.com/Neo23x0/Loki"
+  }
+ },
+ {
+  "id": "iris",
+  "name": "DFIR-IRIS",
+  "developer": "DFIR-IRIS project",
+  "repo": "dfir-iris/iris-web",
+  "type": "open-source",
+  "categories": [
+   "case-management"
+  ],
+  "interface": "Web",
+  "level": "intermediate",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "A collaborative case management platform for incident responders."
+ },
+ {
+  "id": "ghidra",
+  "name": "Ghidra",
+  "developer": "National Security Agency",
+  "repo": "NationalSecurityAgency/ghidra",
+  "type": "open-source",
+  "categories": [
+   "malware"
+  ],
+  "interface": "GUI",
+  "level": "advanced",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "A full reverse engineering suite with disassembler, decompiler and scripting.",
+  "similar_to": [
+   "Binary Ninja",
+   "IDA Pro"
+  ]
+ },
+ {
+  "id": "yara",
+  "name": "YARA",
+  "developer": "VirusTotal (Victor M. Alvarez)",
+  "repo": "VirusTotal/yara",
+  "type": "open-source",
+  "categories": [
+   "malware",
+   "memory",
+   "incident-response"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Pattern-matching rules for identifying and classifying malware in files and memory.",
+  "notice": {
+   "level": "maintenance",
+   "text": "YARA is in maintenance mode, receiving only critical fixes. All future development happens in YARA-X.",
+   "successor": "yara-x",
+   "source": "https://github.com/VirusTotal/yara"
+  }
+ },
+ {
+  "id": "capa",
+  "name": "capa",
+  "developer": "Mandiant",
+  "repo": "mandiant/capa",
+  "type": "open-source",
+  "categories": [
+   "malware"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Identifies what a program can do, such as inject code or contact a server, without running it."
+ },
+ {
+  "id": "flare-vm",
+  "name": "FLARE-VM",
+  "developer": "Mandiant",
+  "repo": "mandiant/flare-vm",
+  "type": "open-source",
+  "categories": [
+   "malware",
+   "distros-practice"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "Scripts that turn a Windows virtual machine into a malware analysis lab."
+ },
+ {
+  "id": "floss",
+  "name": "FLOSS",
+  "developer": "Mandiant",
+  "repo": "mandiant/flare-floss",
+  "type": "open-source",
+  "categories": [
+   "string-search"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Extracts obfuscated and stack strings from malware that the normal strings tool misses."
+ },
+ {
+  "id": "x64dbg",
+  "name": "x64dbg",
+  "developer": "x64dbg project",
+  "repo": "x64dbg/x64dbg",
+  "type": "open-source",
+  "categories": [
+   "malware"
+  ],
+  "interface": "GUI",
+  "level": "advanced",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "An open-source debugger for 32-bit and 64-bit Windows programs."
+ },
+ {
+  "id": "detect-it-easy",
+  "name": "Detect It Easy",
+  "developer": "horsicq",
+  "repo": "horsicq/Detect-It-Easy",
+  "type": "open-source",
+  "categories": [
+   "malware"
+  ],
+  "interface": "Both",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Identifies file types, compilers and packers."
+ },
+ {
+  "id": "oletools",
+  "name": "oletools",
+  "developer": "Philippe Lagadec",
+  "repo": "decalage2/oletools",
+  "type": "open-source",
+  "categories": [
+   "malware",
+   "email"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Analyses Microsoft Office documents for macros, embedded objects and other risky content.",
+  "install": "pip install oletools"
+ },
+ {
+  "id": "pestudio",
+  "name": "pestudio",
+  "developer": "Marc Ochsenmeier (Winitor)",
+  "url": "https://www.winitor.com/",
+  "type": "free-closed",
+  "categories": [
+   "malware"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "Performs an initial static assessment of Windows executables and highlights suspicious indicators."
+ },
+ {
+  "id": "microsoft-extractor-suite",
+  "name": "Microsoft Extractor Suite",
+  "developer": "Invictus Incident Response",
+  "repo": "invictus-ir/Microsoft-Extractor-Suite",
+  "type": "open-source",
+  "categories": [
+   "cloud"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "A PowerShell module that collects audit and sign-in logs from Microsoft 365 and Entra ID."
+ },
+ {
+  "id": "invictus-aws",
+  "name": "Invictus-AWS",
+  "developer": "Invictus Incident Response",
+  "repo": "invictus-ir/Invictus-AWS",
+  "type": "open-source",
+  "categories": [
+   "cloud"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Collects logs and configuration from an AWS account for incident response."
+ },
+ {
+  "id": "microsoft-analyzer-suite",
+  "name": "Microsoft Analyzer Suite",
+  "developer": "Lethal Forensics",
+  "repo": "LETHAL-FORENSICS/Microsoft-Analyzer-Suite",
+  "type": "open-source",
+  "categories": [
+   "cloud"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "PowerShell scripts that analyse the output of Microsoft Extractor Suite."
+ },
+ {
+  "id": "untitled-goose-tool",
+  "name": "Untitled Goose Tool",
+  "developer": "CISA",
+  "repo": "cisagov/untitledgoosetool",
+  "type": "open-source",
+  "categories": [
+   "cloud"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Gathers and analyses Microsoft Azure, Entra ID and Microsoft 365 data for hunting and response."
+ },
+ {
+  "id": "mha",
+  "name": "Message Header Analyzer",
+  "developer": "Microsoft",
+  "repo": "microsoft/MHA",
+  "type": "open-source",
+  "categories": [
+   "email"
+  ],
+  "interface": "Web",
+  "level": "beginner",
+  "platforms": [
+   "Web"
+  ],
+  "summary": "Parses email headers into a readable hop-by-hop table."
+ },
+ {
+  "id": "google-messageheader",
+  "name": "Google Admin Toolbox Messageheader",
+  "developer": "Google",
+  "url": "https://toolbox.googleapps.com/apps/messageheader/",
+  "type": "free-closed",
+  "categories": [
+   "email"
+  ],
+  "interface": "Web",
+  "level": "beginner",
+  "platforms": [
+   "Web"
+  ],
+  "summary": "A web tool that analyses SMTP headers to show delivery delays and routing."
+ },
+ {
+  "id": "libpff",
+  "name": "libpff",
+  "developer": "Joachim Metz",
+  "repo": "libyal/libpff",
+  "type": "open-source",
+  "categories": [
+   "email"
+  ],
+  "interface": "CLI",
+  "level": "advanced",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Reads Outlook PST and OST files and exports their items, including recoverable ones.",
+  "similar_to": [
+   "Aid4Mail",
+   "Vound Intella"
+  ]
+ },
+ {
+  "id": "msg-extractor",
+  "name": "extract-msg",
+  "developer": "TeamMsgExtractor",
+  "repo": "TeamMsgExtractor/msg-extractor",
+  "type": "open-source",
+  "categories": [
+   "email"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Extracts emails and attachments from Outlook .msg files.",
+  "install": "pip install extract-msg",
+  "similar_to": [
+   "Aid4Mail"
+  ]
+ },
+ {
+  "id": "hindsight",
+  "name": "Hindsight",
+  "developer": "Ryan Benson",
+  "repo": "RyanDFIR/hindsight",
+  "type": "open-source",
+  "categories": [
+   "browser"
+  ],
+  "interface": "Both",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Parses Chrome and Chromium artifacts such as history, downloads, cache and cookies into a timeline.",
+  "similar_to": [
+   "Browser History Examiner",
+   "Magnet AXIOM"
+  ],
+  "install": "pip install pyhindsight"
+ },
+ {
+  "id": "unfurl",
+  "name": "Unfurl",
+  "developer": "Ryan Benson",
+  "repo": "RyanDFIR/unfurl",
+  "type": "open-source",
+  "categories": [
+   "browser",
+   "utilities"
+  ],
+  "interface": "Web",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Breaks a URL into its parts and decodes hidden timestamps and identifiers."
+ },
+ {
+  "id": "foxton-browser-tools",
+  "name": "Browser History Capturer and Viewer",
+  "developer": "Foxton Forensics",
+  "url": "https://www.foxtonforensics.com/",
+  "type": "free-closed",
+  "categories": [
+   "browser"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "Free tools to capture and view history from the main desktop browsers."
+ },
+ {
+  "id": "db4s",
+  "name": "DB Browser for SQLite",
+  "developer": "DB4S project",
+  "repo": "sqlitebrowser/sqlitebrowser",
+  "type": "open-source",
+  "categories": [
+   "database",
+   "ios"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "A visual tool to open, browse and query SQLite databases, the format behind most mobile app data.",
+  "similar_to": [
+   "Sanderson Forensic SQLite Explorer",
+   "Sanderson Forensic Toolkit for SQLite"
+  ],
+  "licence": "MPL-2.0 or GPL-3.0"
+ },
+ {
+  "id": "fqlite",
+  "name": "FQLite",
+  "developer": "Dirk Pawlaszczyk",
+  "repo": "pawlaszczyk/fqlite",
+  "type": "open-source",
+  "categories": [
+   "database"
+  ],
+  "interface": "GUI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Recovers deleted records from SQLite databases, journals and write-ahead logs.",
+  "similar_to": [
+   "Sanderson Forensic Toolkit for SQLite"
+  ]
+ },
+ {
+  "id": "exiftool",
+  "name": "ExifTool",
+  "developer": "Phil Harvey",
+  "repo": "exiftool/exiftool",
+  "type": "open-source",
+  "categories": [
+   "multimedia",
+   "gps"
+  ],
+  "interface": "CLI",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Reads and writes metadata in photos, videos, documents and hundreds of other file types.",
+  "download_url": "https://exiftool.org/",
+  "similar_to": [
+   "Amped Authenticate"
+  ]
+ },
+ {
+  "id": "ffmpeg",
+  "name": "FFmpeg",
+  "developer": "FFmpeg project",
+  "repo": "FFmpeg/FFmpeg",
+  "type": "open-source",
+  "categories": [
+   "multimedia",
+   "video"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Converts, inspects and extracts frames from almost any audio or video format.",
+  "download_url": "https://ffmpeg.org/download.html",
+  "similar_to": [
+   "Amped FIVE"
+  ]
+ },
+ {
+  "id": "mediainfo",
+  "name": "MediaInfo",
+  "developer": "MediaArea",
+  "repo": "MediaArea/MediaInfo",
+  "type": "open-source",
+  "categories": [
+   "multimedia",
+   "video"
+  ],
+  "interface": "Both",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Shows the technical details and tags of audio and video files.",
+  "similar_to": [
+   "Amped FIVE"
+  ]
+ },
+ {
+  "id": "sherloq",
+  "name": "Sherloq",
+  "developer": "Guido Bartoli",
+  "repo": "GuidoBartoli/sherloq",
+  "type": "open-source",
+  "categories": [
+   "multimedia"
+  ],
+  "interface": "GUI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "An image forensics toolset for spotting edits, with error level analysis, noise and metadata views.",
+  "similar_to": [
+   "Amped Authenticate"
+  ]
+ },
+ {
+  "id": "audacity",
+  "name": "Audacity",
+  "developer": "Audacity team (Muse Group)",
+  "repo": "audacity/audacity",
+  "type": "open-source",
+  "categories": [
+   "multimedia"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "An audio editor useful for inspecting waveforms and spectrograms and for cleaning up recordings."
+ },
+ {
+  "id": "forensically",
+  "name": "Forensically",
+  "developer": "Jonas Wagner",
+  "url": "https://29a.ch/photo-forensics/",
+  "type": "free-closed",
+  "categories": [
+   "multimedia"
+  ],
+  "interface": "Web",
+  "level": "beginner",
+  "platforms": [
+   "Web"
+  ],
+  "summary": "A browser-based set of image analysis tools, including clone detection and error level analysis.",
+  "similar_to": [
+   "Amped Authenticate"
+  ]
+ },
+ {
+  "id": "fotoforensics",
+  "name": "FotoForensics",
+  "developer": "Hacker Factor",
+  "url": "https://fotoforensics.com/",
+  "type": "free-closed",
+  "categories": [
+   "multimedia"
+  ],
+  "interface": "Web",
+  "level": "beginner",
+  "platforms": [
+   "Web"
+  ],
+  "summary": "A web service for error level analysis and metadata inspection of images."
+ },
+ {
+  "id": "hashcat",
+  "name": "hashcat",
+  "developer": "Jens Steube and contributors",
+  "repo": "hashcat/hashcat",
+  "type": "open-source",
+  "categories": [
+   "passwords"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "A very fast password recovery tool that uses GPUs and supports hundreds of hash types.",
+  "similar_to": [
+   "Elcomsoft Distributed Password Recovery",
+   "Passware Kit Forensic"
+  ],
+  "licence": "MIT"
+ },
+ {
+  "id": "john",
+  "name": "John the Ripper (jumbo)",
+  "developer": "Openwall",
+  "repo": "openwall/john",
+  "type": "open-source",
+  "categories": [
+   "passwords"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "A versatile password cracker with helper scripts that extract hashes from many file types.",
+  "similar_to": [
+   "Elcomsoft Distributed Password Recovery",
+   "Passware Kit Forensic"
+  ]
+ },
+ {
+  "id": "dislocker",
+  "name": "Dislocker",
+  "developer": "Romain Coltel and contributors",
+  "repo": "Aorimn/dislocker",
+  "type": "open-source",
+  "categories": [
+   "passwords",
+   "linux"
+  ],
+  "interface": "CLI",
+  "level": "advanced",
+  "platforms": [
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Reads BitLocker-encrypted volumes on Linux and macOS when the key or password is known.",
+  "similar_to": [
+   "Elcomsoft Forensic Disk Decryptor"
+  ]
+ },
+ {
+  "id": "name-that-hash",
+  "name": "Name-That-Hash",
+  "developer": "bee-san and contributors",
+  "repo": "bee-san/Name-That-Hash",
+  "type": "open-source",
+  "categories": [
+   "passwords"
+  ],
+  "interface": "CLI",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Identifies what type of hash you have and suggests the matching hashcat and John modes.",
+  "install": "pip install name-that-hash"
+ },
+ {
+  "id": "spiderfoot",
+  "name": "SpiderFoot",
+  "developer": "Steve Micallef",
+  "repo": "smicallef/spiderfoot",
+  "type": "open-source",
+  "categories": [
+   "osint"
+  ],
+  "interface": "Web",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Automates open-source intelligence gathering about a target from many data sources.",
+  "similar_to": [
+   "Maltego"
+  ]
+ },
+ {
+  "id": "maltego-ce",
+  "name": "Maltego Graph Community Edition (Basic plan)",
+  "developer": "Maltego Technologies",
+  "url": "https://www.maltego.com/",
+  "type": "free-closed",
+  "categories": [
+   "osint",
+   "data-analytics"
+  ],
+  "interface": "GUI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Free link-analysis desktop app (Maltego Graph CE) included in Maltego's free Basic plan, with monthly data credits and a free Maltego ID.",
+  "licence_note": "Free Basic plan (Community Edition) with 200 credits/month; commercial use allowed since Maltego Graph 4.8.0; registration is not available in some countries. Paid plans add more data and features."
+ },
+ {
+  "id": "sherlock",
+  "name": "Sherlock",
+  "developer": "Sherlock Project",
+  "repo": "sherlock-project/sherlock",
+  "type": "open-source",
+  "categories": [
+   "osint"
+  ],
+  "interface": "CLI",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Checks hundreds of sites for accounts that use a given username."
+ },
+ {
+  "id": "theharvester",
+  "name": "theHarvester",
+  "developer": "Christian Martorella",
+  "repo": "laramies/theHarvester",
+  "type": "open-source",
+  "categories": [
+   "osint"
+  ],
+  "interface": "CLI",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Gathers email addresses, subdomains and hosts for a domain from public sources."
+ },
+ {
+  "id": "osint-framework",
+  "name": "OSINT Framework",
+  "developer": "Justin Nordine",
+  "repo": "lockfale/osint-framework",
+  "type": "open-source",
+  "categories": [
+   "osint"
+  ],
+  "interface": "Web",
+  "level": "beginner",
+  "platforms": [
+   "Web"
+  ],
+  "summary": "A categorised map of free OSINT resources."
+ },
+ {
+  "id": "yt-dlp",
+  "name": "yt-dlp",
+  "developer": "yt-dlp project",
+  "repo": "yt-dlp/yt-dlp",
+  "type": "open-source",
+  "categories": [
+   "osint",
+   "multimedia"
+  ],
+  "interface": "CLI",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Downloads video and audio from many sites, useful for preserving publicly posted media."
+ },
+ {
+  "id": "wayback-machine",
+  "name": "Wayback Machine",
+  "developer": "Internet Archive",
+  "url": "https://web.archive.org/",
+  "type": "free-closed",
+  "categories": [
+   "osint"
+  ],
+  "interface": "Web",
+  "level": "beginner",
+  "platforms": [
+   "Web"
+  ],
+  "summary": "Shows archived copies of web pages and lets you save a page as it looks today."
+ },
+ {
+  "id": "bellingcat-toolkit",
+  "name": "Bellingcat Online Investigation Toolkit",
+  "developer": "Bellingcat",
+  "url": "https://bellingcat.gitbook.io/toolkit",
+  "type": "free-closed",
+  "categories": [
+   "osint"
+  ],
+  "interface": "Web",
+  "level": "beginner",
+  "platforms": [
+   "Web"
+  ],
+  "summary": "A maintained guide to tools for online investigations, with notes on what each is good for."
+ },
+ {
+  "id": "datcon",
+  "name": "DatCon",
+  "developer": "datfile.net",
+  "url": "https://datfile.net/DatCon/intro.html",
+  "type": "free-closed",
+  "categories": [
+   "drone-iot"
+  ],
+  "interface": "GUI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Converts DJI flight controller .DAT logs into readable flight data."
+ },
+ {
+  "id": "dji-log-parser",
+  "name": "dji-log-parser",
+  "developer": "lvauvillier",
+  "repo": "lvauvillier/dji-log-parser",
+  "type": "open-source",
+  "categories": [
+   "drone-iot"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Decodes DJI flight record logs from the mobile app into JSON, CSV or KML."
+ },
+ {
+  "id": "mission-planner",
+  "name": "Mission Planner",
+  "developer": "ArduPilot (Michael Oborne)",
+  "repo": "ArduPilot/MissionPlanner",
+  "type": "open-source",
+  "categories": [
+   "drone-iot"
+  ],
+  "interface": "GUI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "Ground control software for ArduPilot that can also replay and review flight logs."
+ },
+ {
+  "id": "emba",
+  "name": "EMBA",
+  "developer": "EMBA project",
+  "repo": "e-m-b-a/emba",
+  "type": "open-source",
+  "categories": [
+   "drone-iot"
+  ],
+  "interface": "CLI",
+  "level": "advanced",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "A firmware security analyser that extracts and inspects embedded device firmware."
+ },
+ {
+  "id": "can-utils",
+  "name": "can-utils",
+  "developer": "linux-can project",
+  "repo": "linux-can/can-utils",
+  "type": "open-source",
+  "categories": [
+   "vehicle",
+   "drone-iot"
+  ],
+  "interface": "CLI",
+  "level": "advanced",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "Linux utilities for capturing and replaying vehicle CAN bus traffic."
+ },
+ {
+  "id": "savvycan",
+  "name": "SavvyCAN",
+  "developer": "Collin Kidder",
+  "repo": "collin80/SavvyCAN",
+  "type": "open-source",
+  "categories": [
+   "vehicle",
+   "drone-iot"
+  ],
+  "interface": "GUI",
+  "level": "advanced",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "A graphical tool for capturing, visualising and reverse engineering CAN bus data."
+ },
+ {
+  "id": "btcrecover",
+  "name": "BTCRecover",
+  "developer": "3rdIteration and Christopher Gurnee",
+  "repo": "3rdIteration/btcrecover",
+  "type": "open-source",
+  "categories": [
+   "crypto",
+   "passwords"
+  ],
+  "interface": "CLI",
+  "level": "advanced",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Recovers wallet passwords and seed phrases when part of them is known.",
+  "similar_to": [
+   "Passware Kit Forensic"
+  ]
+ },
+ {
+  "id": "bip39",
+  "name": "BIP39 Tool",
+  "developer": "Ian Coleman",
+  "repo": "iancoleman/bip39",
+  "type": "open-source",
+  "categories": [
+   "crypto"
+  ],
+  "interface": "Web",
+  "level": "intermediate",
+  "platforms": [
+   "Web"
+  ],
+  "summary": "Converts a seed phrase into its addresses and keys. Designed to be run offline in a browser."
+ },
+ {
+  "id": "mempool",
+  "name": "mempool",
+  "developer": "The Mempool Open Source Project",
+  "repo": "mempool/mempool",
+  "type": "open-source",
+  "categories": [
+   "crypto"
+  ],
+  "interface": "Web",
+  "level": "intermediate",
+  "platforms": [
+   "Web"
+  ],
+  "summary": "An open-source Bitcoin block explorer for looking up transactions and addresses."
+ },
+ {
+  "id": "blockchair",
+  "name": "Blockchair",
+  "developer": "Blockchair",
+  "url": "https://blockchair.com/",
+  "type": "free-closed",
+  "categories": [
+   "crypto"
+  ],
+  "interface": "Web",
+  "level": "beginner",
+  "platforms": [
+   "Web"
+  ],
+  "summary": "A search engine for transactions and addresses across many blockchains."
+ },
+ {
+  "id": "etherscan",
+  "name": "Etherscan",
+  "developer": "Etherscan",
+  "url": "https://etherscan.io/",
+  "type": "free-closed",
+  "categories": [
+   "crypto"
+  ],
+  "interface": "Web",
+  "level": "beginner",
+  "platforms": [
+   "Web"
+  ],
+  "summary": "The standard explorer for Ethereum transactions, addresses and tokens.",
+  "similar_to": [
+   "Chainalysis Reactor"
+  ]
+ },
+ {
+  "id": "walletexplorer",
+  "name": "WalletExplorer",
+  "developer": "WalletExplorer.com",
+  "url": "https://www.walletexplorer.com/",
+  "type": "free-closed",
+  "categories": [
+   "crypto"
+  ],
+  "interface": "Web",
+  "level": "intermediate",
+  "platforms": [
+   "Web"
+  ],
+  "summary": "Groups Bitcoin addresses into wallets and labels some known services.",
+  "similar_to": [
+   "Chainalysis Reactor"
+  ]
+ },
+ {
+  "id": "cyberchef",
+  "name": "CyberChef",
+  "developer": "GCHQ",
+  "repo": "gchq/CyberChef",
+  "type": "open-source",
+  "categories": [
+   "utilities",
+   "malware"
+  ],
+  "interface": "Web",
+  "level": "beginner",
+  "platforms": [
+   "Web"
+  ],
+  "summary": "A browser-based toolbox for decoding, decrypting, converting and analysing data."
+ },
+ {
+  "id": "hxd",
+  "name": "HxD",
+  "developer": "Maël Hörz",
+  "url": "https://mh-nexus.de/en/hxd/",
+  "type": "free-closed",
+  "categories": [
+   "utilities"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "A fast hex editor for files, disks and memory.",
+  "similar_to": [
+   "010 Editor"
+  ]
+ },
+ {
+  "id": "imhex",
+  "name": "ImHex",
+  "developer": "WerWolv",
+  "repo": "WerWolv/ImHex",
+  "type": "open-source",
+  "categories": [
+   "utilities"
+  ],
+  "interface": "GUI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "A hex editor with a pattern language for decoding binary structures.",
+  "similar_to": [
+   "010 Editor"
+  ]
+ },
+ {
+  "id": "hashdeep",
+  "name": "hashdeep and md5deep",
+  "developer": "Jesse Kornblum",
+  "repo": "jessek/hashdeep",
+  "type": "open-source",
+  "categories": [
+   "utilities"
+  ],
+  "interface": "CLI",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Computes and audits hashes for whole directory trees."
+ },
+ {
+  "id": "ssdeep",
+  "name": "ssdeep",
+  "developer": "Jesse Kornblum and contributors",
+  "repo": "ssdeep-project/ssdeep",
+  "type": "open-source",
+  "categories": [
+   "utilities"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Computes fuzzy hashes to find files that are similar but not identical."
+ },
+ {
+  "id": "quickhash",
+  "name": "QuickHash GUI",
+  "developer": "Ted Smith",
+  "repo": "tedsmith/quickhash",
+  "type": "open-source",
+  "categories": [
+   "utilities"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "A graphical tool for hashing files, folders and disks and comparing the results."
+ },
+ {
+  "id": "bstrings",
+  "name": "bstrings",
+  "developer": "Eric Zimmerman",
+  "repo": "EricZimmerman/bstrings",
+  "type": "open-source",
+  "categories": [
+   "utilities",
+   "string-search"
+  ],
+  "interface": "CLI",
+  "level": "beginner",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "A strings tool with built-in searches for emails, paths, URLs and other patterns.",
+  "download_url": "https://ericzimmerman.github.io/"
+ },
+ {
+  "id": "dcode",
+  "name": "DCode",
+  "developer": "Digital Detective",
+  "url": "https://www.digital-detective.net/dcode/",
+  "type": "free-closed",
+  "categories": [
+   "utilities"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "Decodes date and time values from many formats found in forensic data."
+ },
+ {
+  "id": "nsrl",
+  "name": "NSRL hash sets",
+  "developer": "NIST",
+  "url": "https://www.nist.gov/itl/ssd/software-quality-group/national-software-reference-library-nsrl",
+  "type": "free-resource",
+  "categories": [
+   "utilities",
+   "validation"
+  ],
+  "interface": "Data",
+  "level": "intermediate",
+  "platforms": [
+   "Any"
+  ],
+  "summary": "Reference hash sets of known software, used to filter out known files in an examination."
+ },
+ {
+  "id": "caine",
+  "name": "CAINE",
+  "developer": "Nanni Bassetti",
+  "url": "https://www.caine-live.net/",
+  "type": "open-source",
+  "categories": [
+   "distros-practice",
+   "write-blocking"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "A live Linux distribution for forensics with write-blocking by default and a large tool set."
+ },
+ {
+  "id": "sift",
+  "name": "SIFT Workstation",
+  "developer": "SANS (Rob Lee and team)",
+  "repo": "teamdfir/sift",
+  "type": "open-source",
+  "categories": [
+   "distros-practice"
+  ],
+  "interface": "GUI",
+  "level": "intermediate",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "A free Ubuntu-based workstation loaded with open-source forensic and incident response tools.",
+  "download_url": "https://www.sans.org/tools/sift-workstation/",
+  "install": "sudo cast install teamdfir/sift-saltstack",
+  "licence_note": "Free distribution from SANS; each bundled tool keeps its own licence."
+ },
+ {
+  "id": "tsurugi",
+  "name": "Tsurugi Linux",
+  "developer": "Tsurugi Linux team",
+  "url": "https://tsurugi-linux.org/",
+  "type": "open-source",
+  "categories": [
+   "distros-practice"
+  ],
+  "interface": "GUI",
+  "level": "intermediate",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "A DFIR Linux distribution with tools for acquisition, analysis, malware and OSINT.",
+  "licence_note": "Free and open-source DFIR distribution; bundled tools keep their own licences."
+ },
+ {
+  "id": "remnux",
+  "name": "REMnux",
+  "developer": "Lenny Zeltser and contributors",
+  "url": "https://remnux.org/",
+  "type": "open-source",
+  "categories": [
+   "distros-practice",
+   "malware"
+  ],
+  "interface": "GUI",
+  "level": "intermediate",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "A Linux toolkit for reverse engineering and analysing malicious software."
+ },
+ {
+  "id": "kali",
+  "name": "Kali Linux",
+  "developer": "OffSec",
+  "url": "https://www.kali.org/",
+  "type": "open-source",
+  "categories": [
+   "distros-practice"
+  ],
+  "interface": "GUI",
+  "level": "intermediate",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "A security-focused Linux distribution that includes a forensic boot mode and many forensic tools."
+ },
+ {
+  "id": "csi-linux",
+  "name": "CSI Linux",
+  "developer": "CSI Linux team",
+  "url": "https://csilinux.com/",
+  "type": "open-source",
+  "categories": [
+   "distros-practice",
+   "osint"
+  ],
+  "interface": "GUI",
+  "level": "intermediate",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "An investigation-focused Linux environment for OSINT, forensics and incident response.",
+  "licence_note": "The project describes CSI Linux as an open-source operating system. The site also lists certifications (CSIL courses) in a separate shop. Bundled tools keep their own licences."
+ },
+ {
+  "id": "linux-write-blocker",
+  "name": "Linux write blocker",
+  "developer": "Maxim Suhanov",
+  "repo": "msuhanov/Linux-write-blocker",
+  "type": "open-source",
+  "categories": [
+   "write-blocking"
+  ],
+  "interface": "CLI",
+  "level": "advanced",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "Kernel patches and helper scripts that make Linux treat attached drives as read-only at the block layer.",
+  "notice": {
+   "level": "unmaintained",
+   "text": "No code changes since May 2020; test it on your kernel before use. Based on the last code update recorded on 24 Nov 2026."
+  }
+ },
+ {
+  "id": "util-linux",
+  "name": "util-linux (blockdev)",
+  "developer": "util-linux project",
+  "repo": "util-linux/util-linux",
+  "type": "open-source",
+  "categories": [
+   "write-blocking",
+   "linux"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "The standard Linux utility set. Its blockdev command can mark a block device read-only before it is mounted."
+ },
+ {
+  "id": "nwipe",
+  "name": "nwipe",
+  "developer": "Martijn van Brummelen and contributors",
+  "repo": "martijnvanbrummelen/nwipe",
+  "type": "open-source",
+  "categories": [
+   "sanitization"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "Securely erases disks with several overwrite methods and can verify the result."
+ },
+ {
+  "id": "shredos",
+  "name": "ShredOS",
+  "developer": "PartialVolume",
+  "repo": "PartialVolume/shredos.x86_64",
+  "type": "open-source",
+  "categories": [
+   "sanitization"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "A small bootable Linux image that starts nwipe automatically, for wiping drives without an installed operating system."
+ },
+ {
+  "id": "sdelete",
+  "name": "SDelete",
+  "developer": "Microsoft (Sysinternals)",
+  "url": "https://learn.microsoft.com/sysinternals/downloads/sdelete",
+  "type": "free-closed",
+  "categories": [
+   "sanitization"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "Securely deletes files and cleans free space on Windows drives from the command line."
+ },
+ {
+  "id": "eraser",
+  "name": "Eraser",
+  "developer": "Heidi Computers",
+  "url": "https://eraser.heidi.ie/",
+  "type": "open-source",
+  "categories": [
+   "sanitization"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "Securely erases files, folders and unused disk space on Windows using selectable overwrite patterns."
+ },
+ {
+  "id": "robocopy",
+  "name": "Robocopy",
+  "developer": "Microsoft",
+  "url": "https://learn.microsoft.com/windows-server/administration/windows-commands/robocopy",
+  "type": "free-closed",
+  "categories": [
+   "forensic-copy"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "The copy tool built into Windows. With the right switches it preserves timestamps and logs every file it copies."
+ },
+ {
+  "id": "rclone",
+  "name": "rclone",
+  "developer": "rclone project",
+  "repo": "rclone/rclone",
+  "type": "open-source",
+  "categories": [
+   "forensic-copy",
+   "cloud"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Copies and verifies data to and from cloud storage, useful for preserving cloud-held files with hashes."
+ },
+ {
+  "id": "teracopy",
+  "name": "TeraCopy",
+  "developer": "Code Sector",
+  "url": "https://www.codesector.com/teracopy",
+  "type": "free-closed",
+  "categories": [
+   "forensic-copy"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "Copies files and verifies each one by hash after the copy. Free for personal use."
+ },
+ {
+  "id": "wa-crypt-tools",
+  "name": "wa-crypt-tools",
+  "developer": "ElDavoo",
+  "repo": "ElDavoo/wa-crypt-tools",
+  "type": "open-source",
+  "categories": [
+   "messaging",
+   "android"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Decrypts WhatsApp .crypt12, .crypt14 and .crypt15 backup files when the key is available."
+ },
+ {
+  "id": "signalbackup-tools",
+  "name": "signalbackup-tools",
+  "developer": "bepaald",
+  "repo": "bepaald/signalbackup-tools",
+  "type": "open-source",
+  "categories": [
+   "messaging"
+  ],
+  "interface": "CLI",
+  "level": "advanced",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Reads, repairs and exports Signal for Android backup files."
+ },
+ {
+  "id": "discordchatexporter",
+  "name": "DiscordChatExporter",
+  "developer": "Tyrrrz",
+  "repo": "Tyrrrz/DiscordChatExporter",
+  "type": "open-source",
+  "categories": [
+   "messaging"
+  ],
+  "interface": "Both",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Exports Discord channel and direct message history to HTML, JSON or text."
+ },
+ {
+  "id": "zsteg",
+  "name": "zsteg",
+  "developer": "zed-0xff",
+  "repo": "zed-0xff/zsteg",
+  "type": "open-source",
+  "categories": [
+   "steganalysis"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Detects data hidden in PNG and BMP images."
+ },
+ {
+  "id": "stegseek",
+  "name": "Stegseek",
+  "developer": "Rick de Jager",
+  "repo": "RickdeJager/stegseek",
+  "type": "open-source",
+  "categories": [
+   "steganalysis",
+   "passwords"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "A very fast cracker for Steghide-protected files that can also detect Steghide content without a password.",
+  "notice": {
+   "level": "unmaintained",
+   "text": "No code changes since October 2023. Based on the last code update recorded on 24 Nov 2026."
+  }
+ },
+ {
+  "id": "steghide",
+  "name": "Steghide",
+  "developer": "Stefan Hetzl",
+  "url": "https://steghide.sourceforge.net/",
+  "type": "open-source",
+  "categories": [
+   "steganalysis"
+  ],
+  "interface": "CLI",
+  "level": "beginner",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "The classic tool for hiding and extracting data in images and audio, needed to test and understand stego files."
+ },
+ {
+  "id": "agent-ransack",
+  "name": "Agent Ransack",
+  "developer": "Mythicsoft",
+  "url": "https://www.mythicsoft.com/agentransack/",
+  "type": "free-closed",
+  "categories": [
+   "string-search"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "A free Windows tool for finding files by their content, with a preview of each match."
+ },
+ {
+  "id": "gpsbabel",
+  "name": "GPSBabel",
+  "developer": "Robert Lipe and contributors",
+  "repo": "GPSBabel/gpsbabel",
+  "type": "open-source",
+  "categories": [
+   "gps"
+  ],
+  "interface": "Both",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Converts GPS data between many device and file formats."
+ },
+ {
+  "id": "google-earth-pro",
+  "name": "Google Earth Pro",
+  "developer": "Google",
+  "url": "https://www.google.com/earth/versions/",
+  "type": "free-closed",
+  "categories": [
+   "gps"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "A free desktop globe for plotting KML and GPX tracks and viewing historical imagery."
+ },
+ {
+  "id": "kismet",
+  "name": "Kismet",
+  "developer": "Mike Kershaw",
+  "repo": "kismetwireless/kismet",
+  "type": "open-source",
+  "categories": [
+   "wifi",
+   "network"
+  ],
+  "interface": "Web",
+  "level": "advanced",
+  "platforms": [
+   "Linux",
+   "macOS"
+  ],
+  "summary": "A wireless network and device detector, sniffer and logger for Wi-Fi, Bluetooth and more."
+ },
+ {
+  "id": "aircrack-ng",
+  "name": "Aircrack-ng",
+  "developer": "Aircrack-ng project",
+  "repo": "aircrack-ng/aircrack-ng",
+  "type": "open-source",
+  "categories": [
+   "wifi"
+  ],
+  "interface": "CLI",
+  "level": "advanced",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "A suite for capturing and analysing Wi-Fi traffic. Use it only on networks you are authorised to test."
+ },
+ {
+  "id": "wigle",
+  "name": "WiGLE",
+  "developer": "WiGLE.net",
+  "url": "https://wigle.net/",
+  "type": "free-closed",
+  "categories": [
+   "wifi",
+   "osint"
+  ],
+  "interface": "Web",
+  "level": "beginner",
+  "platforms": [
+   "Web"
+  ],
+  "summary": "A public database for looking up where a Wi-Fi network name or address has been seen."
+ },
+ {
+  "id": "sngrep",
+  "name": "sngrep",
+  "developer": "Irontec",
+  "repo": "irontec/sngrep",
+  "type": "open-source",
+  "categories": [
+   "voip",
+   "network"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Shows SIP call flows from live traffic or PCAP files in the terminal."
+ },
+ {
+  "id": "torrent-file-editor",
+  "name": "Torrent File Editor",
+  "developer": "Ivan Romanov",
+  "repo": "torrent-file-editor/torrent-file-editor",
+  "type": "open-source",
+  "categories": [
+   "p2p"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Opens .torrent files and client resume files and shows their contents as a tree."
+ },
+ {
+  "id": "aurora-ir",
+  "name": "Aurora Incident Response",
+  "developer": "Mathias Fuchs",
+  "repo": "cyb3rfox/Aurora-Incident-Response",
+  "type": "open-source",
+  "categories": [
+   "case-management"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "A desktop tool for tracking findings, timelines and affected systems in one case file.",
+  "notice": {
+   "level": "unmaintained",
+   "text": "No code changes since October 2023. Based on the last code update recorded on 24 Nov 2026."
+  }
+ },
+ {
+  "id": "vlc",
+  "name": "VLC media player",
+  "developer": "VideoLAN",
+  "url": "https://www.videolan.org/vlc/",
+  "type": "open-source",
+  "categories": [
+   "video",
+   "multimedia"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Plays almost any video format and can step through footage frame by frame."
+ },
+ {
+  "id": "cftt",
+  "name": "NIST Computer Forensics Tool Testing (CFTT)",
+  "developer": "NIST",
+  "url": "https://www.nist.gov/itl/ssd/software-quality-group/computer-forensics-tool-testing-program-cftt",
+  "type": "free-resource",
+  "categories": [
+   "validation"
+  ],
+  "interface": "Data",
+  "level": "intermediate",
+  "platforms": [
+   "Any"
+  ],
+  "summary": "NIST's programme that publishes test methods and test reports for forensic tools."
+ },
+ {
+  "id": "cfreds",
+  "name": "NIST CFReDS",
+  "developer": "NIST",
+  "url": "https://cfreds.nist.gov/",
+  "type": "free-resource",
+  "categories": [
+   "validation"
+  ],
+  "interface": "Data",
+  "level": "beginner",
+  "platforms": [
+   "Any"
+  ],
+  "summary": "Reference data sets with documented contents, for checking that a tool finds what it should."
+ },
+ {
+  "id": "digital-corpora",
+  "name": "Digital Corpora",
+  "developer": "Digital Corpora project",
+  "url": "https://digitalcorpora.org/",
+  "type": "free-resource",
+  "categories": [
+   "validation"
+  ],
+  "interface": "Data",
+  "level": "beginner",
+  "platforms": [
+   "Any"
+  ],
+  "summary": "Disk images, memory dumps and network captures for testing tools and for teaching."
+ },
+ {
+  "id": "dfir-artifact-museum",
+  "name": "DFIR Artifact Museum",
+  "developer": "Andrew Rathbun and contributors",
+  "repo": "AndrewRathbun/DFIRArtifactMuseum",
+  "type": "open-source",
+  "categories": [
+   "validation"
+  ],
+  "interface": "Data",
+  "level": "intermediate",
+  "platforms": [
+   "Any"
+  ],
+  "summary": "A community archive of sample artifacts from many operating systems, for testing parsers."
+ },
+ {
+  "id": "apktool",
+  "name": "Apktool",
+  "developer": "Connor Tumbleson (iBotPeaches) and contributors",
+  "repo": "iBotPeaches/Apktool",
+  "type": "open-source",
+  "categories": [
+   "android",
+   "malware"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Decodes Android APK files back to resources and smali code so you can read an app's manifest, permissions and strings.",
+  "licence": "Apache-2.0",
+  "download_url": "https://apktool.org/",
+  "similar_to": [
+   "Oxygen Forensic Detective"
+  ]
+ },
+ {
+  "id": "frida",
+  "name": "Frida",
+  "developer": "Ole André Vadla Ravnås and contributors",
+  "repo": "frida/frida",
+  "type": "open-source",
+  "categories": [
+   "android",
+   "ios",
+   "malware"
+  ],
+  "interface": "CLI",
+  "level": "advanced",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "A dynamic instrumentation toolkit that injects scripts into running apps on Android, iOS and desktop systems to watch or change their behaviour.",
+  "licence": "wxWindows Library Licence 3.1",
+  "install": "pip install frida-tools"
+ },
+ {
+  "id": "androidqf",
+  "name": "androidqf (Android Quick Forensics)",
+  "developer": "MVT project (Amnesty International Security Lab)",
+  "repo": "mvt-project/androidqf",
+  "type": "source-published",
+  "categories": [
+   "android"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "A portable collector that uses adb to gather logs, app lists and other data from an Android phone for later analysis with MVT.",
+  "licence": "MVT License 1.1"
+ },
+ {
+  "id": "arkime",
+  "name": "Arkime",
+  "developer": "Arkime project (formerly Moloch)",
+  "repo": "arkime/arkime",
+  "type": "open-source",
+  "categories": [
+   "network"
+  ],
+  "interface": "Web",
+  "level": "advanced",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "Large-scale full packet capture and indexing with a web interface for searching sessions and exporting PCAP.",
+  "licence": "Apache-2.0",
+  "download_url": "https://arkime.com/",
+  "similar_to": [
+   "NetWitness"
+  ]
+ },
+ {
+  "id": "snort",
+  "name": "Snort 3",
+  "developer": "Cisco Talos",
+  "repo": "snort3/snort3",
+  "type": "open-source",
+  "categories": [
+   "network"
+  ],
+  "interface": "CLI",
+  "level": "advanced",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "Rule-based network intrusion detection and prevention engine; replays PCAP files against rules to find known attack traffic.",
+  "licence": "GPL-2.0",
+  "download_url": "https://www.snort.org/",
+  "licence_note": "Snort 3 is GPL-2.0. The Community ruleset is free; the Subscriber ruleset is a paid service."
+ },
+ {
+  "id": "grr",
+  "name": "GRR Rapid Response",
+  "developer": "Google",
+  "repo": "google/grr",
+  "type": "open-source",
+  "categories": [
+   "incident-response",
+   "remote"
+  ],
+  "interface": "Web",
+  "level": "advanced",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Remote live forensics framework: a Linux server sends collection and hunting tasks to agents on Windows, Linux and macOS computers.",
+  "licence": "Apache-2.0",
+  "download_url": "https://grr-doc.readthedocs.io/",
+  "similar_to": [
+   "Binalyze AIR",
+   "F-Response",
+   "Magnet AXIOM Cyber"
+  ]
+ },
+ {
+  "id": "dfir-orc",
+  "name": "DFIR ORC",
+  "developer": "ANSSI (French National Cybersecurity Agency)",
+  "repo": "DFIR-ORC/dfir-orc",
+  "type": "open-source",
+  "categories": [
+   "incident-response",
+   "windows"
+  ],
+  "interface": "CLI",
+  "level": "advanced",
+  "platforms": [
+   "Windows"
+  ],
+  "summary": "A configurable Windows artefact collector that gathers MFT, registry, event logs and more into one archive.",
+  "licence": "LGPL-2.1",
+  "download_url": "https://dfir-orc.github.io/"
+ },
+ {
+  "id": "radare2",
+  "name": "radare2",
+  "developer": "radare project (pancake and contributors)",
+  "repo": "radareorg/radare2",
+  "type": "open-source",
+  "categories": [
+   "malware",
+   "utilities"
+  ],
+  "interface": "CLI",
+  "level": "advanced",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "A command-line reverse engineering framework: disassembler, debugger, hex editor and binary analysis in one tool.",
+  "licence": "LGPL-3.0 (most parts)",
+  "download_url": "https://www.radare.org/",
+  "similar_to": [
+   "IDA Pro",
+   "Binary Ninja"
+  ]
+ },
+ {
+  "id": "cutter",
+  "name": "Cutter",
+  "developer": "Rizin organization",
+  "repo": "rizinorg/cutter",
+  "type": "open-source",
+  "categories": [
+   "malware"
+  ],
+  "interface": "GUI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "A graphical reverse engineering platform built on Rizin, with graphs, decompiler views and a hex editor.",
+  "licence": "GPL-3.0",
+  "similar_to": [
+   "IDA Pro",
+   "Binary Ninja"
+  ]
+ },
+ {
+  "id": "clamav",
+  "name": "ClamAV",
+  "developer": "Cisco Talos",
+  "repo": "Cisco-Talos/clamav",
+  "type": "open-source",
+  "categories": [
+   "malware",
+   "incident-response"
+  ],
+  "interface": "CLI",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Open-source antivirus engine; scan a mounted image or folder to flag known malware and test custom signatures.",
+  "licence": "GPL-2.0",
+  "download_url": "https://www.clamav.net/"
+ },
+ {
+  "id": "yara-x",
+  "name": "YARA-X",
+  "developer": "VirusTotal (Victor M. Alvarez)",
+  "repo": "VirusTotal/yara-x",
+  "type": "open-source",
+  "categories": [
+   "malware",
+   "incident-response"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "A new version of YARA written in Rust, from the same developers. Read its \"differences with YARA\" page before moving old rules.",
+  "licence": "BSD-3-Clause",
+  "similar_to": [
+   "Magnet AXIOM Cyber",
+   "Belkasoft X"
+  ]
+ },
+ {
+  "id": "loki-rs",
+  "name": "LOKI-RS",
+  "developer": "Florian Roth",
+  "repo": "Neo23x0/Loki-RS",
+  "type": "open-source",
+  "categories": [
+   "incident-response"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Rust successor to the deprecated Python LOKI: scans files and processes with YARA rules and IOC lists.",
+  "licence": "GPL-3.0"
+ },
+ {
+  "id": "wazuh",
+  "name": "Wazuh",
+  "developer": "Wazuh Inc.",
+  "repo": "wazuh/wazuh",
+  "type": "open-source",
+  "categories": [
+   "logs",
+   "incident-response"
+  ],
+  "interface": "Web",
+  "level": "advanced",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "Open-source SIEM and XDR platform: agents on Windows, Linux and macOS send logs and file-integrity events to a central server.",
+  "licence": "GPL-2.0",
+  "download_url": "https://wazuh.com/",
+  "similar_to": [
+   "Splunk",
+   "IBM QRadar",
+   "Microsoft Sentinel"
+  ],
+  "licence_note": "The main licence is GPL-2.0, with an OpenSSL linking exception for some files."
+ },
+ {
+  "id": "misp",
+  "name": "MISP",
+  "developer": "MISP project (CIRCL and community)",
+  "repo": "MISP/MISP",
+  "type": "open-source",
+  "categories": [
+   "case-management"
+  ],
+  "interface": "Web",
+  "level": "advanced",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "Threat intelligence sharing platform for storing, correlating and exchanging indicators of compromise.",
+  "licence": "AGPL-3.0",
+  "download_url": "https://www.misp-project.org/"
+ },
+ {
+  "id": "thehive",
+  "name": "TheHive (Community Edition)",
+  "developer": "StrangeBee",
+  "url": "https://strangebee.com/thehive/",
+  "type": "free-closed",
+  "categories": [
+   "case-management",
+   "incident-response"
+  ],
+  "interface": "Web",
+  "level": "intermediate",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "Security incident case management. The current TheHive is a commercial product; the Community Edition is free for non-commercial use. The old open-source TheHive 3/4 repository is archived.",
+  "licence_note": "Community Edition: a free licence with limited capabilities (two users) for non-commercial use. TheHive 3 and 4 (open source) are no longer distributed and the GitHub repository is archived."
+ },
+ {
+  "id": "paladin",
+  "name": "PALADIN",
+  "developer": "SUMURI",
+  "url": "https://sumuri.com/paladin/",
+  "type": "free-closed",
+  "categories": [
+   "distros-practice",
+   "imaging"
+  ],
+  "interface": "GUI",
+  "level": "beginner",
+  "platforms": [
+   "Linux"
+  ],
+  "summary": "A bootable Linux forensic environment for imaging and triage. Offered as name-your-price; SUMURI says corporate users must donate at least $25.",
+  "licence_note": "Name-your-price download. SUMURI says corporate users must donate at least USD 25. PALADIN PRO is a paid edition (USD 99 on its page)."
+ },
+ {
+  "id": "scalpel",
+  "name": "Scalpel",
+  "developer": "Golden G. Richard III and Vico Marziale",
+  "repo": "sleuthkit/scalpel",
+  "type": "open-source",
+  "categories": [
+   "recovery"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Linux",
+   "macOS"
+  ],
+  "summary": "A fast header/footer file carver, originally based on Foremost, configured through a list of file signatures.",
+  "licence": "Apache-2.0",
+  "notice": {
+   "level": "unmaintained",
+   "text": "No code changes since March 2024. Based on the last code update recorded on 24 Nov 2026."
+  }
+ },
+ {
+  "id": "recuperabit",
+  "name": "RecuperaBit",
+  "developer": "Andrea Lazzarotto",
+  "repo": "Lazza/RecuperaBit",
+  "type": "open-source",
+  "categories": [
+   "recovery"
+  ],
+  "interface": "CLI",
+  "level": "advanced",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Reconstructs damaged NTFS file systems and recovers files and folder structure even when partition data is lost.",
+  "licence": "GPL-3.0",
+  "similar_to": [
+   "R-Studio"
+  ]
+ },
+ {
+  "id": "prowler",
+  "name": "Prowler (open-source CLI)",
+  "developer": "Prowler (Toni de la Fuente and community)",
+  "repo": "prowler-cloud/prowler",
+  "type": "open-source",
+  "categories": [
+   "cloud"
+  ],
+  "interface": "CLI",
+  "level": "intermediate",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Security assessment of AWS, Azure, Google Cloud, Kubernetes and Microsoft 365 configurations. Prowler Cloud is a separate paid service.",
+  "licence": "Apache-2.0",
+  "install": "pip install prowler",
+  "licence_note": "The open-source CLI is Apache-2.0; Prowler Cloud is a separate paid service."
+ },
+ {
+  "id": "maigret",
+  "name": "Maigret",
+  "developer": "soxoj and contributors",
+  "repo": "soxoj/maigret",
+  "type": "open-source",
+  "categories": [
+   "osint"
+  ],
+  "interface": "CLI",
+  "level": "beginner",
+  "platforms": [
+   "Windows",
+   "Linux",
+   "macOS"
+  ],
+  "summary": "Builds a profile of a username by checking thousands of websites, and writes HTML or PDF reports.",
+  "licence": "MIT",
+  "install": "pip install maigret"
+ }
+]

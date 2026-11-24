@@ -191,6 +191,7 @@ if WORKFLOWS:
     NAV.insert(1, ("workflows", "Workflows", "workflows.html"))
 if BASICS:
     NAV.insert(0, ("basics", "Basics", "basics.html"))
+NAV.insert(0, ("home", "Home", "index.html"))
 
 
 def ld(obj):
