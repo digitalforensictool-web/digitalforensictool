@@ -1,0 +1,145 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "physical-image",
+ "branch": "imaging",
+ "title": "What is a physical image?",
+ "quick": "A physical image is a sector-by-sector copy of a whole storage device, including deleted data, unused space and areas outside any file system. On phones, it means a raw copy of the device memory.",
+ "sections": [
+  {
+   "title": "What it contains",
+   "text": [
+    "A physical image copies the device from the first sector to the last, without looking at the file system. It includes files, deleted data that is not overwritten yet, slack space, unallocated space, partition tables and boot areas. SWGDE describes it as a bitstream copy of the device."
+   ]
+  },
+  {
+   "title": "Why it is useful",
+   "text": [
+    "Because nothing is skipped, an examiner can later recover deleted files, carve data and study the partition layout. It also keeps a full record of the device state at the time of copying. It needs as much storage as the device, unless the image is compressed, and it takes longer than copying files."
+   ]
+  },
+  {
+   "title": "Physical images of phones",
+   "text": [
+    "For phones, NIST describes physical methods as extracting an image of the memory itself, such as with hex dumping, JTAG or chip-off. These methods reach deeper data but are more technical and invasive. Encryption and locks often limit what the image contains, so a physical image of a modern phone may be unreadable without keys."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "Physical image and logical image",
+  "headers": [
+   "",
+   "Physical image",
+   "Logical image"
+  ],
+  "rows": [
+   [
+    "What is copied",
+    "Every sector of the device, in order",
+    "Selected files and folders, as the file system presents them"
+   ],
+   [
+    "Deleted and unused space",
+    "Included",
+    "Normally not included"
+   ],
+   [
+    "Partition and boot areas",
+    "Included",
+    "Not included"
+   ],
+   [
+    "File system view needed",
+    "No, the copy is below the file system",
+    "Yes, the tool reads through the file system"
+   ],
+   [
+    "Size and time",
+    "Large and slow",
+    "Smaller and faster"
+   ],
+   [
+    "Metadata such as times and permissions",
+    "Kept inside the raw data",
+    "May be lost unless the format stores it"
+   ],
+   [
+    "On a phone",
+    "Raw memory copy, harder and often limited by encryption",
+    "Data the phone gives through its interface, such as backups or app data"
+   ],
+   [
+    "Typical question it answers",
+    "What was ever on this device?",
+    "What files does the user see?"
+   ]
+  ]
+ },
+ "example": "A suspect's external hard drive is imaged sector by sector. Weeks later the examiner finds a deleted spreadsheet in unallocated space and a second, unused partition. A file copy would have shown neither.",
+ "mistakes": [
+  "Calling any copy made with an imaging tool a physical image, even if only some files were selected.",
+  "Believing a physical image of a phone always includes deleted data.",
+  "Imaging a partition and calling it a full physical image of the disk.",
+  "Ignoring that hidden areas such as HPA may not be copied.",
+  "Forgetting to verify with a hash."
+ ],
+ "terms": [
+  {
+   "term": "Bitstream copy",
+   "meaning": "A copy of every bit of data, in the same order as the source."
+  },
+  {
+   "term": "Unallocated space",
+   "meaning": "Space the file system does not currently use for a file. It may still hold old data."
+  },
+  {
+   "term": "Slack space",
+   "meaning": "Unused bytes at the end of the last block used by a file."
+  },
+  {
+   "term": "Chip-off",
+   "meaning": "Removing a memory chip from a device and reading it directly."
+  }
+ ],
+ "exam": [
+  {
+   "q": "How does a physical image differ from a logical image?",
+   "a": "A physical image copies every sector, including deleted and unused areas. A logical image copies chosen files and folders through the file system."
+  },
+  {
+   "q": "Why can a physical image on a phone still be hard to use?",
+   "a": "Phone storage is often encrypted, so the raw data may be unreadable without the right keys."
+  },
+  {
+   "q": "When would you pick a logical image anyway?",
+   "a": "When time or storage is limited, when only certain data is in scope, or when a physical copy is not possible. Follow your lab's procedure."
+  }
+ ],
+ "tools": [
+  "ftk-imager",
+  "guymager",
+  "dc3dd",
+  "libewf"
+ ],
+ "related": [
+  "logical-image",
+  "what-is-forensic-imaging",
+  "image-formats",
+  "mobile-extraction-levels",
+  "slack-and-unallocated-space"
+ ],
+ "learn": [
+  {
+   "label": "SWGDE: Computer Forensic Acquisitions (17-F-002)",
+   "url": "https://www.swgde.org/17-f-002"
+  },
+  {
+   "label": "NIST SP 800-101 Rev. 1: Guidelines on Mobile Device Forensics",
+   "url": "https://nvlpubs.nist.gov/nistpubs/specialpublications/nist.sp.800-101r1.pdf"
+  },
+  {
+   "label": "NIST SP 800-86: Integrating Forensic Techniques into Incident Response",
+   "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-86.pdf"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

@@ -1,0 +1,166 @@
+{
+ "reviewed": "2026-11-24",
+ "lead": "Guymager is a graphical imaging program for Linux. It copies a drive into a dd, E01 or AFF image while it hashes the data.",
+ "use_when": [
+  "You work on Linux or a forensic Linux live system and need to image a drive.",
+  "You want a graphical tool that is fast on computers with several processor cores.",
+  "You need an E01 image that other forensic tools can open."
+ ],
+ "features": [
+  {
+   "title": "Image formats",
+   "items": [
+    "Writes flat dd images",
+    "Writes EWF (E01) images",
+    "Writes AFF images",
+    "Can also clone one disk to another"
+   ]
+  },
+  {
+   "title": "Speed",
+   "items": [
+    "Uses separate threads for reading, hashing and writing",
+    "Uses a parallel compression engine that can use several processors",
+    "The number of compression threads can be set, for example CompressionThreads=4"
+   ]
+  },
+  {
+   "title": "Safety and records",
+   "items": [
+    "Calculates MD5 and SHA256 hashes",
+    "Shows local hard disks in light red and does not allow imaging them, to help avoid imaging the wrong disk",
+    "Writes an extended acquisition info file",
+    "Writes a log file, by default /var/log/guymager.log"
+   ]
+  },
+  {
+   "title": "Easy to set up",
+   "items": [
+    "Shows connected devices in a list with a rescan button",
+    "Acquisition and cloning dialogs have fields you can add, remove or fill with defaults such as date or serial number",
+    "The interface is available in several languages"
+   ]
+  }
+ ],
+ "formats": [
+  "dd (flat)",
+  "EWF (E01)",
+  "AFF"
+ ],
+ "requirements": "Linux only. Install it from the Debian or Ubuntu package sources, or use a forensic live system that includes it. It needs root rights, because normal users cannot read physical devices. The project suggests smartmontools and hdparm as extras.",
+ "steps": [
+  {
+   "title": "Install Guymager",
+   "text": "On Debian or Ubuntu, install the guymager package from the package sources. Many forensic live systems include it already, but check the version because live systems can carry an old one."
+  },
+  {
+   "title": "Protect the evidence drive",
+   "text": "Connect the drive through a hardware write blocker, or use a software blocker that you have tested. Guymager does not describe write protection of the source in its manual, so do not rely on the tool for this."
+  },
+  {
+   "title": "Start it as root",
+   "text": "Open a terminal and start the program with root rights. Press the rescan button after you connect a drive so that it appears in the list.",
+   "cmd": "sudo guymager"
+  },
+  {
+   "title": "Choose the source",
+   "text": "Find the evidence drive in the upper part of the window and check its model and serial number. Local hard disks are shown in light red and cannot be chosen. Start an acquisition for the evidence drive."
+  },
+  {
+   "title": "Fill in the acquisition dialog",
+   "text": "Choose the image format (dd, E01 or AFF), the destination folder and the file name. Enter case details such as case number, examiner and notes. Then confirm to start."
+  },
+  {
+   "title": "Watch the progress",
+   "text": "The lower part of the window shows details for the selected acquisition. Wait for it to finish. Large drives can take hours."
+  },
+  {
+   "title": "Keep the records",
+   "text": "Save the hash values, the info file and the log file together with the image. Store the image on a second drive and verify it later with another tool such as ewfverify."
+  }
+ ],
+ "options": [
+  {
+   "cmd": "log=/path/to/file.log",
+   "what": "Sets the log file. Can only be given on the command line. The default is /var/log/guymager.log."
+  },
+  {
+   "cmd": "cfg=template.cfg",
+   "what": "Creates a template configuration file. A normal value sets which configuration file is read."
+  },
+  {
+   "cmd": "CompressionThreads=4",
+   "what": "Sets the number of compression threads. Any configuration setting can be given on the command line and then overrides the files."
+  }
+ ],
+ "cases": [
+  {
+   "title": "Imaging a suspect hard disk on Linux",
+   "why": "A graphical wizard with hashing built in gives a repeatable way to make an E01 or dd image."
+  },
+  {
+   "title": "Forensic live system work",
+   "why": "It is included in many forensic Linux systems, so you can image a computer after booting from a USB stick."
+  },
+  {
+   "title": "Teaching labs",
+   "why": "The device list, red marking of local disks and clear dialogs help beginners avoid imaging the wrong disk."
+  },
+  {
+   "title": "Cloning a drive",
+   "why": "The cloning dialog copies one disk to another disk."
+  },
+  {
+   "title": "Large drives with many cores",
+   "why": "Threaded reading, hashing and compression can shorten the imaging time on a powerful computer."
+  }
+ ],
+ "strengths": [
+  "Free and open source, with packages for Debian and Ubuntu.",
+  "Writes three common image formats.",
+  "Pipelined, multi-threaded design with parallel compression.",
+  "Local disks are marked and blocked to reduce the risk of imaging the wrong one."
+ ],
+ "limits": [
+  "It runs on Linux only.",
+  "It needs root rights, so mistakes can be serious. Check the device and serial number every time.",
+  "The manual does not describe write protection of the source drive. Use a write blocker.",
+  "The author warns that EWF files are fragile. A read error, a missing segment or an unstable network drive can stop them from loading in some tools.",
+  "Building from source can need several rounds of fixing missing libraries.",
+  "Live systems may ship an old version.",
+  "Analysis is not included. You need another tool to examine the image."
+ ],
+ "works_with": [
+  {
+   "id": "libewf",
+   "note": "Verify, inspect and export E01 images"
+  },
+  {
+   "id": "linux-write-blocker",
+   "note": "Software write blocking on Linux"
+  },
+  {
+   "id": "caine",
+   "note": "A live system that includes imaging tools"
+  },
+  {
+   "id": "autopsy",
+   "note": "Analyse the finished image"
+  },
+  {
+   "id": "iped",
+   "note": "Process and search the image"
+  }
+ ],
+ "learn": [
+  {
+   "label": "Guymager project page",
+   "url": "https://guymager.sourceforge.io/"
+  },
+  {
+   "label": "Guymager manual page (Debian)",
+   "url": "https://manpages.debian.org/bookworm/guymager/guymager.1.en.html"
+  }
+ ],
+ "sources_note": "Written in our own words from the Guymager project's web page and manual page."
+}

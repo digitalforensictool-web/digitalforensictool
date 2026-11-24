@@ -1,0 +1,177 @@
+{
+ "reviewed": "2026-11-24",
+ "lead": "Software write blocking on Linux means telling the kernel to treat an evidence drive as read-only before anything can write to it. The Linux Write Blocker project adds a kernel patch and helper scripts for this, and the standard blockdev command and read-only mount options cover simpler cases.",
+ "use_when": [
+  "You work on Linux and need to read an evidence drive without changing it, and a software method fits your lab policy.",
+  "You want to learn how write blocking works inside the Linux kernel.",
+  "You need to mount a file system from evidence for a quick look, with the lowest chance of writes."
+ ],
+ "features": [
+  {
+   "title": "Kernel patch",
+   "items": [
+    "Changes the block layer so that write and discard requests to a device marked read-only are stopped",
+    "Works for requests from any kernel driver, without changing each storage driver",
+    "Does not need loop devices, which cannot easily stand in for devices that file systems use directly"
+   ]
+  },
+  {
+   "title": "Helper scripts",
+   "items": [
+    "01wrtblk_all marks all block devices except loop devices as read-only",
+    "wrtblk marks a named device and its parent as read-only, and wrtblk-disable sets them back to read-write",
+    "wrtblk-ioerr marks a device and its children as read-only, for faulty drives"
+   ]
+  },
+  {
+   "title": "udev rule",
+   "items": [
+    "01-forensic-readonly.rules marks new block devices read-only when they appear",
+    "It uses wrtblk, and wrtblk-ioerr for faulty drives",
+    "The paths in it are fixed, so review and adjust them before use"
+   ]
+  },
+  {
+   "title": "Standard Linux methods",
+   "items": [
+    "blockdev --setro marks a device read-only, and blockdev --getro shows 1 for read-only",
+    "mount -o ro mounts a file system read-only",
+    "ro,noload stops ext3 and ext4 from replaying the journal at mount"
+   ]
+  }
+ ],
+ "requirements": "A Linux computer and root rights. To use the project's patch you must apply it to a kernel source and compile your own kernel. The project says it was written for Linux 3.15.1 and works on some newer versions, and a version for Linux 4.10 exists. The blockdev command and mount options need no patch and are part of standard Linux.",
+ "steps": [
+  {
+   "title": "Read the project warnings",
+   "text": "Read the project's README before you start. It lists races, live system issues and bypass risks. Plan your method on paper and check your lab policy on software blockers."
+  },
+  {
+   "title": "Stop automatic mounting",
+   "text": "Turn off automatic mounting and the automatic start of RAID, fake RAID and LVM volumes before you connect evidence. The project warns that the system may write to a drive before you mark it read-only. On live systems, protect all devices early in the boot."
+  },
+  {
+   "title": "Set up the udev rule (optional)",
+   "text": "Local udev rules go in /etc/udev/rules.d and files must end in .rules. They are read in name order, so a name starting with 01 runs early. The project's 01-forensic-readonly.rules uses its helper scripts. Check the paths in it first."
+  },
+  {
+   "title": "Mark the whole drive read-only",
+   "text": "Connect the drive, find its device name, and set the parent device read-only. Marking only a partition is not enough, says the project. The device name below is only an example.",
+   "cmd": "sudo blockdev --setro /dev/sdb"
+  },
+  {
+   "title": "Check the flag",
+   "text": "Ask the system for the read-only status of the device. It prints 1 when the device is read-only. The manual notes that a file system that is already mounted read-write is not affected until it is remounted.",
+   "cmd": "sudo blockdev --getro /dev/sdb"
+  },
+  {
+   "title": "Test with a known drive",
+   "text": "Before real evidence, test your setup with a spare drive. Hash it, try to write to it as a test, and hash it again. The hash must not change. Record the test in your lab notes and repeat it when the system or kernel changes."
+  },
+  {
+   "title": "Image or mount read-only",
+   "text": "Make the image from the whole device with an imaging tool. If you must mount, add the read-only options. For ext3 and ext4 add noload, so the journal is not replayed. For ntfs-3g the project gives the ro option.",
+   "cmd": "sudo mount -o ro,noload /dev/sdb1 /mnt/evidence"
+  }
+ ],
+ "options": [
+  {
+   "cmd": "blockdev --setro /dev/sdX",
+   "what": "Marks a device read-only. Use the parent device, not only a partition."
+  },
+  {
+   "cmd": "blockdev --getro /dev/sdX",
+   "what": "Prints 1 if the device is read-only, 0 if not."
+  },
+  {
+   "cmd": "blockdev --setrw /dev/sdX",
+   "what": "Marks the device read-write again."
+  },
+  {
+   "cmd": "mount -o ro,noload",
+   "what": "Mounts read-only and, for ext3 and ext4, skips the journal replay that would write to the device."
+  },
+  {
+   "cmd": "wrtblk-ioerr",
+   "what": "Project helper that marks a device and its child devices read-only, for faulty drives."
+  }
+ ],
+ "cases": [
+  {
+   "title": "Labs without a hardware blocker",
+   "why": "Where policy allows it, a tested software method lets you read a drive on a Linux computer."
+  },
+  {
+   "title": "Forensic live systems",
+   "why": "Setting every device read-only early in the boot lowers the risk that the live system writes to evidence."
+  },
+  {
+   "title": "Mounting a file system for a quick look",
+   "why": "Read-only mount options with the device flag reduce the chance of writes such as journal replay."
+  },
+  {
+   "title": "Research and teaching",
+   "why": "The project includes discussion and validation work in its research and validation folders, so students can see how a blocker is tested."
+  }
+ ],
+ "strengths": [
+  "Free and open source, with code you can read.",
+  "Blocks at the block layer, so it does not rely on each file system driver to respect read-only.",
+  "The project reports no loss of speed after applying the patch.",
+  "The same ideas work in many Linux forensic tools and live systems."
+ ],
+ "limits": [
+  "Software blocking must be tested on your own system before you trust it. A passing test on one computer or kernel does not prove another one is safe.",
+  "It is not a substitute for a hardware write blocker where your policy, standards or court practice require one.",
+  "The project warns that any software blocker can be bypassed by another program. The patch does not cover SCSI commands sent through the SG_IO interface, which includes some hdparm and sg3_utils commands.",
+  "A race is possible: the system may write to a drive before you mark it read-only. Disable automatic mounting first.",
+  "A read-only mount is not enough on its own. For example, ext3 and ext4 still replay the journal unless you add noload.",
+  "The kernel patch needs a custom kernel build. The project's udev rule and scripts have fixed paths you must check.",
+  "Creating a partition can re-trigger the udev rule and mark the disk read-only again, which can disturb partitioning work."
+ ],
+ "works_with": [
+  {
+   "id": "util-linux",
+   "note": "Provides blockdev and mount"
+  },
+  {
+   "id": "guymager",
+   "note": "Image the protected drive"
+  },
+  {
+   "id": "dc3dd",
+   "note": "Image the protected drive"
+  },
+  {
+   "id": "ddrescue",
+   "note": "Image a failing protected drive"
+  },
+  {
+   "id": "caine",
+   "note": "A live system that includes write blocking"
+  }
+ ],
+ "learn": [
+  {
+   "label": "Linux Write Blocker project (GitHub)",
+   "url": "https://github.com/msuhanov/Linux-write-blocker"
+  },
+  {
+   "label": "blockdev manual page",
+   "url": "https://man7.org/linux/man-pages/man8/blockdev.8.html"
+  },
+  {
+   "label": "mount manual page",
+   "url": "https://man7.org/linux/man-pages/man8/mount.8.html"
+  },
+  {
+   "label": "Kernel documentation: ext4 mount options",
+   "url": "https://docs.kernel.org/admin-guide/ext4.html"
+  },
+  {
+   "label": "udev manual page",
+   "url": "https://man7.org/linux/man-pages/man7/udev.7.html"
+  }
+ ],
+ "sources_note": "Written in our own words from the Linux Write Blocker project's README and the Linux manual pages."
+}

@@ -1,0 +1,126 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "email-file-formats",
+ "branch": "cloud",
+ "title": "Email formats: PST, OST, MBOX, EML",
+ "quick": "Email is stored in different file types. PST and OST are Outlook files, MBOX holds many messages in one text file, and EML holds one message per file. Each needs the right tool to open it.",
+ "sections": [
+  {
+   "title": "PST and OST",
+   "text": [
+    "A PST is an Outlook Personal Folders file. It is a message store with folders, messages and attachments, and Microsoft publishes its structure (MS-PST). An OST is an offline copy of a mailbox kept by Outlook for a server account.",
+    "Both are binary files and cannot be read as plain text. Deleted items can sometimes still be found inside them."
+   ]
+  },
+  {
+   "title": "MBOX",
+   "text": [
+    "An MBOX file stores many messages back to back in one file. A line beginning with From and a space marks the start of each message (RFC 4155). The format has several variants, so tools may handle details differently.",
+    "Many mail programs on Linux and other systems use this format or a close variant."
+   ]
+  },
+  {
+   "title": "EML and MSG",
+   "text": [
+    "An EML file holds one message in the standard text format with its header. MSG is a Microsoft format used for single Outlook items. Attachments are stored inside the message."
+   ]
+  },
+  {
+   "title": "Working with them",
+   "text": [
+    "Keep the original file, hash it and work on a copy. Open it with a tool that reads the format, then export the items you need with their headers. Note which mailbox and account the file came from. Procedures and laws differ by country and agency, so follow your lab's own procedure."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "Common email file types",
+  "headers": [
+   "Type",
+   "Holds",
+   "Notes"
+  ],
+  "rows": [
+   [
+    "PST",
+    "Many items in folders",
+    "Outlook, binary"
+   ],
+   [
+    "OST",
+    "Offline mailbox copy",
+    "Outlook, binary"
+   ],
+   [
+    "MBOX",
+    "Many messages in one file",
+    "Text based, variants exist"
+   ],
+   [
+    "EML",
+    "One message",
+    "Text with header"
+   ]
+  ]
+ },
+ "mistakes": [
+  "Opening a PST in a way that changes the original file.",
+  "Assuming OST and PST are the same thing.",
+  "Looking only at the visible items and missing deleted ones.",
+  "Losing the headers when exporting messages."
+ ],
+ "terms": [
+  {
+   "term": "PST",
+   "meaning": "An Outlook file that stores folders and messages."
+  },
+  {
+   "term": "OST",
+   "meaning": "An offline cache of a mailbox."
+  },
+  {
+   "term": "MBOX",
+   "meaning": "A file that holds many messages in sequence."
+  },
+  {
+   "term": "EML",
+   "meaning": "A file that holds one email message."
+  },
+  {
+   "term": "Attachment",
+   "meaning": "A file sent inside an email."
+  }
+ ],
+ "exam": [
+  {
+   "q": "What is the difference between MBOX and EML?",
+   "a": "MBOX holds many messages in one file. EML holds a single message."
+  },
+  {
+   "q": "What is an OST?",
+   "a": "An offline copy of a mailbox that Outlook keeps for a server based account."
+  }
+ ],
+ "tools": [
+  "libpff",
+  "msg-extractor",
+  "mha",
+  "oletools"
+ ],
+ "related": [
+  "email-headers",
+  "hash-values",
+  "evidence-integrity",
+  "log-analysis-basics"
+ ],
+ "learn": [
+  {
+   "label": "Microsoft MS-PST: Outlook Personal Folders File Format",
+   "url": "https://learn.microsoft.com/en-us/openspecs/office_file_formats/ms-pst/141923d5-15ab-4ef1-a524-6dce75aae546"
+  },
+  {
+   "label": "RFC 4155: The application/mbox Media Type",
+   "url": "https://www.rfc-editor.org/rfc/rfc4155"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

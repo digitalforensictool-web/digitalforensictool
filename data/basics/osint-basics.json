@@ -1,0 +1,107 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "osint-basics",
+ "branch": "cloud",
+ "title": "Open-source intelligence basics",
+ "quick": "Open-source intelligence (OSINT) means collecting and analysing information from public sources, such as websites, social media, public records and maps, to answer an investigative question.",
+ "sections": [
+  {
+   "title": "What counts as open source",
+   "text": [
+    "Open source here means information anyone can lawfully access, not software. Examples are public social media posts, news, company registers, domain records, maps and archived web pages.",
+    "Information can be public and still be personal data, so handle it with care. Procedures and laws differ by country and agency, so follow your lab's own procedure."
+   ]
+  },
+  {
+   "title": "A simple workflow",
+   "text": [
+    "A clear method keeps results reliable."
+   ],
+   "points": [
+    "Define the question first.",
+    "Collect from several sources.",
+    "Save a copy with the date, time and address of the source.",
+    "Check each item against other sources.",
+    "Record how you found it so someone else can repeat it.",
+    "Report what is confirmed and what is only likely."
+   ]
+  },
+  {
+   "title": "Preserving online content",
+   "text": [
+    "Web pages and posts can change or vanish. Save screenshots, page copies and archive links, and note the time. Services like the Wayback Machine can show older versions of pages. Bellingcat keeps a toolkit of investigation tools, with notes on use and ethics.",
+    "Keep the original files and hash them like other evidence."
+   ]
+  },
+  {
+   "title": "Ethics and limits",
+   "text": [
+    "Use only public information and do not break terms or access controls. Do not create fake accounts or contact people unless your procedure and authority allow it. Online information can be false, so verify before you rely on it."
+   ]
+  }
+ ],
+ "mistakes": [
+  "Not saving the page with date and source address.",
+  "Trusting one source or an unverified account.",
+  "Mixing up two people with the same name.",
+  "Using methods that go beyond what is allowed.",
+  "Not recording the steps, so the work cannot be repeated."
+ ],
+ "terms": [
+  {
+   "term": "OSINT",
+   "meaning": "Intelligence made from public information."
+  },
+  {
+   "term": "Verification",
+   "meaning": "Checking that information is true using other sources."
+  },
+  {
+   "term": "Archive",
+   "meaning": "A saved copy of a web page at a certain time."
+  },
+  {
+   "term": "Attribution",
+   "meaning": "Linking an account or action to a person or group."
+  },
+  {
+   "term": "Footprint",
+   "meaning": "Public traces that a person or organisation leaves online."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Why save the date and address of a source?",
+   "a": "Online content can change or disappear, so the record shows what was seen and when."
+  },
+  {
+   "q": "Is public information always safe to use?",
+   "a": "No. It can be false or personal, so verify it and follow the rules of your lab and country."
+  }
+ ],
+ "tools": [
+  "osint-framework",
+  "bellingcat-toolkit",
+  "wayback-machine",
+  "spiderfoot",
+  "maltego-ce",
+  "sherlock"
+ ],
+ "related": [
+  "email-headers",
+  "image-and-video-metadata",
+  "chain-of-custody",
+  "forensic-report-basics"
+ ],
+ "learn": [
+  {
+   "label": "Bellingcat Online Investigations Toolkit announcement",
+   "url": "https://www.bellingcat.com/resources/2024/09/24/bellingcat-online-investigations-toolkit/"
+  },
+  {
+   "label": "NIST SP 800-86: Guide to Integrating Forensic Techniques into Incident Response",
+   "url": "https://csrc.nist.gov/pubs/sp/800/86/final"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

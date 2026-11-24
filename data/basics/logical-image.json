@@ -1,0 +1,141 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "logical-image",
+ "branch": "imaging",
+ "title": "What is a logical image?",
+ "quick": "A logical image copies files and folders as the file system or device presents them, not every sector. The term is used for file-level copies on a computer and for logical extractions from a phone.",
+ "sections": [
+  {
+   "title": "Meaning on a computer",
+   "text": [
+    "On a computer, a logical image is a file-level copy. The tool reads selected folders or a whole volume through the file system and stores the files in a container. FTK Imager can save a custom content image in the AD1 format. SWGDE says metadata such as times and permissions can be lost in logical copies, so choose a format that keeps them or collect them separately."
+   ]
+  },
+  {
+   "title": "Meaning on a phone",
+   "text": [
+    "On a phone, a logical extraction means the tool asks the device for its data over a cable or wireless link, and the device returns it. Typical results are backups, app data and media. NIST describes it as copying logical storage objects such as directories and files. Deleted data is normally not obtained this way."
+   ]
+  },
+  {
+   "title": "Strengths and limits",
+   "text": [
+    "A logical image is smaller, faster and often easier to read. It is useful when the scope is limited or the volume is very large. It does not contain unallocated space, slack space or most deleted data, so some evidence cannot be found. Procedures and laws differ by country and agency, so follow your lab's own procedure on the scope."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "Logical image and physical image",
+  "headers": [
+   "",
+   "Logical image",
+   "Physical image"
+  ],
+  "rows": [
+   [
+    "What is copied",
+    "Files and folders the file system or device shows",
+    "Every sector of the device"
+   ],
+   [
+    "Deleted data and free space",
+    "Normally not included",
+    "Included"
+   ],
+   [
+    "Computer meaning",
+    "File-level copy, for example an AD1 container",
+    "Full disk or volume image, for example E01 or raw"
+   ],
+   [
+    "Phone meaning",
+    "Logical extraction: the device hands over its data",
+    "Raw copy of device memory"
+   ],
+   [
+    "Size and time",
+    "Smaller and faster",
+    "Larger and slower"
+   ],
+   [
+    "Main risk",
+    "Missing evidence that is not in a normal file",
+    "Time, storage and sometimes encrypted data"
+   ],
+   [
+    "Hash check",
+    "Hash each file, or hash the container",
+    "Hash the whole image"
+   ]
+  ]
+ },
+ "example": "A company has a 20 TB file server and the warrant covers only the finance folders. The examiner makes a logical image of those folders to an AD1 container, records the hashes and the file list. Later, on a phone from the same case, she runs a logical extraction to get messages and photos.",
+ "mistakes": [
+  "Using a logical image when deleted data is needed.",
+  "Not noting that file times may change in a logical copy.",
+  "Mixing up a phone's logical extraction with a file-level copy of a computer.",
+  "Calling a copy of one partition a physical image.",
+  "Not recording which folders were included."
+ ],
+ "terms": [
+  {
+   "term": "Logical acquisition",
+   "meaning": "Copying files and folders through the file system or the device interface."
+  },
+  {
+   "term": "AD1",
+   "meaning": "A file-level image format created by AccessData software such as FTK Imager."
+  },
+  {
+   "term": "Container",
+   "meaning": "A file that holds copied data together with information about it."
+  },
+  {
+   "term": "Metadata",
+   "meaning": "Data about data, such as file times and permissions."
+  }
+ ],
+ "exam": [
+  {
+   "q": "What does 'logical image' mean on a computer and on a phone?",
+   "a": "On a computer it is a file-level copy. On a phone it is a logical extraction, where the device provides its data through its interface."
+  },
+  {
+   "q": "What can a logical image miss?",
+   "a": "Unallocated space, slack space and most deleted data, and sometimes file metadata."
+  },
+  {
+   "q": "When is a logical image suitable?",
+   "a": "When the scope is limited, the data volume is huge, or a physical copy is not possible. The choice follows lab procedure."
+  }
+ ],
+ "tools": [
+  "ftk-imager",
+  "adb",
+  "ufade",
+  "libimobiledevice",
+  "aleapp"
+ ],
+ "related": [
+  "physical-image",
+  "targeted-collection",
+  "what-is-forensic-imaging",
+  "mobile-extraction-levels",
+  "image-formats"
+ ],
+ "learn": [
+  {
+   "label": "SWGDE: Computer Forensic Acquisitions (17-F-002)",
+   "url": "https://www.swgde.org/17-f-002"
+  },
+  {
+   "label": "NIST SP 800-101 Rev. 1: Guidelines on Mobile Device Forensics",
+   "url": "https://nvlpubs.nist.gov/nistpubs/specialpublications/nist.sp.800-101r1.pdf"
+  },
+  {
+   "label": "PRONOM: AccessData Custom Content Image (AD1)",
+   "url": "https://pronom.nationalarchives.gov.uk/fmt/842"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

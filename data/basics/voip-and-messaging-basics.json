@@ -1,0 +1,121 @@
+{
+ "id": "voip-and-messaging-basics",
+ "title": "VoIP and secure messaging basics",
+ "quick": "VoIP carries calls over the internet and messaging apps send chats through servers. Content is often encrypted, so examiners usually rely on app data on devices, backups and network records.",
+ "sections": [
+  {
+   "title": "VoIP in short",
+   "text": [
+    "Voice over IP (VoIP) turns speech into data packets sent over a network. NIST notes it has advantages but also many security issues. Systems use signalling protocols to set up calls and other protocols to carry the audio.",
+    "Evidence can include call records on the provider side, device logs and captured traffic."
+   ]
+  },
+  {
+   "title": "Secure messaging",
+   "text": [
+    "Many messaging apps use end-to-end encryption. This means only the sending and receiving devices can read the message. The provider's server carries it but cannot read it. For an examiner, this means reading the chat from a network capture is usually not possible.",
+    "Instead, the messages are often found on the device itself, in app databases, and in backups. Some backups are encrypted and need a key."
+   ]
+  },
+  {
+   "title": "What examiners use",
+   "text": [
+    "Look at app databases, media folders, notifications, contact lists and backup files. Network captures can still show that an app was used, when, and which servers it contacted, even without content. Provider records may hold account and connection details and are obtained through legal process.",
+    "Disappearing messages and deleted chats may reduce what is left. Procedures and laws differ by country and agency, follow your lab's own procedure."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "Where evidence may be found",
+  "headers": [
+   "Source",
+   "Message content",
+   "Metadata"
+  ],
+  "rows": [
+   [
+    "Device app data",
+    "Often yes",
+    "Yes"
+   ],
+   [
+    "Backup files",
+    "Sometimes",
+    "Yes"
+   ],
+   [
+    "Network capture",
+    "No, if encrypted",
+    "Yes, such as timing and servers"
+   ],
+   [
+    "Provider records",
+    "Rarely",
+    "Often"
+   ]
+  ]
+ },
+ "example": "An examiner is asked whether a phone was used for a messaging app on a certain day. The network capture shows connections to the app's servers, but the content is unreadable. The phone image holds the app database, which gives the chat entries and their times.",
+ "mistakes": [
+  "Expecting to read encrypted chats from a packet capture.",
+  "Forgetting the app database and backups on the device.",
+  "Not noting the app version, which changes where data is stored.",
+  "Ignoring metadata such as timing and contacts.",
+  "Assuming deleted messages are always gone."
+ ],
+ "terms": [
+  {
+   "term": "VoIP",
+   "meaning": "Voice over IP, calls carried as data over a network."
+  },
+  {
+   "term": "End-to-end encryption",
+   "meaning": "Encryption where only the two endpoints can read the message."
+  },
+  {
+   "term": "Signalling",
+   "meaning": "Messages that set up and end a call."
+  },
+  {
+   "term": "Metadata",
+   "meaning": "Data about a message, such as time and parties."
+  },
+  {
+   "term": "Backup",
+   "meaning": "A saved copy of app or phone data."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Why can end-to-end encrypted chats not be read from network traffic?",
+   "a": "Only the endpoint devices hold the keys, so the content in transit is unreadable."
+  },
+  {
+   "q": "Where do examiners usually find chats then?",
+   "a": "In app databases on the device, and in backups."
+  }
+ ],
+ "tools": [
+  "wireshark",
+  "whatsapp-chat-exporter",
+  "wa-crypt-tools",
+  "signalbackup-tools",
+  "aleapp",
+  "ileapp"
+ ],
+ "related": [
+  "tls-and-encrypted-traffic",
+  "mobile-artifacts",
+  "packet-capture-pcap",
+  "sqlite-in-mobile-forensics"
+ ],
+ "learn": [
+  {
+   "label": "NIST SP 800-58: Security considerations for VoIP systems",
+   "url": "https://csrc.nist.gov/pubs/sp/800/58/final"
+  }
+ ],
+ "reviewed": "2026-11-24",
+ "branch": "specialist",
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

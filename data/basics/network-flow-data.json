@@ -1,0 +1,103 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "network-flow-data",
+ "branch": "network",
+ "title": "Flow data and network logs",
+ "quick": "Flow data is a summary of network conversations, such as source, destination, ports, times and byte counts, without the content. It is small to store, so it is often kept for longer than full packet captures.",
+ "sections": [
+  {
+   "title": "What a flow is",
+   "text": [
+    "A flow is a set of packets that cross one point in the network during a time window and share common properties, such as the same addresses and ports. This is the idea used by the IPFIX standard (RFC 7011).",
+    "A flow record usually holds the addresses, ports, protocol, start and end time, and the number of packets and bytes."
+   ]
+  },
+  {
+   "title": "How flow data is produced",
+   "text": [
+    "A device such as a router, called the exporter, builds the records and sends them to a collector, which stores them. Common formats are NetFlow and IPFIX. Tools like Zeek create similar connection logs from captured traffic.",
+    "Flow data does not contain the payload, so it cannot show what was said, only who talked, when and how much."
+   ]
+  },
+  {
+   "title": "Other network logs",
+   "text": [
+    "Flow records are one part of the picture. Other logs add detail and often answer different questions."
+   ],
+   "points": [
+    "DNS logs: which names were looked up.",
+    "DHCP logs: which device had which address at a time.",
+    "Proxy and firewall logs: allowed and blocked connections.",
+    "VPN and authentication logs: which account connected."
+   ]
+  },
+  {
+   "title": "Using it in an investigation",
+   "text": [
+    "Flows help to find the start and end of an event, large transfers and unusual destinations. Combine them with DHCP logs to link an address to a device at that time. Check clocks and time zones. Procedures and laws differ by country and agency, so follow your lab's own procedure."
+   ]
+  }
+ ],
+ "mistakes": [
+  "Expecting flow data to show file contents.",
+  "Ignoring that IP addresses change, so a DHCP log is needed.",
+  "Mixing time zones between sources.",
+  "Assuming a missing flow means no traffic, when sampling or limits may have dropped it."
+ ],
+ "terms": [
+  {
+   "term": "Flow",
+   "meaning": "A summary of packets in one conversation."
+  },
+  {
+   "term": "Exporter",
+   "meaning": "A device that creates flow records and sends them out."
+  },
+  {
+   "term": "Collector",
+   "meaning": "A system that receives and stores flow records."
+  },
+  {
+   "term": "NetFlow",
+   "meaning": "A flow export format that began on Cisco devices."
+  },
+  {
+   "term": "IPFIX",
+   "meaning": "An Internet standard for exporting flow information."
+  }
+ ],
+ "exam": [
+  {
+   "q": "What does flow data not contain?",
+   "a": "It does not contain the packet payload, so the content of communication is not available."
+  },
+  {
+   "q": "Why keep flow data if full capture exists?",
+   "a": "Flow data is much smaller, so it can be stored for months while full captures are kept only for a short time."
+  }
+ ],
+ "tools": [
+  "zeek",
+  "sof-elk",
+  "zui",
+  "wireshark",
+  "security-onion"
+ ],
+ "related": [
+  "network-forensics-overview",
+  "packet-capture-pcap",
+  "log-analysis-basics",
+  "tcp-ip-dns-basics"
+ ],
+ "learn": [
+  {
+   "label": "RFC 7011: IPFIX Protocol Specification",
+   "url": "https://www.rfc-editor.org/rfc/rfc7011"
+  },
+  {
+   "label": "NIST SP 800-92: Guide to Computer Security Log Management",
+   "url": "https://csrc.nist.gov/pubs/sp/800/92/final"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

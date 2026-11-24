@@ -1,0 +1,147 @@
+{
+ "reviewed": "2026-11-24",
+ "lead": "Open Windows registry hive files in a window and browse their keys and values. Registry Explorer is a free program by Eric Zimmerman.",
+ "use_when": [
+  "You want to look through a registry hive from a case by hand, key by key.",
+  "You need to open several hives at the same time and search across them.",
+  "You want to read a hive that is locked on a live system."
+ ],
+ "features": [
+  {
+   "title": "Browsing",
+   "items": [
+    "Shows hives as a tree of keys with their values",
+    "Opens more than one hive at the same time",
+    "Handles locked files, such as hives from a running system"
+   ]
+  },
+  {
+   "title": "Searching and marking",
+   "items": [
+    "A search function for keys and values",
+    "Bookmarks to jump back to keys you care about; the manual lists them as a topic"
+   ]
+  },
+  {
+   "title": "Plugins",
+   "items": [
+    "The project lists plugin support as a feature",
+    "Plugins are an extension point you can add to the program"
+   ]
+  },
+  {
+   "title": "Transaction logs",
+   "items": [
+    "Registry Explorer and RECmd ship with rla.exe, which other projects name as a way to merge transaction logs into a hive",
+    "Merge the logs before you open a hive, so recent changes are not missed"
+   ]
+  }
+ ],
+ "formats": [
+  "Registry hive files (NTUSER.DAT, SYSTEM, SOFTWARE, SAM, SECURITY and similar)"
+ ],
+ "requirements": "Windows with the .NET 10 Desktop runtime or newer. The current download is for .NET 10 only. The project's page says to unzip with 7-Zip or WinRAR and not to run it from Program Files unless you run as administrator. It is free, but it is not open source.",
+ "steps": [
+  {
+   "title": "Install the runtime",
+   "text": "Install the .NET 10 Desktop runtime from Microsoft if your computer does not have it. This is a window-based program, so the Desktop runtime is needed."
+  },
+  {
+   "title": "Download and unzip",
+   "text": "Download RegistryExplorer.zip from Eric Zimmerman's tools page. Unzip it with 7-Zip or WinRAR into a folder such as C:\\Tools\\RegistryExplorer, not into Program Files."
+  },
+  {
+   "title": "Prepare your hives",
+   "text": "Copy the hive files out of your evidence image into a case folder. Work on copies. Keep any transaction log files that sit next to the hive."
+  },
+  {
+   "title": "Start the program",
+   "text": "Run the program from its folder. If a security warning appears, check the digital signature. The project says all its software is signed, and a valid signature from Eric Zimmerman means antivirus alerts are false."
+  },
+  {
+   "title": "Load a hive",
+   "text": "Use the program's menu to load a hive file from your case folder. The manual has a chapter on loading hives. You can load more than one hive and switch between them."
+  },
+  {
+   "title": "Browse and search",
+   "text": "Expand keys in the tree and read the values on the right. Use the search to find a key name, a value name or a piece of data. Add a bookmark for each key you want to report."
+  },
+  {
+   "title": "Write down what you found",
+   "text": "Record the hive name, the full key path, the value and the key's last write time in your notes. The key path and time are what another examiner needs to verify the finding."
+  }
+ ],
+ "cases": [
+  {
+   "title": "Checking one specific key",
+   "why": "When a report or another tool points to a key, you can open the hive and see the key and its neighbours in context."
+  },
+  {
+   "title": "User activity review",
+   "why": "NTUSER.DAT holds per-user settings and history. Browsing it shows what a user account did."
+  },
+  {
+   "title": "Software and persistence",
+   "why": "Looking through the SOFTWARE and NTUSER hives shows installed programs and entries that start programs automatically."
+  },
+  {
+   "title": "Comparing hives",
+   "why": "With several hives open at once you can check the same key in the hive from different dates or machines."
+  },
+  {
+   "title": "Teaching and practice",
+   "why": "A visual tree helps students learn how the registry is laid out before they move to command-line parsers."
+  }
+ ],
+ "strengths": [
+  "Free to download and use.",
+  "Several hives can be open at once, with search across them.",
+  "Can read locked hive files, according to the project.",
+  "Has a command-line sibling, RECmd, for scripted work."
+ ],
+ "limits": [
+  "Free but closed source. The source code is not published.",
+  "Windows only, and the current build needs .NET 10.",
+  "The project page links no tool-specific manual. The well-known manual is a PDF kept on third-party sites, so check its date.",
+  "It shows data one key at a time. For a fast report of many artifacts, a command-line tool is quicker.",
+  "A hive copied without its transaction logs can be missing recent changes.",
+  "Beginners can get lost in a large hive. Start from a known key path."
+ ],
+ "works_with": [
+  {
+   "id": "regripper",
+   "note": "Run a text report over the same hives"
+  },
+  {
+   "id": "ez-tools",
+   "note": "The suite this tool belongs to, with RECmd"
+  },
+  {
+   "id": "kape",
+   "note": "Collects hives from a system"
+  },
+  {
+   "id": "ftk-imager",
+   "note": "Export hives from an image"
+  },
+  {
+   "id": "timeline-explorer",
+   "note": "View CSV output from the command-line tools"
+  }
+ ],
+ "learn": [
+  {
+   "label": "Eric Zimmerman's tools page (download and notes)",
+   "url": "https://ericzimmerman.github.io/"
+  },
+  {
+   "label": "Eric Zimmerman's documentation page",
+   "url": "https://ericzimmerman.github.io/documentation/"
+  },
+  {
+   "label": "RegRipper README (explains transaction log handling)",
+   "url": "https://github.com/keydet89/RegRipper3.0"
+  }
+ ],
+ "sources_note": "Written in our own words from the Registry Explorer project's documentation."
+}

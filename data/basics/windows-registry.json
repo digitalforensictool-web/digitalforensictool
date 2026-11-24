@@ -1,0 +1,91 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "windows-registry",
+ "branch": "windows",
+ "title": "The Windows registry",
+ "quick": "The registry is a database where Windows and programs store settings. It also keeps traces of user activity, so examiners read it to learn what happened on a computer.",
+ "sections": [
+  {
+   "title": "What the registry is",
+   "text": [
+    "The registry is a tree of keys and values, a bit like folders and files. Windows, drivers and programs save their settings in it. Because so much happens through these settings, the registry also records many traces of what users and programs did.",
+    "The registry is not one file. It is built from several files called hives. When Windows runs, it shows them together as one tree."
+   ]
+  },
+  {
+   "title": "Main hives and where they live",
+   "text": [
+    "The system hives SYSTEM, SOFTWARE, SAM and SECURITY are stored in the folder C:\\Windows\\System32\\Config. Each user also has a personal hive called NTUSER.DAT in the user profile folder. A second per-user file, UsrClass.dat, sits under the user's AppData\\Local\\Microsoft\\Windows folder."
+   ],
+   "points": [
+    "SYSTEM: hardware, services, USB history, computer name.",
+    "SOFTWARE: installed programs and Windows settings.",
+    "SAM: local user accounts.",
+    "NTUSER.DAT: one user's settings, recent files, run history.",
+    "Amcache.hve: a separate hive that lists programs seen on the system."
+   ]
+  },
+  {
+   "title": "Reading it as evidence",
+   "text": [
+    "Each key stores a last write time, which is the last time that key or one of its values changed. Individual values do not have their own time. Examiners copy the hive files from an image and open them in a registry viewer. A live system keeps the hives locked, so work from an image or use a collection tool.",
+    "Hives also come with transaction log files (.LOG1 and .LOG2). Recent changes may sit only in these logs, so keep them with the hive and use a tool that can apply them."
+   ]
+  }
+ ],
+ "example": "An examiner receives a disk image from a staff laptop. She exports NTUSER.DAT and the SYSTEM hive with their log files. In a registry viewer she can then see which user ran which recent programs and which USB drives were connected.",
+ "mistakes": [
+  "Browsing the registry of the live suspect computer instead of working from a copy.",
+  "Forgetting to copy the transaction log files with the hive.",
+  "Treating a key's last write time as the time of a value inside it.",
+  "Looking only at the user hive and ignoring the system hives, or the other way round."
+ ],
+ "terms": [
+  {
+   "term": "Hive",
+   "meaning": "A registry file on disk that holds one part of the registry tree."
+  },
+  {
+   "term": "Key",
+   "meaning": "A folder-like entry in the registry that can hold values and other keys."
+  },
+  {
+   "term": "Value",
+   "meaning": "A named piece of data stored inside a key."
+  },
+  {
+   "term": "Last write time",
+   "meaning": "The time a key was last changed."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Where are user-specific registry settings stored?",
+   "a": "In the NTUSER.DAT file in the user's profile folder, and UsrClass.dat for some shell data."
+  },
+  {
+   "q": "Does a value have its own timestamp?",
+   "a": "No. Only the key has a last write time, so you cannot tell which value in the key changed."
+  }
+ ],
+ "tools": [
+  "registry-explorer",
+  "regripper",
+  "ez-tools",
+  "kape",
+  "autopsy"
+ ],
+ "related": [
+  "program-execution-artifacts",
+  "usb-device-artifacts",
+  "lnk-jumplists-shellbags",
+  "windows-event-logs"
+ ],
+ "learn": [
+  {
+   "label": "Microsoft: Registry hives",
+   "url": "https://learn.microsoft.com/en-us/windows/win32/sysinfo/registry-hives"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

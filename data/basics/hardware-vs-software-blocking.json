@@ -1,0 +1,133 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "hardware-vs-software-blocking",
+ "branch": "imaging",
+ "title": "Hardware and software write blocking",
+ "quick": "Hardware blockers are separate devices that filter commands to the drive. Software blockers are settings inside the operating system. Both aim to stop writes, but they differ in how they work and how they can fail.",
+ "sections": [
+  {
+   "title": "Hardware write blocking",
+   "text": [
+    "A hardware blocker is a small device with a port for the evidence drive and a port for the computer. It looks at the commands passing through. Writes are stopped before they reach the drive. Because it works outside the examiner's operating system, it does not depend on the settings of that system."
+   ]
+  },
+  {
+   "title": "Software write blocking",
+   "text": [
+    "A software blocker is a program or a setting that tells the operating system not to write to attached storage. Examples are a read-only mount in Linux or a Windows setting for USB storage. NIST describes a software blocker as something loaded before the media is connected. If the setting is wrong or forgotten, writes can happen."
+   ],
+   "points": [
+    "Linux can mark a block device read-only before it is mounted.",
+    "Some forensic Linux boot disks keep drives read-only by default.",
+    "Windows settings may apply only to some types of device.",
+    "Always test with a spare drive first."
+   ]
+  },
+  {
+   "title": "Choosing between them",
+   "text": [
+    "Many labs use hardware blockers for casework because they are simple to check and separate from the examiner's system. Software blocking is useful for teaching, for work in the field or as a second layer. Some tools are mounted read-only only after connection, which may be too late. Follow your lab's procedure and your tool test results."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "Hardware and software blocking",
+  "headers": [
+   "",
+   "Hardware blocker",
+   "Software blocker"
+  ],
+  "rows": [
+   [
+    "How it works",
+    "Separate device filters commands",
+    "Operating system or boot setting"
+   ],
+   [
+    "Depends on examiner OS",
+    "No",
+    "Yes"
+   ],
+   [
+    "Common failure",
+    "Faulty unit or wrong mode",
+    "Setting forgotten or applied too late"
+   ],
+   [
+    "Cost",
+    "Purchase needed",
+    "Often free"
+   ],
+   [
+    "Typical use",
+    "Routine lab casework",
+    "Teaching, field work, extra safety layer"
+   ]
+  ]
+ },
+ "example": "A student has no hardware blocker at home. She boots a forensic Linux live disk that keeps drives read-only, then checks the drive status before connecting a practice USB stick. She repeats the check each time she starts the system.",
+ "mistakes": [
+  "Assuming a software setting works for every device type.",
+  "Setting read-only after the drive is already connected.",
+  "Skipping the test because the device is new.",
+  "Mixing up read-only on a file system with block-level write protection.",
+  "Not noting in the log which method was used."
+ ],
+ "terms": [
+  {
+   "term": "Hardware write blocker",
+   "meaning": "A separate device that blocks write commands between a drive and a computer."
+  },
+  {
+   "term": "Software write blocker",
+   "meaning": "A program or operating system setting that stops writes to a drive."
+  },
+  {
+   "term": "Block device",
+   "meaning": "A storage device that the operating system reads and writes in blocks, such as a disk."
+  },
+  {
+   "term": "Mount",
+   "meaning": "Making a file system available to the operating system so files can be opened."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Name one advantage of a hardware blocker.",
+   "a": "It works outside the examiner's operating system, so it does not depend on that system's settings."
+  },
+  {
+   "q": "What is a risk of software blocking?",
+   "a": "The setting may be forgotten, wrong or applied too late, so writes can reach the drive. It must be tested before use."
+  },
+  {
+   "q": "Is either method acceptable?",
+   "a": "Standards allow both, but procedures differ by agency. Follow your lab's procedure and test the method you use."
+  }
+ ],
+ "tools": [
+  "linux-write-blocker",
+  "util-linux",
+  "caine"
+ ],
+ "related": [
+  "write-blocker",
+  "what-is-forensic-imaging",
+  "good-practice-principles"
+ ],
+ "learn": [
+  {
+   "label": "NIST SP 800-86: Integrating Forensic Techniques into Incident Response",
+   "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-86.pdf"
+  },
+  {
+   "label": "SWGDE: Computer Forensic Acquisitions (17-F-002)",
+   "url": "https://www.swgde.org/17-f-002"
+  },
+  {
+   "label": "NIST CFTT: Computer Forensics Tool Testing Program",
+   "url": "https://www.nist.gov/itl/ssd/software-quality-group/computer-forensics-tool-testing-program-cftt"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

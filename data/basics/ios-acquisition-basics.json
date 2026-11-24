@@ -1,0 +1,103 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "ios-acquisition-basics",
+ "branch": "mobile",
+ "title": "iOS acquisition basics",
+ "quick": "iOS acquisition is the process of copying data from an iPhone or iPad. Apple devices are strongly encrypted, so what you can get depends on the lock state, iOS version and the method.",
+ "sections": [
+  {
+   "title": "What makes iOS different",
+   "text": [
+    "Apple designs the hardware, the system and the encryption together. Data is protected by keys linked to the passcode and to the device. Because of this, methods that worked on one iOS version often do not work on the next."
+   ]
+  },
+  {
+   "title": "Common approaches",
+   "text": [
+    "A common method is a backup made over USB with a trusted computer. An unencrypted backup holds less data than an encrypted one, so ask whether a backup password is set. Other methods get a file system copy, but these depend on the device and software version. Cloud backups may also hold data, if legal authority allows access."
+   ],
+   "points": [
+    "Local backup: data Apple allows to be backed up.",
+    "File system copy: more data, needs special access.",
+    "Cloud data: held by the provider, needs proper authority."
+   ]
+  },
+  {
+   "title": "Trust and pairing",
+   "text": [
+    "A phone that was unlocked and trusted a computer may keep a pairing record. These records can expire. A restart can also change what is available."
+   ]
+  },
+  {
+   "title": "Documentation",
+   "text": [
+    "Record the iOS version, model, lock state and every step taken. Procedures and laws differ by country and agency, so follow your lab's own procedure."
+   ]
+  }
+ ],
+ "example": "A student makes an encrypted backup of their own test iPhone with a free open-source tool. They note the backup password, check the file size and hash, then parse the backup with iLEAPP and compare the results with the phone.",
+ "mistakes": [
+  "Restarting an iPhone and moving it into a state with less accessible data.",
+  "Ignoring a backup password that blocks data.",
+  "Using a tool that does not support the iOS version.",
+  "Forgetting that Find My or remote wipe may act if the phone is online.",
+  "Skipping the cloud backup question."
+ ],
+ "terms": [
+  {
+   "term": "Backup",
+   "meaning": "A copy of device data made through a supported function."
+  },
+  {
+   "term": "Pairing record",
+   "meaning": "Data that lets a computer talk to a phone that trusted it."
+  },
+  {
+   "term": "Data protection",
+   "meaning": "Apple's system that ties file keys to the passcode and device."
+  },
+  {
+   "term": "Trust prompt",
+   "meaning": "The question the phone asks before it allows a computer to connect."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Why is an encrypted iOS backup useful?",
+   "a": "It often contains more data, such as saved passwords and health data, than an unencrypted backup, but it needs the backup password."
+  },
+  {
+   "q": "Why does a restart matter on an iPhone?",
+   "a": "After a restart, some data stays locked until the passcode is entered, so less may be reachable."
+  }
+ ],
+ "tools": [
+  "libimobiledevice",
+  "pymobiledevice3",
+  "ufade",
+  "ileapp",
+  "mvt",
+  "apollo"
+ ],
+ "related": [
+  "mobile-extraction-levels",
+  "mobile-encryption-and-locks",
+  "mobile-isolation",
+  "mobile-artifacts"
+ ],
+ "learn": [
+  {
+   "label": "NIST SP 800-101 Rev. 1: Guidelines on Mobile Device Forensics",
+   "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-101r1.pdf"
+  },
+  {
+   "label": "SWGDE: Mobile device evidence collection, preservation, handling and acquisition",
+   "url": "https://www.swgde.org/documents/published-complete-listing/18-f-003-2/"
+  },
+  {
+   "label": "Apple Platform Security: Data Protection classes",
+   "url": "https://support.apple.com/guide/security/secb010e978a/web"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

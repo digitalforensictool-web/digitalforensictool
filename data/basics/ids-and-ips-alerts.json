@@ -1,0 +1,129 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "ids-and-ips-alerts",
+ "branch": "network",
+ "title": "IDS and IPS alerts",
+ "quick": "An IDS watches network traffic and raises an alert when something matches a rule or looks unusual. An IPS sits in the path of traffic and can also block it. An alert is a lead to check, not proof.",
+ "sections": [
+  {
+   "title": "IDS and IPS",
+   "text": [
+    "An intrusion detection system (IDS) detects and reports. An intrusion prevention system (IPS) works inline with traffic and can stop it as well (NIST SP 800-94). Suricata is one engine that can run in both ways and can also process saved PCAP files.",
+    "Systems can be network based or placed on a host."
+   ]
+  },
+  {
+   "title": "How alerts are made",
+   "text": [
+    "Most alerts come from rules that describe a pattern in traffic. Some systems also look for unusual behaviour. When a rule matches, the system writes an alert with the time, addresses, ports and the rule name.",
+    "Good practice is to keep the matching packets or the rule details so the alert can be explained later."
+   ]
+  },
+  {
+   "title": "Reading an alert",
+   "text": [
+    "Check these points before trusting an alert."
+   ],
+   "points": [
+    "Which rule fired and what does it look for.",
+    "The time and the clock source.",
+    "Source and destination, and whether address translation hides the real host.",
+    "Whether traffic was blocked or only seen.",
+    "Other logs from the same time."
+   ]
+  },
+  {
+   "title": "False positives and negatives",
+   "text": [
+    "A false positive is an alert for harmless traffic. A false negative is a missed attack. Both happen. Rules also age, so replaying a capture with new rules can give new results. Record the rule set version used."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "IDS and IPS",
+  "headers": [
+   "",
+   "IDS",
+   "IPS"
+  ],
+  "rows": [
+   [
+    "Position",
+    "Watches a copy of traffic",
+    "Sits in the traffic path"
+   ],
+   [
+    "Action",
+    "Alerts",
+    "Alerts and can block"
+   ],
+   [
+    "Risk",
+    "Misses are only reported",
+    "A wrong block can stop normal traffic"
+   ]
+  ]
+ },
+ "mistakes": [
+  "Treating an alert as proof of an attack.",
+  "Ignoring false positives and not checking the packets.",
+  "Not noting the rule set version or time source.",
+  "Forgetting that encrypted traffic limits what rules can see."
+ ],
+ "terms": [
+  {
+   "term": "IDS",
+   "meaning": "A system that detects suspicious traffic and reports it."
+  },
+  {
+   "term": "IPS",
+   "meaning": "A system that can also block suspicious traffic."
+  },
+  {
+   "term": "Signature",
+   "meaning": "A rule that matches a known pattern."
+  },
+  {
+   "term": "False positive",
+   "meaning": "An alert raised for harmless activity."
+  },
+  {
+   "term": "Sensor",
+   "meaning": "A device or program that watches traffic and sends alerts."
+  }
+ ],
+ "exam": [
+  {
+   "q": "What is the main difference between IDS and IPS?",
+   "a": "An IDS detects and alerts. An IPS is placed inline and can also block traffic."
+  },
+  {
+   "q": "Why can you not rely on an alert alone?",
+   "a": "Rules can fire on harmless traffic, so the alert must be checked against packets and other logs."
+  }
+ ],
+ "tools": [
+  "suricata",
+  "zeek",
+  "security-onion",
+  "wireshark",
+  "zui"
+ ],
+ "related": [
+  "network-forensics-overview",
+  "packet-capture-pcap",
+  "log-analysis-basics",
+  "network-flow-data"
+ ],
+ "learn": [
+  {
+   "label": "NIST SP 800-94: Guide to Intrusion Detection and Prevention Systems",
+   "url": "https://csrc.nist.gov/pubs/sp/800/94/final"
+  },
+  {
+   "label": "Suricata documentation: What is Suricata",
+   "url": "https://docs.suricata.io/en/latest/what-is-suricata.html"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

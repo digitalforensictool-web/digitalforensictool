@@ -1,0 +1,89 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "sqlite-wal-and-deleted-records",
+ "branch": "mobile",
+ "title": "SQLite WAL files and deleted records",
+ "quick": "A SQLite WAL file holds recent changes before they are merged into the main database. Deleted records can also stay inside the database file. Both can contain evidence that a normal viewer does not show.",
+ "sections": [
+  {
+   "title": "What the WAL is",
+   "text": [
+    "WAL means write-ahead log. In this mode SQLite adds changes to a separate file with a -wal ending instead of changing the main file straight away. A -shm file helps readers find pages quickly. Later a checkpoint copies the changes back into the main database."
+   ]
+  },
+  {
+   "title": "Why it matters for evidence",
+   "text": [
+    "If a phone is stopped before a checkpoint, new records may exist only in the -wal file. If you copy only the main file, you lose them. If you open the database in a normal tool, the tool may run a checkpoint and change the files. So copy the database, the -wal and the -shm together, and work on a copy."
+   ],
+   "points": [
+    "Keep the files together.",
+    "Hash them before you work.",
+    "Prefer tools that read the files without merging them."
+   ]
+  },
+  {
+   "title": "Deleted records",
+   "text": [
+    "When a row is deleted, SQLite often does not erase it at once. Pages that are no longer used go on a freelist. Space inside a page can also hold left-over cell data. This data stays until it is reused. Recovery is not certain. Vacuum operations and later writes can remove it."
+   ]
+  }
+ ],
+ "example": "A practice chat database is copied with its -wal file. Opened alone, the main file shows 100 messages. With the WAL read as well, 12 newer messages appear. The student notes both counts, hashes the files and works only on copies.",
+ "mistakes": [
+  "Copying only the .db file and leaving out the -wal file.",
+  "Opening the original in a tool that checkpoints the log.",
+  "Assuming deleted rows can always be recovered.",
+  "Treating recovered fragments as complete records.",
+  "Forgetting that a vacuum can remove old data."
+ ],
+ "terms": [
+  {
+   "term": "WAL",
+   "meaning": "Write-ahead log, a file that holds recent changes before they are merged."
+  },
+  {
+   "term": "Checkpoint",
+   "meaning": "The step that copies WAL changes into the main database."
+  },
+  {
+   "term": "Freelist",
+   "meaning": "A list of database pages that are not currently in use."
+  },
+  {
+   "term": "Carving",
+   "meaning": "Recovering data by looking for its structure in raw bytes."
+  }
+ ],
+ "exam": [
+  {
+   "q": "What is a WAL file and why does it matter?",
+   "a": "It holds recent changes not yet merged into the main database, so it may contain records that exist nowhere else."
+  },
+  {
+   "q": "Why can deleted SQLite data sometimes be recovered?",
+   "a": "The engine often leaves deleted data in freelist pages or unused space until it is overwritten."
+  }
+ ],
+ "tools": [
+  "fqlite",
+  "db4s"
+ ],
+ "related": [
+  "sqlite-in-mobile-forensics",
+  "mobile-artifacts",
+  "deleted-files-and-recovery",
+  "file-carving"
+ ],
+ "learn": [
+  {
+   "label": "SQLite: Write-ahead logging",
+   "url": "https://www.sqlite.org/wal.html"
+  },
+  {
+   "label": "Forensic Focus: Forensic analysis of SQLite databases",
+   "url": "https://www.forensicfocus.com/articles/forensic-analysis-of-sqlite-databases-free-lists-write-ahead-log-unallocated-space-and-carving/"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

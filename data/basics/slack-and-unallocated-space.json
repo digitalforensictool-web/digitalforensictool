@@ -1,0 +1,118 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "slack-and-unallocated-space",
+ "branch": "disk",
+ "title": "Slack space and unallocated space",
+ "quick": "Slack space is the unused part of the last cluster a file occupies. Unallocated space is space the file system sees as free. Both can still hold old data.",
+ "sections": [
+  {
+   "title": "File slack",
+   "text": [
+    "Files are stored in whole clusters. If a file does not fill its last cluster, the rest is slack. For example, a 7 KB file in a 32 KB cluster leaves 25 KB of slack. That space may hold leftovers of an older file.",
+    "Slack is often split into two parts. RAM slack is the rest of the last sector after the file ends. Drive slack is the sectors after that to the end of the cluster. Modern systems often fill the first part with zeros."
+   ]
+  },
+  {
+   "title": "Unallocated space",
+   "text": [
+    "Unallocated space is the area not assigned to any file now. It includes the clusters of deleted files. It can hold whole files, parts of files or text fragments, and it is a main source for carving and keyword search.",
+    "This space is not visible in a normal file listing. A logical copy does not include it. A full bit-for-bit image does, so use that when this data may matter."
+   ]
+  },
+  {
+   "title": "Why it matters",
+   "text": [
+    "Old data in slack or unallocated space can show that a file existed, even if the file itself is gone. Results need care. Fragments may be partial and hard to link to one user or time.",
+    "Tools search it by keyword or carve it. Procedures differ by lab, so follow your lab's own procedure for reporting such findings."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "Slack and unallocated space",
+  "headers": [
+   "",
+   "File slack",
+   "Unallocated space"
+  ],
+  "rows": [
+   [
+    "Where",
+    "End of the last cluster of a file",
+    "Clusters not assigned to any file"
+   ],
+   [
+    "Size",
+    "Small, per file",
+    "Can be very large"
+   ],
+   [
+    "Typical content",
+    "Pieces of earlier data",
+    "Deleted files and fragments"
+   ],
+   [
+    "Seen in normal listing",
+    "No",
+    "No"
+   ]
+  ]
+ },
+ "example": "A short text file sits in a large cluster. After the file ends, the examiner sees readable words from an older email in the rest of the cluster. This is slack. The same words may also appear in unallocated space, where the old file was stored.",
+ "mistakes": [
+  "Using a logical copy that leaves out slack and unallocated space.",
+  "Treating a text fragment as a complete document.",
+  "Assuming slack always contains data.",
+  "Not noting which cluster the fragment came from."
+ ],
+ "terms": [
+  {
+   "term": "Cluster",
+   "meaning": "A group of sectors allocated as one unit."
+  },
+  {
+   "term": "Slack space",
+   "meaning": "Unused space at the end of the last cluster of a file."
+  },
+  {
+   "term": "Unallocated space",
+   "meaning": "Space that the file system marks as free."
+  },
+  {
+   "term": "Bit-for-bit image",
+   "meaning": "A full copy of every sector, including free and slack space."
+  }
+ ],
+ "exam": [
+  {
+   "q": "What is the difference between slack and unallocated space?",
+   "a": "Slack is leftover space inside an allocated cluster at the end of a file. Unallocated space is whole clusters that no file uses now."
+  },
+  {
+   "q": "Why use a full image instead of a logical copy?",
+   "a": "A logical copy only has the files. A full image also keeps slack and unallocated space, where old data may sit."
+  }
+ ],
+ "tools": [
+  "sleuthkit",
+  "autopsy",
+  "bulk-extractor",
+  "hxd"
+ ],
+ "related": [
+  "deleted-files-and-recovery",
+  "file-carving",
+  "file-systems-overview",
+  "physical-image"
+ ],
+ "learn": [
+  {
+   "label": "NIST glossary: slack space",
+   "url": "https://csrc.nist.gov/glossary/term/slack_space"
+  },
+  {
+   "label": "NIST SP 800-86: Guide to Integrating Forensic Techniques into Incident Response",
+   "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-86.pdf"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

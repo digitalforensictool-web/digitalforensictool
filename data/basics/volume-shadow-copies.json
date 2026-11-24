@@ -1,0 +1,83 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "volume-shadow-copies",
+ "branch": "windows",
+ "title": "Volume shadow copies",
+ "quick": "A volume shadow copy is a snapshot of a Windows volume made by the system. Old snapshots can still hold earlier versions of files, including some that were later changed or deleted.",
+ "sections": [
+  {
+   "title": "What it is",
+   "text": [
+    "The Volume Shadow Copy Service, called VSS, is a Windows framework that makes a snapshot of a volume while programs keep running. It is used for backups and for System Restore points and Previous Versions. It is available from Windows XP onward, but how it is set up differs by version."
+   ]
+  },
+  {
+   "title": "Why examiners care",
+   "text": [
+    "A snapshot is a view of the volume at an earlier time. It may contain registry hives, event logs or user files as they were then. This helps when evidence was altered or deleted after the snapshot was taken. You can compare the snapshot with the current state to see what changed."
+   ]
+  },
+  {
+   "title": "Working with them",
+   "text": [
+    "Snapshots are stored in the System Volume Information folder on the volume. In a forensic image they can be listed and mounted with image-mounting tools and then read like another drive. They can be removed by Windows when space is low, by the user, or by malware, so they might not exist.",
+    "Always work on a copy and note the creation date of each snapshot."
+   ]
+  }
+ ],
+ "example": "A user deletes a spreadsheet after a dispute. It is gone from the live drive. The examiner mounts the drive's older snapshot from two weeks earlier and finds the file as it was then.",
+ "mistakes": [
+  "Not checking whether shadow copies exist before closing the case.",
+  "Mixing up files from a snapshot with the current file system.",
+  "Forgetting that snapshot dates show when it was made, not when a file was changed.",
+  "Assuming that every system has them. They can be turned off."
+ ],
+ "terms": [
+  {
+   "term": "VSS",
+   "meaning": "Volume Shadow Copy Service, the Windows snapshot framework."
+  },
+  {
+   "term": "Snapshot",
+   "meaning": "A copy of a volume as it was at one moment."
+  },
+  {
+   "term": "Restore point",
+   "meaning": "A saved system state that a user can go back to."
+  },
+  {
+   "term": "System Volume Information",
+   "meaning": "A protected folder where Windows stores restore data."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Why can a shadow copy help recover deleted evidence?",
+   "a": "It holds the volume as it was earlier, so a file deleted later may still be there."
+  },
+  {
+   "q": "What can remove shadow copies?",
+   "a": "Disk space cleanup, a user command, or malware."
+  }
+ ],
+ "tools": [
+  "arsenal-image-mounter",
+  "kape",
+  "autopsy",
+  "ez-tools",
+  "sleuthkit"
+ ],
+ "related": [
+  "windows-registry",
+  "deleted-files-and-recovery",
+  "file-systems-overview",
+  "anti-forensics"
+ ],
+ "learn": [
+  {
+   "label": "Microsoft: Volume Shadow Copy Service",
+   "url": "https://learn.microsoft.com/en-us/windows/win32/vss/volume-shadow-copy-service-portal"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

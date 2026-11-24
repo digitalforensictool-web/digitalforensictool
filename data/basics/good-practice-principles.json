@@ -1,0 +1,123 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "good-practice-principles",
+ "branch": "foundations",
+ "title": "Good practice principles for digital evidence",
+ "quick": "Good practice guides say: do not change original data, use competent people, keep a record of every action so others can repeat it, and make sure someone is responsible for following the rules.",
+ "sections": [
+  {
+   "title": "The ACPO principles",
+   "text": [
+    "The ACPO Good Practice Guide for Digital Evidence, written for police in the UK, sets out four principles. In short: do not alter data that may be relied on later. Anyone who must access original data must be competent and able to explain their actions. Keep a record of all processes so that an independent person could repeat them. The person in charge of the investigation is responsible for following the law and these principles."
+   ]
+  },
+  {
+   "title": "What this means in daily work",
+   "text": [
+    "Use write blockers and work on copies. Train people before they touch evidence. Write notes as you go. Use tested tools and written procedures."
+   ],
+   "points": [
+    "Protect the original",
+    "Be competent",
+    "Keep an audit trail",
+    "Know who is responsible"
+   ]
+  },
+  {
+   "title": "RFC 3227 collection guidance",
+   "text": [
+    "RFC 3227 adds practical points. Collect first and analyse later. Work on a copy, not on the evidence. Keep dated, timed notes. Note whether times come from the system clock or from UTC. Be ready to explain every action later, perhaps years after."
+   ]
+  },
+  {
+   "title": "When the original must change",
+   "text": [
+    "Sometimes the original must be touched, for example when collecting RAM. The ACPO principles allow this only when the person is competent and can explain the effect. Record what you did and why. Laws and procedures differ by country and agency, so follow your lab's own procedure."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "Principle and everyday action",
+  "headers": [
+   "Principle",
+   "Everyday action"
+  ],
+  "rows": [
+   [
+    "Do not alter original data",
+    "Write blocker, work on image copies"
+   ],
+   [
+    "Competence",
+    "Training and supervised practice"
+   ],
+   [
+    "Audit trail",
+    "Notes, logs, custody forms"
+   ],
+   [
+    "Responsibility",
+    "Named lead who checks the procedure was followed"
+   ]
+  ]
+ },
+ "example": "A lab receives a laptop. The examiner uses a write blocker, images the drive, records hashes and tool versions, and signs the notes. A second examiner reads the notes, follows them on a test image and gets the same result.",
+ "mistakes": [
+  "Treating the principles as a legal checklist instead of a guide to procedure.",
+  "Skipping notes on small tasks.",
+  "Letting untrained people handle original media.",
+  "Not knowing who is the responsible lead in the case.",
+  "Forgetting that the principles allow necessary changes only if they are explained."
+ ],
+ "terms": [
+  {
+   "term": "ACPO",
+   "meaning": "The Association of Chief Police Officers in the UK, which published the original guide."
+  },
+  {
+   "term": "Audit trail",
+   "meaning": "A preserved record of the actions taken."
+  },
+  {
+   "term": "Competence",
+   "meaning": "Having the skill and knowledge to do a task and explain it."
+  },
+  {
+   "term": "Repeatability",
+   "meaning": "The ability for another person to follow the steps and get the same result."
+  }
+ ],
+ "exam": [
+  {
+   "q": "State the idea of the third ACPO principle.",
+   "a": "A record of all processes applied to digital evidence must be kept, so an independent person can repeat them and reach the same result."
+  },
+  {
+   "q": "When may original data be accessed?",
+   "a": "Only by a competent person who can explain why and what the effect of the actions is."
+  }
+ ],
+ "tools": [
+  "ftk-imager",
+  "autopsy",
+  "sift"
+ ],
+ "related": [
+  "forensic-process",
+  "evidence-integrity",
+  "chain-of-custody",
+  "forensic-report-basics",
+  "order-of-volatility"
+ ],
+ "learn": [
+  {
+   "label": "ACPO Good Practice Guide for Digital Evidence (v5)",
+   "url": "https://www.digital-detective.net/digital-forensics-documents/ACPO_Good_Practice_Guide_for_Digital_Evidence_v5.pdf"
+  },
+  {
+   "label": "RFC 3227: Guidelines for Evidence Collection and Archiving",
+   "url": "https://datatracker.ietf.org/doc/html/rfc3227"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

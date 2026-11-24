@@ -1,0 +1,133 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "live-vs-dead-acquisition",
+ "branch": "imaging",
+ "title": "Live and dead acquisition",
+ "quick": "A live acquisition collects data from a running system. A dead acquisition copies a powered-off system's storage, usually through a write blocker. The choice depends on volatile data, encryption and risk.",
+ "sections": [
+  {
+   "title": "Dead acquisition",
+   "text": [
+    "In a dead acquisition the computer is off. The drive is removed or the machine is booted from trusted media, and a write blocker is used. This is the simplest case to repeat and check, because the data is not changing."
+   ]
+  },
+  {
+   "title": "Live acquisition",
+   "text": [
+    "In a live acquisition the system is running. The examiner may collect memory, network connections and running processes, and may copy files or an unlocked encrypted volume. SWGDE notes it may be the only chance to get data from an encrypted system. Every action changes the system a little, so it must be documented."
+   ]
+  },
+  {
+   "title": "Order and risks",
+   "text": [
+    "The order of volatility says to collect the most short-lived data first. SWGDE lists running processes, network connections, memory and keys before storage. NIST says a full physical image of a live system is not recommended, because the data keeps changing and the result cannot be validated. Cutting power can lose volatile data and may corrupt open files."
+   ]
+  },
+  {
+   "title": "Choosing",
+   "text": [
+    "Think about whether the machine is on, whether disk encryption is active, and what is at stake. Photograph the screen and write down the time before acting. Procedures and laws differ by country and agency, so follow your lab's own procedure."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "Live and dead acquisition",
+  "headers": [
+   "",
+   "Live acquisition",
+   "Dead acquisition"
+  ],
+  "rows": [
+   [
+    "System state",
+    "Running",
+    "Powered off"
+   ],
+   [
+    "Volatile data (RAM, connections)",
+    "Can be collected",
+    "Lost"
+   ],
+   [
+    "Encrypted volumes",
+    "May be read while unlocked",
+    "Locked, may need keys"
+   ],
+   [
+    "Changes to evidence",
+    "Some, unavoidable",
+    "Minimal with a write blocker"
+   ],
+   [
+    "Repeatable",
+    "Difficult",
+    "Easier"
+   ]
+  ]
+ },
+ "example": "An examiner arrives at a desk where the computer is on and a disk encryption product is running. She photographs the screen, captures memory, then copies the needed files from the unlocked volume. She notes each step with times, before the machine is shut down and the drive is imaged.",
+ "mistakes": [
+  "Pulling the plug without thinking about encryption or volatile data.",
+  "Running tools from the suspect's own disk instead of trusted media.",
+  "Not writing down each action and the time.",
+  "Taking a physical image of a running disk and expecting a clean hash.",
+  "Forgetting that live work changes file times."
+ ],
+ "terms": [
+  {
+   "term": "Volatile data",
+   "meaning": "Data that is lost when power is removed, such as RAM."
+  },
+  {
+   "term": "Smear",
+   "meaning": "Inconsistency in a capture because data changed while it was being copied."
+  },
+  {
+   "term": "Trusted binaries",
+   "meaning": "Known clean programs run from controlled media."
+  },
+  {
+   "term": "Order of volatility",
+   "meaning": "The rule to collect the most short-lived data first."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Why might you do a live acquisition?",
+   "a": "To capture volatile data such as memory, or to reach data in an encrypted volume that is unlocked while the system runs."
+  },
+  {
+   "q": "What is the main risk of live acquisition?",
+   "a": "The examiner's actions change the system, and the data may change during copying, so everything must be documented."
+  },
+  {
+   "q": "Why is a dead acquisition easier to verify?",
+   "a": "The data is not changing, so source and image hashes can be compared."
+  }
+ ],
+ "tools": [
+  "ftk-imager",
+  "winpmem",
+  "kape",
+  "velociraptor",
+  "magnet-response"
+ ],
+ "related": [
+  "order-of-volatility",
+  "ram-acquisition",
+  "full-disk-encryption",
+  "what-is-forensic-imaging",
+  "targeted-collection"
+ ],
+ "learn": [
+  {
+   "label": "SWGDE: Computer Forensic Acquisitions (17-F-002)",
+   "url": "https://www.swgde.org/17-f-002"
+  },
+  {
+   "label": "NIST SP 800-86: Integrating Forensic Techniques into Incident Response",
+   "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-86.pdf"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

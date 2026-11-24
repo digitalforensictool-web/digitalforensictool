@@ -1,0 +1,145 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "mobile-extraction-levels",
+ "branch": "mobile",
+ "title": "Extraction types: logical, file system, physical",
+ "quick": "Mobile extraction ranges from manual screen capture to logical, file system and physical methods, including chip-off and JTAG. Each level reaches more data but is harder and riskier.",
+ "sections": [
+  {
+   "title": "The idea of levels",
+   "text": [
+    "NIST describes a tool classification system with levels that grow more technical, more invasive and more expensive. Lower levels are easy and safe but see less. Higher levels can reach deleted data but need more skill. Real tools and labs may name these methods differently, so check what a method really reaches."
+   ]
+  },
+  {
+   "title": "What each method reaches",
+   "text": [
+    "Manual extraction means reading the screen and photographing it. A logical extraction asks the phone's operating system for data, for example through a backup. A file system extraction gets the files and folders, often including databases and some deleted remnants. A physical extraction reads the storage itself, which can include unallocated space."
+   ],
+   "points": [
+    "Manual: only what is visible, no deleted data.",
+    "Logical: data the OS agrees to give, such as contacts and messages.",
+    "File system: app databases and system files, plus some leftovers.",
+    "Physical: raw storage, but modern encryption often blocks useful results."
+   ]
+  },
+  {
+   "title": "Chip-off and JTAG",
+   "text": [
+    "JTAG connects to test points on the circuit board and reads memory through them. Chip-off removes the memory chip and reads it directly. Both are invasive, can damage the device, and need advanced training. On devices that encrypt data with keys tied to the hardware, a raw chip image may be unreadable."
+   ]
+  },
+  {
+   "title": "Choosing a method",
+   "text": [
+    "Start with the least invasive method that answers the question, and move up only if needed. Document why. Procedures and laws differ by country and agency, so follow your lab's own procedure."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "Mobile extraction methods compared",
+  "headers": [
+   "Method",
+   "What it reaches",
+   "Deleted data",
+   "Risk and effort"
+  ],
+  "rows": [
+   [
+    "Manual",
+    "Only what you can see on the screen",
+    "No",
+    "Low risk, slow, depends on the user interface"
+   ],
+   [
+    "Logical",
+    "Data the operating system returns, such as backups, contacts, messages",
+    "Rarely",
+    "Low risk, common"
+   ],
+   [
+    "File system",
+    "Files and folders, often app databases",
+    "Some remnants",
+    "Medium, may need special access"
+   ],
+   [
+    "Physical",
+    "Raw storage of the device",
+    "Possible",
+    "High, encryption often limits it"
+   ],
+   [
+    "Chip-off or JTAG",
+    "Memory read through the board or the removed chip",
+    "Possible",
+    "Very high, can damage the device"
+   ]
+  ]
+ },
+ "example": "An examiner gets a phone with unknown content. A logical extraction gives contacts and messages. A file system extraction adds app databases. The case needs deleted chats, so the examiner checks whether a more invasive method is possible and records the reason.",
+ "mistakes": [
+  "Thinking a physical extraction is always possible or always better. On encrypted phones it often is not.",
+  "Calling any USB extraction logical without checking what was really copied.",
+  "Skipping a logical extraction and going straight to an invasive method.",
+  "Not recording which method and tool version was used.",
+  "Forgetting that chip-off can destroy the device."
+ ],
+ "terms": [
+  {
+   "term": "Logical extraction",
+   "meaning": "Data requested from the operating system through supported interfaces."
+  },
+  {
+   "term": "File system extraction",
+   "meaning": "A copy of the files and folders held on the device."
+  },
+  {
+   "term": "Physical extraction",
+   "meaning": "A copy of the raw storage of the device."
+  },
+  {
+   "term": "JTAG",
+   "meaning": "A method that reads memory through test points on the circuit board."
+  },
+  {
+   "term": "Chip-off",
+   "meaning": "Removing the memory chip to read it directly."
+  }
+ ],
+ "exam": [
+  {
+   "q": "What is the difference between logical and physical extraction?",
+   "a": "Logical asks the operating system for data and gets what it offers. Physical reads the storage itself, so it can include deleted and unallocated data, but it may be encrypted."
+  },
+  {
+   "q": "Why do examiners avoid chip-off unless needed?",
+   "a": "It is invasive, can damage the device, takes advanced skill and may give encrypted data that cannot be read."
+  }
+ ],
+ "tools": [
+  "adb",
+  "libimobiledevice",
+  "ufade",
+  "aleapp",
+  "ileapp"
+ ],
+ "related": [
+  "mobile-forensics-overview",
+  "android-acquisition-basics",
+  "ios-acquisition-basics",
+  "logical-image",
+  "physical-image"
+ ],
+ "learn": [
+  {
+   "label": "NIST SP 800-101 Rev. 1: Guidelines on Mobile Device Forensics",
+   "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-101r1.pdf"
+  },
+  {
+   "label": "SWGDE: Mobile device evidence collection, preservation, handling and acquisition",
+   "url": "https://www.swgde.org/documents/published-complete-listing/18-f-003-2/"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

@@ -1,0 +1,103 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "tls-and-encrypted-traffic",
+ "branch": "network",
+ "title": "Encrypted traffic: what can still be seen",
+ "quick": "Encrypted traffic hides its content, but an investigator can often still see who connected to whom, when, how much data moved, and sometimes the server name used in the handshake.",
+ "sections": [
+  {
+   "title": "What TLS does",
+   "text": [
+    "TLS is the protocol behind HTTPS and many other secure services. It protects the content of a connection from being read or changed on the way. In TLS 1.3, all handshake messages after the ServerHello are encrypted (RFC 8446).",
+    "Without the keys, you cannot read the content, so a capture shows only protected data."
+   ]
+  },
+  {
+   "title": "What stays visible",
+   "text": [
+    "Even when content is hidden, other details remain. These are called metadata."
+   ],
+   "points": [
+    "Source and destination addresses and ports.",
+    "Time, duration and amount of data.",
+    "DNS lookups made before the connection.",
+    "The first message of the handshake, the ClientHello, which is not encrypted and can carry a server name.",
+    "Certificate details in older TLS versions."
+   ]
+  },
+  {
+   "title": "Reading the content",
+   "text": [
+    "Content can be read only if you have the session keys or the private key in a case where that is possible. Some clients can write session keys to a file for testing, and Wireshark can use such a file. Modern key exchange often makes a stolen server key alone not enough.",
+    "Other routes are the endpoint itself, such as memory or logs on the device. Procedures and laws differ by country and agency, so follow your lab's own procedure."
+   ]
+  },
+  {
+   "title": "Practical advice",
+   "text": [
+    "Do not try to break encryption in routine cases. Use the metadata, the endpoint evidence and other logs together. Document what you could and could not see."
+   ]
+  }
+ ],
+ "mistakes": [
+  "Thinking that encrypted means nothing can be learned.",
+  "Believing the server name is always hidden.",
+  "Expecting to decrypt a capture without session keys.",
+  "Forgetting to look at the endpoint, which may hold the keys or the data."
+ ],
+ "terms": [
+  {
+   "term": "TLS",
+   "meaning": "A protocol that encrypts data between a client and a server."
+  },
+  {
+   "term": "Handshake",
+   "meaning": "The first exchange where keys are agreed."
+  },
+  {
+   "term": "Metadata",
+   "meaning": "Details about traffic, such as time and size, not the content."
+  },
+  {
+   "term": "SNI",
+   "meaning": "A field in the handshake that names the server the client wants."
+  },
+  {
+   "term": "Session key",
+   "meaning": "A temporary key used to encrypt one connection."
+  }
+ ],
+ "exam": [
+  {
+   "q": "What can you learn from encrypted traffic?",
+   "a": "Addresses, ports, time, volume, DNS lookups and often the server name from the handshake."
+  },
+  {
+   "q": "Why is the endpoint important?",
+   "a": "The endpoint holds the data before encryption and may hold keys, so its evidence can show what network capture cannot."
+  }
+ ],
+ "tools": [
+  "wireshark",
+  "zeek",
+  "tcpdump",
+  "networkminer"
+ ],
+ "related": [
+  "packet-capture-pcap",
+  "tcp-ip-dns-basics",
+  "network-flow-data",
+  "mobile-encryption-and-locks"
+ ],
+ "learn": [
+  {
+   "label": "RFC 8446: TLS Protocol Version 1.3",
+   "url": "https://www.rfc-editor.org/rfc/rfc8446"
+  },
+  {
+   "label": "Wireshark User's Guide: Introduction",
+   "url": "https://www.wireshark.org/docs/wsug_html_chunked/ChapterIntroduction.html"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

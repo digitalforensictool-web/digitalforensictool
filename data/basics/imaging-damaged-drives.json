@@ -1,0 +1,102 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "imaging-damaged-drives",
+ "branch": "imaging",
+ "title": "Imaging a failing or damaged drive",
+ "quick": "A failing drive may have unreadable sectors. A tool such as ddrescue reads the good areas first, logs the bad ones, and retries later, so as much data as possible is saved with little extra stress.",
+ "sections": [
+  {
+   "title": "Why it is different",
+   "text": [
+    "A normal imager may stop or repeat reads when it hits a bad sector. Repeated reads can stress a weak drive and shorten its life. The aim is to get the readable data safely, and to record exactly what could not be read."
+   ]
+  },
+  {
+   "title": "How a rescue tool works",
+   "text": [
+    "GNU ddrescue copies from one device to another and, on errors, tries to save readable parts first. It skips unreadable areas and does not write zeros for them. It keeps a mapfile that tracks what has been rescued, so you can stop, resume and retry only the missing blocks."
+   ]
+  },
+  {
+   "title": "Good habits",
+   "text": [
+    "Use a write blocker or read-only access. Save the image to a separate healthy drive. Make the first copy, then work from that copy. Keep the mapfile and the tool log, and note the errors. SWGDE says verification may not cover damaged sectors, so record these gaps and explain them in the report."
+   ],
+   "points": [
+    "Do not run repair tools on the original.",
+    "Do not mount the failing drive normally.",
+    "Watch for heat, noises and slow reads.",
+    "A drive with a physical fault such as a clicking head may need a specialist lab."
+   ]
+  },
+  {
+   "title": "Reporting the result",
+   "text": [
+    "The image may have holes. Write down how much was unreadable and where, using the log. If another copy of the same data exists, ddrescue can fill gaps from it, because damage is unlikely to fall in the same places."
+   ]
+  }
+ ],
+ "example": "A hard drive from a damaged laptop slows down and reports read errors. The examiner connects it through a write blocker and runs ddrescue to a clean drive with a mapfile. The first pass copies most of the drive. Later passes recover a few more areas, and the report lists the sectors that stayed unreadable.",
+ "mistakes": [
+  "Running a file system repair tool on the original drive.",
+  "Imaging to the same failing drive.",
+  "Retrying again and again without a mapfile.",
+  "Ignoring the error log and claiming a complete image.",
+  "Opening a drive with physical faults without proper skills or equipment."
+ ],
+ "terms": [
+  {
+   "term": "Bad sector",
+   "meaning": "A sector that cannot be read reliably."
+  },
+  {
+   "term": "Mapfile",
+   "meaning": "A file that records which parts of a source were rescued and which were not."
+  },
+  {
+   "term": "ddrescue",
+   "meaning": "A GNU tool that copies data from damaged devices."
+  },
+  {
+   "term": "Image with gaps",
+   "meaning": "An image where some sectors could not be read."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Why does ddrescue read good areas first?",
+   "a": "It secures the readable data early and avoids stressing the drive on difficult areas until later."
+  },
+  {
+   "q": "What is the mapfile for?",
+   "a": "It tracks what has been rescued so work can resume and only missing blocks are retried."
+  },
+  {
+   "q": "What should you report after imaging a damaged drive?",
+   "a": "The amount and location of unreadable data, the tool and version, and the hashes of the image."
+  }
+ ],
+ "tools": [
+  "ddrescue",
+  "dc3dd",
+  "guymager",
+  "linux-write-blocker"
+ ],
+ "related": [
+  "what-is-forensic-imaging",
+  "write-blocker",
+  "hash-values",
+  "evidence-integrity"
+ ],
+ "learn": [
+  {
+   "label": "GNU ddrescue: project page",
+   "url": "https://www.gnu.org/software/ddrescue/ddrescue.html"
+  },
+  {
+   "label": "SWGDE: Computer Forensic Acquisitions (17-F-002)",
+   "url": "https://www.swgde.org/17-f-002"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

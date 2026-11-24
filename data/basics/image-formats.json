@@ -1,0 +1,155 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "image-formats",
+ "branch": "imaging",
+ "title": "Forensic image formats: raw, E01, AFF4, AD1",
+ "quick": "Image formats decide how a copy is stored. Raw is a plain sector copy. E01 adds compression, hashes and case notes. AFF4 is an open, flexible container. AD1 stores a file-level copy.",
+ "sections": [
+  {
+   "title": "Raw (dd)",
+   "text": [
+    "A raw image is a flat file with the sector data and nothing else. It is simple and almost every tool can read it. It has no built-in compression, hashes or notes, so these must be kept in a separate record. SWGDE says to acquire to raw or to a well-documented, widely used container."
+   ]
+  },
+  {
+   "title": "E01 (Expert Witness)",
+   "text": [
+    "E01 is the Expert Witness format used by EnCase. The data is split into chunks that can be compressed and carry checks for errors. The file also stores case details such as case number, examiner and notes, and a hash of the source. Large images are split into numbered segments such as .E01, .E02 and so on."
+   ]
+  },
+  {
+   "title": "AFF4 and AD1",
+   "text": [
+    "AFF4 is an open framework from Cohen, Garfinkel and Schatz. It can hold several data sources, logical evidence and signed metadata in a zip-based volume. AD1 is a file-level format created by AccessData software such as FTK Imager. It stores selected files and folders, not a full disk, and can span files named .ad1, .ad2 and so on."
+   ]
+  },
+  {
+   "title": "How to choose",
+   "text": [
+    "Think about who must read the image later, how much space you have, and whether you need a full disk or only files. A common format avoids being tied to one tool. Always verify with a hash after conversion and keep the original image until the copy is checked."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "Four common formats",
+  "headers": [
+   "",
+   "Raw",
+   "E01",
+   "AFF4",
+   "AD1"
+  ],
+  "rows": [
+   [
+    "Type of copy",
+    "Full sectors",
+    "Full sectors",
+    "Full sectors or logical",
+    "File-level"
+   ],
+   [
+    "Compression",
+    "No",
+    "Yes, optional",
+    "Yes",
+    "Depends on the tool"
+   ],
+   [
+    "Stores case notes and hash",
+    "No, kept separately",
+    "Yes",
+    "Yes, as metadata",
+    "Depends on the tool"
+   ],
+   [
+    "Open specification",
+    "Trivial, no spec needed",
+    "Documented by community work",
+    "Yes, open",
+    "Proprietary"
+   ],
+   [
+    "Split into segments",
+    "Optional",
+    "Yes",
+    "Zip based volume",
+    "Yes"
+   ]
+  ]
+ },
+ "example": "A student images a 500 GB drive with a free imager and chooses E01 with compression. The result is a set of segments that saves space and stores the case number and source hash. She later converts a copy to raw so that a tool that only reads raw images can open it.",
+ "mistakes": [
+  "Deleting E02 or later segments, which makes the image unreadable.",
+  "Assuming every tool reads every format.",
+  "Converting an image and not checking the hash afterward.",
+  "Choosing raw and forgetting to store the hash separately.",
+  "Thinking compression changes the evidence, when it only changes how it is stored."
+ ],
+ "terms": [
+  {
+   "term": "Raw image",
+   "meaning": "A plain copy of sectors with no extra information."
+  },
+  {
+   "term": "E01",
+   "meaning": "The Expert Witness image format, also called EWF."
+  },
+  {
+   "term": "AFF4",
+   "meaning": "Advanced Forensic Framework 4, an open container for evidence."
+  },
+  {
+   "term": "Segment",
+   "meaning": "One of several files that together make up a split image."
+  },
+  {
+   "term": "Chunk",
+   "meaning": "A fixed-size block of data inside an image, which can be compressed on its own."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Give two differences between raw and E01.",
+   "a": "Raw has no compression or built-in notes. E01 can compress the data and stores case details and a source hash."
+  },
+  {
+   "q": "What can AFF4 store that a simple image file cannot?",
+   "a": "Several data sources, logical evidence and signed metadata in one container."
+  },
+  {
+   "q": "Is AD1 a full disk image?",
+   "a": "No, it is a file-level image of selected files and folders."
+  }
+ ],
+ "tools": [
+  "ftk-imager",
+  "libewf",
+  "guymager",
+  "arsenal-image-mounter"
+ ],
+ "related": [
+  "what-is-forensic-imaging",
+  "physical-image",
+  "logical-image",
+  "hash-values"
+ ],
+ "learn": [
+  {
+   "label": "Keramics: Expert Witness Compression Format (EWF)",
+   "url": "https://keramics.github.io/ewf.html"
+  },
+  {
+   "label": "Forensics Wiki: AFF4",
+   "url": "https://forensics.wiki/aff4/"
+  },
+  {
+   "label": "Library of Congress: AFF4",
+   "url": "https://loc.gov/preservation/digital/formats/fdd/fdd000413.shtml"
+  },
+  {
+   "label": "PRONOM: AccessData Custom Content Image (AD1)",
+   "url": "https://pronom.nationalarchives.gov.uk/fmt/842"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

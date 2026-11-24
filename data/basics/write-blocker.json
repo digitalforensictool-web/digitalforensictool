@@ -1,0 +1,141 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "write-blocker",
+ "branch": "imaging",
+ "title": "What is a write blocker?",
+ "quick": "A write blocker is a hardware device or software setting that lets a computer read a storage device but stops commands that would change it, so the original evidence is not altered during copying.",
+ "sections": [
+  {
+   "title": "The problem it solves",
+   "text": [
+    "Operating systems often write to a drive that is just plugged in. Windows may add hidden folders and index data. Some systems try to repair a file system or update access times. These small changes alter the original and make it harder to prove it is unchanged.",
+    "A write blocker is placed between the evidence drive and the examiner's computer so that such writes never reach the drive."
+   ]
+  },
+  {
+   "title": "What it passes and what it stops",
+   "text": [
+    "Computers talk to a drive using commands. Commands that only read data or ask for information are passed through. Commands that would change the data are blocked. NIST publishes a specification for hardware write blockers, and tests devices against it through its CFTT program."
+   ],
+   "points": [
+    "Blocked: commands that modify the protected drive.",
+    "Passed: read commands and information commands.",
+    "The reply from the drive should reach the computer unchanged.",
+    "Some devices have a switch for protected and unprotected mode, or lights to show the state."
+   ]
+  },
+  {
+   "title": "Using one in practice",
+   "text": [
+    "Connect the blocker to the examiner computer first, then connect the evidence drive. Check that the drive is shown as read-only. Record the blocker model, serial number and firmware version, plus the date and time. Create the image, then compare hash values. Test the blocker on a spare drive before casework and repeat tests on a routine schedule, as your lab requires."
+   ]
+  },
+  {
+   "title": "What a blocker does not do",
+   "text": [
+    "It does not make a copy and it does not check hashes. It also does not protect against a drive that is already failing. Many phones are not simple disks, so a normal disk write blocker does not apply to them. Other methods are used, and they are covered in the mobile topics."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "What happens with and without a blocker",
+  "headers": [
+   "",
+   "Drive connected directly",
+   "Drive connected through a write blocker"
+  ],
+  "rows": [
+   [
+    "Operating system may mount and write",
+    "Yes, possible",
+    "Writes are blocked"
+   ],
+   [
+    "File times and hidden folders may change",
+    "Possible",
+    "Not changed by the examiner computer"
+   ],
+   [
+    "Hash of the drive stays the same",
+    "Not certain",
+    "Expected to stay the same"
+   ],
+   [
+    "Record needed",
+    "Not applicable",
+    "Model, serial number, firmware, test date"
+   ]
+  ]
+ },
+ "example": "An examiner needs to image a SATA drive from a desktop. She connects a hardware write blocker to her workstation, then attaches the drive. The workstation shows the disk as read-only. She notes the blocker serial number, images the drive and checks that the image hash matches the source hash.",
+ "mistakes": [
+  "Connecting the evidence drive before the blocker is attached and switched on.",
+  "Never testing the blocker, or testing it only once.",
+  "Treating a read-only file system view as full write blocking.",
+  "Forgetting to log the model, serial number and firmware.",
+  "Expecting a disk blocker to work for a phone."
+ ],
+ "terms": [
+  {
+   "term": "Write blocking",
+   "meaning": "Stopping write commands from reaching a storage device."
+  },
+  {
+   "term": "Read-only",
+   "meaning": "A state where data can be read but not changed."
+  },
+  {
+   "term": "Protected drive",
+   "meaning": "The evidence drive that sits behind the blocker."
+  },
+  {
+   "term": "Firmware",
+   "meaning": "The small built-in program that runs a device such as a blocker."
+  },
+  {
+   "term": "CFTT",
+   "meaning": "The NIST Computer Forensics Tool Testing program, which publishes specifications and test results."
+  }
+ ],
+ "exam": [
+  {
+   "q": "What must a write blocker do?",
+   "a": "Block commands that change the protected drive, and pass commands that only read or request information, with the replies unchanged."
+  },
+  {
+   "q": "In what order do you connect the devices?",
+   "a": "Attach the blocker to the examiner computer first, confirm it is working, then connect the evidence drive. Follow your lab's procedure."
+  },
+  {
+   "q": "How do you know your blocker works?",
+   "a": "Test it on a spare drive and keep the test record. Also use published test results as a guide, but still test your own unit."
+  }
+ ],
+ "tools": [
+  "linux-write-blocker",
+  "util-linux",
+  "caine",
+  "ftk-imager"
+ ],
+ "related": [
+  "what-is-forensic-imaging",
+  "hardware-vs-software-blocking",
+  "evidence-integrity",
+  "good-practice-principles"
+ ],
+ "learn": [
+  {
+   "label": "NIST CFTT: Hardware Write Block specification documents",
+   "url": "https://www.nist.gov/itl/ssd/software-quality-group/cftt-technical-information/hardware-write-block"
+  },
+  {
+   "label": "NIST CFTT: Computer Forensics Tool Testing Program",
+   "url": "https://www.nist.gov/itl/ssd/software-quality-group/computer-forensics-tool-testing-program-cftt"
+  },
+  {
+   "label": "NIST SP 800-86: Integrating Forensic Techniques into Incident Response",
+   "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-86.pdf"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

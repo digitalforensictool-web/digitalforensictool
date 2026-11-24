@@ -1,0 +1,137 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "file-timestamps",
+ "branch": "disk",
+ "title": "File timestamps: MACB",
+ "quick": "File timestamps record when a file was modified, accessed, changed or born. MACB is the short name for these four times, and each file system stores them differently.",
+ "sections": [
+  {
+   "title": "The four times",
+   "text": [
+    "M is modified: the content last changed. A is accessed: the file was last read or opened. C is changed: the metadata record of the file was last changed (in NTFS this is the MFT entry modified time). B is born: the file was created on this volume.",
+    "Not every file system keeps all four. FAT has no change time. Older Linux file systems have no birth time. Names also vary between tools, so check the tool help."
+   ]
+  },
+  {
+   "title": "Precision and behaviour",
+   "text": [
+    "Precision differs. FAT stores last modified with a two second step. NTFS uses a count of 100 nanosecond units. ext4 and APFS record times with nanosecond detail.",
+    "Copying or moving a file can change times in different ways. Copying usually gives the new file a new creation time, while the modified time may stay. Recent Windows versions do not update last access by default, so it may not show real reading."
+   ]
+  },
+  {
+   "title": "Reading times with care",
+   "text": [
+    "The system clock can be wrong or not synchronised. Time zone and daylight saving settings also matter, because some systems store local time and others store UTC. A user or a tool can also change times on purpose.",
+    "Treat a timestamp as one clue and compare it with other sources, such as logs, the USN journal and the file content. Record the time zone you used in your notes."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "What each file system keeps",
+  "headers": [
+   "",
+   "FAT",
+   "NTFS",
+   "ext4",
+   "APFS"
+  ],
+  "rows": [
+   [
+    "Modified",
+    "Yes (2 s step)",
+    "Yes",
+    "Yes",
+    "Yes"
+   ],
+   [
+    "Accessed",
+    "Date only",
+    "Yes (often not updated)",
+    "Yes",
+    "Yes"
+   ],
+   [
+    "Metadata change",
+    "No",
+    "Yes",
+    "Yes",
+    "Yes"
+   ],
+   [
+    "Birth or created",
+    "Yes",
+    "Yes",
+    "Yes (crtime)",
+    "Yes"
+   ]
+  ]
+ },
+ "example": "A document appears to have been created on Monday, but the modified time is earlier. The examiner sees that the file was copied from a USB drive. The creation time shows the copy time on this volume, while the modified time kept the original value.",
+ "mistakes": [
+  "Assuming access time shows when a user read the file.",
+  "Ignoring time zones and mixing local time with UTC.",
+  "Trusting the system clock without checking it.",
+  "Using a tool that shows only one of the four times."
+ ],
+ "terms": [
+  {
+   "term": "MACB",
+   "meaning": "Modified, Accessed, Changed, Born, the four common file times."
+  },
+  {
+   "term": "UTC",
+   "meaning": "Coordinated Universal Time, a time standard without daylight saving."
+  },
+  {
+   "term": "Timestamp",
+   "meaning": "A recorded date and time attached to data."
+  },
+  {
+   "term": "Timeline",
+   "meaning": "A list of events ordered by time."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Why can a copied file have a creation time later than its modified time?",
+   "a": "The copy is a new file on the new volume, so it gets a new creation time, while the modified time can be carried over."
+  },
+  {
+   "q": "Why must you be careful with the system clock?",
+   "a": "If the clock was wrong or not synchronised, the recorded times are wrong too. Compare with other time sources."
+  }
+ ],
+ "tools": [
+  "mftecmd",
+  "plaso",
+  "timeline-explorer",
+  "dcode",
+  "sleuthkit"
+ ],
+ "related": [
+  "mft-and-file-metadata",
+  "timeline-analysis",
+  "file-systems-overview",
+  "windows-event-logs"
+ ],
+ "learn": [
+  {
+   "label": "NIST SP 800-86: Guide to Integrating Forensic Techniques into Incident Response",
+   "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-86.pdf"
+  },
+  {
+   "label": "Forensics Wiki: NTFS",
+   "url": "https://forensics.wiki/new_technology_file_system_%28ntfs%29/"
+  },
+  {
+   "label": "Wikipedia: Ext4",
+   "url": "https://en.wikipedia.org/wiki/Ext4"
+  },
+  {
+   "label": "Wikipedia: Apple File System",
+   "url": "https://en.wikipedia.org/wiki/Apple_File_System"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

@@ -1,0 +1,88 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "memory-forensics-overview",
+ "branch": "memory",
+ "title": "What is memory (RAM) forensics?",
+ "quick": "Memory forensics is the study of a computer's RAM, the fast working memory. It can show running programs, network connections and other evidence that is lost when the power goes off.",
+ "sections": [
+  {
+   "title": "What RAM holds",
+   "text": [
+    "RAM is volatile. This means its content disappears when the computer loses power. While a system runs, RAM holds the running processes, open network connections, loaded programs and often parts of documents, chats and web pages. It may also hold encryption keys of mounted encrypted volumes."
+   ]
+  },
+  {
+   "title": "Why it matters",
+   "text": [
+    "Some evidence exists only in memory. Malware may run without leaving a file on disk. A password or key may appear in memory but nowhere else. Memory is also high in the order of volatility, which means it should be collected before more stable sources such as disks."
+   ]
+  },
+  {
+   "title": "The basic workflow",
+   "text": [
+    "First the memory is captured to a file (a memory image). Then the image is analysed offline with a memory analysis framework. The analysis lists processes, network connections and loaded modules, and searches for strings and hidden code. Findings are then compared with disk evidence and logs.",
+    "Procedures and laws differ by country and agency. Follow your lab's own procedure for live capture."
+   ]
+  }
+ ],
+ "example": "Officers find a running laptop with an encrypted drive that is unlocked. The examiner captures RAM first. Later, analysis of the image shows the programs that were open and a connection to an unknown server.",
+ "mistakes": [
+  "Switching off a running computer before checking whether RAM should be captured.",
+  "Thinking memory analysis makes disk analysis unnecessary. Both are needed.",
+  "Not recording the time and the tool used for the capture.",
+  "Expecting old data. RAM only reflects recent activity."
+ ],
+ "terms": [
+  {
+   "term": "RAM",
+   "meaning": "Random access memory, the working memory of a computer."
+  },
+  {
+   "term": "Volatile",
+   "meaning": "Lost when the power is removed."
+  },
+  {
+   "term": "Memory image",
+   "meaning": "A file that contains a copy of RAM."
+  },
+  {
+   "term": "Process",
+   "meaning": "A running program on the computer."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Why is RAM collected before the disk?",
+   "a": "It is more volatile. Its content can change or vanish quickly, so it is captured first."
+  },
+  {
+   "q": "Name evidence that may exist only in RAM.",
+   "a": "Running malware, open connections, and keys for mounted encrypted volumes."
+  }
+ ],
+ "tools": [
+  "volatility3",
+  "memprocfs",
+  "winpmem",
+  "ftk-imager",
+  "magnet-dumpit",
+  "yara"
+ ],
+ "related": [
+  "order-of-volatility",
+  "ram-acquisition",
+  "memory-analysis-basics",
+  "live-vs-dead-acquisition"
+ ],
+ "learn": [
+  {
+   "label": "Forensic Focus: Live RAM analysis",
+   "url": "https://www.forensicfocus.com/?p=2507"
+  },
+  {
+   "label": "NIST SP 800-86",
+   "url": "https://csrc.nist.gov/pubs/sp/800/86/final"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

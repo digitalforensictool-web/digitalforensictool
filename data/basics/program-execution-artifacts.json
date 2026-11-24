@@ -1,0 +1,121 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "program-execution-artifacts",
+ "branch": "windows",
+ "title": "Evidence of program execution",
+ "quick": "Program execution artifacts are traces that show a program ran or was present on a Windows system. No single trace is perfect, so examiners compare several.",
+ "sections": [
+  {
+   "title": "Why several sources",
+   "text": [
+    "Windows has no single list of every program run. Instead, different features leave small traces as a side effect. Some prove a program ran. Others only show that a file existed. An examiner combines them to build a reliable picture."
+   ]
+  },
+  {
+   "title": "Common artifacts",
+   "text": [
+    "Each artifact records different details. Learn what each one can and cannot tell you."
+   ],
+   "points": [
+    "Prefetch: .pf files in C:\\Windows\\Prefetch with the program name, run count and recent run times.",
+    "UserAssist: registry data on programs a user started from the desktop, with a run count.",
+    "ShimCache (AppCompatCache): a list of executables Windows saw, which may not mean they ran.",
+    "Amcache: records of programs and their file hashes.",
+    "SRUM: a database of app and network usage over time.",
+    "BAM: registry entries of recent program use on newer Windows."
+   ]
+  },
+  {
+   "title": "Prefetch in more detail",
+   "text": [
+    "Prefetch exists to start programs faster. The file name has the program name and a hash of its path, so the same program run from two places gives two files. A file can hold up to eight last run times on Windows 8 and later. Prefetch files can remain after the program is deleted."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "What each artifact can show",
+  "headers": [
+   "Artifact",
+   "Shows it ran?",
+   "Extra detail"
+  ],
+  "rows": [
+   [
+    "Prefetch",
+    "Yes",
+    "Run count, recent run times, files used"
+   ],
+   [
+    "UserAssist",
+    "Yes, if started by the user",
+    "Run count, last run"
+   ],
+   [
+    "ShimCache",
+    "Not by itself",
+    "Path, file last modified time"
+   ],
+   [
+    "Amcache",
+    "Not by itself",
+    "File hash, first seen"
+   ]
+  ]
+ },
+ "example": "A tool called payload.exe is found in a user's Downloads folder. Prefetch has an entry with a run count of 2 and a last run time. The examiner then checks Amcache for the file hash to look it up on a hash list.",
+ "mistakes": [
+  "Treating ShimCache entries as proof that a program ran.",
+  "Forgetting that Prefetch can be turned off or be limited in how many files it keeps.",
+  "Reading UserAssist names without knowing they are stored in a scrambled (ROT13) form, so use a tool.",
+  "Using one artifact alone to make a conclusion."
+ ],
+ "terms": [
+  {
+   "term": "Prefetch",
+   "meaning": "A Windows feature that saves data about a program's start to speed up later starts."
+  },
+  {
+   "term": "ShimCache",
+   "meaning": "A compatibility record of executable files that Windows has seen."
+  },
+  {
+   "term": "Amcache",
+   "meaning": "A hive file with details of programs and their hashes."
+  },
+  {
+   "term": "Run count",
+   "meaning": "How many times a program is recorded as started."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Does a ShimCache entry prove execution?",
+   "a": "No. It shows Windows saw the file. Another artifact is needed to show it ran."
+  },
+  {
+   "q": "Which artifact gives run count and last run times?",
+   "a": "Prefetch. UserAssist also gives a run count for programs launched by the user."
+  }
+ ],
+ "tools": [
+  "pecmd",
+  "ez-tools",
+  "registry-explorer",
+  "regripper",
+  "srum-dump",
+  "kape"
+ ],
+ "related": [
+  "windows-registry",
+  "lnk-jumplists-shellbags",
+  "timeline-analysis",
+  "malware-analysis-basics"
+ ],
+ "learn": [
+  {
+   "label": "Magnet Forensics: Prefetch analysis",
+   "url": "https://www.magnetforensics.com/blog/forensic-analysis-of-prefetch-files-in-windows/"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

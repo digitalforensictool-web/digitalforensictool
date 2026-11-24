@@ -1,0 +1,204 @@
+{
+ "reviewed": "2026-11-24",
+ "lead": "Read a Windows registry hive file and get a plain text report of the forensic items inside it. RegRipper uses small plugins, and each plugin knows how to read one key or group of keys.",
+ "use_when": [
+  "You have registry hives from a case, such as NTUSER.DAT, SYSTEM, SOFTWARE or SAM, and want a quick report.",
+  "You want to run one check, such as the Run keys or UserAssist, across many hives.",
+  "You need a command-line tool that can run in a script."
+ ],
+ "features": [
+  {
+   "title": "Plugin based",
+   "items": [
+    "Each plugin reads and decodes one key or group of keys",
+    "You can list all plugins from the command line",
+    "You can run one plugin, or let the tool pick all that fit the hive",
+    "You can add your own plugins, which are Perl files"
+   ]
+  },
+  {
+   "title": "Two ways to run it",
+   "items": [
+    "rr.exe is a simple window: choose a hive and an output folder",
+    "rip.exe is the command-line program",
+    "On Linux you run the Perl version"
+   ]
+  },
+  {
+   "title": "Timeline output",
+   "items": [
+    "A mode that runs the timeline (TLN) plugins for a hive",
+    "Options to set a system name and a user name in that output"
+   ]
+  },
+  {
+   "title": "Helpful checks",
+   "items": [
+    "Can check whether a hive is dirty",
+    "Can guess which kind of hive a file is",
+    "Writes results to the screen, so you can save them with a redirect"
+   ]
+  }
+ ],
+ "formats": [
+  "NTUSER.DAT",
+  "SYSTEM",
+  "SOFTWARE",
+  "SAM",
+  "SECURITY"
+ ],
+ "requirements": "On Windows you download the project and run the exe files. No other setup is needed, because the modified Perl modules are built in. On Linux you need Perl and the Parse::Win32Registry module, and you copy three modified modules (File.pm, Base.pm and Key.pm) from the project into your installation. Some Linux distributions also package it.",
+ "steps": [
+  {
+   "title": "Download the project",
+   "text": "Download RegRipper 3.0 from its GitHub page and unzip it. The folder holds rip.exe, rr.exe and a plugins folder. Keep that structure, because the program looks for its plugins next to itself."
+  },
+  {
+   "title": "Get the hive files",
+   "text": "Copy the hives out of your evidence image. System hives sit in the Windows config folder under System32. User hives such as NTUSER.DAT sit in each user's profile folder. Work on copies."
+  },
+  {
+   "title": "Check the help text",
+   "text": "Open a command prompt in the RegRipper folder and run rip with the -h option. This prints the list of options that your version supports.",
+   "cmd": "rip -h"
+  },
+  {
+   "title": "See which plugins exist",
+   "text": "List the plugins. Adding -c prints the list in CSV form, which is easier to search in a spreadsheet.",
+   "cmd": "rip -l -c"
+  },
+  {
+   "title": "Run one plugin on a hive",
+   "text": "Use -r for the hive file and -p for the plugin name. The result prints on screen. Add a redirect to save it into a text file.",
+   "cmd": "rip -r c:\\case\\ntuser.dat -p userassist"
+  },
+  {
+   "title": "Run every plugin that fits the hive",
+   "text": "Use -a to run all plugins that apply to that hive type. Save the output to a file in your case folder.",
+   "cmd": "rip -r c:\\case\\ntuser.dat -a"
+  },
+  {
+   "title": "Read and record the result",
+   "text": "Open the text file and read the key names, values and last-write times. Note the hive path and the plugin name in your case notes, so another examiner can repeat your steps."
+  }
+ ],
+ "options": [
+  {
+   "cmd": "-r <hive>",
+   "what": "The registry hive file to read."
+  },
+  {
+   "cmd": "-p <plugin>",
+   "what": "Runs one plugin, for example userassist or run."
+  },
+  {
+   "cmd": "-f <profile>",
+   "what": "Uses a profile, or a hive type such as system, sam, software, security or ntuser."
+  },
+  {
+   "cmd": "-a",
+   "what": "Runs all plugins that apply to the hive."
+  },
+  {
+   "cmd": "-aT",
+   "what": "Runs all timeline (TLN) plugins for the hive."
+  },
+  {
+   "cmd": "-l",
+   "what": "Lists all plugins. Add -c to print the list as CSV."
+  },
+  {
+   "cmd": "-d",
+   "what": "Checks whether the hive is dirty."
+  },
+  {
+   "cmd": "-g",
+   "what": "Guesses the type of the hive file."
+  },
+  {
+   "cmd": "-s <name> -u <name>",
+   "what": "Sets the system name and user name used in timeline output."
+  }
+ ],
+ "cases": [
+  {
+   "title": "Program execution",
+   "why": "Plugins for items such as UserAssist and the application compatibility cache show programs a user or the system started."
+  },
+  {
+   "title": "Persistence",
+   "why": "The Run key plugins list programs set to start with Windows or at logon, a common place for malware."
+  },
+  {
+   "title": "USB device history",
+   "why": "SYSTEM and NTUSER hives hold records of connected storage devices, which helps in data-theft questions."
+  },
+  {
+   "title": "User activity",
+   "why": "Recent documents and other per-user keys show what a person opened and when."
+  },
+  {
+   "title": "System profile",
+   "why": "SYSTEM, SOFTWARE and SAM hives give computer name, installed software and local accounts for the case report."
+  },
+  {
+   "title": "Batch triage",
+   "why": "Because it is a command-line tool, you can run the same plugin over the hives of many machines and compare the output."
+  }
+ ],
+ "strengths": [
+  "Free and open source, released under the MIT licence.",
+  "Plugins keep each check small, readable and easy to extend.",
+  "Output is plain text, so it is easy to save, search and compare.",
+  "Runs on Windows and, with Perl, on Linux."
+ ],
+ "limits": [
+  "It does not process registry transaction logs. Merge the logs into the hive first, for example with Eric Zimmerman's rla.exe or with the yarp library plus registryFlush.py. The project suggests both.",
+  "It shows what a plugin knows how to read. A key without a plugin will not appear in the report.",
+  "The README documents only a few options. Run rip -h to see the rest for your version.",
+  "Output is text, not a browsable tree. Use a viewer such as Registry Explorer when you need to explore.",
+  "Plugin names are not obvious at first. Expect to read the plugin list before you know which to run.",
+  "Check the results against another tool before you rely on them in a report."
+ ],
+ "works_with": [
+  {
+   "id": "registry-explorer",
+   "note": "Browse the same hives visually, and merge transaction logs"
+  },
+  {
+   "id": "ez-tools",
+   "note": "Includes rla.exe for transaction logs"
+  },
+  {
+   "id": "kape",
+   "note": "Collects the hive files from a system"
+  },
+  {
+   "id": "autopsy",
+   "note": "Export hives from an image to examine"
+  },
+  {
+   "id": "ftk-imager",
+   "note": "Export hive files from a disk image"
+  },
+  {
+   "id": "timeline-explorer",
+   "note": "View timeline output after converting it to CSV"
+  }
+ ],
+ "learn": [
+  {
+   "label": "RegRipper 3.0 on GitHub (README)",
+   "url": "https://github.com/keydet89/RegRipper3.0"
+  },
+  {
+   "label": "RegRipper manual page (Debian)",
+   "url": "https://manpages.debian.org/bookworm/regripper/regripper.1"
+  },
+  {
+   "label": "Kali Linux tool page for RegRipper",
+   "url": "https://www.kali.org/tools/regripper"
+  }
+ ],
+ "sources_note": "Written in our own words from the RegRipper project's documentation."
+}

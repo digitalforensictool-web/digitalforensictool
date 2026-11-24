@@ -1,0 +1,92 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "mobile-forensics-overview",
+ "branch": "mobile",
+ "title": "What is mobile forensics?",
+ "quick": "Mobile forensics is the process of recovering and examining digital evidence from phones, tablets and similar devices in a way that keeps the evidence reliable.",
+ "sections": [
+  {
+   "title": "What it covers",
+   "text": [
+    "Mobile forensics deals with phones, tablets, SIM cards and memory cards. These devices hold calls, messages, photos, app data, location history and more. The goal is to recover this data with methods that are controlled, repeatable and documented."
+   ]
+  },
+  {
+   "title": "Why phones are different from computers",
+   "text": [
+    "A phone is always on, always connected and always changing. It receives messages and can be wiped remotely. Its storage is soldered inside, so you cannot attach it to a write blocker like a hard drive. Most data is encrypted, and many makers use their own security design."
+   ],
+   "points": [
+    "Radio signals can change data after seizure, so the phone must be isolated.",
+    "Data is held in app databases, not just ordinary files.",
+    "Models and operating system versions change fast, so methods go out of date."
+   ]
+  },
+  {
+   "title": "Main stages",
+   "text": [
+    "A typical job has these stages: secure and document the device, isolate it from networks, choose an acquisition method, extract the data, verify and analyse it, then report. Procedures and laws differ by country and agency, so follow your lab's own procedure and check that you have proper legal authority before you collect or examine a device."
+   ]
+  }
+ ],
+ "example": "A lab receives a locked phone that was switched on at the scene. The examiner photographs it, notes the time shown on the screen, puts it in an isolation container with power connected, and logs each step before choosing an acquisition method.",
+ "mistakes": [
+  "Treating a phone like a hard drive and expecting a simple write blocker to work.",
+  "Leaving the phone connected to the network after seizure.",
+  "Not recording the device state (on, off, locked) when it arrives.",
+  "Trusting one tool's output without checking the data another way.",
+  "Changing settings on the phone without writing it down."
+ ],
+ "terms": [
+  {
+   "term": "Mobile device",
+   "meaning": "A phone, tablet or similar handheld device with its own operating system."
+  },
+  {
+   "term": "Acquisition",
+   "meaning": "The act of copying data from a device for examination."
+  },
+  {
+   "term": "SIM card",
+   "meaning": "A small card that holds subscriber identity data for a mobile network."
+  },
+  {
+   "term": "Isolation",
+   "meaning": "Stopping a device from talking to networks."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Why can you not use a normal write blocker on most phones?",
+   "a": "Phones are not simple disks. Their storage is inside the device and is accessed through the operating system or special modes, so other controls and careful documentation are used to limit changes."
+  },
+  {
+   "q": "What are the first things to record when a phone arrives?",
+   "a": "Make, model, state (on or off, locked or unlocked), visible time, network status, damage and identifiers, plus who handled it and when."
+  }
+ ],
+ "tools": [
+  "adb",
+  "aleapp",
+  "ileapp",
+  "mvt",
+  "db4s"
+ ],
+ "related": [
+  "mobile-extraction-levels",
+  "mobile-isolation",
+  "mobile-artifacts",
+  "chain-of-custody"
+ ],
+ "learn": [
+  {
+   "label": "NIST SP 800-101 Rev. 1: Guidelines on Mobile Device Forensics",
+   "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-101r1.pdf"
+  },
+  {
+   "label": "SWGDE: Mobile device evidence collection, preservation, handling and acquisition",
+   "url": "https://www.swgde.org/documents/published-complete-listing/18-f-003-2/"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

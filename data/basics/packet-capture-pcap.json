@@ -1,0 +1,128 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "packet-capture-pcap",
+ "branch": "network",
+ "title": "Packet capture and PCAP files",
+ "quick": "A packet capture records the packets seen on a network link and saves them to a file, most often in the pcap or pcapng format, so they can be studied later in a tool such as Wireshark.",
+ "sections": [
+  {
+   "title": "What a capture is",
+   "text": [
+    "Capturing means copying packets as they pass a network interface and writing them to a file. Each saved packet has a timestamp and the bytes that were seen. This gives the most detailed network evidence, because content can be read if it is not encrypted.",
+    "Wireshark is passive. It listens and does not send packets of its own."
+   ]
+  },
+  {
+   "title": "pcap and pcapng",
+   "text": [
+    "The pcap format comes from the libpcap library and is widely supported. The pcapng format is newer. It can hold several interfaces in one file and can store comments and extra details such as interface names and capture filters. Wireshark has used pcapng as its default format since version 1.8.",
+    "Most analysis tools can open both formats."
+   ]
+  },
+  {
+   "title": "Where captures are taken",
+   "text": [
+    "Where you capture decides what you see. A capture on one computer shows only that computer's traffic. A capture on a switch mirror port or network tap can show many hosts. Wireless captures need a suitable adapter."
+   ],
+   "points": [
+    "Capture filter: limits what is recorded, so data outside the filter is lost for good.",
+    "Display filter: hides packets on screen only, nothing is lost.",
+    "Hash the capture file after saving and note the tool, interface and time."
+   ]
+  },
+  {
+   "title": "Reading a capture",
+   "text": [
+    "Start with a summary of conversations and protocols, then follow one stream at a time. Look for the hosts, times and amount of data. Keep the original file untouched and work on a copy. Procedures and laws differ by country and agency, so follow your lab's own procedure."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "Capture filter and display filter",
+  "headers": [
+   "",
+   "Capture filter",
+   "Display filter"
+  ],
+  "rows": [
+   [
+    "When used",
+    "While recording",
+    "After recording, on screen"
+   ],
+   [
+    "Effect on data",
+    "Packets outside the filter are not saved",
+    "Nothing is deleted"
+   ],
+   [
+    "Can it be changed later",
+    "No, lost data is gone",
+    "Yes, any time"
+   ]
+  ]
+ },
+ "mistakes": [
+  "Using a capture filter that is too narrow and losing evidence.",
+  "Confusing a display filter with a capture filter.",
+  "Capturing on the wrong interface or in the wrong place.",
+  "Not hashing the file or not noting the clock and time zone.",
+  "Expecting to read the content of encrypted traffic."
+ ],
+ "terms": [
+  {
+   "term": "pcap",
+   "meaning": "A common capture file format that stores packets with timestamps."
+  },
+  {
+   "term": "pcapng",
+   "meaning": "A newer capture format that supports several interfaces and comments."
+  },
+  {
+   "term": "Capture filter",
+   "meaning": "A rule that decides which packets are recorded."
+  },
+  {
+   "term": "Display filter",
+   "meaning": "A rule that decides which recorded packets are shown."
+  },
+  {
+   "term": "Mirror port",
+   "meaning": "A switch port that gets a copy of traffic from other ports."
+  }
+ ],
+ "exam": [
+  {
+   "q": "What is the difference between a capture filter and a display filter?",
+   "a": "A capture filter limits what is saved. A display filter only changes what you see in a file that is already saved."
+  },
+  {
+   "q": "Why hash a pcap file?",
+   "a": "The hash shows later that the file has not changed since it was collected."
+  }
+ ],
+ "tools": [
+  "wireshark",
+  "tcpdump",
+  "networkminer",
+  "zui",
+  "zeek"
+ ],
+ "related": [
+  "network-forensics-overview",
+  "network-flow-data",
+  "tcp-ip-dns-basics",
+  "hash-values"
+ ],
+ "learn": [
+  {
+   "label": "Wireshark User's Guide: Introduction",
+   "url": "https://www.wireshark.org/docs/wsug_html_chunked/ChapterIntroduction.html"
+  },
+  {
+   "label": "Wireshark wiki: pcapng",
+   "url": "https://wiki.wireshark.org/Development/PcapNg"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

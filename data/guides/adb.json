@@ -1,0 +1,194 @@
+{
+ "reviewed": "2026-11-24",
+ "lead": "Talk to an Android phone from your computer with a few simple commands. adb is the command-line bridge from Google's Platform-Tools package, and many logical acquisition tools rely on it.",
+ "use_when": [
+  "You need to list a connected Android device and run commands on it.",
+  "You want to copy files or folders from a phone to your computer.",
+  "You need to list installed apps or read system logs from a device."
+ ],
+ "features": [
+  {
+   "title": "Connecting",
+   "items": [
+    "Works over USB after you turn on USB debugging",
+    "Can also connect over Wi-Fi, after pairing on Android 11 or newer",
+    "Handles several devices at once, and you pick one by its serial number"
+   ]
+  },
+  {
+   "title": "Working on the device",
+   "items": [
+    "Opens a shell, or runs a single command on the device",
+    "Package manager commands list installed apps and their file paths",
+    "Activity manager commands can start and stop apps"
+   ]
+  },
+  {
+   "title": "Moving files",
+   "items": [
+    "adb pull copies files and folders from the device to your computer",
+    "adb push copies them the other way",
+    "adb install adds an app from an APK file"
+   ]
+  },
+  {
+   "title": "Logs and diagnostics",
+   "items": [
+    "adb logcat shows the system log, with filters by tag and priority",
+    "Several log buffers can be read, such as main, system, crash and radio",
+    "A bug report command collects a full diagnostic package"
+   ]
+  }
+ ],
+ "requirements": "Windows, macOS or Linux, using the SDK Platform-Tools package. No Android Studio is needed. The device needs Developer options and USB debugging turned on, and the owner must accept the prompt that asks to trust your computer. A USB cable that carries data is also needed. On Windows, the tools need the Universal C Runtime, which usually comes through Windows Update.",
+ "steps": [
+  {
+   "title": "Download Platform-Tools",
+   "text": "Download the Platform-Tools zip for your system from the Android developer site and unzip it into a short folder path, for example C:\\platform-tools. The package contains adb and fastboot."
+  },
+  {
+   "title": "Check the install",
+   "text": "Open a terminal in that folder and ask adb for its version. This also prints where it is installed.",
+   "cmd": "adb --version"
+  },
+  {
+   "title": "Turn on USB debugging",
+   "text": "On the phone, show Developer options (the way to do this is different between phones), then turn on USB debugging. Connect the cable. Unlock the phone and accept the dialog that asks to allow this computer. This needs the device owner or a lawful way to unlock it."
+  },
+  {
+   "title": "List connected devices",
+   "text": "Run the command below. A device shows as device when it is ready and offline when it is not responding. The -l option adds model details that help you tell devices apart.",
+   "cmd": "adb devices -l"
+  },
+  {
+   "title": "Look around with a shell",
+   "text": "List the third-party apps with the package manager. This shows which apps the user installed.",
+   "cmd": "adb shell pm list packages -3"
+  },
+  {
+   "title": "Copy files to your computer",
+   "text": "Pull a file or folder from the phone into a case folder on your computer. Always write to a separate evidence folder, never into the device.",
+   "cmd": "adb pull /sdcard/DCIM C:\\case\\DCIM"
+  },
+  {
+   "title": "Save the system log",
+   "text": "Dump the log buffers once and exit. Redirect the output to a file. Write down the date, time and the exact commands you ran.",
+   "cmd": "adb logcat -b all -d > C:\\case\\logcat.txt"
+  }
+ ],
+ "options": [
+  {
+   "cmd": "adb devices -l",
+   "what": "Lists connected devices with details."
+  },
+  {
+   "cmd": "adb -s <serial> <command>",
+   "what": "Sends the command to the device with this serial number. Needed when more than one device is connected."
+  },
+  {
+   "cmd": "adb -d / adb -e",
+   "what": "Targets the only attached hardware device (-d) or the only running emulator (-e)."
+  },
+  {
+   "cmd": "adb shell",
+   "what": "Opens an interactive shell on the device. Add a command after it to run just that command."
+  },
+  {
+   "cmd": "adb shell pm path <package>",
+   "what": "Prints the APK path of an installed app."
+  },
+  {
+   "cmd": "adb pull <remote> <local>",
+   "what": "Copies a file or folder from the device to your computer."
+  },
+  {
+   "cmd": "adb logcat <tag>:<priority> *:S",
+   "what": "Shows only the log lines from the tag at that priority or higher, and hides the rest."
+  },
+  {
+   "cmd": "adb pair <ip>:<port>",
+   "what": "Pairs with a device over Wi-Fi using the pairing code shown on the phone (Android 11 or newer)."
+  },
+  {
+   "cmd": "adb kill-server",
+   "what": "Stops the adb background server. Use it if adb stops responding, then run adb devices to start it again."
+  }
+ ],
+ "cases": [
+  {
+   "title": "Logical copy of user files",
+   "why": "Pulling the shared storage folders gives you the photos, downloads and documents that the user can reach."
+  },
+  {
+   "title": "App inventory",
+   "why": "The package manager lists installed apps and their paths, which shows what the user had on the phone."
+  },
+  {
+   "title": "Log review",
+   "why": "Logcat output can show events from apps and the system around the time of an incident, if the buffers still hold them."
+  },
+  {
+   "title": "Getting data for other tools",
+   "why": "Many Android parsers expect an extraction folder. adb is a common way to produce the files they read."
+  },
+  {
+   "title": "Quick device facts",
+   "why": "Shell commands show model and system details to record in your notes before deeper work."
+  }
+ ],
+ "strengths": [
+  "Free and published by Google as part of the Android Platform-Tools.",
+  "Runs on Windows, macOS and Linux.",
+  "Small download with no install steps beyond unzipping.",
+  "Works with almost every Android phone once debugging is on."
+ ],
+ "limits": [
+  "USB debugging must already be on, and the device must be unlocked to accept the computer. Without this adb cannot talk to the phone.",
+  "It reaches only what the shell user is allowed to read. Private app data is normally out of reach on an unrooted phone.",
+  "Connecting changes the device a little, such as storing the key of your computer. Write down every step you take.",
+  "It is a set of commands, not a forensic suite. You must organise, hash and document the output yourself.",
+  "Behaviour differs between Android versions and phone makers. Test your commands on a similar device first.",
+  "Quoting rules for adb shell are tricky. Values with spaces need extra quotes."
+ ],
+ "works_with": [
+  {
+   "id": "aleapp",
+   "note": "Parse the Android data you pulled"
+  },
+  {
+   "id": "andriller",
+   "note": "Extraction and decoding that builds on adb"
+  },
+  {
+   "id": "scrcpy",
+   "note": "Show the phone screen on your computer"
+  },
+  {
+   "id": "db4s",
+   "note": "Open the SQLite databases you copied"
+  },
+  {
+   "id": "jadx",
+   "note": "Read an APK you pulled from the device"
+  },
+  {
+   "id": "mobsf",
+   "note": "Analyse an app you pulled from the device"
+  }
+ ],
+ "learn": [
+  {
+   "label": "Android Debug Bridge (adb) documentation",
+   "url": "https://developer.android.com/tools/adb"
+  },
+  {
+   "label": "SDK Platform-Tools release notes and downloads",
+   "url": "https://developer.android.com/tools/releases/platform-tools"
+  },
+  {
+   "label": "Logcat command-line tool",
+   "url": "https://developer.android.com/tools/logcat"
+  }
+ ],
+ "sources_note": "Written in our own words from the Android developer documentation for adb."
+}

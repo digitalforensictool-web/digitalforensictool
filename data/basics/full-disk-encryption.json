@@ -1,0 +1,131 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "full-disk-encryption",
+ "branch": "disk",
+ "title": "Full-disk encryption: BitLocker, FileVault, LUKS",
+ "quick": "Full-disk encryption scrambles everything on a volume so it can only be read with the right key. BitLocker, FileVault and LUKS are the common systems on Windows, Mac and Linux.",
+ "sections": [
+  {
+   "title": "The idea",
+   "text": [
+    "The system encrypts all data on the volume as it is written and decrypts it as it is read. An image of a locked volume contains only unreadable data. Without the key you cannot see files, file systems or deleted data.",
+    "The volume is encrypted with a main key. That key is itself protected by a password, a hardware module or a recovery key. The keys are therefore the first thing an examiner looks for."
+   ]
+  },
+  {
+   "title": "The three systems",
+   "text": [
+    "BitLocker (Windows) can use a TPM, a chip that holds keys and checks the boot state, together with a PIN or startup key. It also has a recovery password that may be saved to a Microsoft account or a company directory.",
+    "FileVault (macOS) protects Mac volumes with AES-XTS. A recovery key is created when it is turned on. LUKS (Linux) keeps a header with keyslots. Each keyslot holds a copy of the master key protected by one passphrase or key. If the header is damaged, the data cannot be decrypted, so back it up."
+   ]
+  },
+  {
+   "title": "Practical steps",
+   "text": [
+    "First find out if a volume is encrypted, and whether the system is running. A live running system may have keys in memory, and procedures differ by agency and country, so follow your lab's own procedure before powering anything off.",
+    "Look for recovery keys in accounts, directory services, printed pages or files, as the case allows. Document the state you found and every action you take. Guessing passwords is a separate and often slow task."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "BitLocker, FileVault and LUKS",
+  "headers": [
+   "",
+   "BitLocker",
+   "FileVault",
+   "LUKS"
+  ],
+  "rows": [
+   [
+    "Platform",
+    "Windows",
+    "macOS",
+    "Linux"
+   ],
+   [
+    "Key protection",
+    "TPM, PIN, password, recovery key",
+    "Account password, recovery key",
+    "Passphrase or key in a keyslot"
+   ],
+   [
+    "Key backup",
+    "Account or directory service",
+    "Recovery key, may be escrowed by management",
+    "Header backup and spare keyslots"
+   ],
+   [
+    "Algorithm",
+    "AES (XTS or CBC)",
+    "AES-XTS",
+    "Set in the header, often AES-XTS"
+   ]
+  ]
+ },
+ "example": "A laptop arrives powered off. The image shows an unreadable volume with a BitLocker marker. The case file lists a Microsoft account, and the investigator is authorised to request the recovery password through the proper channel. With it, the volume can be unlocked on a copy.",
+ "mistakes": [
+  "Powering off a running system before checking for keys in memory.",
+  "Imaging only the unlocked drive and forgetting the original encrypted image.",
+  "Forgetting to back up a LUKS header before testing.",
+  "Assuming a strong password cannot be found elsewhere, such as in a stored recovery key."
+ ],
+ "terms": [
+  {
+   "term": "Encryption",
+   "meaning": "Turning data into an unreadable form that needs a key."
+  },
+  {
+   "term": "TPM",
+   "meaning": "A chip that stores keys and checks that the boot process was not changed."
+  },
+  {
+   "term": "Recovery key",
+   "meaning": "A backup key used when the normal unlock fails."
+  },
+  {
+   "term": "Keyslot",
+   "meaning": "A LUKS entry holding the master key protected by one passphrase."
+  },
+  {
+   "term": "Master key",
+   "meaning": "The main key that encrypts the volume data."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Why is a live system important when encryption is present?",
+   "a": "The volume is already unlocked and keys may be in memory. Powering off could make the data unreadable."
+  },
+  {
+   "q": "Where might a BitLocker recovery password be stored?",
+   "a": "In a Microsoft account, in Active Directory or Entra ID, on a printout or in a saved file."
+  }
+ ],
+ "tools": [
+  "dislocker",
+  "hashcat",
+  "john",
+  "arsenal-image-mounter"
+ ],
+ "related": [
+  "mobile-encryption-and-locks",
+  "ram-acquisition",
+  "password-cracking-basics",
+  "live-vs-dead-acquisition"
+ ],
+ "learn": [
+  {
+   "label": "Microsoft Learn: BitLocker overview",
+   "url": "https://learn.microsoft.com/en-us/windows/security/operating-system-security/data-protection/bitlocker/"
+  },
+  {
+   "label": "Apple Platform Security: FileVault",
+   "url": "https://support.apple.com/guide/security/volume-encryption-with-filevault-sec4c6dc1b6e/web"
+  },
+  {
+   "label": "Wikipedia: Linux Unified Key Setup",
+   "url": "https://en.wikipedia.org/wiki/Linux_Unified_Key_Setup"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

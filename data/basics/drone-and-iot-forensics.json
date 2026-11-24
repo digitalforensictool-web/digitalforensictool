@@ -1,0 +1,116 @@
+{
+ "id": "drone-and-iot-forensics",
+ "title": "Drone and IoT forensics basics",
+ "quick": "Drones and other smart devices store logs, media and settings in several places: the device, its controller, a paired phone and the cloud. Careful handling protects the evidence and safety.",
+ "sections": [
+  {
+   "title": "Where the data lives",
+   "text": [
+    "SWGDE guidance lists several sources for drones. These are the aircraft's own memory or SD card, the controller, the phone or tablet running the app, and the maker's cloud account. Flight logs and photos may be copied between these places by sync or backup.",
+    "Smart home and wearable devices (IoT, the Internet of Things) work similarly. They hold little data themselves and often depend on an app and a cloud service."
+   ]
+  },
+  {
+   "title": "Safe handling",
+   "text": [
+    "Treat a drone as a physical hazard. Propellers can spin without warning, and damaged lithium batteries can be dangerous. Isolate the device from radio signals, for example in a Faraday container, so it cannot be wiped remotely. Powering on can create new logs or overwrite old ones, so record its state first.",
+    "Record identifiers, damage and the battery state in your notes."
+   ]
+  },
+  {
+   "title": "What examiners look for",
+   "text": [
+    "Typical items are flight paths, take-off points, times, photos and videos, and the app account. Some logs use proprietary or encrypted formats and need special parsers. A device's GPS may be inaccurate, so check positions against other sources.",
+    "For other IoT devices, firmware can also be examined. Procedures and laws differ by country and agency, follow your lab's own procedure."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "Drone sources of data",
+  "headers": [
+   "Source",
+   "Possible data"
+  ],
+  "rows": [
+   [
+    "Aircraft memory or SD card",
+    "Flight logs, photos, videos"
+   ],
+   [
+    "Controller or phone app",
+    "Logs, settings, account"
+   ],
+   [
+    "Cloud account",
+    "Synced flights and media"
+   ],
+   [
+    "Paired devices",
+    "Backups and copies"
+   ]
+  ]
+ },
+ "example": "A drone is found at a scene. The examiner photographs it, notes the serial number, removes the SD card and images it, then places the drone in a signal blocking bag. Later, the controller phone is examined and its app database gives flight times that match the log on the card.",
+ "mistakes": [
+  "Powering on the drone to see what is inside.",
+  "Ignoring the controller, phone app and cloud account.",
+  "Leaving the device connected to wireless networks.",
+  "Handling a damaged battery without safety precautions.",
+  "Trusting GPS positions without checking them."
+ ],
+ "terms": [
+  {
+   "term": "IoT",
+   "meaning": "Internet of Things. Everyday devices that connect to networks."
+  },
+  {
+   "term": "Flight log",
+   "meaning": "A record of positions, times and settings during a flight."
+  },
+  {
+   "term": "Firmware",
+   "meaning": "The built-in software that runs a device."
+  },
+  {
+   "term": "Faraday container",
+   "meaning": "A shielded container that blocks radio signals."
+  },
+  {
+   "term": "Telemetry",
+   "meaning": "Data sent back from a device about its state."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Where can drone flight data be stored?",
+   "a": "In the aircraft, on its SD card, in the controller, in the phone app and in the cloud account."
+  },
+  {
+   "q": "Why isolate a drone from radio signals?",
+   "a": "To stop remote commands such as a wipe and to protect the evidence from change."
+  }
+ ],
+ "tools": [
+  "datcon",
+  "dji-log-parser",
+  "mission-planner",
+  "emba",
+  "binwalk",
+  "gpsbabel"
+ ],
+ "related": [
+  "mobile-forensics-overview",
+  "vehicle-forensics-basics",
+  "mobile-isolation",
+  "cloud-forensics-basics"
+ ],
+ "learn": [
+  {
+   "label": "UAV forensic investigation process, DJI Phantom 3 case study (arXiv)",
+   "url": "https://arxiv.org/abs/1804.08649"
+  }
+ ],
+ "reviewed": "2026-11-24",
+ "branch": "specialist",
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

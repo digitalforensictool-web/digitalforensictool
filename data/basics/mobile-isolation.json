@@ -1,0 +1,95 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "mobile-isolation",
+ "branch": "mobile",
+ "title": "Isolating a phone: airplane mode and Faraday bags",
+ "quick": "Isolation means stopping a seized phone from using mobile, Wi-Fi and Bluetooth networks, so new data or remote commands cannot change the evidence. Airplane mode and Faraday containers are common tools.",
+ "sections": [
+  {
+   "title": "Why isolate",
+   "text": [
+    "A connected phone can receive messages and calls, sync apps and accept a remote wipe or lock command. Any of these can change or destroy evidence. Isolation reduces that risk."
+   ]
+  },
+  {
+   "title": "Airplane mode and Faraday containers",
+   "text": [
+    "Airplane mode turns off radios, but it needs you to touch the phone, and some radios may still run or come back on. A Faraday bag or box is a shielded container that blocks radio signals. Guidance says shielding may not stop every signal, so test your container regularly. Cables passing through the shield can also act as antennas."
+   ],
+   "points": [
+    "Airplane mode: changes the phone, must be checked.",
+    "Faraday container: no touch needed, needs testing.",
+    "Isolation card or other methods: can also be used."
+   ]
+  },
+  {
+   "title": "Power and battery",
+   "text": [
+    "A phone inside a shield keeps searching for signal and the battery drains fast. If it turns off, it may need the passcode and access may be lost. Plan for power, using a method that does not break the shield, and follow your lab's procedure."
+   ]
+  },
+  {
+   "title": "Record what you do",
+   "text": [
+    "Write down the time, the method and the state of the device before and after. Procedures and laws differ by country and agency."
+   ]
+  }
+ ],
+ "example": "A phone is found switched on and unlocked. The first officer places it in a tested shielded container with a power bank cable arranged by the lab procedure, and notes the time, the battery level and the network symbols shown on the screen.",
+ "mistakes": [
+  "Believing a Faraday bag always works without testing it.",
+  "Switching airplane mode on a locked phone by guessing.",
+  "Letting the battery run flat.",
+  "Breaking the shield to connect a cable and reconnecting the phone to the network.",
+  "Not writing down when isolation was done."
+ ],
+ "terms": [
+  {
+   "term": "Airplane mode",
+   "meaning": "A phone setting that turns off radio transmission."
+  },
+  {
+   "term": "Faraday container",
+   "meaning": "A shielded bag or box that blocks radio waves."
+  },
+  {
+   "term": "Remote wipe",
+   "meaning": "A command sent over a network that erases a device."
+  },
+  {
+   "term": "RF",
+   "meaning": "Radio frequency signals used for mobile and wireless networks."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Why is a Faraday bag tested before use?",
+   "a": "Some shields only reduce signals, so a test shows whether the phone can still connect."
+  },
+  {
+   "q": "Why is airplane mode alone not always enough?",
+   "a": "It needs interaction with the phone, and some wireless functions may stay on or be turned back on."
+  }
+ ],
+ "tools": [
+  "adb",
+  "scrcpy"
+ ],
+ "related": [
+  "mobile-forensics-overview",
+  "mobile-encryption-and-locks",
+  "chain-of-custody",
+  "good-practice-principles"
+ ],
+ "learn": [
+  {
+   "label": "NIST SP 800-101 Rev. 1: Guidelines on Mobile Device Forensics",
+   "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-101r1.pdf"
+  },
+  {
+   "label": "SWGDE: Mobile device evidence collection, preservation, handling and acquisition",
+   "url": "https://www.swgde.org/documents/published-complete-listing/18-f-003-2/"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

@@ -1,0 +1,197 @@
+{
+ "reviewed": "2026-11-24",
+ "lead": "Compute hashes for every file in a folder tree, then use the saved list later to check that nothing changed. The hashdeep tool set is also known as md5deep.",
+ "use_when": [
+  "You need a hash list for a whole folder of exported evidence, not just one file.",
+  "You want to prove later that a set of files is unchanged, or find which files were added, removed or altered.",
+  "You need to compare files against a list of known hashes."
+ ],
+ "features": [
+  {
+   "title": "Hashing",
+   "items": [
+    "Supports MD5, SHA-1, SHA-256, Tiger and Whirlpool",
+    "Computes several hashes in the same pass; the default is MD5 and SHA-256",
+    "Goes through folders and subfolders with the -r option",
+    "Reads from standard input when no files are given"
+   ]
+  },
+  {
+   "title": "Audit mode",
+   "items": [
+    "Checks a folder against a hash list made earlier",
+    "Passes only if every file matches exactly one known entry",
+    "Reports new, missing and changed files, with more detail at higher verbosity"
+   ]
+  },
+  {
+   "title": "Matching",
+   "items": [
+    "Positive matching shows files that match a known hash",
+    "Negative matching shows files that match none of the known hashes",
+    "Can show the name of the known file that matched"
+   ]
+  },
+  {
+   "title": "Output control",
+   "items": [
+    "Can write Digital Forensics XML (DFXML)",
+    "Relative or bare file names, and a progress display",
+    "Can hash files in pieces of a set size",
+    "Exit codes tell scripts whether the check passed"
+   ]
+  }
+ ],
+ "requirements": "Command-line tool for Unix-like systems and Windows. On Unix-like systems you build it from source with the usual autotools steps (bootstrap, configure, make, make install). The project also lists Windows builds of its 4.4 release, and your Linux distribution may offer a package.",
+ "steps": [
+  {
+   "title": "Install the tool",
+   "text": "On Linux or macOS, install it from your package manager if it is available, or build it from the source on the project's GitHub page. On Windows, download a Windows build from the project's releases. Then open a terminal."
+  },
+  {
+   "title": "Check the help text",
+   "text": "Run the tool with -h to see the options for your version, and -V to see the version number. Record the version in your case notes.",
+   "cmd": "hashdeep -h"
+  },
+  {
+   "title": "Hash a folder tree",
+   "text": "Use -r to go through all subfolders and save the output to a file. This file is your audit list. Store it outside the folder you are hashing, and keep a copy in a safe place.",
+   "cmd": "hashdeep -r dir > /tmp/auditfile"
+  },
+  {
+   "title": "Choose the algorithms if needed",
+   "text": "Use -c with a comma-separated list if your lab policy needs a particular algorithm. The default is MD5 and SHA-256.",
+   "cmd": "hashdeep -c sha1,sha256 -r dir > /tmp/auditfile"
+  },
+  {
+   "title": "Audit the folder later",
+   "text": "Run it again with -a for audit mode and -k for the saved list. It prints Audit passed if every file matches, or Audit Failed if not.",
+   "cmd": "hashdeep -a -k /tmp/auditfile -r dir"
+  },
+  {
+   "title": "See what changed",
+   "text": "If the audit fails, add -v twice to see the differences between the folder and the list. Add -v three times to see the result for every file. Read the exit code in a script to know the outcome."
+  },
+  {
+   "title": "Find known or unknown files",
+   "text": "Use -m to show only files that match your known list, or -x to show only files that do not. Use -w with -m to see which known entry matched.",
+   "cmd": "hashdeep -m -w -k known.txt -r dir"
+  }
+ ],
+ "options": [
+  {
+   "cmd": "-r",
+   "what": "Goes through subfolders."
+  },
+  {
+   "cmd": "-c md5,sha1,sha256,tiger,whirlpool",
+   "what": "Chooses which hash algorithms to compute. Pick any of these."
+  },
+  {
+   "cmd": "-a -k <file>",
+   "what": "Audit mode against a known hash list. Needs at least one -k file."
+  },
+  {
+   "cmd": "-m / -x",
+   "what": "Shows only matching files (-m) or only non-matching files (-x). -M and -X also show the hash."
+  },
+  {
+   "cmd": "-v",
+   "what": "More detail in audit output. Repeat it for more. Two give the differences, three give every file."
+  },
+  {
+   "cmd": "-l",
+   "what": "Shows paths as typed on the command line, not full paths."
+  },
+  {
+   "cmd": "-b",
+   "what": "Removes folder names from file names in the output."
+  },
+  {
+   "cmd": "-d",
+   "what": "Writes the output in DFXML format."
+  },
+  {
+   "cmd": "-j0",
+   "what": "Turns off threads so the output order is the same every time."
+  },
+  {
+   "cmd": "-p <size>",
+   "what": "Hashes each file in pieces of this size."
+  }
+ ],
+ "cases": [
+  {
+   "title": "Verifying exported evidence",
+   "why": "Hash a folder of exported files when you export it, and audit it later to show that nothing was altered."
+  },
+  {
+   "title": "Chain of custody for file sets",
+   "why": "A saved hash list travels with the files. The receiving party runs an audit to confirm they have the same content."
+  },
+  {
+   "title": "Finding known files",
+   "why": "Match files against a list of known hashes, for example a list of files you want to flag, using positive matching."
+  },
+  {
+   "title": "Filtering out known files",
+   "why": "Negative matching shows files that are not on a known list, which leaves fewer files to review by hand."
+  },
+  {
+   "title": "Detecting change in a working copy",
+   "why": "Audit mode tells you which files were added, removed or modified between two points in time."
+  }
+ ],
+ "strengths": [
+  "Free and open source, with a command-line design that fits scripts.",
+  "Audit mode gives a clear pass or fail, with exit codes for automation.",
+  "Several algorithms can be computed in one pass.",
+  "The project says it uses one thread to scan files and one hashing thread per CPU core."
+ ],
+ "limits": [
+  "It has no graphical interface. Beginners need to be comfortable in a terminal.",
+  "Matching and audit modes need hash lists that were produced by hashdeep itself.",
+  "The -r option cannot select files by extension. Use another tool such as find to choose files.",
+  "Known-hash files cannot have Unicode characters in their own file names.",
+  "The Windows console cannot show Unicode names well. Save the output to a file or use -u.",
+  "The project's last release listed in its README is 4.4, so check support for new systems yourself.",
+  "With threads on, the output order changes between runs. Use -j0 if you need the same order."
+ ],
+ "works_with": [
+  {
+   "id": "quickhash",
+   "note": "A graphical way to hash folders and compare"
+  },
+  {
+   "id": "ftk-imager",
+   "note": "Export files from images, then hash the export"
+  },
+  {
+   "id": "nsrl",
+   "note": "Known-file hash sets to compare against"
+  },
+  {
+   "id": "ssdeep",
+   "note": "Fuzzy hashes for files that are similar, not identical"
+  },
+  {
+   "id": "libewf",
+   "note": "Verify image hashes before you hash the files"
+  }
+ ],
+ "learn": [
+  {
+   "label": "hashdeep project page and README (GitHub)",
+   "url": "https://github.com/jessek/hashdeep"
+  },
+  {
+   "label": "hashdeep man page (project repository)",
+   "url": "https://github.com/jessek/hashdeep/blob/master/man/hashdeep.1"
+  },
+  {
+   "label": "Project NEWS file with changes between releases",
+   "url": "https://github.com/jessek/hashdeep/blob/master/NEWS"
+  }
+ ],
+ "sources_note": "Written in our own words from the hashdeep project's documentation."
+}

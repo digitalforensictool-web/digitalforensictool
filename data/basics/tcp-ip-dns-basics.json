@@ -1,0 +1,101 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "tcp-ip-dns-basics",
+ "branch": "network",
+ "title": "TCP/IP and DNS basics for investigators",
+ "quick": "TCP/IP is the set of rules that devices use to send data across networks, and DNS turns names like example.org into IP addresses. Knowing both helps you read packets and logs correctly.",
+ "sections": [
+  {
+   "title": "Layers and addresses",
+   "text": [
+    "Network data is built in layers. Each layer adds its own header around the data. An IP address says which device the packet is for. A port number says which service on that device. Together with the protocol they identify a connection.",
+    "IP addresses can be IPv4 or IPv6. Many home and office devices use private addresses inside and share one public address outside."
+   ]
+  },
+  {
+   "title": "TCP and UDP",
+   "text": [
+    "TCP sets up a connection first, with a three step handshake, and checks that data arrives. UDP just sends messages without a connection. DNS normally uses UDP port 53 for small queries and TCP for larger replies and zone transfers (RFC 1035)."
+   ],
+   "points": [
+    "TCP: reliable, ordered, used by web and email.",
+    "UDP: lighter and faster, used by DNS and streaming.",
+    "A TCP handshake in a capture shows when a connection started."
+   ]
+  },
+  {
+   "title": "What DNS does",
+   "text": [
+    "A device asks a resolver for the address of a name. The answer is made of resource records. An A record gives an IPv4 address, a CNAME gives an alias, an MX record names a mail server and a TXT record holds text.",
+    "DNS logs and captures show which names a device looked up and when, even if the later traffic is encrypted."
+   ]
+  },
+  {
+   "title": "Why it matters",
+   "text": [
+    "A name looked up can show intent, such as a visit to a certain site. But a lookup does not prove a person saw the page. Caches and automatic software also make lookups. Procedures and laws differ by country and agency, so follow your lab's own procedure."
+   ]
+  }
+ ],
+ "mistakes": [
+  "Treating a DNS lookup as proof that a user visited a site.",
+  "Forgetting that many users share one public IP address.",
+  "Confusing the source port with the service port.",
+  "Ignoring DNS over TCP and other transports when filtering."
+ ],
+ "terms": [
+  {
+   "term": "IP address",
+   "meaning": "A number that identifies a network interface."
+  },
+  {
+   "term": "Port",
+   "meaning": "A number that identifies a service on a device."
+  },
+  {
+   "term": "TCP",
+   "meaning": "A connection based protocol that checks delivery."
+  },
+  {
+   "term": "UDP",
+   "meaning": "A simple protocol that sends messages without a connection."
+  },
+  {
+   "term": "Resolver",
+   "meaning": "A server that answers DNS questions for clients."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Which record type names a mail server?",
+   "a": "The MX record."
+  },
+  {
+   "q": "Why is a DNS log useful when traffic is encrypted?",
+   "a": "The lookup is often visible even when the later connection is encrypted, so it shows which names were requested."
+  }
+ ],
+ "tools": [
+  "wireshark",
+  "tcpdump",
+  "zeek",
+  "zui"
+ ],
+ "related": [
+  "packet-capture-pcap",
+  "tls-and-encrypted-traffic",
+  "network-flow-data",
+  "email-headers"
+ ],
+ "learn": [
+  {
+   "label": "RFC 1035: Domain Names, Implementation and Specification",
+   "url": "https://www.rfc-editor.org/rfc/rfc1035"
+  },
+  {
+   "label": "Wireshark User's Guide: Introduction",
+   "url": "https://www.wireshark.org/docs/wsug_html_chunked/ChapterIntroduction.html"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

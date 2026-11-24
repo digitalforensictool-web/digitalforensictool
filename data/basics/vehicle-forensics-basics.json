@@ -1,0 +1,110 @@
+{
+ "id": "vehicle-forensics-basics",
+ "title": "Vehicle forensics basics",
+ "quick": "Modern cars store digital data in the infotainment system and telematics unit, including paired phones, locations and connection events. Examiners must handle them with care for safety and for the data.",
+ "sections": [
+  {
+   "title": "What a car can hold",
+   "text": [
+    "The infotainment system is the screen and computer in the dashboard. The telematics unit handles tracking and mobile connections. According to SWGDE guidance, these can hold contacts, call logs, messages, saved places, routes, Wi-Fi details and records of Bluetooth and USB connections.",
+    "Vehicle events such as door opening or system restarts may also be logged."
+   ]
+  },
+  {
+   "title": "Acquisition and handling",
+   "text": [
+    "Some systems can be read in the car, others must be removed first. Extraction is sometimes not possible, so photographing the screen may be needed. Cars have hazards such as airbag modules and high-voltage batteries in electric and hybrid vehicles. Control units use power even when the ignition is off, so limit power cycles.",
+    "Isolate wireless parts and keep key fobs in shielded containers. Collect phones, dash cameras and other items found with the vehicle, and keep chain of custody."
+   ]
+  },
+  {
+   "title": "Reading the evidence",
+   "text": [
+    "Check the car clock against a known time and note the time zone. A phone that was paired earlier may reconnect, which can add new data, so isolate it. Related cloud data may also exist and may need to be preserved quickly.",
+    "Procedures and laws differ by country and agency, follow your lab's own procedure."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "Infotainment and telematics",
+  "headers": [
+   "",
+   "Infotainment",
+   "Telematics"
+  ],
+  "rows": [
+   [
+    "Main role",
+    "Media, navigation, phone link",
+    "Tracking, mobile connectivity"
+   ],
+   [
+    "Typical data",
+    "Contacts, calls, routes",
+    "Locations, connection records"
+   ]
+  ]
+ },
+ "example": "A student examines a training vehicle. She photographs the screen, notes the displayed time against her watch, and lists the phones paired with it. The paired device list matches a phone seized separately, which links the phone to the car.",
+ "mistakes": [
+  "Ignoring safety risks such as airbags and high-voltage parts.",
+  "Leaving the vehicle connected to wireless networks.",
+  "Cycling the power many times for no reason.",
+  "Trusting the car clock without checking it.",
+  "Forgetting the phones and fobs found inside the car."
+ ],
+ "terms": [
+  {
+   "term": "Infotainment",
+   "meaning": "The dashboard system for media, navigation and phone connection."
+  },
+  {
+   "term": "Telematics",
+   "meaning": "Technology that sends vehicle data over mobile networks."
+  },
+  {
+   "term": "ECU",
+   "meaning": "Electronic control unit, a small computer inside a car."
+  },
+  {
+   "term": "CAN bus",
+   "meaning": "The network that links the electronic units in many vehicles."
+  },
+  {
+   "term": "Pairing",
+   "meaning": "Linking a phone to the car by Bluetooth."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Name data an infotainment system may hold.",
+   "a": "Paired phone data, contacts, call logs, locations, routes and Wi-Fi or Bluetooth connection records."
+  },
+  {
+   "q": "Why limit power cycles on a vehicle?",
+   "a": "Control units stay active and each cycle may change or overwrite data."
+  }
+ ],
+ "tools": [
+  "can-utils",
+  "savvycan",
+  "exiftool",
+  "gpsbabel",
+  "google-earth-pro"
+ ],
+ "related": [
+  "drone-and-iot-forensics",
+  "mobile-forensics-overview",
+  "mobile-artifacts",
+  "chain-of-custody"
+ ],
+ "learn": [
+  {
+   "label": "Magnet Forensics: Vehicle forensics, a practical guide",
+   "url": "https://magnetforensics.com/blog/vehicle-forensics-a-practical-guide/"
+  }
+ ],
+ "reviewed": "2026-11-24",
+ "branch": "specialist",
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

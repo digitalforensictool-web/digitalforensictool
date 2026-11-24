@@ -1,0 +1,92 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "mobile-encryption-and-locks",
+ "branch": "mobile",
+ "title": "Phone encryption, locks and BFU or AFU",
+ "quick": "Modern phones encrypt user data with keys linked to the screen lock. BFU means before first unlock after a restart. AFU means after the first unlock. AFU usually gives access to more data.",
+ "sections": [
+  {
+   "title": "Encryption and the screen lock",
+   "text": [
+    "Phone storage is encrypted. The keys are protected by the user's passcode and by hardware in the device. This means data is hard to read without the passcode, even if you copy the storage."
+   ]
+  },
+  {
+   "title": "BFU and AFU",
+   "text": [
+    "BFU (Before First Unlock) is the state after a restart when the user has not yet entered the passcode. AFU (After First Unlock) is the state after the user has unlocked the phone once since the restart. In AFU, many keys stay available in memory, even if the screen is locked again. In BFU, less data can be read. For this reason guidance tells examiners to keep a powered-on phone powered on and avoid a reboot."
+   ],
+   "points": [
+    "Apple: some data classes stay available after first unlock.",
+    "Android: Credential Encrypted storage is available only after first unlock.",
+    "Both: a restart returns the phone to BFU."
+   ]
+  },
+  {
+   "title": "Lock types and attempts",
+   "text": [
+    "Locks can be passcodes, patterns or biometrics. Some phones limit wrong attempts or erase data after too many. Guidance says to record every attempt. Biometric unlock may time out and may need the passcode again. Procedures and laws differ by country and agency, so follow your lab's own procedure before trying to bypass a lock."
+   ]
+  }
+ ],
+ "mistakes": [
+  "Rebooting a phone that is in AFU.",
+  "Guessing passcodes without a plan and triggering a lock or wipe.",
+  "Believing a screen lock and the encryption are the same thing.",
+  "Not recording how many attempts were made.",
+  "Assuming biometrics will keep working for days."
+ ],
+ "terms": [
+  {
+   "term": "BFU",
+   "meaning": "Before First Unlock, the state after a restart before the passcode is entered."
+  },
+  {
+   "term": "AFU",
+   "meaning": "After First Unlock, the state after the passcode has been entered once since restart."
+  },
+  {
+   "term": "Passcode",
+   "meaning": "The secret code used to unlock a phone."
+  },
+  {
+   "term": "Biometrics",
+   "meaning": "Unlocking by fingerprint or face."
+  }
+ ],
+ "exam": [
+  {
+   "q": "What is the difference between BFU and AFU?",
+   "a": "BFU is before the first unlock after a restart and gives little access. AFU is after the first unlock and usually keeps more data available."
+  },
+  {
+   "q": "Why should a powered-on phone not be restarted?",
+   "a": "A restart returns it to BFU and some data may become unreachable."
+  }
+ ],
+ "tools": [
+  "adb",
+  "mvt"
+ ],
+ "related": [
+  "android-acquisition-basics",
+  "ios-acquisition-basics",
+  "mobile-isolation",
+  "full-disk-encryption"
+ ],
+ "learn": [
+  {
+   "label": "SWGDE: Mobile device evidence collection, preservation, handling and acquisition",
+   "url": "https://www.swgde.org/documents/published-complete-listing/18-f-003-2/"
+  },
+  {
+   "label": "Apple Platform Security: Data Protection classes",
+   "url": "https://support.apple.com/guide/security/secb010e978a/web"
+  },
+  {
+   "label": "Android Open Source Project: File-based encryption",
+   "url": "https://source.android.com/docs/security/features/encryption/file-based"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

@@ -1,0 +1,133 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "evidence-integrity",
+ "branch": "foundations",
+ "title": "How do we prove evidence was not changed?",
+ "quick": "We protect the original with write blocking, copy it bit by bit, compare hash values of the original and copy, and keep notes and custody records of every step.",
+ "sections": [
+  {
+   "title": "What integrity means",
+   "text": [
+    "Integrity means the evidence is complete and unchanged since collection. You cannot prove it with one trick. Several controls work together, and each covers a different risk."
+   ]
+  },
+  {
+   "title": "Controls that protect integrity",
+   "text": [
+    "Together these controls give a reader reasons to trust the evidence."
+   ],
+   "points": [
+    "Write blocker: stops changes to the original drive",
+    "Forensic image: a copy, so the original is touched once",
+    "Hash values: show the copy matches the original",
+    "Work on copies: the image stays as a master",
+    "Chain of custody: shows who held the item",
+    "Notes and logs: record each action"
+   ]
+  },
+  {
+   "title": "Verification in practice",
+   "text": [
+    "Calculate a hash of the source when you acquire it and a hash of the image after. Compare them. Store both values in your notes. Later, hash the image again before analysis. If the value is still the same, the image was not altered while stored.",
+    "NIST SP 800-86 says to use message digests of the original and copy and compare them."
+   ]
+  },
+  {
+   "title": "When data must change",
+   "text": [
+    "Some sources cannot stay unchanged, such as a live system or a phone that is on. In these cases you reduce changes, record what you did and explain the effect in your report."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "Controls and what they address",
+  "headers": [
+   "Control",
+   "Risk it reduces"
+  ],
+  "rows": [
+   [
+    "Write blocker",
+    "Changes to the original during connection"
+   ],
+   [
+    "Hash comparison",
+    "Errors or changes in the copy"
+   ],
+   [
+    "Custody record",
+    "Doubts about who handled it"
+   ],
+   [
+    "Notes and logs",
+    "Doubts about what was done"
+   ]
+  ]
+ },
+ "example": "After imaging a drive, the examiner records the source and image SHA-256 values in the case notes. Three weeks later the image is hashed again before analysis. The values match, so the image has not changed in storage.",
+ "mistakes": [
+  "Hashing only the final report and not the evidence image.",
+  "Not hashing the image again before analysis.",
+  "Connecting the drive without a write blocker, then hashing afterwards.",
+  "Not writing the hash value in the notes.",
+  "Assuming the image hash shows the original is unchanged if the original was not write blocked."
+ ],
+ "terms": [
+  {
+   "term": "Verification",
+   "meaning": "Checking that a copy matches its source, usually by hash."
+  },
+  {
+   "term": "Master copy",
+   "meaning": "The image kept untouched and used only to make working copies."
+  },
+  {
+   "term": "Write blocker",
+   "meaning": "A device or setting that allows reads but stops writes to a drive."
+  },
+  {
+   "term": "Tamper-evident",
+   "meaning": "Built so that any opening or change is visible."
+  }
+ ],
+ "exam": [
+  {
+   "q": "How do you show an image is identical to the original drive?",
+   "a": "Hash the source and the image with the same algorithm and compare. Equal values show the data matches."
+  },
+  {
+   "q": "Does a hash prove the original was never changed?",
+   "a": "No. It only shows the copy matches the source at the time of hashing. Write blocking and notes show the source was protected."
+  }
+ ],
+ "tools": [
+  "ftk-imager",
+  "guymager",
+  "dc3dd",
+  "libewf",
+  "hashdeep",
+  "quickhash"
+ ],
+ "related": [
+  "hash-values",
+  "write-blocker",
+  "chain-of-custody",
+  "what-is-forensic-imaging",
+  "good-practice-principles"
+ ],
+ "learn": [
+  {
+   "label": "NIST SP 800-86: Guide to Integrating Forensic Techniques into Incident Response",
+   "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-86.pdf"
+  },
+  {
+   "label": "RFC 3227: Guidelines for Evidence Collection and Archiving",
+   "url": "https://datatracker.ietf.org/doc/html/rfc3227"
+  },
+  {
+   "label": "NIST Computer Forensics Tool Testing Program",
+   "url": "https://www.nist.gov/itl/ssd/software-quality-group/computer-forensics-tool-testing-program-cftt"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

@@ -1,0 +1,131 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "partitions-mbr-gpt",
+ "branch": "disk",
+ "title": "Partitions: MBR and GPT",
+ "quick": "A partition is a section of a drive treated as a separate volume. MBR and GPT are two ways of recording where the partitions start and end.",
+ "sections": [
+  {
+   "title": "What a partition is",
+   "text": [
+    "A partition table divides one physical drive into parts. Each part can hold its own file system. The table only stores where each part starts, how big it is and what type it is.",
+    "For an examiner the partition table matters because deleted or hidden partitions, and space between partitions, can still hold data."
+   ]
+  },
+  {
+   "title": "MBR",
+   "text": [
+    "The Master Boot Record sits in the first sector of the drive (512 bytes). It holds a small piece of boot code, a table with four entries, and a two byte signature (0x55 0xAA) at the end.",
+    "Start and size are stored as 32-bit sector numbers. With 512-byte sectors this limits addressing to about 2 TiB. Only four primary partitions fit, so extended partitions are used to hold more."
+   ]
+  },
+  {
+   "title": "GPT",
+   "text": [
+    "The GUID Partition Table is part of the UEFI standard. The first sector holds a protective MBR, so old tools do not think the disk is empty. The real header is in the second sector and starts with the text EFI PART.",
+    "The partition entries are stored twice, once near the start and once near the end of the disk, together with a backup header. Each entry has a type GUID (a long unique identifier), a unique GUID, start and end sectors, and a name. If the main header is damaged, the backup can be used."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "MBR and GPT",
+  "headers": [
+   "",
+   "MBR",
+   "GPT"
+  ],
+  "rows": [
+   [
+    "Location of table",
+    "Sector 0",
+    "Sector 1 onward, plus a backup at the end"
+   ],
+   [
+    "Partitions",
+    "4 primary entries",
+    "Many entries (128 in a common layout)"
+   ],
+   [
+    "Size limit",
+    "About 2 TiB with 512-byte sectors",
+    "Far larger"
+   ],
+   [
+    "Backup copy",
+    "No",
+    "Yes"
+   ],
+   [
+    "Identifiers",
+    "One byte type code",
+    "Type GUID and unique GUID"
+   ]
+  ]
+ },
+ "example": "A 4 TB drive shows only 2 TB of usable space in an old tool. The examiner finds a protective MBR in sector 0 and an EFI PART header in sector 1. The disk is GPT, so the old tool only understood the protective record.",
+ "mistakes": [
+  "Looking only at the partitions the operating system shows, and missing deleted or hidden ones.",
+  "Treating the protective MBR of a GPT disk as the real partition table.",
+  "Ignoring unallocated gaps between partitions.",
+  "Forgetting that sector size can be 4096 bytes, so offsets change."
+ ],
+ "terms": [
+  {
+   "term": "Partition",
+   "meaning": "A defined section of a drive that is treated as its own volume."
+  },
+  {
+   "term": "MBR",
+   "meaning": "Master Boot Record, the first sector of a drive using the older layout."
+  },
+  {
+   "term": "GPT",
+   "meaning": "GUID Partition Table, the newer layout from the UEFI standard."
+  },
+  {
+   "term": "GUID",
+   "meaning": "A long unique identifier used for disks and partitions."
+  },
+  {
+   "term": "Protective MBR",
+   "meaning": "A fake MBR at the start of a GPT disk that stops old tools from treating it as empty."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Why does a GPT disk have a protective MBR?",
+   "a": "So tools that only know MBR see the disk as used and do not overwrite or ignore it."
+  },
+  {
+   "q": "Why is there a backup GPT header?",
+   "a": "If the main header or entry array is damaged, the backup at the end of the disk lets the table be rebuilt."
+  }
+ ],
+ "tools": [
+  "testdisk",
+  "sleuthkit",
+  "hxd",
+  "imhex"
+ ],
+ "related": [
+  "file-systems-overview",
+  "what-is-forensic-imaging",
+  "slack-and-unallocated-space",
+  "full-disk-encryption"
+ ],
+ "learn": [
+  {
+   "label": "UEFI specification: GUID Partition Table format",
+   "url": "https://uefi.org/specs/UEFI/2.10/05_GUID_Partition_Table_Format.html"
+  },
+  {
+   "label": "Wikipedia: Master boot record",
+   "url": "https://en.wikipedia.org/wiki/Master_boot_record"
+  },
+  {
+   "label": "NIST SP 800-86: Guide to Integrating Forensic Techniques into Incident Response",
+   "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-86.pdf"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

@@ -1,0 +1,88 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "pagefile-and-hiberfil",
+ "branch": "memory",
+ "title": "Pagefile, hiberfil.sys and swap",
+ "quick": "Pagefile.sys, hiberfil.sys and swap are disk files that can hold copies of memory content. They help when RAM was not captured, but they have limits.",
+ "sections": [
+  {
+   "title": "Pagefile and swap",
+   "text": [
+    "When Windows needs more working memory, it moves rarely used memory pages to a hidden file called the page file, usually pagefile.sys at the root of the system drive. Linux does a similar job with a swap partition or swap file. These files can hold pieces of past memory, such as text, passwords or parts of programs. The pieces are scattered and incomplete, so search them with strings or carving tools."
+   ]
+  },
+  {
+   "title": "Hibernation file",
+   "text": [
+    "When a computer hibernates, Windows writes the RAM content into hiberfil.sys. On newer Windows, Fast Startup can also make this file at shutdown, but it then holds mostly kernel data, not user sessions. The file is stored in compressed form, so it must be converted to a raw memory image before a normal analysis tool can read it. It is a snapshot of one moment and is overwritten each time.",
+    "If the drive uses full disk encryption, you need the key to read it."
+   ]
+  },
+  {
+   "title": "How examiners use them",
+   "text": [
+    "Take a disk image, then extract these files from it. A running system keeps them locked, so a disk image is the safer source. Search the page file for strings and URLs. Convert hiberfil.sys and analyse it like a memory image. Settings may clear the page file at shutdown, so it can be empty."
+   ]
+  }
+ ],
+ "example": "A laptop was found powered off, so no RAM was captured. The examiner images the disk, extracts hiberfil.sys, converts it to a raw memory image and finds the browser and chat programs that were open at hibernation.",
+ "mistakes": [
+  "Copying hiberfil.sys from a live system, which can give a damaged file.",
+  "Treating the page file as one continuous memory image.",
+  "Ignoring these files when RAM could not be captured.",
+  "Forgetting that Fast Startup may not keep user session data."
+ ],
+ "terms": [
+  {
+   "term": "Page file",
+   "meaning": "A hidden file that extends memory by holding pages moved out of RAM."
+  },
+  {
+   "term": "Hibernation",
+   "meaning": "A power state that saves RAM to disk."
+  },
+  {
+   "term": "Swap",
+   "meaning": "The Linux space used in the same way as a page file."
+  },
+  {
+   "term": "Fast Startup",
+   "meaning": "A Windows option that saves part of the system state to speed up the next start."
+  }
+ ],
+ "exam": [
+  {
+   "q": "How is hiberfil.sys useful?",
+   "a": "It holds a compressed copy of RAM from the time of hibernation, which can be converted and analysed."
+  },
+  {
+   "q": "Why is the page file less complete than a RAM image?",
+   "a": "It holds only pages moved out of memory, scattered over time."
+  }
+ ],
+ "tools": [
+  "volatility3",
+  "bulk-extractor",
+  "bstrings",
+  "ftk-imager",
+  "autopsy",
+  "foremost"
+ ],
+ "related": [
+  "ram-acquisition",
+  "memory-analysis-basics",
+  "slack-and-unallocated-space",
+  "full-disk-encryption"
+ ],
+ "learn": [
+  {
+   "label": "Microsoft: Introduction to the page file",
+   "url": "https://learn.microsoft.com/en-us/troubleshoot/windows-client/performance/introduction-to-the-page-file"
+  },
+  {
+   "label": "Magnet Forensics: Inside hiberfil.sys",
+   "url": "https://www.magnetforensics.com/blog/when-windows-takes-a-nap-and-leaves-you-evidence-inside-hiberfil-sys/"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

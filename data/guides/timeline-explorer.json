@@ -1,0 +1,151 @@
+{
+ "reviewed": "2026-11-24",
+ "lead": "Open large CSV and Excel files in a table you can filter, group and sort. Timeline Explorer is a free program by Eric Zimmerman, made to read the output of forensic parsers.",
+ "use_when": [
+  "A parser such as MFTECmd gave you a CSV with a very large number of rows.",
+  "You want to filter by time, user, program or path without writing queries.",
+  "You need to read CSV timelines that are too big for a normal spreadsheet."
+ ],
+ "features": [
+  {
+   "title": "Viewing",
+   "items": [
+    "Opens CSV and Excel files",
+    "Shows data as a table with one column per field",
+    "The project describes it as a viewer for filtering, grouping and sorting"
+   ]
+  },
+  {
+   "title": "Working with columns",
+   "items": [
+    "Filter and sort on any column",
+    "Group rows by a column to see counts and patterns",
+    "Search across the data"
+   ]
+  },
+  {
+   "title": "Made for forensic output",
+   "items": [
+    "Used with the CSV output of the other Eric Zimmerman tools",
+    "Other guides show it opening KAPE timeline output"
+   ]
+  }
+ ],
+ "formats": [
+  "CSV",
+  "Excel"
+ ],
+ "requirements": "Windows with the .NET 10 Desktop runtime or newer. The current download is for .NET 10 only. The project says to unzip with 7-Zip or WinRAR and not to run it from Program Files unless you run as administrator. It is free, but it is not open source.",
+ "steps": [
+  {
+   "title": "Install the runtime",
+   "text": "Install the .NET 10 Desktop runtime from Microsoft if your computer does not have it. Timeline Explorer is a window-based program, so it needs the Desktop runtime."
+  },
+  {
+   "title": "Download and unzip",
+   "text": "Download TimelineExplorer.zip from Eric Zimmerman's tools page. Unzip it with 7-Zip or WinRAR into a folder such as C:\\Tools\\TimelineExplorer. Do not use Program Files."
+  },
+  {
+   "title": "Create a CSV to look at",
+   "text": "Run a parser first, for example MFTECmd with its --csv option. Save the CSV in your case folder. You can also use CSV files produced by KAPE modules.",
+   "cmd": "MFTECmd.exe -f \"C:\\Temp\\SomeMFT\" --csv \"c:\\temp\\out\""
+  },
+  {
+   "title": "Open the file",
+   "text": "Start Timeline Explorer and open the CSV. Other guides describe dragging the file onto the window, which also works. Large files can take a short time to load."
+  },
+  {
+   "title": "Sort by time",
+   "text": "Click a time column header to sort. Look at the period that matters for your case first. Narrowing to the incident window is the usual first move."
+  },
+  {
+   "title": "Filter and group",
+   "text": "Use the filter on a column to keep only one user, one program or one folder. Use grouping to see which values appear most often. Combine filters step by step and note each one."
+  },
+  {
+   "title": "Save what you need",
+   "text": "Record the file name, the filters you used and the row numbers of interesting entries in your notes, so another person can reproduce your view."
+  }
+ ],
+ "cases": [
+  {
+   "title": "File system timelines",
+   "why": "MFTECmd output has many rows. Filtering by path or time shows what changed around an incident."
+  },
+  {
+   "title": "Program execution review",
+   "why": "CSV from Prefetch and Amcache parsers can be filtered on the executable name to follow one program."
+  },
+  {
+   "title": "Single user activity",
+   "why": "Filtering on a user name column isolates the activity of one account across a large file."
+  },
+  {
+   "title": "Spotting unusual values",
+   "why": "Grouping by a column shows rare values, such as one odd file path or process among thousands."
+  },
+  {
+   "title": "Triage output from KAPE",
+   "why": "KAPE modules write CSV files that open directly, so a first look takes only a few minutes."
+  }
+ ],
+ "strengths": [
+  "Free to download and use.",
+  "Built for the large CSV files that forensic parsers produce.",
+  "Sort, filter and group work without any query language.",
+  "Fits directly after the command-line tools from the same author."
+ ],
+ "limits": [
+  "Free but closed source. The source code is not published.",
+  "Windows only, and the current build needs .NET 10.",
+  "It is a viewer. It does not parse evidence itself, so you need a parser to make the CSV first.",
+  "The project page links no tool-specific manual, so you learn it by trying and from training material.",
+  "Very large files need enough memory on your computer.",
+  "Filtering is manual. Keep notes of what you applied, or your result is hard to repeat."
+ ],
+ "works_with": [
+  {
+   "id": "mftecmd",
+   "note": "Creates the $MFT and USN journal CSV files"
+  },
+  {
+   "id": "evtxecmd",
+   "note": "Creates event log CSV files"
+  },
+  {
+   "id": "pecmd",
+   "note": "Creates Prefetch CSV files"
+  },
+  {
+   "id": "kape",
+   "note": "Collects artifacts and writes CSV output"
+  },
+  {
+   "id": "ez-tools",
+   "note": "The suite this tool belongs to"
+  },
+  {
+   "id": "plaso",
+   "note": "Convert its timeline output to CSV to review it"
+  }
+ ],
+ "learn": [
+  {
+   "label": "Eric Zimmerman's tools page (download and notes)",
+   "url": "https://ericzimmerman.github.io/"
+  },
+  {
+   "label": "Eric Zimmerman's documentation page",
+   "url": "https://ericzimmerman.github.io/documentation/"
+  },
+  {
+   "label": "SANS: triage collection and timeline generation with KAPE",
+   "url": "https://www.sans.org/blog/triage-collection-and-timeline-generation-with-kape"
+  },
+  {
+   "label": "Kroll: detecting timestomping with KAPE (uses Timeline Explorer)",
+   "url": "https://www.kroll.com/en/insights/publications/cyber/anti-forensic-tactics/detecting-analyzing-timestomping-with-kape"
+  }
+ ],
+ "sources_note": "Written in our own words from the Timeline Explorer project's documentation."
+}

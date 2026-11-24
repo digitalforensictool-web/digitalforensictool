@@ -1,0 +1,105 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "timeline-analysis",
+ "branch": "cloud",
+ "title": "What is timeline analysis?",
+ "quick": "Timeline analysis puts events from many sources, such as file times, logs and browser history, into one list sorted by time, so you can see what happened and in what order.",
+ "sections": [
+  {
+   "title": "The idea",
+   "text": [
+    "Each artifact on a system has timestamps. A timeline collects them in one place and sorts them. Seeing a file created, a program run and a network connection together can tell a story that one source alone cannot.",
+    "A timeline that mixes many sources is often called a super timeline."
+   ]
+  },
+  {
+   "title": "How it is built",
+   "text": [
+    "Tools such as Plaso, with its log2timeline tool, read many artifact types and write their timestamps to one file. Other tools then filter and search it. Timeline Explorer and Timesketch help to view and share large timelines.",
+    "You can also build a small timeline by hand from a few sources."
+   ]
+  },
+  {
+   "title": "How to read it",
+   "text": [
+    "Start with a known point, such as a time of an alert, and look at what happened just before and after. Filter by type, user or file path."
+   ],
+   "points": [
+    "Convert all times to one time zone, often UTC.",
+    "Know what each timestamp means, such as created, modified or accessed.",
+    "Use several sources to confirm one event.",
+    "Remove noise but keep a note of what you removed."
+   ]
+  },
+  {
+   "title": "Limits",
+   "text": [
+    "Clocks can be wrong, users can change times and some timestamps update for normal reasons. A timeline shows when records say events happened, so check key points in more than one source."
+   ]
+  }
+ ],
+ "example": "An analyst has a phishing alert at 09:12. The timeline shows a document downloaded at 09:10, a program started at 09:11 and a new outside connection at 09:12. Together these suggest the order of events, which the analyst then checks in each source.",
+ "mistakes": [
+  "Mixing time zones in one timeline.",
+  "Treating a modified time as the time of a user action.",
+  "Trusting one timestamp without a second source.",
+  "Filtering so hard that important events are lost."
+ ],
+ "terms": [
+  {
+   "term": "Timestamp",
+   "meaning": "A recorded date and time for an event."
+  },
+  {
+   "term": "Super timeline",
+   "meaning": "One timeline combining many artifact sources."
+  },
+  {
+   "term": "UTC",
+   "meaning": "A world standard time that avoids time zone confusion."
+  },
+  {
+   "term": "MAC times",
+   "meaning": "Modified, accessed and created times of a file."
+  },
+  {
+   "term": "Pivot",
+   "meaning": "Using one found event as a starting point for more searching."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Why use a timeline?",
+   "a": "It brings events from many sources into order, so you can see the sequence and find links."
+  },
+  {
+   "q": "Why convert to UTC?",
+   "a": "So that events from different systems and time zones can be compared on one scale."
+  }
+ ],
+ "tools": [
+  "plaso",
+  "timesketch",
+  "timeline-explorer",
+  "mftecmd",
+  "hayabusa",
+  "autopsy"
+ ],
+ "related": [
+  "file-timestamps",
+  "log-analysis-basics",
+  "windows-event-logs",
+  "mft-and-file-metadata"
+ ],
+ "learn": [
+  {
+   "label": "Plaso documentation",
+   "url": "https://plaso.readthedocs.io/en/latest/"
+  },
+  {
+   "label": "NIST SP 800-86: Guide to Integrating Forensic Techniques into Incident Response",
+   "url": "https://csrc.nist.gov/pubs/sp/800/86/final"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

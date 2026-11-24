@@ -1,0 +1,103 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "database-forensics-basics",
+ "branch": "cloud",
+ "title": "Database forensics basics",
+ "quick": "Database forensics studies the data, structure and logs of a database to find what was stored, changed or deleted. SQLite is a good place to start, because phones and browsers use it widely.",
+ "sections": [
+  {
+   "title": "What a database holds",
+   "text": [
+    "A database stores records in tables, plus indexes and settings. Server databases keep logs of changes. File based databases such as SQLite keep everything in one file. Apps on phones and computers use these for messages, history and settings.",
+    "The same file can hold live data and traces of older data."
+   ]
+  },
+  {
+   "title": "Where deleted data may remain",
+   "text": [
+    "In SQLite, the file is split into pages. Unused pages are kept in a freelist, and their old content may stay until reused. A rollback journal or a write-ahead log (WAL) holds earlier page content during changes. The WAL also has its own header and frames.",
+    "Journal and WAL files are separate files next to the database. Collect them together with the main file."
+   ]
+  },
+  {
+   "title": "How to work",
+   "text": [
+    "Keep the original files and hash them. Work on a copy so that opening the database does not change the evidence. Read the structure first, then run read only queries."
+   ],
+   "points": [
+    "Copy the database, journal and WAL files together.",
+    "Check the header to confirm the file type.",
+    "Review tables and run read only queries.",
+    "Use a recovery tool for deleted records.",
+    "Note timestamp formats, which differ by app."
+   ]
+  },
+  {
+   "title": "Server databases",
+   "text": [
+    "For server databases, useful sources are transaction logs, audit logs, backups and access records. Their contents depend on settings, so ask the administrator what was enabled. Procedures and laws differ by country and agency, so follow your lab's own procedure."
+   ]
+  }
+ ],
+ "mistakes": [
+  "Opening a live database and changing it by accident.",
+  "Copying only the main file and leaving out the WAL.",
+  "Assuming a deleted record is always recoverable.",
+  "Misreading timestamp formats.",
+  "Writing to the original while testing queries."
+ ],
+ "terms": [
+  {
+   "term": "Table",
+   "meaning": "A set of records with the same fields."
+  },
+  {
+   "term": "Page",
+   "meaning": "A fixed size block that SQLite uses to store data."
+  },
+  {
+   "term": "Freelist",
+   "meaning": "The list of unused pages in a SQLite file."
+  },
+  {
+   "term": "WAL",
+   "meaning": "A write-ahead log that holds recent changes."
+  },
+  {
+   "term": "Transaction log",
+   "meaning": "A record of changes made to a server database."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Where can deleted SQLite data remain?",
+   "a": "In freelist pages, free space inside pages, the journal and the WAL file."
+  },
+  {
+   "q": "Why copy the WAL with the database?",
+   "a": "It may hold recent changes that are not yet in the main file, so without it you can miss data."
+  }
+ ],
+ "tools": [
+  "db4s",
+  "fqlite",
+  "autopsy"
+ ],
+ "related": [
+  "sqlite-in-mobile-forensics",
+  "sqlite-wal-and-deleted-records",
+  "mobile-artifacts",
+  "log-analysis-basics"
+ ],
+ "learn": [
+  {
+   "label": "SQLite documentation: Database file format",
+   "url": "https://www.sqlite.org/fileformat.html"
+  },
+  {
+   "label": "NIST SP 800-86: Guide to Integrating Forensic Techniques into Incident Response",
+   "url": "https://csrc.nist.gov/pubs/sp/800/86/final"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

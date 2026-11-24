@@ -1,0 +1,90 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "mobile-spyware-basics",
+ "branch": "mobile",
+ "title": "Spyware and stalkerware checks",
+ "quick": "Spyware is software that secretly watches a phone user. Stalkerware is spyware installed by someone close to the user. Checks look for suspicious apps, settings and known indicators, and a clean result is never proof of safety.",
+ "sections": [
+  {
+   "title": "Types",
+   "text": [
+    "Stalkerware is usually a commercial app installed by a person with access to the phone. Advanced spyware may be installed remotely, using software flaws. The two differ in cost, skill and traces left behind."
+   ],
+   "points": [
+    "Stalkerware: often visible in app lists or settings.",
+    "Advanced spyware: fewer traces, may need expert help."
+   ]
+  },
+  {
+   "title": "What checks look for",
+   "text": [
+    "Common checks look at installed apps, permissions, device administrator and accessibility settings, unknown profiles, odd battery or data use, and system logs. Some tools compare data with indicators of compromise, which are known bad names, addresses or files from past research."
+   ]
+  },
+  {
+   "title": "Limits and care",
+   "text": [
+    "Public indicators only find known cases. A negative result does not show that a phone is clean. The Mobile Verification Toolkit documentation says it is meant for people who know forensic basics and for consensual use. If a person may be in danger, think about their safety first, since removing an app may alert the abuser. Seek expert and legal help, following your lab's procedure."
+   ]
+  }
+ ],
+ "example": "A student scans their own practice phone, which has a test app installed, with a free toolkit. The app list shows an unknown app with accessibility access. The student records the finding and does not claim the phone is safe from a clean result elsewhere.",
+ "mistakes": [
+  "Saying a phone is clean because a scan found nothing.",
+  "Deleting a stalkerware app and warning the person who installed it.",
+  "Scanning a phone without the owner's consent.",
+  "Relying on a store security app alone.",
+  "Missing that the account, not the phone, is being watched."
+ ],
+ "terms": [
+  {
+   "term": "Spyware",
+   "meaning": "Software that secretly collects data from a device."
+  },
+  {
+   "term": "Stalkerware",
+   "meaning": "Spyware used to watch a partner, family member or other person."
+  },
+  {
+   "term": "Indicator of compromise",
+   "meaning": "A known trace, such as a file name or address, linked to an attack."
+  },
+  {
+   "term": "Accessibility service",
+   "meaning": "An Android feature that some malicious apps misuse to read the screen."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Why is a negative scan result not proof that a phone is safe?",
+   "a": "Scans use known indicators, and new or targeted spyware may not match them."
+  },
+  {
+   "q": "Why be careful before removing a suspected stalkerware app?",
+   "a": "The person who installed it might be alerted, which can put the user at risk, so safety and evidence preservation come first."
+  }
+ ],
+ "tools": [
+  "mvt",
+  "mobsf",
+  "jadx",
+  "adb"
+ ],
+ "related": [
+  "mobile-forensics-overview",
+  "mobile-extraction-levels",
+  "mobile-artifacts",
+  "anti-forensics"
+ ],
+ "learn": [
+  {
+   "label": "Mobile Verification Toolkit: Introduction",
+   "url": "https://docs.mvt.re/en/latest/introduction/"
+  },
+  {
+   "label": "NIST SP 800-101 Rev. 1: Guidelines on Mobile Device Forensics",
+   "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-101r1.pdf"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

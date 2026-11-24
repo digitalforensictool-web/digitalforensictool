@@ -1,0 +1,148 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "what-is-forensic-imaging",
+ "branch": "imaging",
+ "title": "What is forensic imaging?",
+ "quick": "Forensic imaging is making a verified, exact copy of a storage device or its data, so the examiner can work on the copy and leave the original untouched.",
+ "sections": [
+  {
+   "title": "Why we image",
+   "text": [
+    "Evidence drives and phones must not be changed. If you browse the original, you may alter file times or other data. So the examiner makes a copy first and analyses the copy. If something goes wrong, a fresh copy can be made from the original.",
+    "The copy is called a forensic image. It is usually stored in a file, called an image file."
+   ]
+  },
+  {
+   "title": "Steps in a normal job",
+   "text": [
+    "Protect the original from writes, usually with a write blocker. Record the details of the device, such as make, model and serial number. Run the imaging tool. Then check the result with hash values."
+   ],
+   "points": [
+    "Protect the source (write blocker or other read-only method).",
+    "Document the device and the tool version.",
+    "Copy to a trusted destination drive.",
+    "Hash the source and the image, and compare.",
+    "Keep the original safe and work on copies."
+   ]
+  },
+  {
+   "title": "Kinds of copy",
+   "text": [
+    "A physical image copies every sector of the device, including unused space. A logical image copies selected files or folders. A clone copies one device straight onto another device. Procedures and laws differ by country and agency, so follow your lab's own procedure about which kind to make."
+   ]
+  },
+  {
+   "title": "Checking the copy",
+   "text": [
+    "A hash value is a short fingerprint made from data. If the hash of the source and the hash of the image match, the copy is exact. Some areas may be unreadable, for example bad sectors, so the tool log should be reviewed and any problems written down."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "Image, clone and file copy",
+  "headers": [
+   "",
+   "Forensic image",
+   "Clone",
+   "Normal file copy"
+  ],
+  "rows": [
+   [
+    "What is copied",
+    "All sectors of the device, stored in an image file",
+    "All sectors, written straight to another drive",
+    "Only the files you pick"
+   ],
+   [
+    "Unused and deleted data",
+    "Included",
+    "Included",
+    "Not included"
+   ],
+   [
+    "Hash check",
+    "Yes, part of the process",
+    "Yes, if you do it",
+    "Usually not"
+   ],
+   [
+    "Typical use",
+    "Standard evidence copy",
+    "When the copy must run as a real drive",
+    "Quick sharing, not for evidence"
+   ]
+  ]
+ },
+ "example": "A lab receives a laptop hard drive. The examiner connects it through a write blocker, creates an image file on a clean external drive and records the hash of both. The hashes match. The original drive goes back into the evidence store and all analysis is done on the image.",
+ "mistakes": [
+  "Browsing the original drive before making a copy.",
+  "Copying files by drag and drop and calling it an image.",
+  "Saving the image to the same drive that is being copied.",
+  "Not recording the hash value or the tool version.",
+  "Not reading the tool log after the job."
+ ],
+ "terms": [
+  {
+   "term": "Forensic image",
+   "meaning": "An exact copy of a storage device, usually saved as a file."
+  },
+  {
+   "term": "Sector",
+   "meaning": "The smallest block of data a drive reads or writes, often 512 bytes or 4096 bytes."
+  },
+  {
+   "term": "Hash value",
+   "meaning": "A short fingerprint of data. Same data gives the same hash."
+  },
+  {
+   "term": "Clone",
+   "meaning": "A copy written directly onto another storage device instead of into an image file."
+  },
+  {
+   "term": "Source",
+   "meaning": "The original device that is being copied."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Why do we examine an image and not the original?",
+   "a": "The original must stay unchanged. The image can be copied again if it is damaged, and the hash shows it matches the original."
+  },
+  {
+   "q": "How do you show that an image is an exact copy?",
+   "a": "Calculate a hash of the source and a hash of the image with the same algorithm, and show that they match."
+  },
+  {
+   "q": "What is the difference between an image and a clone?",
+   "a": "An image is stored in a file, often in a forensic container. A clone is written directly to another drive as a copy of the sectors."
+  }
+ ],
+ "tools": [
+  "ftk-imager",
+  "guymager",
+  "dc3dd",
+  "libewf"
+ ],
+ "related": [
+  "write-blocker",
+  "physical-image",
+  "logical-image",
+  "image-formats",
+  "hash-values"
+ ],
+ "learn": [
+  {
+   "label": "SWGDE: Computer Forensic Acquisitions (17-F-002)",
+   "url": "https://www.swgde.org/17-f-002"
+  },
+  {
+   "label": "NIST SP 800-86: Integrating Forensic Techniques into Incident Response",
+   "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-86.pdf"
+  },
+  {
+   "label": "NIST CFTT: Computer Forensics Tool Testing Program",
+   "url": "https://www.nist.gov/itl/ssd/software-quality-group/computer-forensics-tool-testing-program-cftt"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

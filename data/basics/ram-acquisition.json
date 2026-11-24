@@ -1,0 +1,94 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "ram-acquisition",
+ "branch": "memory",
+ "title": "How RAM is captured",
+ "quick": "RAM acquisition means copying the content of memory from a running computer to a file. Every capture tool changes memory a little, so the examiner documents the steps.",
+ "sections": [
+  {
+   "title": "Basic idea",
+   "text": [
+    "A capture tool, often with a small driver, reads physical memory and writes it to a file. On Windows, tools include WinPmem, DumpIt, Magnet RAM Capture, Belkasoft RAM Capturer and FTK Imager. On Linux and Android, LiME can be used. The output is usually a raw file as big as the installed RAM."
+   ]
+  },
+  {
+   "title": "Good practice",
+   "text": [
+    "Run the tool from external media, not from the suspect disk. Write the image to a different, clean drive with enough space. Note the date, time, tool name and version, and who did it. Hash the image after capture. Every tool must load itself into memory, so it changes memory slightly. Record this footprint in your notes."
+   ],
+   "points": [
+    "Use a trusted tool with a small footprint.",
+    "Do not install anything on the suspect system.",
+    "Write the output to external media.",
+    "Record the time and the commands used.",
+    "Hash the image and keep it with your case notes."
+   ]
+  },
+  {
+   "title": "Other ways to get memory",
+   "text": [
+    "If a live capture is not possible, memory content may still exist in other files. A hibernation file holds a copy of RAM from the time of hibernation. Crash dumps and virtual machine snapshots can also contain memory. For virtual machines, use the platform's snapshot function."
+   ]
+  }
+ ],
+ "example": "A student practises in a lab with a virtual machine. She runs a capture tool from a USB stick, saves the file to a second drive, hashes it, and writes down the time and the tool version.",
+ "mistakes": [
+  "Saving the memory image to the evidence drive being examined.",
+  "Running an unknown tool without testing it first.",
+  "Not writing down the time of capture.",
+  "Forgetting that full disk encryption keys may only be in RAM."
+ ],
+ "terms": [
+  {
+   "term": "Memory dump",
+   "meaning": "A file that contains the content of RAM."
+  },
+  {
+   "term": "Raw image",
+   "meaning": "A plain copy of memory without extra structure."
+  },
+  {
+   "term": "Footprint",
+   "meaning": "The small changes a tool makes to the system while it runs."
+  },
+  {
+   "term": "Snapshot",
+   "meaning": "A saved state of a virtual machine, including its memory."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Why does RAM capture always change the system?",
+   "a": "The tool has to load into memory to run, so memory content changes slightly."
+  },
+  {
+   "q": "Where should the image be saved?",
+   "a": "On clean external media, not on the suspect's own drive."
+  }
+ ],
+ "tools": [
+  "winpmem",
+  "magnet-dumpit",
+  "belkasoft-ram-capturer",
+  "ftk-imager",
+  "lime",
+  "avml"
+ ],
+ "related": [
+  "memory-forensics-overview",
+  "live-vs-dead-acquisition",
+  "pagefile-and-hiberfil",
+  "hash-values"
+ ],
+ "learn": [
+  {
+   "label": "WinPmem on GitHub",
+   "url": "https://github.com/Velocidex/WinPmem"
+  },
+  {
+   "label": "Forensic Focus: Live RAM analysis",
+   "url": "https://www.forensicfocus.com/?p=2507"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

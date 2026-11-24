@@ -1,0 +1,99 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "chain-of-custody",
+ "branch": "foundations",
+ "title": "What is chain of custody?",
+ "quick": "Chain of custody is the written record of who held a piece of evidence, when, where and why, from collection until it is no longer needed, so its handling can be shown.",
+ "sections": [
+  {
+   "title": "Why it matters",
+   "text": [
+    "Evidence can be questioned. A reader may ask whether it was changed, swapped or mixed up. A complete chain of custody record answers these questions by showing every handler and every move.",
+    "Legal rules differ by country and agency. Follow your lab's own procedure."
+   ]
+  },
+  {
+   "title": "What the record contains",
+   "text": [
+    "Guides such as RFC 3227 say to record where, when and by whom evidence was found and collected, who handled or examined it, who had custody and for how long, how it was stored, and how each transfer took place."
+   ],
+   "points": [
+    "Unique item number and short description",
+    "Make, model and serial number",
+    "Date, time and place of collection",
+    "Name and signature of each person who takes or gives the item",
+    "Storage location and conditions",
+    "Reason for each access"
+   ]
+  },
+  {
+   "title": "Physical and digital items",
+   "text": [
+    "A phone or drive is a physical item. Its custody record follows it in a sealed bag, a locked store and a transfer form. Copies such as images are digital items. They also need records, plus hash values to show they are unchanged.",
+    "Work copies and the original should be recorded separately."
+   ]
+  },
+  {
+   "title": "Good habits",
+   "text": [
+    "Fill in the form at the time, not later. Do not leave gaps in time. Store evidence in a controlled place with limited access. If something goes wrong, such as a seal found broken, record it honestly."
+   ]
+  }
+ ],
+ "example": "An examiner receives a sealed bag with a USB drive. The form shows the officer who seized it and the time. The examiner checks the seal, signs the form, images the drive, and returns it to the locked store with a new entry. Each step has a name, date and time.",
+ "mistakes": [
+  "Leaving custody forms blank until the end of the day.",
+  "Having gaps between entries, so nobody can say where the item was.",
+  "Not recording who opened a sealed bag.",
+  "Treating the hash of the image as a substitute for the custody form. Both are needed.",
+  "Using shared logins or initials that cannot identify a person."
+ ],
+ "terms": [
+  {
+   "term": "Custody",
+   "meaning": "Being responsible for and holding an item."
+  },
+  {
+   "term": "Seal",
+   "meaning": "A tamper-evident closure on an evidence bag or box."
+  },
+  {
+   "term": "Transfer",
+   "meaning": "Handing an item from one person or place to another."
+  },
+  {
+   "term": "Audit trail",
+   "meaning": "A record of actions that lets others check what happened."
+  }
+ ],
+ "exam": [
+  {
+   "q": "What is the purpose of chain of custody?",
+   "a": "To show who handled the evidence and when, so its handling can be checked and doubts about change or mix-up can be answered."
+  },
+  {
+   "q": "Name some things a custody record should contain.",
+   "a": "Item description, who collected it and when and where, each person who held it, storage, and each transfer."
+  }
+ ],
+ "tools": [
+  "iris"
+ ],
+ "related": [
+  "evidence-integrity",
+  "forensic-process",
+  "good-practice-principles",
+  "hash-values"
+ ],
+ "learn": [
+  {
+   "label": "RFC 3227: Guidelines for Evidence Collection and Archiving",
+   "url": "https://datatracker.ietf.org/doc/html/rfc3227"
+  },
+  {
+   "label": "NIST SP 800-86: Guide to Integrating Forensic Techniques into Incident Response",
+   "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-86.pdf"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

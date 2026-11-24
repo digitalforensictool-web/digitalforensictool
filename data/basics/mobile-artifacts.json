@@ -1,0 +1,94 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "mobile-artifacts",
+ "branch": "mobile",
+ "title": "Common mobile artifacts: chats, calls, location",
+ "quick": "Mobile artifacts are traces left by apps and the system, such as chats, call logs, contacts, photos and location data. They help build a picture of what a user did and when.",
+ "sections": [
+  {
+   "title": "Main groups",
+   "text": [
+    "Common artifacts are messages and chats, call history, contacts, photos and videos with metadata, browser history, app usage, installed apps, Wi-Fi networks and location data. Each can support a part of a story, but none proves intent alone."
+   ],
+   "points": [
+    "Communications: SMS, chat apps, calls, email.",
+    "Media: photos, videos and their metadata.",
+    "Location: GPS points, Wi-Fi and cell data, saved places.",
+    "Device: accounts, installed apps, settings."
+   ]
+  },
+  {
+   "title": "Where they live",
+   "text": [
+    "Most are stored in app databases and files. Their paths and layouts depend on the app and the operating system version, so check current documentation or test on a known device. Parsers read these locations and build a report, but you should know how to check key results by hand."
+   ]
+  },
+  {
+   "title": "Time and context",
+   "text": [
+    "Timestamps use different formats and time zones. Location points may be approximate. Treat an artifact as a clue, compare several sources and report how sure you are."
+   ]
+  }
+ ],
+ "example": "A student parses a practice phone image with ALEAPP. The report shows a chat, a call and a photo within the same five minutes. They check the time zone, open the databases to confirm the rows, and then add the three events to a timeline.",
+ "mistakes": [
+  "Trusting a parser report without checking the raw data.",
+  "Ignoring time zones and time formats.",
+  "Treating a location point as exact.",
+  "Missing artifacts from a new app version.",
+  "Reporting one artifact as proof of what a user meant."
+ ],
+ "terms": [
+  {
+   "term": "Artifact",
+   "meaning": "A trace left on a device by a user, an app or the system."
+  },
+  {
+   "term": "Metadata",
+   "meaning": "Data about data, such as the time a photo was taken."
+  },
+  {
+   "term": "Parser",
+   "meaning": "A tool that reads a file format and turns it into readable data."
+  },
+  {
+   "term": "Timestamp",
+   "meaning": "A recorded date and time value."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Why are timestamps a common problem in mobile forensics?",
+   "a": "Apps use different formats and time zones, so an unchecked conversion can give the wrong time."
+  },
+  {
+   "q": "What should you do besides running a parser?",
+   "a": "Check important findings against the raw data or another source and record your method."
+  }
+ ],
+ "tools": [
+  "aleapp",
+  "ileapp",
+  "db4s",
+  "whatsapp-chat-exporter",
+  "exiftool",
+  "autopsy"
+ ],
+ "related": [
+  "sqlite-in-mobile-forensics",
+  "sqlite-wal-and-deleted-records",
+  "mobile-extraction-levels",
+  "timeline-analysis"
+ ],
+ "learn": [
+  {
+   "label": "NIST SP 800-101 Rev. 1: Guidelines on Mobile Device Forensics",
+   "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-101r1.pdf"
+  },
+  {
+   "label": "Forensic Focus: Forensic analysis of SQLite databases",
+   "url": "https://www.forensicfocus.com/articles/forensic-analysis-of-sqlite-databases-free-lists-write-ahead-log-unallocated-space-and-carving/"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

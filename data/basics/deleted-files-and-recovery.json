@@ -1,0 +1,123 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "deleted-files-and-recovery",
+ "branch": "disk",
+ "title": "How deleted files can be recovered",
+ "quick": "Deleting a file usually only marks its record and space as free. The data often stays on the drive until new data overwrites it, so it can sometimes be recovered.",
+ "sections": [
+  {
+   "title": "What delete really does",
+   "text": [
+    "When you delete a file, most systems mark the directory entry or file record as deleted and mark the clusters as free. They do not wipe the content. The data stays until the space is reused.",
+    "Emptying the Recycle Bin or Trash is the same idea. The file is first moved, and later its record and space are freed."
+   ]
+  },
+  {
+   "title": "Two ways to recover",
+   "text": [
+    "Metadata recovery uses what is left of the file record. If the name, size and cluster list still exist, the file can be rebuilt with its original name and times. This works well soon after deletion.",
+    "File carving works without file system records. It searches raw data for file headers and footers. It gives content but usually no name or times. If the record is gone, carving is the next step."
+   ]
+  },
+  {
+   "title": "What limits recovery",
+   "text": [
+    "New writes can overwrite the data. Partly overwritten files give damaged output. Drives with TRIM may erase freed blocks. Secure erase tools and encryption also reduce or end recovery.",
+    "Work on a forensic image, never on the original drive. Procedures and laws differ by country and agency, so follow your lab's own procedure for handling recovered data."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "Metadata recovery and carving",
+  "headers": [
+   "",
+   "Metadata recovery",
+   "File carving"
+  ],
+  "rows": [
+   [
+    "Needs file system records",
+    "Yes",
+    "No"
+   ],
+   [
+    "Original name and times",
+    "Often kept",
+    "Usually lost"
+   ],
+   [
+    "Fragmented files",
+    "Handled if clusters are listed",
+    "Often fails"
+   ],
+   [
+    "Typical use",
+    "Soon after deletion",
+    "When records are gone"
+   ]
+  ]
+ },
+ "example": "A user deletes a spreadsheet and empties the Recycle Bin. On the image, the examiner finds the file's MFT record still marked free with its name and cluster list. The clusters have not been reused, so the file is recovered whole.",
+ "mistakes": [
+  "Running recovery software and saving files onto the evidence drive.",
+  "Believing deleted always means gone.",
+  "Believing deleted always means recoverable.",
+  "Not hashing the recovered files and noting how they were found."
+ ],
+ "terms": [
+  {
+   "term": "Deleted file",
+   "meaning": "A file whose record is marked free but whose data may still exist."
+  },
+  {
+   "term": "Overwrite",
+   "meaning": "Writing new data over old data so the old data is lost."
+  },
+  {
+   "term": "Recovery",
+   "meaning": "Getting deleted data back from a drive or image."
+  },
+  {
+   "term": "Carving",
+   "meaning": "Finding files in raw data using their structure."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Why can deleted files often be recovered?",
+   "a": "Deleting normally frees the record and clusters but does not erase the content until it is overwritten."
+  },
+  {
+   "q": "Why should recovery be done on an image?",
+   "a": "Writing to or changing the original could destroy evidence. An image can be hashed and repeated safely."
+  }
+ ],
+ "tools": [
+  "autopsy",
+  "sleuthkit",
+  "testdisk",
+  "mftecmd"
+ ],
+ "related": [
+  "file-carving",
+  "mft-and-file-metadata",
+  "ssd-trim-and-forensics",
+  "slack-and-unallocated-space",
+  "recycle-bin-and-user-activity"
+ ],
+ "learn": [
+  {
+   "label": "NIST SP 800-86: Guide to Integrating Forensic Techniques into Incident Response",
+   "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-86.pdf"
+  },
+  {
+   "label": "Microsoft Learn: Master File Table",
+   "url": "https://learn.microsoft.com/en-us/windows/win32/fileio/master-file-table"
+  },
+  {
+   "label": "Forensics Wiki: File carving",
+   "url": "https://forensics.wiki/file_carving/"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

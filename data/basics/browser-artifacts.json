@@ -1,0 +1,91 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "browser-artifacts",
+ "branch": "windows",
+ "title": "Web browser artifacts",
+ "quick": "Browsers store history, downloads, cookies and cache on the computer. Examiners read these files to see what sites a user visited and what was downloaded.",
+ "sections": [
+  {
+   "title": "What browsers keep",
+   "text": [
+    "Most modern browsers save data in each user's profile folder, often in SQLite database files. Typical items are visited pages, searches, downloads, cookies, saved form data and cached copies of web pages. Chrome, Edge and other Chromium browsers share a similar layout. Firefox has its own."
+   ]
+  },
+  {
+   "title": "Where to look",
+   "text": [
+    "In Chromium browsers, the History file holds tables such as urls, visits and downloads. In Firefox, history is mostly in places.sqlite. Profiles are stored under the user's AppData folder, so you need the user's profile from the image.",
+    "Chrome stores visit times as microseconds since 1 January 1601, UTC. Firefox uses a different time format. Use a tool or time converter and note which format you used."
+   ],
+   "points": [
+    "History: pages visited and when.",
+    "Downloads: file name, source and saved location.",
+    "Cookies: sites visited and sometimes logins.",
+    "Cache: saved pieces of web pages.",
+    "Login data: stored account names (passwords are protected)."
+   ]
+  },
+  {
+   "title": "Limits",
+   "text": [
+    "Private browsing modes are designed to keep history off the disk, but some traces can still be found elsewhere, for example in memory or other system files. Users can also clear history or sync it across devices. Use the date range and the profile to avoid mixing different users."
+   ]
+  }
+ ],
+ "example": "A student is asked to find when a file was first downloaded. She copies the Chrome History file from a disk image, opens it in a SQLite viewer and reads the downloads table. She converts the time stamp and matches it to a visit in the urls table.",
+ "mistakes": [
+  "Opening the live browser history of the suspect computer instead of a copy of the files.",
+  "Misreading timestamps because of the wrong time format.",
+  "Forgetting there may be many profiles or more than one browser.",
+  "Treating a visit as proof the user typed the page address."
+ ],
+ "terms": [
+  {
+   "term": "SQLite",
+   "meaning": "A small database file format used by most browsers."
+  },
+  {
+   "term": "Cache",
+   "meaning": "A local store of web page parts to load sites faster."
+  },
+  {
+   "term": "Cookie",
+   "meaning": "A small file a site stores in the browser."
+  },
+  {
+   "term": "Profile",
+   "meaning": "A folder with one user's browser data."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Where does Chrome keep browsing history?",
+   "a": "In the History SQLite file in the user's profile, in tables like urls and visits."
+  },
+  {
+   "q": "Why must you check the timestamp format?",
+   "a": "Different browsers store time in different formats. A wrong conversion gives a wrong date."
+  }
+ ],
+ "tools": [
+  "hindsight",
+  "nirsoft",
+  "db4s",
+  "foxton-browser-tools",
+  "autopsy",
+  "unfurl"
+ ],
+ "related": [
+  "sqlite-in-mobile-forensics",
+  "timeline-analysis",
+  "recycle-bin-and-user-activity",
+  "anti-forensics"
+ ],
+ "learn": [
+  {
+   "label": "SANS: Google Chrome forensics",
+   "url": "https://sans.org/blog/google-chrome-forensics"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

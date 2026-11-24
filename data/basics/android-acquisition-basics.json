@@ -1,0 +1,103 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "android-acquisition-basics",
+ "branch": "mobile",
+ "title": "Android acquisition basics",
+ "quick": "Android acquisition is the process of copying data from an Android phone. What you can reach depends on the lock state, encryption, the device model and what access is allowed.",
+ "sections": [
+  {
+   "title": "Starting points",
+   "text": [
+    "First note the state of the phone: on or off, locked or unlocked, and the Android version. Isolate it from the network. Keep it powered. Then choose the least invasive method that works for that model."
+   ]
+  },
+  {
+   "title": "Common approaches",
+   "text": [
+    "Many Android methods use Android Debug Bridge (ADB), a command line tool that talks to the phone over USB. It usually needs USB debugging turned on, which needs an unlocked phone. Other methods use a backup, an app that is installed temporarily, or manufacturer specific modes. Some need extra access to the system, such as root. Results vary a lot by model."
+   ],
+   "points": [
+    "Manual review of the screen is the fallback.",
+    "Logical methods return data apps and the system agree to share.",
+    "Deeper methods need system access and can change the device."
+   ]
+  },
+  {
+   "title": "Encryption on Android",
+   "text": [
+    "Most modern Android phones use file-based encryption. Files have separate keys. Some data is only available after the user unlocks the phone once since the last boot. This is why a restart can reduce what you can reach."
+   ]
+  },
+  {
+   "title": "Documentation",
+   "text": [
+    "Record each command, setting change and tool version. Procedures and laws differ by country and agency, so follow your lab's own procedure."
+   ]
+  }
+ ],
+ "example": "A student practises on a spare test phone. They enable USB debugging, connect it to a computer, list the installed apps with ADB, and record each step. They then parse the result with a free tool and compare it with what the phone screen shows.",
+ "mistakes": [
+  "Turning the phone off or restarting it and losing access to data.",
+  "Changing settings on the phone without logging it.",
+  "Assuming one tool works on every Android model.",
+  "Forgetting the SD card and the SIM card.",
+  "Running ADB commands without understanding what they change."
+ ],
+ "terms": [
+  {
+   "term": "ADB",
+   "meaning": "Android Debug Bridge, a tool to communicate with an Android device from a computer."
+  },
+  {
+   "term": "USB debugging",
+   "meaning": "An Android setting that allows ADB access."
+  },
+  {
+   "term": "Root",
+   "meaning": "Administrator level access to the Android system."
+  },
+  {
+   "term": "File-based encryption",
+   "meaning": "Encryption where each file can use a different key."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Why should you keep an Android phone powered on and not restart it?",
+   "a": "After a restart some encrypted data stays locked until the user enters the credential again, so access may be lost."
+  },
+  {
+   "q": "What does ADB do?",
+   "a": "It lets a computer send commands to an Android device over USB, for example to list apps or make a backup, if the device allows it."
+  }
+ ],
+ "tools": [
+  "adb",
+  "aleapp",
+  "andriller",
+  "avilla",
+  "scrcpy",
+  "mobsf"
+ ],
+ "related": [
+  "mobile-extraction-levels",
+  "mobile-encryption-and-locks",
+  "mobile-isolation",
+  "mobile-artifacts"
+ ],
+ "learn": [
+  {
+   "label": "NIST SP 800-101 Rev. 1: Guidelines on Mobile Device Forensics",
+   "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-101r1.pdf"
+  },
+  {
+   "label": "SWGDE: Mobile device evidence collection, preservation, handling and acquisition",
+   "url": "https://www.swgde.org/documents/published-complete-listing/18-f-003-2/"
+  },
+  {
+   "label": "Android Open Source Project: File-based encryption",
+   "url": "https://source.android.com/docs/security/features/encryption/file-based"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

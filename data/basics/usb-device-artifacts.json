@@ -1,0 +1,91 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "usb-device-artifacts",
+ "branch": "windows",
+ "title": "USB device artifacts",
+ "quick": "Windows keeps records of USB storage devices that were connected, such as serial number and first and last connection times. Examiners use them to link a device to a computer and a user.",
+ "sections": [
+  {
+   "title": "What Windows records",
+   "text": [
+    "When a USB drive is connected, Windows saves details in the registry and in logs. The main registry keys are USB and USBSTOR under SYSTEM\\CurrentControlSet\\Enum. They hold the vendor, product and serial number of the device. The USBSTOR area also helps show first and last connection times."
+   ]
+  },
+  {
+   "title": "Where to look",
+   "text": [
+    "Several sources work together to answer who, which device and when."
+   ],
+   "points": [
+    "USBSTOR: device make, model and serial number.",
+    "MountedDevices: links a device to a drive letter.",
+    "MountPoints2 in NTUSER.DAT: shows which user account had the device mounted.",
+    "setupapi.dev.log: text log that shows when a device was first installed.",
+    "Event logs: some driver logs show connect and disconnect times.",
+    "LNK files and shellbags: show files and folders used from the drive."
+   ]
+  },
+  {
+   "title": "Cautions",
+   "text": [
+    "Registry times are in UTC, but the setupapi log uses local time. Convert them before building a timeline. Some devices have no unique serial number, so two devices may look the same. Phones can look different, as they use other drivers. Procedures differ by agency, so follow your lab's own method."
+   ]
+  }
+ ],
+ "example": "A company suspects data left with a contractor's USB stick. From the SYSTEM hive the examiner lists the device serial number and times. Then MountPoints2 points to the contractor's account, and LNK files list documents opened from the drive letter.",
+ "mistakes": [
+  "Mixing UTC and local time in one timeline.",
+  "Assuming a missing serial number means no device was connected.",
+  "Stating the user copied files because a drive was connected. Connection alone does not show copying.",
+  "Checking only one user's hive for MountPoints2."
+ ],
+ "terms": [
+  {
+   "term": "USBSTOR",
+   "meaning": "A registry key that lists USB mass storage devices seen by Windows."
+  },
+  {
+   "term": "Serial number",
+   "meaning": "An ID printed in the device data that helps tell devices apart."
+  },
+  {
+   "term": "MountedDevices",
+   "meaning": "A registry key that maps volumes to drive letters."
+  },
+  {
+   "term": "setupapi.dev.log",
+   "meaning": "A Windows text log of device installation."
+  }
+ ],
+ "exam": [
+  {
+   "q": "How can you tell which user plugged in a USB drive?",
+   "a": "Check MountPoints2 in each user's NTUSER.DAT, and then support it with LNK files, shellbags and logon times."
+  },
+  {
+   "q": "Does a USBSTOR entry show files were copied?",
+   "a": "No. It shows the device was connected. Other artifacts are needed to show file activity."
+  }
+ ],
+ "tools": [
+  "registry-explorer",
+  "regripper",
+  "nirsoft",
+  "ez-tools",
+  "kape",
+  "autopsy"
+ ],
+ "related": [
+  "windows-registry",
+  "lnk-jumplists-shellbags",
+  "windows-event-logs",
+  "timeline-analysis"
+ ],
+ "learn": [
+  {
+   "label": "Magnet Forensics: Artifact profile, USB devices",
+   "url": "https://www.magnetforensics.com/blog/artifact-profile-usb-devices"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

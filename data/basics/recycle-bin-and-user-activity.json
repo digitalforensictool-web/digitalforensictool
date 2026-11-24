@@ -1,0 +1,83 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "recycle-bin-and-user-activity",
+ "branch": "windows",
+ "title": "Recycle Bin and user activity traces",
+ "quick": "The Recycle Bin keeps deleted files and a record of where they came from. Along with recent-file lists, it helps show what a user was doing on a Windows computer.",
+ "sections": [
+  {
+   "title": "How the Recycle Bin works",
+   "text": [
+    "On Windows Vista and later, a file deleted with the Delete key goes to a hidden C:\\$Recycle.Bin folder, inside a sub-folder named with the user's SID. A SID is the unique ID of a user account. Each deleted file makes two files. The $R file holds the content. The $I file has the same random part in its name and holds the original name, path, size and deletion time."
+   ]
+  },
+  {
+   "title": "What it can and cannot show",
+   "text": [
+    "The SID folder tells you which account deleted the file. The $I file tells you when. If a user empties the Recycle Bin, or deletes with Shift+Delete, the files do not go there, though they may still be recoverable from unallocated space. Files deleted over a network or from some external drives may not be moved there at all."
+   ]
+  },
+  {
+   "title": "Other user activity traces",
+   "text": [
+    "Many small lists record what a user did. These include recent documents lists (RecentDocs), the Run box history (RunMRU), typed paths in Explorer, and Open and Save dialog lists. They are mostly in the user's NTUSER.DAT. Combine them with LNK files and jump lists to see a pattern of use."
+   ]
+  }
+ ],
+ "example": "A staff member says a report was never deleted. In the image the examiner finds an $I file in the Recycle Bin folder with that user's SID. It gives the original path and a delete time. The matching $R file still holds the report.",
+ "mistakes": [
+  "Guessing which user deleted a file without checking the SID of the Recycle Bin sub-folder.",
+  "Missing the $I file, which holds the original path and time.",
+  "Forgetting that Shift+Delete skips the Recycle Bin.",
+  "Reading the file's own times as the delete time."
+ ],
+ "terms": [
+  {
+   "term": "$I file",
+   "meaning": "A small file that stores the original path, size and delete time of a recycled file."
+  },
+  {
+   "term": "$R file",
+   "meaning": "The file that holds the actual recycled data."
+  },
+  {
+   "term": "SID",
+   "meaning": "Security identifier, a unique ID of a Windows account."
+  },
+  {
+   "term": "MRU",
+   "meaning": "Most recently used list."
+  }
+ ],
+ "exam": [
+  {
+   "q": "How do you find when a file was deleted into the Recycle Bin?",
+   "a": "Read the matching $I file. It stores the deletion time and original path."
+  },
+  {
+   "q": "Which user deleted it?",
+   "a": "The SID in the Recycle Bin sub-folder name. Map it to an account."
+  }
+ ],
+ "tools": [
+  "ez-tools",
+  "autopsy",
+  "sleuthkit",
+  "regripper",
+  "registry-explorer",
+  "kape"
+ ],
+ "related": [
+  "deleted-files-and-recovery",
+  "lnk-jumplists-shellbags",
+  "windows-registry",
+  "file-timestamps"
+ ],
+ "learn": [
+  {
+   "label": "Andrea Fortuna: Analysis of Recycle Bin artifacts",
+   "url": "https://andreafortuna.org/2019/09/26/windows-forensics-analysis-of-recycle-bin-artifacts/"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

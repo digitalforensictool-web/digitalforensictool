@@ -1,0 +1,120 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "ssd-trim-and-forensics",
+ "branch": "disk",
+ "title": "SSDs, TRIM and forensics",
+ "quick": "SSDs store data in flash and manage it themselves. With TRIM and garbage collection, deleted data can be erased by the drive, so recovery is less certain than on hard disks.",
+ "sections": [
+  {
+   "title": "How an SSD differs",
+   "text": [
+    "A hard disk can overwrite a sector directly. Flash memory can only be written to empty pages, and it erases in whole blocks. The SSD controller therefore keeps its own map between the addresses the computer uses and the real flash locations.",
+    "It also moves data around for wear levelling, to spread wear, and for garbage collection, to free blocks. This happens inside the drive, without the operating system."
+   ]
+  },
+  {
+   "title": "What TRIM does",
+   "text": [
+    "TRIM is a command with which the operating system tells the drive which blocks no longer hold used data. The drive may then erase them in the background. After that, reads of those areas can return zeros or other data, depending on the drive.",
+    "So a deleted file on an SSD with TRIM may disappear sooner than on a hard disk. Timing is not predictable and depends on the drive and firmware."
+   ]
+  },
+  {
+   "title": "What this means for examiners",
+   "text": [
+    "Do not promise that deleted data can be recovered from an SSD. A write blocker still stops the computer writing, but it cannot stop the drive's own internal housekeeping once it has power.",
+    "Image the drive early, document the drive model and firmware, and note the file system and TRIM state if known. Carving and recovery results may be partial, and the report should say so."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "Hard disk and SSD after deletion",
+  "headers": [
+   "",
+   "Hard disk",
+   "SSD with TRIM"
+  ],
+  "rows": [
+   [
+    "Data after delete",
+    "Stays until overwritten",
+    "May be erased by the drive"
+   ],
+   [
+    "Who changes data",
+    "Mostly the computer",
+    "Computer and drive controller"
+   ],
+   [
+    "Recovery chance",
+    "Often good",
+    "Less predictable"
+   ],
+   [
+    "Same image twice",
+    "Usually the same",
+    "Can differ if the drive changes data itself"
+   ]
+  ]
+ },
+ "example": "A laptop SSD is seized a week after a user deleted files. The examiner images it and finds the file records, but the data areas return zeros. The drive had run TRIM and cleanup, so the report notes that content could not be recovered.",
+ "mistakes": [
+  "Expecting the same recovery rate as on a hard disk.",
+  "Believing a write blocker stops all changes inside an SSD.",
+  "Powering the drive on again and again before imaging.",
+  "Not recording drive model and firmware."
+ ],
+ "terms": [
+  {
+   "term": "SSD",
+   "meaning": "Solid-state drive that stores data in flash memory."
+  },
+  {
+   "term": "TRIM",
+   "meaning": "A command telling the drive which blocks are no longer in use."
+  },
+  {
+   "term": "Garbage collection",
+   "meaning": "Drive housekeeping that erases unused flash blocks."
+  },
+  {
+   "term": "Wear levelling",
+   "meaning": "Spreading writes evenly over flash to extend its life."
+  },
+  {
+   "term": "Controller",
+   "meaning": "The chip in the drive that manages flash and address mapping."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Why is recovery on SSDs less predictable?",
+   "a": "The drive's controller can erase freed blocks by itself through TRIM and garbage collection, at times the examiner does not control."
+  },
+  {
+   "q": "Does a write blocker make an SSD image fully stable?",
+   "a": "It stops writes from the computer. It does not stop the drive's own internal processes, so repeated images can differ."
+  }
+ ],
+ "tools": [
+  "autopsy",
+  "testdisk"
+ ],
+ "related": [
+  "deleted-files-and-recovery",
+  "write-blocker",
+  "what-is-forensic-imaging",
+  "evidence-integrity"
+ ],
+ "learn": [
+  {
+   "label": "Wikipedia: Trim (computing)",
+   "url": "https://en.wikipedia.org/wiki/Trim_(computing)"
+  },
+  {
+   "label": "NIST SP 800-86: Guide to Integrating Forensic Techniques into Incident Response",
+   "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-86.pdf"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

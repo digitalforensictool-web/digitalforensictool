@@ -1,0 +1,126 @@
+{
+ "id": "anti-forensics",
+ "title": "Anti-forensics techniques",
+ "quick": "Anti-forensics means actions that make a digital investigation harder, such as wiping data, hiding it, confusing the trail or attacking the tools. Examiners learn to notice the traces these actions leave.",
+ "sections": [
+  {
+   "title": "Four broad groups",
+   "text": [
+    "Researchers often sort anti-forensic methods into four groups. This page describes ideas only, at a general level."
+   ],
+   "points": [
+    "Artefact wiping: deleting data or logs so they are hard to recover.",
+    "Data hiding: encryption, steganography or hidden storage areas.",
+    "Trail obfuscation: changing timestamps or file types, or using VPNs and anonymity networks.",
+    "Attacks on tools and process: flooding examiners with data or files built to cause problems for tools."
+   ]
+  },
+  {
+   "title": "How examiners notice them",
+   "text": [
+    "Anti-forensic actions often leave their own traces. A wiping tool may appear in program execution records. Large gaps in logs, or timestamps that do not fit with other sources, are warning signs. A file whose content does not match its extension suggests disguise. Encrypted containers often show high randomness.",
+    "Secure deletion may not remove every copy. Fragments can remain in backups, caches, memory, cloud accounts and other devices."
+   ]
+  },
+  {
+   "title": "What this means for the examiner",
+   "text": [
+    "Finding signs of anti-forensics does not by itself show who did it or why. Many ordinary privacy tools do similar things. Report what you observed, how you tested it and what you cannot tell. Capture volatile data early, because some data exists only in memory. Procedures and laws differ by country and agency, follow your lab's own procedure."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "Group and typical clue",
+  "headers": [
+   "Group",
+   "Example",
+   "What an examiner may notice"
+  ],
+  "rows": [
+   [
+    "Artefact wiping",
+    "Secure deletion tool",
+    "Tool traces, log gaps"
+   ],
+   [
+    "Data hiding",
+    "Encrypted container",
+    "High randomness, installed software"
+   ],
+   [
+    "Trail obfuscation",
+    "Changed timestamps",
+    "Times that conflict with other sources"
+   ],
+   [
+    "Attacks on tools",
+    "Huge amounts of junk files",
+    "Processing slowdowns, odd file structures"
+   ]
+  ]
+ },
+ "example": "A timeline shows no browser activity for two days, yet network logs show the computer was online. The examiner also finds a disk wiping program in the list of recently run programs. She reports the gap, the program and the times, and states that the reason cannot be decided from this evidence alone.",
+ "mistakes": [
+  "Assuming a missing artifact means the user deleted it on purpose.",
+  "Accusing a person because a privacy tool is installed.",
+  "Relying on one source, when other sources may still hold the data.",
+  "Powering off a live system and losing data held in memory.",
+  "Not documenting tests that were run to check for tampering."
+ ],
+ "terms": [
+  {
+   "term": "Anti-forensics",
+   "meaning": "Methods that hinder a digital investigation."
+  },
+  {
+   "term": "Wiping",
+   "meaning": "Overwriting data so it cannot be read back."
+  },
+  {
+   "term": "Obfuscation",
+   "meaning": "Making something unclear or misleading on purpose."
+  },
+  {
+   "term": "Timestomping",
+   "meaning": "Changing file times to mislead."
+  },
+  {
+   "term": "Residual data",
+   "meaning": "Traces left behind after an attempt to remove data."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Name the four groups of anti-forensic techniques.",
+   "a": "Artefact wiping, data hiding, trail obfuscation and attacks on forensic tools and process."
+  },
+  {
+   "q": "Does a wiping tool on a computer prove guilt?",
+   "a": "No. It shows the tool was present or used. The reason must be judged from all the evidence."
+  }
+ ],
+ "tools": [
+  "nwipe",
+  "shredos",
+  "sdelete",
+  "eraser",
+  "zsteg",
+  "exiftool"
+ ],
+ "related": [
+  "steganography-basics",
+  "full-disk-encryption",
+  "order-of-volatility",
+  "file-timestamps",
+  "deleted-files-and-recovery"
+ ],
+ "learn": [
+  {
+   "label": "Digital Forensics vs. Anti-Digital Forensics (arXiv)",
+   "url": "https://arxiv.org/pdf/2103.17028"
+  }
+ ],
+ "reviewed": "2026-11-24",
+ "branch": "specialist",
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

@@ -1,0 +1,205 @@
+{
+ "reviewed": "2026-11-24",
+ "lead": "Turn the NTFS metadata files of a Windows disk into CSV, JSON or bodyfile output that you can sort and search. MFTECmd is a command-line parser written by Eric Zimmerman.",
+ "use_when": [
+  "You need a list of every file and folder on an NTFS volume, including deleted entries, with all their timestamps.",
+  "You want to check whether file times were changed on purpose, by comparing the two sets of timestamps in each record.",
+  "You need file system activity from the USN journal ($J) for a timeline."
+ ],
+ "features": [
+  {
+   "title": "Reads NTFS system files",
+   "items": [
+    "Parses $MFT, $J, $LogFile, $Boot and $SDS",
+    "The project page also lists $I30 as supported",
+    "The project reports that it detects the type of each file from its content",
+    "Can read locked files and Volume Shadow Copies through raw disk access"
+   ]
+  },
+  {
+   "title": "Output you can use",
+   "items": [
+    "CSV and JSON files written to a folder you choose",
+    "Bodyfile output for timeline tools, for the $MFT",
+    "Option to set your own output file name",
+    "A condensed file listing with --fl"
+   ]
+  },
+  {
+   "title": "Looks at one record closely",
+   "items": [
+    "Dumps the full details of one entry by its entry number and sequence number",
+    "Can list the contents of a directory entry",
+    "Can export a single raw FILE record from a given offset",
+    "Can dump the details of one security ID"
+   ]
+  },
+  {
+   "title": "Volume Shadow Copies",
+   "items": [
+    "Processes all shadow copies on the drive you point it at",
+    "Can remove duplicate files between the live volume and the copies, based on SHA-1"
+   ]
+  }
+ ],
+ "formats": [
+  "$MFT",
+  "$J (USN journal)",
+  "$LogFile",
+  "$Boot",
+  "$SDS",
+  "$I30"
+ ],
+ "requirements": "Windows. The project offers two builds: one for .NET Framework 4.7.2 or newer and one for .NET 10 or newer. You need the matching runtime installed. The project's page also says to unzip with a tool such as 7-Zip and not to run it from Program Files unless you run as administrator.",
+ "steps": [
+  {
+   "title": "Download and unzip",
+   "text": "Get the zip from Eric Zimmerman's tools page. Pick the .NET 4 build or the .NET 10 build, depending on which runtime your computer has. Unzip it with 7-Zip into a folder such as C:\\Tools\\MFTECmd."
+  },
+  {
+   "title": "Get the file you want to parse",
+   "text": "Copy $MFT out of your evidence first. Work on a copy or a mounted image, never on the original. The tool can also read locked files from a live disk, but for case work use a forensic image."
+  },
+  {
+   "title": "Open a command prompt in the folder",
+   "text": "Start Command Prompt or PowerShell and change to the folder that holds MFTECmd.exe. Run the tool with no options if you want to see its help text."
+  },
+  {
+   "title": "Parse the $MFT to CSV",
+   "text": "Use -f for the input file and --csv for the output folder. Put the paths in quotes. The tool writes a CSV file with a name based on the time of the run. Add --csvf to choose the file name yourself.",
+   "cmd": "MFTECmd.exe -f \"C:\\Temp\\SomeMFT\" --csv \"c:\\temp\\out\""
+  },
+  {
+   "title": "Look at one entry in detail",
+   "text": "To inspect a single record, give its entry number and sequence number to --de. This prints the full details on screen. Use it when a row in the CSV looks odd.",
+   "cmd": "MFTECmd.exe -f \"C:\\Temp\\SomeMFT\" --de 5-5"
+  },
+  {
+   "title": "Open the CSV in a viewer",
+   "text": "Load the CSV in Timeline Explorer, or in a spreadsheet, so you can sort and filter millions of rows. Sort by time, filter on a path or a name, and note the entry numbers you want to follow up."
+  },
+  {
+   "title": "Parse the USN journal as well",
+   "text": "Run the same command with $J as the input to get file create, rename and delete activity. Add the $MFT with -m so the tool can fill in the parent paths. The project README documents -m for this purpose."
+  }
+ ],
+ "options": [
+  {
+   "cmd": "-f <file>",
+   "what": "The file to parse. Required."
+  },
+  {
+   "cmd": "--csv <folder>",
+   "what": "Writes CSV results to this folder. Use --csvf to set the file name."
+  },
+  {
+   "cmd": "--json <folder>",
+   "what": "Writes JSON results to this folder. Use --jsonf to set the file name."
+  },
+  {
+   "cmd": "--body <folder> --bdl c",
+   "what": "Writes a bodyfile. --bdl sets the drive letter to use in the paths."
+  },
+  {
+   "cmd": "--de <entry>",
+   "what": "Shows full details for one entry number or entry-sequence number, such as 5 or 624-5."
+  },
+  {
+   "cmd": "--dd <folder> --do <offset>",
+   "what": "Exports one raw FILE record from the given offset (decimal or hex)."
+  },
+  {
+   "cmd": "--vss",
+   "what": "Processes all Volume Shadow Copies on the drive given with -f."
+  },
+  {
+   "cmd": "--dedupe",
+   "what": "Removes duplicate files between the drive and its shadow copies using SHA-1. The first file found is kept."
+  },
+  {
+   "cmd": "--at",
+   "what": "Includes all timestamps from the 0x30 attribute, not only the ones that differ from the 0x10 attribute."
+  }
+ ],
+ "cases": [
+  {
+   "title": "Timestomping checks",
+   "why": "Each record holds two sets of times. A tampered file may show different values in the two sets. The tool leaves the second set empty when they match, which helps you spot the files that differ."
+  },
+  {
+   "title": "Data theft and staging",
+   "why": "Sort the file list by time and size to find large files or archives created in a short window before an incident."
+  },
+  {
+   "title": "Deleted file evidence",
+   "why": "The listing includes entries for deleted files, with a flag showing whether the record is still in use. This shows that a file existed even if it is gone."
+  },
+  {
+   "title": "Timeline building",
+   "why": "Bodyfile and CSV output can be merged with results from other tools to place file activity in order with events from other artifacts."
+  },
+  {
+   "title": "Malware investigation",
+   "why": "File creation times and paths show when a suspicious program appeared and which other files were written near it."
+  },
+  {
+   "title": "Comparing older versions of a volume",
+   "why": "With shadow copy support you can parse earlier states of the volume and see what changed between them."
+  }
+ ],
+ "strengths": [
+  "Free, with the source code published under the MIT licence.",
+  "Handles several NTFS system files with one tool and one set of options.",
+  "Output goes straight into CSV viewers and timeline workflows.",
+  "The project reports faster loading of large $MFT files in its 2026.10 changelog."
+ ],
+ "limits": [
+  "It is a command-line tool with many options, so the first runs take some practice.",
+  "It only reads NTFS metadata. It does not recover file contents, except for small resident data where the options allow it.",
+  "It works on Windows. The file must first be copied out of your evidence.",
+  "The README does not describe the exact output fields, so learn the columns by looking at a sample CSV.",
+  "Its convenience flags are produced by the tool, not stored in the raw $MFT. Check suspicious files against the full record and the case context.",
+  "The CSV for a large volume can be very big and may be slow to open in a spreadsheet."
+ ],
+ "works_with": [
+  {
+   "id": "timeline-explorer",
+   "note": "Open the CSV output and filter it"
+  },
+  {
+   "id": "kape",
+   "note": "Collects the $MFT and can run MFTECmd on it"
+  },
+  {
+   "id": "ez-tools",
+   "note": "The suite this tool belongs to"
+  },
+  {
+   "id": "plaso",
+   "note": "Merge results into a larger timeline"
+  },
+  {
+   "id": "arsenal-image-mounter",
+   "note": "Mount an image so you can reach the $MFT"
+  },
+  {
+   "id": "ftk-imager",
+   "note": "Export the $MFT from an image"
+  }
+ ],
+ "learn": [
+  {
+   "label": "MFTECmd project page and README (GitHub)",
+   "url": "https://github.com/EricZimmerman/MFTECmd"
+  },
+  {
+   "label": "Eric Zimmerman's tools page",
+   "url": "https://ericzimmerman.github.io/"
+  },
+  {
+   "label": "Kroll: detecting timestomping with KAPE",
+   "url": "https://www.kroll.com/en/insights/publications/cyber/anti-forensic-tactics/detecting-analyzing-timestomping-with-kape"
+  }
+ ],
+ "sources_note": "Written in our own words from the MFTECmd project's documentation."
+}

@@ -1,0 +1,115 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "memory-analysis-basics",
+ "branch": "memory",
+ "title": "Analysing a memory image",
+ "quick": "Memory analysis means reading a RAM image with a framework such as Volatility to list processes, connections and loaded code. The frameworks rebuild the system's data structures from raw bytes.",
+ "sections": [
+  {
+   "title": "How the tools work",
+   "text": [
+    "A memory image is just raw bytes. A framework such as Volatility 3 uses knowledge of the operating system's data structures to find the processes and other objects inside. It needs symbol tables for the right operating system version. Volatility 3 can usually find and use these automatically. Its tools are called plugins and their names show the system, for example windows.pslist."
+   ]
+  },
+  {
+   "title": "First steps",
+   "text": [
+    "Start with general information such as the operating system and time of capture. Then list processes and look at their parent and child links. Check command lines, loaded libraries and network connections. Unusual names, odd parent processes or strange locations are leads to follow.",
+    "Some plugins walk the system's own process list. Others scan the memory for process structures. Comparing both can reveal hidden or ended processes."
+   ],
+   "points": [
+    "windows.pslist and windows.pstree: running processes and their tree.",
+    "windows.psscan: searches memory for process structures.",
+    "windows.cmdline: command line of each process.",
+    "windows.netscan: network connections.",
+    "windows.malfind: possible injected code."
+   ]
+  },
+  {
+   "title": "Cautions",
+   "text": [
+    "A memory image is a snapshot of one moment. A single odd result is a lead, not proof. Confirm with a second plugin or with disk and log evidence, and write down the plugin and version you used."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "Process list methods",
+  "headers": [
+   "Method",
+   "How it finds processes",
+   "Good for"
+  ],
+  "rows": [
+   [
+    "pslist",
+    "Follows the system's active process list",
+    "Normal running processes"
+   ],
+   [
+    "psscan",
+    "Scans memory for process structures",
+    "Hidden or ended processes"
+   ]
+  ]
+ },
+ "example": "A student loads a practice image and runs pslist and pstree. One process named like a system program has an unusual parent. Running cmdline and netscan on it shows an odd file path and an outside connection.",
+ "mistakes": [
+  "Using the wrong symbol table or operating system profile.",
+  "Trusting one plugin result without checking another.",
+  "Forgetting to hash the image before working on it.",
+  "Assuming a process with a normal name is safe."
+ ],
+ "terms": [
+  {
+   "term": "Plugin",
+   "meaning": "A module in a framework that does one type of analysis."
+  },
+  {
+   "term": "Symbol table",
+   "meaning": "Data that tells the tool how the operating system lays out its structures."
+  },
+  {
+   "term": "Process tree",
+   "meaning": "A view of which process started which."
+  },
+  {
+   "term": "Parent process",
+   "meaning": "The process that started another process."
+  }
+ ],
+ "exam": [
+  {
+   "q": "What does windows.pslist show?",
+   "a": "The processes listed in the operating system's active process list."
+  },
+  {
+   "q": "Why compare pslist with psscan?",
+   "a": "A process hidden from the list or already ended can still be found by scanning memory."
+  }
+ ],
+ "tools": [
+  "volatility3",
+  "memprocfs",
+  "yara",
+  "bulk-extractor",
+  "bstrings",
+  "hxd"
+ ],
+ "related": [
+  "memory-forensics-overview",
+  "ram-acquisition",
+  "malware-in-memory",
+  "pagefile-and-hiberfil"
+ ],
+ "learn": [
+  {
+   "label": "Volatility 3 documentation",
+   "url": "https://volatility3.readthedocs.io/en/latest/"
+  },
+  {
+   "label": "Volatility 3: basics and symbol tables",
+   "url": "https://volatility3.readthedocs.io/en/latest/basics.html"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

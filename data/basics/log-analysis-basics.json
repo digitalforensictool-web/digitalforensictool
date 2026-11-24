@@ -1,0 +1,107 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "log-analysis-basics",
+ "branch": "cloud",
+ "title": "Log analysis basics",
+ "quick": "A log is a record of events made by a system, such as sign-ins, errors or connections. Log analysis means collecting these records, putting them in order and reading them to explain what happened.",
+ "sections": [
+  {
+   "title": "What logs are",
+   "text": [
+    "Logs are written by operating systems, applications, network devices and cloud services. Each entry usually has a time, a source and a message. NIST SP 800-92 explains why organisations need sound log management and how to run it.",
+    "Logs are often the only record of past activity, so they are valuable evidence."
+   ]
+  },
+  {
+   "title": "Steps in analysis",
+   "text": [
+    "A simple routine keeps the work clear."
+   ],
+   "points": [
+    "Identify which logs exist and how long they are kept.",
+    "Collect copies and hash them.",
+    "Normalise time to one time zone.",
+    "Filter by account, address or time window.",
+    "Look for patterns, gaps and unusual entries.",
+    "Write down what you found and what you could not see."
+   ]
+  },
+  {
+   "title": "Common problems",
+   "text": [
+    "Logs from different systems use different formats and clocks. A clock that is off by minutes can break a story. Logs can also be deleted or changed by someone with access, so a gap or a cleared log is a finding in itself.",
+    "Rule based tools, such as those using Sigma rules, can help to find known patterns, but results still need review."
+   ]
+  },
+  {
+   "title": "Reporting",
+   "text": [
+    "Say what the log shows and what it does not show. A log entry proves that the system recorded an event, not who was at the keyboard. Procedures and laws differ by country and agency, so follow your lab's own procedure."
+   ]
+  }
+ ],
+ "mistakes": [
+  "Not checking the clock or time zone of each log.",
+  "Reading only matching lines and missing the gap before and after.",
+  "Working on the original log instead of a copy.",
+  "Treating an account name as a specific person.",
+  "Overlooking that logs may have rotated or expired."
+ ],
+ "terms": [
+  {
+   "term": "Log",
+   "meaning": "A record of events written by a system."
+  },
+  {
+   "term": "Normalisation",
+   "meaning": "Converting entries to a common format and time."
+  },
+  {
+   "term": "Retention",
+   "meaning": "How long logs are kept."
+  },
+  {
+   "term": "Log rotation",
+   "meaning": "Replacing old log files with new ones."
+  },
+  {
+   "term": "Sigma",
+   "meaning": "A shared rule format for describing log detections."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Why normalise time before comparing logs?",
+   "a": "Different systems use different time zones and clocks, so entries must be converted to compare them fairly."
+  },
+  {
+   "q": "What does a cleared log tell you?",
+   "a": "That someone with access removed records. The gap itself is worth reporting."
+  }
+ ],
+ "tools": [
+  "sof-elk",
+  "hayabusa",
+  "chainsaw",
+  "sigma",
+  "evtxecmd",
+  "zircolite"
+ ],
+ "related": [
+  "windows-event-logs",
+  "timeline-analysis",
+  "network-flow-data",
+  "cloud-forensics-basics"
+ ],
+ "learn": [
+  {
+   "label": "NIST SP 800-92: Guide to Computer Security Log Management",
+   "url": "https://csrc.nist.gov/pubs/sp/800/92/final"
+  },
+  {
+   "label": "NIST SP 800-86: Guide to Integrating Forensic Techniques into Incident Response",
+   "url": "https://csrc.nist.gov/pubs/sp/800/86/final"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

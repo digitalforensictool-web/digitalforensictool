@@ -1,0 +1,92 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "sqlite-in-mobile-forensics",
+ "branch": "mobile",
+ "title": "SQLite databases in apps",
+ "quick": "SQLite is a small database stored in a single file. Many phone apps keep chats, calls, contacts and history in SQLite files, so reading them is a core mobile forensic skill.",
+ "sections": [
+  {
+   "title": "What SQLite is",
+   "text": [
+    "SQLite is a database engine that stores data in one file. The file is split into pages of equal size. Data is stored in tables, which have rows and columns. Apps use it because it is small, fast and needs no server."
+   ]
+  },
+  {
+   "title": "Why it matters",
+   "text": [
+    "Messaging apps, browsers, call logs and many system services save data in SQLite files. Often the file ends in .db or .sqlite, but the extension can vary, so look at the file header. A good examiner reads the tables and also knows the app's own meaning of the columns."
+   ],
+   "points": [
+    "Open a copy, not the original.",
+    "Look at the tables and their column names.",
+    "Time values may be stored as numbers in different formats."
+   ]
+  },
+  {
+   "title": "Working safely",
+   "text": [
+    "Opening a database in a normal program can change it, for example by merging a log file. Work on a copy and keep any -wal or -journal file with the database. Always document which copy you used and its hash."
+   ]
+  }
+ ],
+ "example": "A student copies a test chat app's database from a practice phone image. They open the copy in DB Browser for SQLite, list the tables, find the messages table and note that the date column holds large numbers that must be converted.",
+ "mistakes": [
+  "Opening the original database on the evidence copy.",
+  "Leaving out the -wal file when copying.",
+  "Trusting a table view and ignoring deleted data.",
+  "Misreading timestamps because the format was not checked.",
+  "Assuming all app data is in SQLite."
+ ],
+ "terms": [
+  {
+   "term": "SQLite",
+   "meaning": "A small database engine that stores data in a single file."
+  },
+  {
+   "term": "Table",
+   "meaning": "A set of rows and columns in a database."
+  },
+  {
+   "term": "Page",
+   "meaning": "A fixed size block of a SQLite file."
+  },
+  {
+   "term": "Query",
+   "meaning": "A request to read data from a database."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Why do phones use SQLite so often?",
+   "a": "It is lightweight, stores data in one file and needs no database server."
+  },
+  {
+   "q": "Why should you work on a copy of a database?",
+   "a": "Opening it can change it or merge other files into it, so the original evidence is kept unchanged."
+  }
+ ],
+ "tools": [
+  "db4s",
+  "fqlite",
+  "aleapp",
+  "ileapp",
+  "whatsapp-chat-exporter"
+ ],
+ "related": [
+  "sqlite-wal-and-deleted-records",
+  "mobile-artifacts",
+  "database-forensics-basics",
+  "mobile-extraction-levels"
+ ],
+ "learn": [
+  {
+   "label": "Forensic Focus: Forensic analysis of SQLite databases",
+   "url": "https://www.forensicfocus.com/articles/forensic-analysis-of-sqlite-databases-free-lists-write-ahead-log-unallocated-space-and-carving/"
+  },
+  {
+   "label": "NIST SP 800-101 Rev. 1: Guidelines on Mobile Device Forensics",
+   "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-101r1.pdf"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

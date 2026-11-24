@@ -1,0 +1,199 @@
+{
+ "reviewed": "2026-11-24",
+ "lead": "libewf is a library for the Expert Witness (EWF) image format, with command-line tools to create, check, inspect, export and mount E01 images. Many other forensic programs use it to read these images.",
+ "use_when": [
+  "You need to create an E01 image from a drive on Linux.",
+  "You want to verify an E01 image or read its case details.",
+  "You need to convert an E01 image to a raw image, or the other way round.",
+  "You want to mount an E01 image on Linux to look inside."
+ ],
+ "features": [
+  {
+   "title": "Tools in the package",
+   "items": [
+    "ewfacquire writes data from devices and files to EWF files",
+    "ewfacquirestream writes data from standard input to EWF files",
+    "ewfverify checks the media data in EWF files",
+    "ewfinfo shows the information stored in EWF files"
+   ]
+  },
+  {
+   "title": "Convert and mount",
+   "items": [
+    "ewfexport exports to split raw format or to another EWF version",
+    "ewfmount mounts EWF files with FUSE",
+    "ewfrecover makes a new EWF set from a damaged one"
+   ]
+  },
+  {
+   "title": "Acquisition settings",
+   "items": [
+    "Records case number, evidence number, description, examiner and notes",
+    "Adds SHA-1 or SHA-256 next to MD5",
+    "Sets compression, segment size and format",
+    "Can retry read errors and write a log file"
+   ]
+  },
+  {
+   "title": "Library features",
+   "items": [
+    "Reads and writes SMART and EnCase formats, including E01",
+    "Reads logical evidence files L01 and Lx01",
+    "Supports delta (shadow) files and resuming a write"
+   ]
+  }
+ ],
+ "formats": [
+  "E01 (EWF-E01)",
+  "Ex01 (EWF2-Ex01)",
+  "SMART (s01)",
+  "L01 and Lx01 (read only)",
+  "Raw (export)"
+ ],
+ "requirements": "Linux, macOS and other Unix-like systems. Many Linux systems have a package named ewf-tools. To build from source, follow the build guide on the project wiki. ewfmount needs FUSE.",
+ "steps": [
+  {
+   "title": "Install the tools",
+   "text": "On a Debian-based system, install the ewf-tools package. If you build from source, follow the project's building guide on its wiki. Run any tool with -h to see its help."
+  },
+  {
+   "title": "Protect the source drive",
+   "text": "Connect the evidence drive through a write blocker and find its device name. Device names such as /dev/sdb are only examples, so confirm the right one first."
+  },
+  {
+   "title": "Acquire an E01 image",
+   "text": "Run ewfacquire with the source device. It asks questions about case number, examiner, evidence number, description, format, compression and segment size, then it starts. The -t option sets the output name without extension.",
+   "cmd": "sudo ewfacquire -t case001 /dev/sdb"
+  },
+  {
+   "title": "Check the details",
+   "text": "Use ewfinfo to see the stored case details and the hash values. Compare the hash with the one shown at the end of the acquisition.",
+   "cmd": "ewfinfo case001.E01"
+  },
+  {
+   "title": "Verify the image",
+   "text": "ewfverify reads the segments again and checks the stored hash. Add -d sha256 to calculate an extra SHA-256 value. -l writes the result to a log file.",
+   "cmd": "ewfverify -d sha256 -l verify.log case001.E01"
+  },
+  {
+   "title": "Export or mount",
+   "text": "To make a raw copy, use ewfexport with -f raw and -t for the output name. To look inside the image, use ewfmount with the first segment and an empty folder as the mount point.",
+   "cmd": "ewfmount case001.E01 /mnt/ewf"
+  },
+  {
+   "title": "Work from the raw view",
+   "text": "The mount point shows the data of the image as a raw view. Tools such as the Sleuth Kit can read it. Unmount the folder when you finish."
+  }
+ ],
+ "options": [
+  {
+   "cmd": "ewfacquire -t NAME",
+   "what": "Sets the output file name without extension. The default is image."
+  },
+  {
+   "cmd": "ewfacquire -C, -e, -E, -D, -N",
+   "what": "Records case number, examiner name, evidence number, description and notes."
+  },
+  {
+   "cmd": "ewfacquire -d sha256",
+   "what": "Calculates an extra digest besides MD5. sha1 and sha256 are the choices."
+  },
+  {
+   "cmd": "ewfacquire -f FORMAT",
+   "what": "Chooses the EWF format. The default is encase6."
+  },
+  {
+   "cmd": "ewfacquire -u",
+   "what": "Unattended mode, with no questions."
+  },
+  {
+   "cmd": "ewfverify -l FILE",
+   "what": "Writes verification errors and the digest to a log file."
+  },
+  {
+   "cmd": "ewfexport -f raw -t NAME",
+   "what": "Exports to raw format. Raw is the default format of ewfexport."
+  },
+  {
+   "cmd": "ewfinfo -f dfxml",
+   "what": "Shows the information in DFXML instead of plain text."
+  }
+ ],
+ "cases": [
+  {
+   "title": "Creating E01 images on Linux",
+   "why": "ewfacquire stores case details, compression and hashes in an image that other forensic tools can open."
+  },
+  {
+   "title": "Checking evidence integrity",
+   "why": "ewfverify re-reads the image and checks the stored hashes, which is useful when you receive an image from another lab."
+  },
+  {
+   "title": "Converting between formats",
+   "why": "ewfexport changes an E01 image to raw so tools that cannot read E01 can process it."
+  },
+  {
+   "title": "Quick look inside an image",
+   "why": "ewfmount gives a raw view that standard Linux tools can read without making a full copy."
+  },
+  {
+   "title": "Damaged image files",
+   "why": "ewfrecover tries to make a new EWF set from a damaged one."
+  }
+ ],
+ "strengths": [
+  "Open source under the LGPL, used as a base by other forensic programs.",
+  "Separate small tools for each job: acquire, verify, inspect, export, mount.",
+  "Reads and writes the common E01 and Ex01 formats.",
+  "Records case details and hashes inside the image."
+ ],
+ "limits": [
+  "The project calls the library experimental. Test your results with a second tool.",
+  "For Ex01, the project says bzip2 compression is still in progress and encryption is not supported.",
+  "L01 and Lx01 logical evidence files can be read but not written.",
+  "ewfacquire does not block writes to the source. Use a write blocker.",
+  "These are command-line tools, so beginners need practice with device names and options.",
+  "No analysis is included. You need another tool to examine the contents."
+ ],
+ "works_with": [
+  {
+   "id": "guymager",
+   "note": "Also writes E01 images with a graphical interface"
+  },
+  {
+   "id": "dc3dd",
+   "note": "Make a raw image first, then convert it"
+  },
+  {
+   "id": "sleuthkit",
+   "note": "Reads E01 images with libewf support"
+  },
+  {
+   "id": "autopsy",
+   "note": "Opens E01 images"
+  },
+  {
+   "id": "linux-write-blocker",
+   "note": "Protect the source during acquisition"
+  }
+ ],
+ "learn": [
+  {
+   "label": "libewf project page (GitHub)",
+   "url": "https://github.com/libyal/libewf"
+  },
+  {
+   "label": "libewf project wiki: building",
+   "url": "https://github.com/libyal/libewf/wiki/Building"
+  },
+  {
+   "label": "ewfacquire manual page (Debian)",
+   "url": "https://manpages.debian.org/bookworm/ewf-tools/ewfacquire.1.en.html"
+  },
+  {
+   "label": "ewfverify manual page (Debian)",
+   "url": "https://manpages.debian.org/bookworm/ewf-tools/ewfverify.1.en.html"
+  }
+ ],
+ "sources_note": "Written in our own words from the libewf project's README and the ewf-tools manual pages."
+}

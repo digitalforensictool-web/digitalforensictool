@@ -4,6 +4,7 @@
 Uses only the Python standard library. Run from anywhere:
     python scripts/build.py
 """
+import re
 import datetime
 import html
 import json
@@ -59,6 +60,7 @@ def load_folder(name):
 
 GUIDES = load_folder("guides")
 WORKFLOWS = load_folder("workflows")
+BASICS = load_folder("basics")
 
 CAT = {c["id"]: c for c in CATS}
 TOOL = {t["id"]: t for t in TOOLS}
@@ -176,6 +178,8 @@ NAV = [("categories", "Categories", "index.html#categories"), ("tools", "All too
        ("practice", "Practice", "practice.html"), ("learn", "Learn", "learn.html"), ("about", "About", "about.html")]
 if WORKFLOWS:
     NAV.insert(2, ("workflows", "Workflows", "workflows.html"))
+if BASICS:
+    NAV.insert(0, ("basics", "Basics", "basics.html"))
 
 
 def page(path, title, desc, body, current=""):
@@ -218,13 +222,14 @@ def page(path, title, desc, body, current=""):
 </main>
 <footer class="site-foot"><div class="wrap">
 <p class="about">{name} is an independent educational resource. It is not affiliated with, sponsored by or endorsed by any vendor or project listed here. Credit for every tool belongs to its developers. Product names are trademarks of their owners. Downloads come from third parties: validate every tool yourself before using it on real evidence.</p>
-<nav aria-label="Footer"><a href="{px}compare.html">Compare tools</a><a href="{px}toolbox.html">Pocket toolbox</a><a href="{px}nist.html">Browse by NIST functionality</a><a href="{px}about.html">About and disclaimer</a><a href="{px}about.html#corrections">Corrections and removal requests</a><a href="{px}about.html#privacy">Privacy</a>{maint}</nav>
+<nav aria-label="Footer">{basics_link}<a href="{px}compare.html">Compare tools</a><a href="{px}toolbox.html">Pocket toolbox</a><a href="{px}nist.html">Browse by NIST functionality</a><a href="{px}about.html">About and disclaimer</a><a href="{px}about.html#corrections">Corrections and removal requests</a><a href="{px}about.html#privacy">Privacy</a>{maint}</nav>
 </div></footer>
 <script src="{px}assets/app.js" defer></script>
 </body>
 </html>
 """.format(title=e(full_title), desc=e(desc), canonical=canonical, favicon=FAVICON, px=px, logo=ICON_LOGO,
            name=e(NAME), nav=nav, suggest=e(suggest), body=body, menu_icon=ICON_MENU,
+           basics_link=('<a href="%sbasics.html">Basics</a><a href="%sglossary.html">Glossary</a>' % (px, px)) if BASICS else "",
            maint=('<span style="padding:10px 0">Maintained by %s</span>' % e(maint)) if maint else "")
     target = OUT / path
     target.parent.mkdir(parents=True, exist_ok=True)
@@ -312,6 +317,7 @@ def build_home():
     oss = sum(1 for t in TOOLS if eff_type(t) == "open-source")
     checked = fmt_date(RELDATA.get("generated"))
     explore = "".join('<a href="%s"><strong>%s</strong><span>%s</span></a>' % x for x in [
+        ("basics.html", "Basics", "What is imaging? A write blocker? Start here")] * int(bool(BASICS)) + [
         ("map.html", "Evidence map", "Tap a laptop or phone to see where evidence lives")] * int((DATA / "xray.json").exists() and (PREVIEW or not json.load(open(DATA / "xray.json", encoding="utf-8")).get("draft"))) + [
         ("workflows.html", "Case workflows", "Step by step, with practice data")] * int(bool(WORKFLOWS)) + [
         ("compare.html", "Compare tools", "Two or three tools side by side"),
@@ -848,6 +854,141 @@ def build_hotseat():
     return True
 
 
+BRANCHES = [
+    ("foundations", "Foundations", "The ideas every examiner uses: process, custody, hashes and good practice."),
+    ("imaging", "Imaging and acquisition", "How evidence is copied without changing it."),
+    ("disk", "Disks and file systems", "Where data lives on a drive, and how deleted data can come back."),
+    ("windows", "Windows artifacts", "What Windows records about users and programs."),
+    ("memory", "Memory (RAM)", "Evidence that exists only while a computer is running."),
+    ("mobile", "Mobile devices", "Phones and tablets: extraction, locks, databases and apps."),
+    ("network", "Network", "Traffic, logs and what can be seen on the wire."),
+    ("cloud", "Cloud, email, logs and timelines", "Evidence that lives online or in records across many systems."),
+    ("specialist", "Specialist topics", "Malware, metadata, hiding, passwords, crypto, drones, vehicles and calls."),
+]
+BRANCH = {b[0]: b for b in BRANCHES}
+
+
+def basics_order():
+    """Topics in the order of data/basics-order, else the order of the topic list file."""
+    ids = list(BASICS)
+    order = {}
+    f = DATA / "basics-order.txt"
+    if f.exists():
+        order = {x.strip(): i for i, x in enumerate(f.read_text(encoding="utf-8").split("\n")) if x.strip()}
+    return sorted(ids, key=lambda i: (order.get(i, 10 ** 6), i))
+
+
+def build_basics():
+    if not BASICS:
+        return
+    ids = basics_order()
+    by_branch = {}
+    for i in ids:
+        by_branch.setdefault(BASICS[i]["branch"], []).append(i)
+    # topic pages
+    for b, members in by_branch.items():
+        for n, tid in enumerate(members):
+            g = BASICS[tid]
+            out, jump = [], []
+
+            def section(anchor, title, inner):
+                jump.append('<a href="#%s">%s</a>' % (anchor, e(title)))
+                out.append('<section id="%s"><h2>%s</h2>%s</section>' % (anchor, e(title), inner))
+
+            for k, sec in enumerate(g["sections"]):
+                inner = "".join("<p>%s</p>" % e(t) for t in sec["text"])
+                if sec.get("points"):
+                    inner += '<ul class="tight-list">%s</ul>' % "".join("<li>%s</li>" % e(x) for x in sec["points"])
+                section("s%d" % (k + 1), sec["title"], inner)
+            c = g.get("compare")
+            if c:
+                head = "".join("<th>%s</th>" % e(h) for h in c["headers"])
+                rows = "".join("<tr><th scope=\"row\">%s</th>%s</tr>" % (e(r[0]), "".join("<td>%s</td>" % e(x) for x in r[1:])) for r in c["rows"])
+                section("compare", c["title"], '<div class="cmp-wrap"><table class="cmp"><thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>' % (head, rows))
+            if g.get("example"):
+                section("example", "Example", '<div class="note"><p>%s</p></div>' % e(g["example"]))
+            section("mistakes", "Common mistakes", '<ul class="tight-list">%s</ul>' % "".join("<li>%s</li>" % e(x) for x in g["mistakes"]))
+            section("terms", "Key terms", '<dl class="terms">%s</dl>' % "".join("<dt>%s</dt><dd>%s</dd>" % (e(t["term"]), e(t["meaning"])) for t in g["terms"]))
+            section("viva", "Questions you may be asked",
+                    '<div class="qa-list">%s</div>' % "".join('<details class="qa"><summary>%s</summary><p>%s</p></details>' % (e(x["q"]), e(x["a"])) for x in g["exam"]))
+            tl = [TOOL[x] for x in g.get("tools", []) if x in TOOL]
+            if tl:
+                section("tools", "Free tools to practise with",
+                        '<div class="tool-chips">%s</div>' % "".join('<a class="tool-chip" href="../tools/%s.html">%s</a>' % (x["id"], e(x["name"])) for x in tl))
+            rel = [r for r in g.get("related", []) if r in BASICS]
+            if rel:
+                section("related", "Read next",
+                        '<div class="grid">%s</div>' % "".join(
+                            '<article class="card"><h3><a href="%s.html">%s</a></h3><p class="sum">%s</p></article>'
+                            % (r, e(BASICS[r]["title"]), e(BASICS[r]["quick"][:150].rsplit(" ", 1)[0] + ("..." if len(BASICS[r]["quick"]) > 150 else ""))) for r in rel))
+            section("learn", "Learn more",
+                    '<ul class="list-plain">%s</ul><p class="muted" style="font-size:13px;margin-top:12px">%s Last reviewed %s. '
+                    'Procedures and laws differ by country and agency. Follow your own lab\'s procedure.</p>'
+                    % ("".join('<li><a href="%s" rel="noopener">%s</a></li>' % (e(l["url"]), e(l["label"])) for l in g["learn"]),
+                       e(g.get("sources_note", "")), fmt_date(g.get("reviewed"))))
+            prev_t = BASICS[members[n - 1]] if n else None
+            next_t = BASICS[members[n + 1]] if n + 1 < len(members) else None
+            pn = ""
+            if prev_t or next_t:
+                pn = '<nav class="pn" aria-label="Next and previous">%s%s</nav>' % (
+                    ('<a href="%s.html"><span class="label">Previous</span>%s</a>' % (prev_t["id"], e(prev_t["title"]))) if prev_t else "<span></span>",
+                    ('<a href="%s.html"><span class="label">Next</span>%s</a>' % (next_t["id"], e(next_t["title"]))) if next_t else "<span></span>")
+            body = ('<div class="wrap"><div class="page-head"><div class="crumbs"><a href="../index.html">Home</a> / <a href="../basics.html">Basics</a> / <a href="../basics.html#%s">%s</a></div>'
+                    '<h1>%s</h1><div class="answer"><span class="label y">Short answer</span><p>%s</p></div></div>'
+                    '%s<nav class="jump" aria-label="On this page"><span class="label">On this page</span>%s</nav>'
+                    '<div class="prose wide basic">%s</div>%s</div>'
+                    % (b, e(BRANCH[b][1]), e(g["title"]), e(g["quick"]), draft_banner(g), "".join(jump), "".join(out), pn))
+            page("basics/%s.html" % tid, g["title"], g["quick"][:200], body, "basics")
+    # index
+    sections = []
+    for key, name, intro in BRANCHES:
+        members = by_branch.get(key, [])
+        if not members:
+            continue
+        cards = "".join('<article class="card" data-section="%s"><h3><a href="basics/%s.html">%s</a></h3><p class="sum">%s</p></article>'
+                        % (e((BASICS[i]["title"] + " " + BASICS[i]["quick"] + " " + " ".join(t["term"] for t in BASICS[i]["terms"])).lower()),
+                           i, e(BASICS[i]["title"]), e(BASICS[i]["quick"][:140].rsplit(" ", 1)[0] + ("..." if len(BASICS[i]["quick"]) > 140 else ""))) for i in members)
+        sections.append('<section id="%s" class="basic-group"><div class="section-head"><h2>%s</h2><span class="muted">%d topics</span></div>'
+                        '<p class="muted" style="max-width:760px;margin-bottom:16px">%s</p><div class="grid">%s</div></section>' % (key, e(name), len(members), e(intro), cards))
+    start = [i for i in ["digital-forensics-overview", "what-is-forensic-imaging", "write-blocker", "physical-image", "logical-image", "hash-values",
+                         "mobile-extraction-levels", "packet-capture-pcap"] if i in BASICS]
+    chips = "".join('<a href="basics/%s.html">%s</a>' % (i, e(BASICS[i]["title"])) for i in start)
+    jumpb = "".join('<a href="#%s">%s</a>' % (k, e(n)) for k, n, _ in BRANCHES if k in by_branch)
+    body = ('<div class="wrap"><div class="page-head"><div class="label y">Start here</div><h1>Digital forensics basics</h1>'
+            '<p class="lead">Short, plain-English answers to the questions every student asks first: what is imaging, what is a write blocker, what is a logical or physical image, and the same for mobile, network, memory and more.</p>'
+            '<p class="note" style="max-width:820px">These pages teach general method for study. Procedures and laws differ by country and agency, and none of this is legal advice. Follow your own lab\'s procedure.</p>'
+            '<div class="chips"><span class="muted">Popular:</span>%s</div>'
+            '<div class="filters"><div class="row"><label class="label" for="bq">Search the basics</label>'
+            '<input id="bq" type="search" data-section-filter placeholder="For example hash, write blocker or SQLite" autocomplete="off"></div></div>'
+            '<nav class="jump" aria-label="Branches"><span class="label">Branches</span>%s<a href="glossary.html">Glossary</a></nav></div>'
+            '%s<p class="empty" data-empty hidden>No match yet. Try a shorter word, or open the <a href="glossary.html">glossary</a>.</p></div>' % (chips, jumpb, "".join(sections)))
+    page("basics.html", "Digital forensics basics", "Plain-English answers for students: forensic imaging, write blockers, logical and physical images, mobile, network, memory and more.", body, "basics")
+    # glossary
+    terms = {}
+    for i in ids:
+        for t in BASICS[i]["terms"]:
+            terms.setdefault(t["term"].strip(), []).append((t["meaning"], i))
+    letters = {}
+    for term in sorted(terms, key=str.lower):
+        letters.setdefault(term[0].upper(), []).append(term)
+    gl = []
+    for L in sorted(letters):
+        items = ""
+        for term in letters[L]:
+            meaning, src = terms[term][0]
+            more = "".join(' <a href="basics/%s.html">%s</a>' % (i, e(BASICS[i]["title"])) for _, i in terms[term][:2])
+            items += ('<div class="gl" data-section="%s" id="t-%s"><dt>%s</dt><dd>%s<span class="muted gl-src">Read: %s</span></dd></div>'
+                      % (e((term + " " + meaning).lower()), re.sub(r"[^a-z0-9]+", "-", term.lower()).strip("-"), e(term), e(meaning), more.strip()))
+        gl.append('<section><h2 class="gl-letter" id="L%s">%s</h2><dl class="terms">%s</dl></section>' % (L, L, items))
+    az = "".join('<a href="#L%s">%s</a>' % (L, L) for L in sorted(letters))
+    body = ('<div class="wrap"><div class="page-head"><div class="crumbs"><a href="index.html">Home</a> / <a href="basics.html">Basics</a> / Glossary</div><h1>Forensics glossary</h1>'
+            '<p class="lead">%d terms from the Basics pages, in plain English.</p>'
+            '<div class="filters"><div class="row"><label class="label" for="gq">Find a term</label><input id="gq" type="search" data-section-filter placeholder="For example hash or HPA" autocomplete="off"></div></div>'
+            '<nav class="jump az" aria-label="Letters"><span class="label">Jump to</span>%s</nav></div>'
+            '<div class="prose wide" style="padding-bottom:64px">%s<p class="empty" data-empty hidden>No term found.</p></div></div>' % (len(terms), az, "".join(gl)))
+    page("glossary.html", "Forensics glossary", "Plain-English definitions of digital forensics terms for students.", body, "basics")
+
+
 def build_toolbox():
     body = """<div class="wrap"><div class="page-head"><div class="label y">Runs in your browser</div><h1>Pocket toolbox</h1>
 <p class="lead">Small helpers for daily forensic work. Everything runs on your own device. Nothing you type or open here is sent anywhere.</p></div>
@@ -1033,7 +1174,7 @@ def main():
     assets = OUT / "assets"
     shutil.copytree(ROOT / "static", assets, dirs_exist_ok=True)
     build_home(); build_tools_index(); build_categories(); build_tool_pages()
-    build_workflows(); build_xray(); build_compare(); build_hotseat(); build_toolbox(); build_alternatives(); build_inside(); build_nist(); build_practice(); build_learn(); build_about(); build_404()
+    build_workflows(); build_xray(); build_compare(); build_hotseat(); build_basics(); build_toolbox(); build_alternatives(); build_inside(); build_nist(); build_practice(); build_learn(); build_about(); build_404()
     (OUT / ".nojekyll").write_text("", encoding="utf-8")
     domain = SITE.get("domain", "").strip()
     if domain:

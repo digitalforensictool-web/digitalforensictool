@@ -1,0 +1,131 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "targeted-collection",
+ "branch": "imaging",
+ "title": "Targeted collection and triage",
+ "quick": "Targeted collection copies only selected files or data instead of a whole device. Triage is a quick first look to decide what to collect. They are used when time, volume or the allowed scope is limited.",
+ "sections": [
+  {
+   "title": "When it is used",
+   "text": [
+    "SWGDE describes targeted acquisition as collecting selected content through a live, physical or logical method. It can suit very large data volumes, many devices or a search scope that covers only certain data. It may not suit every case, so the decision should follow lab procedure and the rules for the case."
+   ]
+  },
+  {
+   "title": "What triage means",
+   "text": [
+    "Triage is a fast review to find the devices or data most likely to matter. It may use a few quick searches or collect a standard set of artifacts, such as browser history or event logs. The aim is to set priorities, not to finish the examination. Record what you did so that others can repeat it."
+   ]
+  },
+  {
+   "title": "Risks to understand",
+   "text": [
+    "A targeted copy can miss data, such as deleted files, and may lose file metadata like times and permissions. Collecting from a live system also changes it. Because of this, some labs make a full image later if time allows. Procedures and laws differ by country and agency, so follow your lab's own procedure and the limits of your authority."
+   ],
+   "points": [
+    "Write down what was selected and why.",
+    "Hash the collected files.",
+    "Save the collection list and tool version.",
+    "Keep the original device safe for a full image if needed."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "Targeted collection and full image",
+  "headers": [
+   "",
+   "Targeted collection",
+   "Full image"
+  ],
+  "rows": [
+   [
+    "What is copied",
+    "Selected files or artifact types",
+    "Every sector of the device"
+   ],
+   [
+    "Speed",
+    "Fast",
+    "Slow for large devices"
+   ],
+   [
+    "Deleted and unused space",
+    "Usually missed",
+    "Included"
+   ],
+   [
+    "Scope control",
+    "Easy to limit",
+    "Everything on the device is copied"
+   ],
+   [
+    "Main risk",
+    "Missing evidence that was not selected",
+    "Time and storage"
+   ]
+  ]
+ },
+ "example": "An incident responder must check 200 office computers after a data leak. She runs a collection script on each to gather event logs, browser history and recent file lists. Two machines show signs of misuse, and those two are then fully imaged.",
+ "mistakes": [
+  "Treating triage results as the final answer.",
+  "Not recording what was left out.",
+  "Collecting more than the allowed scope.",
+  "Forgetting that file times may change in the copy.",
+  "Skipping hash values for the collected files."
+ ],
+ "terms": [
+  {
+   "term": "Triage",
+   "meaning": "A quick first assessment to decide priorities."
+  },
+  {
+   "term": "Targeted collection",
+   "meaning": "Copying only selected files or data."
+  },
+  {
+   "term": "Artifact",
+   "meaning": "A trace of activity that an examiner can use, such as a log or a history file."
+  },
+  {
+   "term": "Scope",
+   "meaning": "The limits of what you are allowed or asked to collect."
+  }
+ ],
+ "exam": [
+  {
+   "q": "When is targeted collection suitable?",
+   "a": "When data volumes are huge, there are many devices, time is short, or the authority covers only some data."
+  },
+  {
+   "q": "What is a weakness of targeted collection?",
+   "a": "It can miss deleted data and unselected files, and may lose metadata."
+  },
+  {
+   "q": "How is triage different from a full examination?",
+   "a": "Triage is a quick check to set priorities. A full examination is a detailed analysis."
+  }
+ ],
+ "tools": [
+  "kape",
+  "velociraptor",
+  "magnet-response",
+  "ftk-imager"
+ ],
+ "related": [
+  "logical-image",
+  "live-vs-dead-acquisition",
+  "what-is-forensic-imaging",
+  "forensic-process"
+ ],
+ "learn": [
+  {
+   "label": "SWGDE: Computer Forensic Acquisitions (17-F-002)",
+   "url": "https://www.swgde.org/17-f-002"
+  },
+  {
+   "label": "NIST SP 800-86: Integrating Forensic Techniques into Incident Response",
+   "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-86.pdf"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

@@ -1,0 +1,101 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "forensic-report-basics",
+ "branch": "foundations",
+ "title": "What goes into a forensic report?",
+ "quick": "A forensic report states who did the work, what was examined, how it was done, what was found and how sure the examiner is, in clear language that a reader can follow and check.",
+ "sections": [
+  {
+   "title": "Purpose and readers",
+   "text": [
+    "A report is how your work reaches other people. Readers may be investigators, managers, lawyers or a judge. Many are not technical. Write so that a careful non-expert can follow it.",
+    "NIST SP 800-86 notes that the formality of reporting varies with the situation. Follow your lab's report template and procedure."
+   ]
+  },
+  {
+   "title": "Common parts",
+   "text": [
+    "Layouts differ between labs. Many reports include the following."
+   ],
+   "points": [
+    "Case details, examiner name and dates",
+    "Scope and questions to answer",
+    "Items received, with identifiers and custody",
+    "Methods, tools and versions used",
+    "Findings, with supporting detail",
+    "Conclusions, limits and appendices such as hash values"
+   ]
+  },
+  {
+   "title": "Fact and opinion",
+   "text": [
+    "Keep facts apart from opinion. A fact is something the data shows, such as a file with a given name and time. An opinion is your reading of those facts. State how strong each conclusion is and say what you could not check.",
+    "The ACPO guide asks that opinion and fact be kept clearly separate."
+   ]
+  },
+  {
+   "title": "Repeatability",
+   "text": [
+    "Another examiner should be able to repeat your steps and reach the same results. List tool names and versions, settings and hash values. Keep your notes, because the report is built from them."
+   ]
+  }
+ ],
+ "example": "An examiner is asked whether a USB drive was connected to a laptop. The report lists the laptop image hash, the artifacts checked, the device name and the times found. It says the data shows the drive was connected, and notes that it does not show who used the laptop.",
+ "mistakes": [
+  "Using heavy jargon without explaining it.",
+  "Mixing facts and opinion in the same sentence.",
+  "Leaving out tool versions and settings.",
+  "Reporting only what supports one side of the case.",
+  "Making claims about who did something when the data only shows what the device did."
+ ],
+ "terms": [
+  {
+   "term": "Findings",
+   "meaning": "The facts that the examination shows."
+  },
+  {
+   "term": "Conclusion",
+   "meaning": "The examiner's reasoned view based on the findings."
+  },
+  {
+   "term": "Scope",
+   "meaning": "What the examination is asked to cover."
+  },
+  {
+   "term": "Appendix",
+   "meaning": "Extra material at the end of a report, such as lists and hash values."
+  }
+ ],
+ "exam": [
+  {
+   "q": "What is the difference between a finding and a conclusion?",
+   "a": "A finding is a fact shown by the data. A conclusion is the examiner's reasoned interpretation of the findings."
+  },
+  {
+   "q": "Why list tools and versions in a report?",
+   "a": "So another examiner can repeat the work and understand any differences in results."
+  }
+ ],
+ "tools": [
+  "autopsy",
+  "iris",
+  "timeline-explorer"
+ ],
+ "related": [
+  "forensic-process",
+  "good-practice-principles",
+  "chain-of-custody",
+  "evidence-integrity"
+ ],
+ "learn": [
+  {
+   "label": "NIST SP 800-86: Guide to Integrating Forensic Techniques into Incident Response",
+   "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-86.pdf"
+  },
+  {
+   "label": "ACPO Good Practice Guide for Digital Evidence (v5)",
+   "url": "https://www.digital-detective.net/digital-forensics-documents/ACPO_Good_Practice_Guide_for_Digital_Evidence_v5.pdf"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

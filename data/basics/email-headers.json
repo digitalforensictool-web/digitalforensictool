@@ -1,0 +1,105 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "email-headers",
+ "branch": "cloud",
+ "title": "Reading email headers",
+ "quick": "An email header is the block of technical lines above the message text. It shows the sender, date and the servers that handled the message, and it helps check where an email really came from.",
+ "sections": [
+  {
+   "title": "What is in a header",
+   "text": [
+    "Every message has fields such as From, To, Date, Subject and Message-ID. RFC 5322 defines the format. The Date field records when the author finished the message, not when it was delivered. The Message-ID is meant to be a unique label for one message.",
+    "Anyone can write a From line, so it is not proof of the sender."
+   ]
+  },
+  {
+   "title": "Received lines",
+   "text": [
+    "Each mail server that handles the message adds a Received line at the top. So the lowest Received line is the first hop and you read upwards to follow the route. These trace fields are informational and can be forged below the point where your own trusted server added its line.",
+    "Compare the times between hops. A large gap can show a delay."
+   ]
+  },
+  {
+   "title": "A simple method",
+   "text": [
+    "Work in the same order each time."
+   ],
+   "points": [
+    "Export the full original header, not a screenshot.",
+    "List the Received lines from bottom to top.",
+    "Normalise the times to one time zone.",
+    "Compare From, Return-Path and Reply-To.",
+    "Check authentication results added by the receiving server, if present."
+   ]
+  },
+  {
+   "title": "Limits",
+   "text": [
+    "Headers can be edited in copies or forwarded messages. The strongest evidence is the original message from the server or mailbox. Procedures and laws differ by country and agency, so follow your lab's own procedure."
+   ]
+  }
+ ],
+ "mistakes": [
+  "Trusting the From field as the real sender.",
+  "Reading Received lines from top to bottom as the route.",
+  "Using a screenshot instead of the full raw header.",
+  "Ignoring time zones in the dates.",
+  "Trusting every Received line, including ones added by the sender."
+ ],
+ "terms": [
+  {
+   "term": "Header",
+   "meaning": "The technical lines at the top of an email."
+  },
+  {
+   "term": "Received",
+   "meaning": "A trace line added by each server that handles a message."
+  },
+  {
+   "term": "Message-ID",
+   "meaning": "A label meant to identify one message."
+  },
+  {
+   "term": "Return-Path",
+   "meaning": "The address where bounces are sent."
+  },
+  {
+   "term": "Hop",
+   "meaning": "One server step on the path of a message."
+  }
+ ],
+ "exam": [
+  {
+   "q": "In which order do you read Received lines?",
+   "a": "From the bottom up, because each server adds its line on top."
+  },
+  {
+   "q": "Can the From address prove who sent a message?",
+   "a": "No. It can be set freely, so you must check the route and other fields."
+  }
+ ],
+ "tools": [
+  "mha",
+  "google-messageheader",
+  "libpff",
+  "msg-extractor",
+  "unfurl"
+ ],
+ "related": [
+  "email-file-formats",
+  "tcp-ip-dns-basics",
+  "timeline-analysis",
+  "osint-basics"
+ ],
+ "learn": [
+  {
+   "label": "RFC 5322: Internet Message Format",
+   "url": "https://www.rfc-editor.org/rfc/rfc5322"
+  },
+  {
+   "label": "Google Admin Toolbox: Messageheader",
+   "url": "https://toolbox.googleapps.com/apps/messageheader/"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

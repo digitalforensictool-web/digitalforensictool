@@ -1,0 +1,94 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "windows-event-logs",
+ "branch": "windows",
+ "title": "Windows event logs",
+ "quick": "Windows event logs are files where the system and programs record events such as logons, errors and service changes. They help build a timeline of what happened on a machine.",
+ "sections": [
+  {
+   "title": "What they are",
+   "text": [
+    "Windows records important software and hardware events in a central place called the event log. Since Windows Vista the logs are saved as .evtx files, usually in C:\\Windows\\System32\\winevt\\Logs. Windows Event Viewer is the built-in program to read them."
+   ]
+  },
+  {
+   "title": "The main logs",
+   "text": [
+    "Three classic logs exist on every system. Many extra logs sit under Applications and Services Logs, for example PowerShell, Task Scheduler and Remote Desktop logs."
+   ],
+   "points": [
+    "Security: audit events such as logons and policy changes.",
+    "System: events from Windows parts, drivers and services.",
+    "Application: events from installed programs.",
+    "Operational logs: extra logs for single features."
+   ]
+  },
+  {
+   "title": "Events examiners often look for",
+   "text": [
+    "Each event has an ID number. Common examples are 4624 for a successful logon, 4625 for a failed logon, 7045 for a new service installed, 1102 for the Security log cleared and 104 for another log cleared. Event 4688 records a new process, but only if that auditing is switched on.",
+    "Not every system logs the same things. Audit settings and log size limits decide what is kept. Old events are overwritten when a log is full, so the time range in a log can be short."
+   ]
+  }
+ ],
+ "example": "An examiner suspects someone logged in at night. She exports Security.evtx from the image, filters event 4624 for that time range and notes the account name and logon type. She then checks the System log for any new service installed around the same time.",
+ "mistakes": [
+  "Assuming every action is logged. Audit policy decides this.",
+  "Reading events in the local timezone without checking, since the stored times are UTC.",
+  "Ignoring signs that a log was cleared, such as event 1102.",
+  "Opening the live log of the original computer instead of a copy."
+ ],
+ "terms": [
+  {
+   "term": "EVTX",
+   "meaning": "The binary file format of Windows event log files."
+  },
+  {
+   "term": "Event ID",
+   "meaning": "A number that tells what kind of event happened."
+  },
+  {
+   "term": "Audit policy",
+   "meaning": "Windows settings that decide which actions are written to the Security log."
+  },
+  {
+   "term": "Log clearing",
+   "meaning": "Deleting the events in a log, which itself can be recorded."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Why can a Security log be missing events?",
+   "a": "The audit policy may not enable them, or the log filled up and older events were overwritten."
+  },
+  {
+   "q": "What does event 4624 mean?",
+   "a": "A successful logon. The details show the account and the logon type."
+  }
+ ],
+ "tools": [
+  "evtxecmd",
+  "hayabusa",
+  "chainsaw",
+  "deepbluecli",
+  "timeline-explorer",
+  "plaso"
+ ],
+ "related": [
+  "log-analysis-basics",
+  "timeline-analysis",
+  "program-execution-artifacts",
+  "windows-registry"
+ ],
+ "learn": [
+  {
+   "label": "Microsoft: Event logging",
+   "url": "https://learn.microsoft.com/en-us/windows/win32/eventlog/event-logging"
+  },
+  {
+   "label": "NIST SP 800-86",
+   "url": "https://csrc.nist.gov/pubs/sp/800/86/final"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

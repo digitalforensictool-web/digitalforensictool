@@ -1,0 +1,176 @@
+{
+ "reviewed": "2026-11-24",
+ "lead": "GNU ddrescue copies data from one drive or file to another and, when it hits read errors, it copies the good parts first. It keeps a mapfile so you can stop and continue later.",
+ "use_when": [
+  "A drive has bad sectors and normal imaging tools stop or hang.",
+  "You need as much data as possible from a failing drive or damaged memory card.",
+  "A copy was interrupted and you want to continue it without starting again."
+ ],
+ "features": [
+  {
+   "title": "Rescue strategy",
+   "items": [
+    "Copies the good areas first and leaves the damaged areas for later",
+    "Can skip the trimming phase (-N) or the scraping phase (-n)",
+    "Can retry bad areas a set number of times with -r",
+    "Can read in the reverse direction with -R, which sometimes helps on a bad area"
+   ]
+  },
+  {
+   "title": "Mapfile",
+   "items": [
+    "Records which parts are copied, which failed and which are not tried yet",
+    "Lets you stop and resume a rescue",
+    "Older versions called this file a logfile. The format is the same"
+   ]
+  },
+  {
+   "title": "Control of the copy",
+   "items": [
+    "Direct disc access for the input with -d",
+    "Sector size with -b, copy block size with -c",
+    "Start position and size limits with -i and -s",
+    "Limits for read errors and read rate, and timeouts"
+   ]
+  },
+  {
+   "title": "Reports",
+   "items": [
+    "Shows progress and the amount of data rescued and bad data",
+    "Optional logs of events, rates and reads",
+    "Exit codes tell you about environment problems or corrupt input"
+   ]
+  }
+ ],
+ "formats": [
+  "Raw copy of a block device or file"
+ ],
+ "requirements": "Linux or another Unix-like system, with a terminal and root rights to read a physical device. Install the gddrescue package on Debian-based systems, or build the GNU source. You need an output disk that is at least as large as the source and a place to store the mapfile.",
+ "steps": [
+  {
+   "title": "Install ddrescue",
+   "text": "On a Debian-based system the package is named gddrescue, and the command is ddrescue. Check the version with the help option."
+  },
+  {
+   "title": "Identify drives carefully",
+   "text": "Connect the failing drive through a write blocker if you can. Find its device name and the name of the output drive. Check device names again after any reboot, because they can change."
+  },
+  {
+   "title": "First pass: copy the easy data",
+   "text": "Run ddrescue with -n to skip scraping and -f to allow writing to a device. The three names are the input, the output and the mapfile. Always give a mapfile. Use an image file as output if you can, to avoid overwriting a disk by mistake.",
+   "cmd": "sudo ddrescue -f -n /dev/sdb image.img rescue.map"
+  },
+  {
+   "title": "Second pass: retry the bad areas",
+   "text": "Run the same command again with the same mapfile. Add -d for direct input access and -r3 to retry bad areas three times. Never use a mapfile from a different rescue.",
+   "cmd": "sudo ddrescue -f -d -r3 /dev/sdb image.img rescue.map"
+  },
+  {
+   "title": "Check the result",
+   "text": "Read the final report for the amount of data rescued and the amount still bad. Keep the mapfile with the image, because it shows exactly which areas could not be read."
+  },
+  {
+   "title": "Hash and use the image",
+   "text": "ddrescue does not write E01 files or a hash report. Hash the image with another tool, record the value, and then open the image in an analysis tool. Work from a copy."
+  }
+ ],
+ "options": [
+  {
+   "cmd": "-f, --force",
+   "what": "Allows the output to be a device or partition. Take care: it overwrites the output."
+  },
+  {
+   "cmd": "-n, --no-scrape",
+   "what": "Skips the scraping phase, so the first pass is quick."
+  },
+  {
+   "cmd": "-d, --idirect",
+   "what": "Uses direct disc access for the input file."
+  },
+  {
+   "cmd": "-r, --retry-passes=N",
+   "what": "Retries bad areas for N passes. A value of -1 means no limit."
+  },
+  {
+   "cmd": "-R, --reverse",
+   "what": "Reads in the reverse direction in all passes."
+  },
+  {
+   "cmd": "-M, --retrim",
+   "what": "Marks all failed blocks as not trimmed so they are tried again."
+  },
+  {
+   "cmd": "-b, --sector-size=BYTES",
+   "what": "Sets the sector size of the input device. The default is 512."
+  },
+  {
+   "cmd": "-i, --input-position=BYTES",
+   "what": "Sets the position in the input where copying starts."
+  }
+ ],
+ "cases": [
+  {
+   "title": "Failing hard disks",
+   "why": "It copies the readable data first and handles the bad areas later, which reduces the extra strain on the drive."
+  },
+  {
+   "title": "Damaged memory cards and USB drives",
+   "why": "It can copy the areas that still read and tell you which areas could not be read."
+  },
+  {
+   "title": "Interrupted imaging",
+   "why": "The mapfile lets a rescue continue after a stop, a power cut or a cable problem."
+  },
+  {
+   "title": "Data recovery before analysis",
+   "why": "A rescued raw image can be opened by recovery and analysis tools."
+  }
+ ],
+ "strengths": [
+  "Free software from the GNU project.",
+  "The mapfile makes long rescues safe to stop and resume.",
+  "Many settings to tune how a damaged drive is read.",
+  "Works with any block device or file."
+ ],
+ "limits": [
+  "It does not hash the data, and it does not write E01 files. Use other tools for those jobs.",
+  "It does not block writes to the source. Use a write blocker.",
+  "A wrong output name can overwrite a disk, especially with -f. Check every name.",
+  "Retrying a dying drive may make the damage worse, so plan the number of retries.",
+  "The manual page has no examples. The full manual is a Texinfo file read with info ddrescue.",
+  "A mapfile from a different rescue can give wrong results. Keep one mapfile for each job."
+ ],
+ "works_with": [
+  {
+   "id": "linux-write-blocker",
+   "note": "Protect the failing drive from writes"
+  },
+  {
+   "id": "libewf",
+   "note": "Convert the raw image to E01"
+  },
+  {
+   "id": "testdisk",
+   "note": "Recover partitions and files from the rescued image"
+  },
+  {
+   "id": "sleuthkit",
+   "note": "Analyse the rescued image"
+  },
+  {
+   "id": "hashdeep",
+   "note": "Hash the image and copies"
+  }
+ ],
+ "learn": [
+  {
+   "label": "GNU ddrescue manual",
+   "url": "https://www.gnu.org/software/ddrescue/manual/ddrescue_manual.html"
+  },
+  {
+   "label": "ddrescue manual page (Debian)",
+   "url": "https://manpages.debian.org/bookworm/gddrescue/ddrescue.1.en.html"
+  }
+ ],
+ "sources_note": "Written in our own words from the GNU ddrescue manual page."
+}

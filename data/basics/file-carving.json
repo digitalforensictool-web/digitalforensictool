@@ -1,0 +1,119 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "file-carving",
+ "branch": "disk",
+ "title": "What is file carving?",
+ "quick": "File carving recovers files from raw data by looking for their content patterns, such as the start and end markers, instead of using file system records.",
+ "sections": [
+  {
+   "title": "How carving works",
+   "text": [
+    "Many file types begin with a fixed byte pattern called a header, or magic number. Some also end with a footer. A carver scans the raw data, finds a header, and copies the bytes up to the footer or a size limit.",
+    "Carving is used when directory entries are missing or damaged, for example after deletion, formatting or a corrupted file system. The same idea is used on memory dumps."
+   ]
+  },
+  {
+   "title": "Limits",
+   "text": [
+    "Most carvers expect the file to be stored in one piece. Fragmented files, whose parts sit in different places, may come out broken or incomplete. Studies by Garfinkel found that a fair share of JPEG and Word files are fragmented.",
+    "Carved files have no name, no folder and no original times. Output can include false hits, so check each file. Carving from a forensic image is safer than from the original drive."
+   ]
+  },
+  {
+   "title": "Better methods",
+   "text": [
+    "Basic header and footer carving is the simplest. Other methods use a maximum size, a length stored in the file, or checks of the file structure to confirm the result. Some tools can join fragments by testing which pieces fit together.",
+    "Always record the tool, the version and the signature set you used, so another examiner can repeat the result."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "Carving and file system recovery",
+  "headers": [
+   "",
+   "File carving",
+   "File system recovery"
+  ],
+  "rows": [
+   [
+    "Uses",
+    "File content patterns",
+    "File system records"
+   ],
+   [
+    "Names and times",
+    "Usually lost",
+    "Often kept"
+   ],
+   [
+    "Works on formatted drives",
+    "Often yes",
+    "Only if records remain"
+   ],
+   [
+    "Fragmented files",
+    "Weak",
+    "Better"
+   ]
+  ]
+ },
+ "example": "A memory card was formatted before it reached the lab. The file system shows no files. The examiner runs a carver on the image and recovers JPEG photos by their header and footer. The photos have generic names, so the examiner checks the embedded metadata for dates.",
+ "mistakes": [
+  "Expecting carved files to have names and original times.",
+  "Trusting every carved file without opening and checking it.",
+  "Carving from the original drive instead of an image.",
+  "Using only the default signatures and missing unusual file types."
+ ],
+ "terms": [
+  {
+   "term": "Header",
+   "meaning": "The first bytes of a file that show its type."
+  },
+  {
+   "term": "Footer",
+   "meaning": "Bytes that mark the end of some file types."
+  },
+  {
+   "term": "Magic number",
+   "meaning": "Another name for a file signature at the start of a file."
+  },
+  {
+   "term": "Fragmentation",
+   "meaning": "A file stored in several separate pieces."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Why does carving work when the file system is damaged?",
+   "a": "It reads the raw bytes and recognises file types by their own structure, so it does not need directory entries."
+  },
+  {
+   "q": "Why are fragmented files hard to carve?",
+   "a": "The carver expects the data to follow the header in one block, so pieces stored elsewhere are missed."
+  }
+ ],
+ "tools": [
+  "foremost",
+  "testdisk",
+  "bulk-extractor",
+  "binwalk",
+  "autopsy"
+ ],
+ "related": [
+  "deleted-files-and-recovery",
+  "slack-and-unallocated-space",
+  "hash-values",
+  "image-and-video-metadata"
+ ],
+ "learn": [
+  {
+   "label": "Forensics Wiki: File carving",
+   "url": "https://forensics.wiki/file_carving/"
+  },
+  {
+   "label": "NIST SP 800-86: Guide to Integrating Forensic Techniques into Incident Response",
+   "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-86.pdf"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

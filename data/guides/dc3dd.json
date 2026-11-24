@@ -1,0 +1,183 @@
+{
+ "reviewed": "2026-11-24",
+ "lead": "dc3dd is a patched version of the Linux dd command with forensic additions. It hashes the data while it copies and writes logs of what happened.",
+ "use_when": [
+  "You want to image a drive from the command line on Linux.",
+  "You need hashes and a log made in the same step as the copy.",
+  "You want to split an image into several files while you copy it.",
+  "You need to wipe a drive and then check that the wipe worked."
+ ],
+ "features": [
+  {
+   "title": "Copy and hash",
+   "items": [
+    "Hashes the data on the fly with MD5, SHA-1, SHA-256 or SHA-512",
+    "hof= writes the output, hashes it and compares the hash with the input",
+    "Can write to several outputs at once"
+   ]
+  },
+  {
+   "title": "Logs and reports",
+   "items": [
+    "log= saves statistics, errors and the total hashes",
+    "hlog= saves total and piecewise hashes",
+    "mlog= writes a hash log that is easier for programs to read",
+    "Shows progress while it runs"
+   ]
+  },
+  {
+   "title": "Split output",
+   "items": [
+    "ofs= writes the output as numbered files",
+    "ofsz= sets the maximum size of each piece"
+   ]
+  },
+  {
+   "title": "Wiping",
+   "items": [
+    "wipe= overwrites a device with zeros or a pattern",
+    "hwipe= wipes a device and then hashes it to check the result"
+   ]
+  }
+ ],
+ "formats": [
+  "Raw (dd) output, including split raw files"
+ ],
+ "requirements": "Linux or another Unix-like system, with a terminal and root rights to read a physical device. On Kali Linux and Debian-based systems you can install it with the package manager. You need free space at the destination for the image.",
+ "steps": [
+  {
+   "title": "Install dc3dd",
+   "text": "On a Debian-based system such as Kali Linux, install the package. Then run the help option to see the list of settings.",
+   "cmd": "sudo apt install dc3dd"
+  },
+  {
+   "title": "Protect and identify the source",
+   "text": "Connect the evidence drive through a write blocker. Use lsblk or a similar command to find its device name. Device names such as /dev/sdb are only examples and change between computers, so confirm the right one before you continue."
+  },
+  {
+   "title": "Create the image with hash and log",
+   "text": "Run dc3dd as root. if= is the source, of= is the output file, hash= picks the algorithm and log= names the log file. Use your own names in place of the examples.",
+   "cmd": "sudo dc3dd if=/dev/sdb of=image.dd hash=sha256 log=image.log"
+  },
+  {
+   "title": "Read the report",
+   "text": "When the copy ends, dc3dd prints the number of sectors copied and the hash of the input. Check that there are no errors and keep the log file with your case notes."
+  },
+  {
+   "title": "Verify while writing (optional)",
+   "text": "Use hof= instead of of= to let dc3dd hash the output after writing and compare it with the input hash. Add hash= to choose the algorithm.",
+   "cmd": "sudo dc3dd if=/dev/sdb hof=image.dd hash=sha256 log=image.log"
+  },
+  {
+   "title": "Split a large image (optional)",
+   "text": "Use ofs= and ofsz= to write numbered pieces of a fixed size, which helps when the destination has a file size limit or you want to move the pieces on separate media.",
+   "cmd": "sudo dc3dd if=/dev/sdb ofs=image.000 ofsz=2G hash=sha256 log=image.log"
+  },
+  {
+   "title": "Check the image again later",
+   "text": "Hash the finished image with a separate tool and compare the value with the one in your log. Store the log and the hash with the image."
+  }
+ ],
+ "options": [
+  {
+   "cmd": "hash=sha256",
+   "what": "Calculates a hash of the input. Choices are md5, sha1, sha256 and sha512. Use it once for each algorithm."
+  },
+  {
+   "cmd": "hof=FILE",
+   "what": "Writes the output, hashes it and compares it with the input hash."
+  },
+  {
+   "cmd": "ofs=BASE.000 ofsz=2G",
+   "what": "Writes the output as a series of files, each up to the given size."
+  },
+  {
+   "cmd": "log=FILE",
+   "what": "Saves statistics, diagnostics and total hashes to a file."
+  },
+  {
+   "cmd": "hlog=FILE",
+   "what": "Saves total and piecewise hashes to a file."
+  },
+  {
+   "cmd": "hwipe=DEVICE",
+   "what": "Wipes a device and then hashes it to check the wipe."
+  },
+  {
+   "cmd": "verb=on",
+   "what": "Turns on more detailed reports, such as the sectors in and out for each file of a split set."
+  }
+ ],
+ "cases": [
+  {
+   "title": "Imaging a drive in a Linux lab",
+   "why": "One command copies the drive, hashes it and writes the log."
+  },
+  {
+   "title": "Imaging with limited resources",
+   "why": "It needs no graphical interface, so it works over a terminal on small computers and live systems."
+  },
+  {
+   "title": "Moving large images on small media",
+   "why": "Split output makes pieces that fit on smaller disks or file systems."
+  },
+  {
+   "title": "Sanitising a drive before reuse",
+   "why": "The wipe options overwrite a drive and can check the result with a hash."
+  },
+  {
+   "title": "Teaching how imaging works",
+   "why": "The options are simple and show each step: input, output, hash and log."
+  }
+ ],
+ "strengths": [
+  "Open source and based on the well-known dd command.",
+  "Hashing, logging and error reporting are part of the copy.",
+  "Supports four hash algorithms.",
+  "Small and available in Debian-based systems such as Kali Linux."
+ ],
+ "limits": [
+  "It is a command-line tool, and a wrong device name can destroy data. Check the names carefully.",
+  "It writes raw images. It does not write E01 files. Use another tool such as ewfacquire for that.",
+  "It does not stop writes to the source drive. Use a write blocker.",
+  "It does not skip unreadable areas as cleverly as ddrescue. For failing drives, use a recovery imager.",
+  "The manual page is short. The full manual is in the Texinfo format and is read with the info command."
+ ],
+ "works_with": [
+  {
+   "id": "linux-write-blocker",
+   "note": "Block writes to the source drive"
+  },
+  {
+   "id": "libewf",
+   "note": "Convert the raw image to E01"
+  },
+  {
+   "id": "hashdeep",
+   "note": "Hash files again for checking"
+  },
+  {
+   "id": "sleuthkit",
+   "note": "Analyse the raw image"
+  },
+  {
+   "id": "caine",
+   "note": "A live system that includes dc3dd"
+  }
+ ],
+ "learn": [
+  {
+   "label": "dc3dd on Kali Linux tools",
+   "url": "https://www.kali.org/tools/dc3dd/"
+  },
+  {
+   "label": "dc3dd manual page (mankier)",
+   "url": "https://www.mankier.com/1/dc3dd"
+  },
+  {
+   "label": "dc3dd manual page (Debian)",
+   "url": "https://manpages.debian.org/bookworm/dc3dd/dc3dd.1.en.html"
+  }
+ ],
+ "sources_note": "Written in our own words from the dc3dd manual pages and the Kali Linux tools page."
+}

@@ -1,0 +1,88 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "lnk-jumplists-shellbags",
+ "branch": "windows",
+ "title": "LNK files, jump lists and shellbags",
+ "quick": "LNK files, jump lists and shellbags are Windows traces of files and folders a user opened or browsed. They can show a file or folder existed even after it was deleted or the drive was removed.",
+ "sections": [
+  {
+   "title": "LNK files",
+   "text": [
+    "An LNK file is a shortcut. Windows also makes them by itself when a user opens a file, and stores them in the user's Recent folder. The shortcut keeps details of its target: the path, the target's file times, its size and the volume serial number. For a network file it can keep share details.",
+    "The LNK can stay on disk after the target file is deleted, or after the USB drive holding it is gone."
+   ]
+  },
+  {
+   "title": "Jump lists",
+   "text": [
+    "Jump lists are the recent and pinned items shown when you right-click a program on the taskbar. They are stored as automaticDestinations-ms and customDestinations-ms files in the user profile. They use the same data structure as LNK files and are tied to an application ID, so they show which program opened which file."
+   ]
+  },
+  {
+   "title": "Shellbags",
+   "text": [
+    "Shellbags are registry entries that remember how a user viewed a folder in Windows Explorer, such as window size and sort order. As a side effect they list folders a user browsed. This includes folders on USB drives and network shares that are no longer connected. They are found in the user's NTUSER.DAT and UsrClass.dat hives."
+   ]
+  }
+ ],
+ "example": "A report says a user opened a secret document from a USB drive. The drive is not available. The examiner finds an LNK file and a jump list entry for the document with a volume serial number, and a shellbag for the same folder path.",
+ "mistakes": [
+  "Assuming an LNK file means the user created it on purpose. Windows makes many automatically.",
+  "Using the LNK file's own times and the target times as if they were the same thing.",
+  "Thinking shellbags prove a folder's contents were seen. They show the folder was browsed.",
+  "Looking at only one of the three. They support each other."
+ ],
+ "terms": [
+  {
+   "term": "LNK",
+   "meaning": "A Windows shortcut file with details of its target."
+  },
+  {
+   "term": "Jump list",
+   "meaning": "A list of recent or pinned files kept for each program."
+  },
+  {
+   "term": "Shellbag",
+   "meaning": "A registry record of Explorer folder view settings that also shows browsed folders."
+  },
+  {
+   "term": "Volume serial number",
+   "meaning": "An ID of a file system volume, useful to link a file to a drive."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Why can an LNK file prove a file once existed?",
+   "a": "It stores the target path, times and size, and the LNK often stays after the target is deleted."
+  },
+  {
+   "q": "Name a trace of a folder on a removed USB drive.",
+   "a": "Shellbags. They keep the folder path even when the drive is not attached."
+  }
+ ],
+ "tools": [
+  "ez-tools",
+  "registry-explorer",
+  "regripper",
+  "kape",
+  "autopsy",
+  "timeline-explorer"
+ ],
+ "related": [
+  "usb-device-artifacts",
+  "recycle-bin-and-user-activity",
+  "windows-registry",
+  "program-execution-artifacts"
+ ],
+ "learn": [
+  {
+   "label": "Magnet Forensics: Forensic analysis of LNK files",
+   "url": "https://www.magnetforensics.com/blog/forensic-analysis-of-lnk-files/"
+  },
+  {
+   "label": "Forensics Wiki: LNK",
+   "url": "https://forensics.wiki/lnk/"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

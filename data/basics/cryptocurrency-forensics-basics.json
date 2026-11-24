@@ -1,0 +1,116 @@
+{
+ "id": "cryptocurrency-forensics-basics",
+ "title": "Cryptocurrency forensics basics",
+ "quick": "Cryptocurrency forensics follows digital coins through public ledgers and finds the wallets, keys and apps on seized devices that control them. Names are not stored, only addresses.",
+ "sections": [
+  {
+   "title": "Blockchain basics",
+   "text": [
+    "A blockchain is a shared ledger kept by many computers. NIST describes it as a record that resists change, where published transactions are not meant to be altered. Bitcoin and Ethereum are public chains, so anyone can read their transactions.",
+    "An address is a string that receives coins. A wallet is software or hardware that holds the keys needed to spend them. Whoever controls the private key controls the coins."
+   ]
+  },
+  {
+   "title": "Pseudonymous, not anonymous",
+   "text": [
+    "Addresses do not contain names. But all transactions are visible, so activity can be followed from address to address. Analysts group addresses that appear to belong together and look for links to exchanges. Exchanges may hold customer details and can be asked for them through legal process.",
+    "Some coins and services are designed to hide more details, which makes tracing harder."
+   ]
+  },
+  {
+   "title": "Evidence on devices",
+   "text": [
+    "On a computer or phone, examiners look for wallet apps and files, browser extensions, exchange apps, saved seed phrases, screenshots and notes. A seed phrase is a list of words that can rebuild a wallet. Hardware wallets may also be present. Take care, because moving funds or touching a live wallet could change the case.",
+    "Do not move or spend anything yourself. Procedures and laws differ by country and agency, follow your lab's own procedure."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "Types of wallet",
+  "headers": [
+   "",
+   "Hot wallet",
+   "Cold wallet"
+  ],
+  "rows": [
+   [
+    "Connected to the internet",
+    "Yes",
+    "No"
+   ],
+   [
+    "Examples",
+    "Phone app, exchange account",
+    "Hardware device, paper"
+   ],
+   [
+    "Typical evidence",
+    "App data, cloud account",
+    "The device, backup words"
+   ]
+  ]
+ },
+ "example": "On a seized laptop, a student finds a wallet application and a text file with twelve words. She photographs the screen, records the file hash, and notes the wallet address shown. Using a public block explorer, she then sees the history of that address and writes it into her report.",
+ "mistakes": [
+  "Thinking cryptocurrency is fully anonymous.",
+  "Missing seed phrases written in notes or screenshots.",
+  "Entering seed phrases into online services.",
+  "Not recording addresses and transaction IDs exactly.",
+  "Forgetting that exchange accounts and cloud backups also matter."
+ ],
+ "terms": [
+  {
+   "term": "Blockchain",
+   "meaning": "A shared ledger of transactions kept by many computers."
+  },
+  {
+   "term": "Address",
+   "meaning": "A string used to receive cryptocurrency."
+  },
+  {
+   "term": "Private key",
+   "meaning": "The secret that allows spending from an address."
+  },
+  {
+   "term": "Seed phrase",
+   "meaning": "A list of words that can rebuild a wallet."
+  },
+  {
+   "term": "Block explorer",
+   "meaning": "A website that lets you look up transactions and addresses."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Is Bitcoin anonymous?",
+   "a": "No. It is pseudonymous. Addresses are public and transactions can be followed, but they do not carry names."
+  },
+  {
+   "q": "What is a seed phrase?",
+   "a": "A list of words that can restore a wallet and its keys, so it must be handled as highly sensitive."
+  }
+ ],
+ "tools": [
+  "bip39",
+  "mempool",
+  "blockchair",
+  "etherscan",
+  "walletexplorer",
+  "btcrecover"
+ ],
+ "related": [
+  "mobile-artifacts",
+  "browser-artifacts",
+  "hash-values",
+  "osint-basics"
+ ],
+ "learn": [
+  {
+   "label": "NISTIR 8202: Blockchain technology overview",
+   "url": "https://csrc.nist.gov/pubs/ir/8202/final"
+  }
+ ],
+ "reviewed": "2026-11-24",
+ "branch": "specialist",
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

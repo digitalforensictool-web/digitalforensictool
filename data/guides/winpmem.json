@@ -1,0 +1,157 @@
+{
+ "reviewed": "2026-11-24",
+ "lead": "WinPmem saves the physical memory (RAM) of a running Windows computer to a file. It is a small command-line program that loads a driver to read memory.",
+ "use_when": [
+  "You need a copy of RAM from a running Windows computer before it is switched off.",
+  "You want a raw memory image to analyse with a memory tool.",
+  "You need a small tool that runs from a USB stick without other software."
+ ],
+ "features": [
+  {
+   "title": "Memory capture",
+   "items": [
+    "Writes the physical memory to a raw image file",
+    "The mini programs include both the 32-bit and 64-bit drivers and load the right one",
+    "The driver is unloaded after the capture"
+   ]
+  },
+  {
+   "title": "Design",
+   "items": [
+    "Uses a read interface to the driver, and the imaging logic runs in user space",
+    "This allows copying over a network, hashing and live analysis",
+    "The project describes three independent ways to read memory, two of which give a complete dump"
+   ]
+  },
+  {
+   "title": "Platforms",
+   "items": [
+    "The project lists Windows 7 to Windows 10, 32-bit and 64-bit",
+    "The standalone program needs no other software"
+   ]
+  },
+  {
+   "title": "Open source",
+   "items": [
+    "Apache License 2.0",
+    "Started at Google and was part of the Rekall project",
+    "Is the Windows counterpart of Linpmem"
+   ]
+  }
+ ],
+ "formats": [
+  "Raw memory image"
+ ],
+ "requirements": "A Windows computer in the range the project lists (Windows 7 to 10), and rights to load a kernel driver. The README does not say that administrator rights are needed, but loading a driver normally needs them. Save the image to a different drive with enough free space for all the RAM.",
+ "steps": [
+  {
+   "title": "Get the program",
+   "text": "Download the WinPmem program from the project's GitHub page. Use the mini version that matches your computer, for example winpmem_mini_x64.exe for 64-bit Windows. Check the file hash against the one you recorded when you downloaded it."
+  },
+  {
+   "title": "Prepare the output drive",
+   "text": "Use a clean external drive with free space larger than the RAM of the target computer. Do not save the image on the computer's own disk, because that changes the evidence."
+  },
+  {
+   "title": "Plan before you run",
+   "text": "A memory capture changes the running computer a little, because the program and its driver are loaded. Write down the time, who did it and which tool and version you used. Do this before you run the tool."
+  },
+  {
+   "title": "Show the help",
+   "text": "Run the program with no arguments to see the usage text for your version.",
+   "cmd": "winpmem_mini_x64.exe"
+  },
+  {
+   "title": "Capture the memory",
+   "text": "Run the program with the name of the output file. Wait until it finishes and the prompt returns. The README gives this form of the command.",
+   "cmd": "winpmem_mini_x64.exe physmem.raw"
+  },
+  {
+   "title": "Hash and keep the image",
+   "text": "Calculate a hash of the raw file, write it in your notes and keep the image as read-only evidence. Make a working copy for analysis."
+  },
+  {
+   "title": "Analyse the image",
+   "text": "Open the raw file in a memory analysis tool such as Volatility 3 or MemProcFS to list processes, network connections and other details."
+  }
+ ],
+ "options": [
+  {
+   "cmd": "winpmem_mini_x64.exe physmem.raw",
+   "what": "Writes a raw image to physmem.raw with the default method."
+  },
+  {
+   "cmd": "winpmem.exe -1 myimage.raw",
+   "what": "Uses the MmMapIoSpace method to write a raw image."
+  },
+  {
+   "cmd": "winpmem.exe -w -l",
+   "what": "Loads the driver with write support. The project warns that this is dangerous and only for self-signed test builds."
+  }
+ ],
+ "cases": [
+  {
+   "title": "Malware and intrusion investigations",
+   "why": "Memory can hold running processes, network connections and code that is never saved to disk."
+  },
+  {
+   "title": "Cases with encrypted drives",
+   "why": "A memory capture from a running computer may hold material that is not available after shutdown."
+  },
+  {
+   "title": "Incident response triage",
+   "why": "A small single-file tool is easy to copy to a computer and run quickly."
+  },
+  {
+   "title": "Teaching memory forensics",
+   "why": "Students can capture RAM from a test virtual machine and then practise with a memory analysis tool."
+  }
+ ],
+ "strengths": [
+  "Open source under Apache License 2.0.",
+  "Small program, no extra software needed.",
+  "Simple command: one program name and one output file name.",
+  "Imaging in user space allows hashing and copying over a network."
+ ],
+ "limits": [
+  "It writes raw images only. The mini programs cannot write AFF4 files.",
+  "The README lists Windows 7 to 10. Check that it works on your Windows version before an important case, and test on a lab computer.",
+  "The README notes that reads can fail for physical addresses above half the maximum 64-bit value. This is unlikely, but possible as RAM grows.",
+  "It loads a kernel driver, so security software may block it. Test this in advance on a lab computer.",
+  "It does not analyse memory. You need a tool such as Volatility 3.",
+  "The README is short. Test the tool on a lab computer and read the project's pages for newer versions."
+ ],
+ "works_with": [
+  {
+   "id": "volatility3",
+   "note": "Analyse the memory image"
+  },
+  {
+   "id": "memprocfs",
+   "note": "Browse the memory image as files"
+  },
+  {
+   "id": "kape",
+   "note": "A KAPE module can run WinPmem during collection"
+  },
+  {
+   "id": "ftk-imager",
+   "note": "Another way to capture memory on Windows"
+  },
+  {
+   "id": "bulk-extractor",
+   "note": "Scan the raw image for emails, URLs and more"
+  }
+ ],
+ "learn": [
+  {
+   "label": "WinPmem project page (GitHub)",
+   "url": "https://github.com/Velocidex/WinPmem"
+  },
+  {
+   "label": "GIAC paper: KAPE, fast and flexible incident response (includes a WinPmem module)",
+   "url": "https://giac.org/paper/gcih/34611/kape-fast-flexible-incident-response/152146"
+  }
+ ],
+ "sources_note": "Written in our own words from the WinPmem project's README."
+}

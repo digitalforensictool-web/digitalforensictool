@@ -1,0 +1,131 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "digital-forensics-overview",
+ "branch": "foundations",
+ "title": "What is digital forensics?",
+ "quick": "Digital forensics is the careful collection, examination and reporting of data from digital devices, so that the findings are reliable and can be checked by others.",
+ "sections": [
+  {
+   "title": "What it covers",
+   "text": [
+    "Digital forensics applies scientific methods to digital evidence. Digital evidence is any data that may help show what happened, such as files, messages, logs and network traffic. The work is used in criminal cases, company investigations, incident response and civil disputes.",
+    "Procedures and laws differ by country and agency. Follow your lab's own procedure."
+   ],
+   "points": [
+    "Computer and disk forensics",
+    "Mobile device forensics",
+    "Memory (RAM) forensics",
+    "Network forensics",
+    "Cloud and email forensics"
+   ]
+  },
+  {
+   "title": "What makes it forensic",
+   "text": [
+    "Many people can read files from a drive. Forensic work adds rules. You keep the original unchanged, you write down every step, and you show that your results can be repeated by another trained person.",
+    "The aim is to find facts and report them fairly. You do not decide guilt. You describe what the data shows and how sure you are."
+   ]
+  },
+  {
+   "title": "Main stages",
+   "text": [
+    "Most guides describe four stages: collection, examination, analysis and reporting. Each stage must protect the integrity of the data, which means the data stays unchanged and can be shown to be unchanged. The next topics explain these stages in detail."
+   ]
+  },
+  {
+   "title": "Skills a student needs",
+   "text": [
+    "You need to understand file systems, operating systems and how apps store data. You also need clear note taking and writing. A tool only shows data. The examiner must understand and explain it."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "Digital forensics and general IT support",
+  "headers": [
+   "",
+   "Digital forensics",
+   "General IT support"
+  ],
+  "rows": [
+   [
+    "Goal",
+    "Find and report facts about past events",
+    "Keep systems working"
+   ],
+   [
+    "Treatment of data",
+    "Original kept unchanged",
+    "Data is often changed or repaired"
+   ],
+   [
+    "Records",
+    "Every step documented",
+    "Light notes"
+   ],
+   [
+    "Output",
+    "Report others can check",
+    "Fixed system"
+   ]
+  ]
+ },
+ "example": "A company finds that a laptop was used to send confidential files. An examiner makes a copy of the laptop drive, checks the copy with a hash, and studies only the copy. The report lists what was found, the steps taken and the limits of the findings.",
+ "mistakes": [
+  "Believing that forensics means only recovering deleted files.",
+  "Opening files on the original device instead of working on a copy.",
+  "Writing opinions as if they were facts.",
+  "Relying on one tool result without understanding it.",
+  "Skipping notes because the work seems simple."
+ ],
+ "terms": [
+  {
+   "term": "Digital evidence",
+   "meaning": "Data stored or sent in digital form that may help in an investigation."
+  },
+  {
+   "term": "Integrity",
+   "meaning": "The state of data being complete and unchanged."
+  },
+  {
+   "term": "Examiner",
+   "meaning": "The person who carries out the forensic work."
+  },
+  {
+   "term": "Artifact",
+   "meaning": "A trace left by a user or system activity, such as a log entry or a browser history record."
+  }
+ ],
+ "exam": [
+  {
+   "q": "What is digital forensics in one sentence?",
+   "a": "It is the careful collection, examination, analysis and reporting of digital data in a way that protects its integrity and can be repeated and checked."
+  },
+  {
+   "q": "Why is documentation so important?",
+   "a": "It lets another examiner repeat the work and reach the same result, and it shows how the evidence was handled."
+  }
+ ],
+ "tools": [
+  "autopsy",
+  "sleuthkit",
+  "sift",
+  "caine"
+ ],
+ "related": [
+  "forensic-process",
+  "chain-of-custody",
+  "evidence-integrity",
+  "good-practice-principles"
+ ],
+ "learn": [
+  {
+   "label": "NIST SP 800-86: Guide to Integrating Forensic Techniques into Incident Response",
+   "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-86.pdf"
+  },
+  {
+   "label": "NIST Computer Forensics Tool Testing Program",
+   "url": "https://www.nist.gov/itl/ssd/software-quality-group/computer-forensics-tool-testing-program-cftt"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

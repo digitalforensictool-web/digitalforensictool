@@ -1,0 +1,122 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "mft-and-file-metadata",
+ "branch": "disk",
+ "title": "The MFT and file metadata",
+ "quick": "The Master File Table (MFT) is the database of an NTFS volume. It holds one record for every file and folder, including names, times, size and often where the data is.",
+ "sections": [
+  {
+   "title": "What the MFT is",
+   "text": [
+    "NTFS keeps at least one MFT entry for every file on the volume. The MFT is itself a file. A record holds attributes, which are small labelled blocks of information such as the file name, the times and the data.",
+    "Metadata means data about a file. In NTFS most metadata lives in the MFT, so it is one of the richest sources for an examiner."
+   ]
+  },
+  {
+   "title": "What a record can show",
+   "text": [
+    "Two attributes are very important. $STANDARD_INFORMATION holds the main file times and flags. $FILE_NAME holds the name, the parent folder and a second set of times. Comparing the two sets can help show that times were changed by a tool.",
+    "Very small files can be stored inside the record itself. This is called resident data. Bigger files are non-resident: the record only lists where their clusters are."
+   ]
+  },
+  {
+   "title": "Deleted files and related files",
+   "text": [
+    "When a file is deleted, its MFT entry is marked as free and can be reused later. Until it is reused, the name, times and sometimes the data can still be read. The MFT does not shrink after deletions.",
+    "NTFS also keeps the $UsnJrnl change journal and the $LogFile. These record changes such as create, rename and delete, and can add context that the MFT alone does not give."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "Resident and non-resident data",
+  "headers": [
+   "",
+   "Resident",
+   "Non-resident"
+  ],
+  "rows": [
+   [
+    "Where the content is",
+    "Inside the MFT record",
+    "In clusters elsewhere on the volume"
+   ],
+   [
+    "Typical files",
+    "Very small files",
+    "Larger files"
+   ],
+   [
+    "After deletion",
+    "Content may stay in the free record",
+    "Content stays in its clusters until reused"
+   ]
+  ]
+ },
+ "example": "An examiner exports the MFT from an image and parses it into a spreadsheet. A deleted document still has a record with its name and times. The $FILE_NAME times differ from the $STANDARD_INFORMATION times, which suggests a tool may have changed the visible times.",
+ "mistakes": [
+  "Thinking the file name list in Explorer shows everything the MFT contains.",
+  "Reading only $STANDARD_INFORMATION times and ignoring $FILE_NAME.",
+  "Assuming a free MFT record is always empty.",
+  "Parsing the live MFT of a running system instead of an image."
+ ],
+ "terms": [
+  {
+   "term": "MFT",
+   "meaning": "Master File Table, the NTFS database of file records."
+  },
+  {
+   "term": "Attribute",
+   "meaning": "A labelled block inside an MFT record, such as name, times or data."
+  },
+  {
+   "term": "Resident data",
+   "meaning": "File content small enough to be stored inside the MFT record."
+  },
+  {
+   "term": "USN journal",
+   "meaning": "An NTFS log of changes to files and folders, stored as $UsnJrnl."
+  },
+  {
+   "term": "$STANDARD_INFORMATION",
+   "meaning": "The attribute with the main timestamps and flags of a file."
+  }
+ ],
+ "exam": [
+  {
+   "q": "What happens to the MFT entry when a file is deleted?",
+   "a": "The entry is marked free and may be reused later. Until then the name and times can still be read."
+  },
+  {
+   "q": "Why compare $STANDARD_INFORMATION and $FILE_NAME times?",
+   "a": "The two sets are updated by different actions, so a mismatch can hint that times were altered."
+  }
+ ],
+ "tools": [
+  "mftecmd",
+  "ez-tools",
+  "timeline-explorer",
+  "sleuthkit",
+  "autopsy"
+ ],
+ "related": [
+  "file-systems-overview",
+  "file-timestamps",
+  "deleted-files-and-recovery",
+  "timeline-analysis"
+ ],
+ "learn": [
+  {
+   "label": "Microsoft Learn: Master File Table",
+   "url": "https://learn.microsoft.com/en-us/windows/win32/fileio/master-file-table"
+  },
+  {
+   "label": "Microsoft Learn: NTFS overview",
+   "url": "https://learn.microsoft.com/en-us/windows-server/storage/file-server/ntfs-overview"
+  },
+  {
+   "label": "Forensics Wiki: NTFS",
+   "url": "https://forensics.wiki/new_technology_file_system_%28ntfs%29/"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

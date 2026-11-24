@@ -1,0 +1,137 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "hpa-and-dco",
+ "branch": "imaging",
+ "title": "Hidden areas of a drive: HPA and DCO",
+ "quick": "HPA and DCO are settings on some hard drives that hide part of the capacity from the operating system. An imaging job can miss that area unless the examiner checks for it.",
+ "sections": [
+  {
+   "title": "What they are",
+   "text": [
+    "The Host Protected Area, or HPA, was added in ATA-4. The drive reports a smaller size than it really has, so the operating system cannot address the rest. It was meant for things like boot or recovery tools. The Device Configuration Overlay, or DCO, came with ATA-6. It can make a drive report fewer features or less capacity, for example so drives from different makers look the same."
+   ]
+  },
+  {
+   "title": "Why it matters",
+   "text": [
+    "If part of the drive is hidden, a normal image only contains the visible part. Data in the hidden area may be missed. SWGDE notes that HPAs and DCOs can stop a tool reading some areas, so hash verification may not cover them. People can also hide data there on purpose."
+   ]
+  },
+  {
+   "title": "How examiners check",
+   "text": [
+    "Drives answer ATA commands. For the HPA, compare the size from IDENTIFY DEVICE with the true size from READ NATIVE MAX ADDRESS. For the DCO, compare IDENTIFY DEVICE with DEVICE CONFIGURATION IDENTIFY. A difference means something is hidden."
+   ],
+   "points": [
+    "Check before imaging and write the result in your notes.",
+    "Removing an HPA can be undone by a power cycle.",
+    "DCO reset is permanent, so removal changes the drive.",
+    "Procedures differ, so follow your lab's rules before changing the original drive."
+   ]
+  },
+  {
+   "title": "Tools and limits",
+   "text": [
+    "Some forensic tools and utilities can detect these areas, and some can remove them. Older tests found that tools differed in what they handled. Some USB bridges may not pass these commands through, so test your setup."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "HPA and DCO",
+  "headers": [
+   "",
+   "HPA",
+   "DCO"
+  ],
+  "rows": [
+   [
+    "Introduced in",
+    "ATA-4",
+    "ATA-6"
+   ],
+   [
+    "What it does",
+    "Hides the end of the drive from the OS",
+    "Makes the drive report less size or fewer features"
+   ],
+   [
+    "Detect by comparing",
+    "IDENTIFY DEVICE and READ NATIVE MAX ADDRESS",
+    "IDENTIFY DEVICE and DEVICE CONFIGURATION IDENTIFY"
+   ],
+   [
+    "Removal",
+    "Can be temporary, until power cycle",
+    "Reset is permanent"
+   ]
+  ]
+ },
+ "example": "A drive is listed as 500 GB but the checking tool shows its native size is 520 GB. The examiner notes the difference, follows lab procedure to access the hidden 20 GB, and images the full native size.",
+ "mistakes": [
+  "Imaging only the visible size and not checking for hidden areas.",
+  "Removing a DCO without noting it and without lab approval.",
+  "Assuming a matching hash proves nothing is hidden.",
+  "Believing every USB bridge passes these commands.",
+  "Forgetting to write the drive's reported size in the notes."
+ ],
+ "terms": [
+  {
+   "term": "HPA",
+   "meaning": "Host Protected Area, a hidden region at the end of a drive."
+  },
+  {
+   "term": "DCO",
+   "meaning": "Device Configuration Overlay, a setting that changes what a drive reports."
+  },
+  {
+   "term": "ATA",
+   "meaning": "The standard set of commands that computers use to talk to many hard drives."
+  },
+  {
+   "term": "Native size",
+   "meaning": "The true capacity of the drive, before any hiding."
+  }
+ ],
+ "exam": [
+  {
+   "q": "How do you detect an HPA?",
+   "a": "Compare the size reported by IDENTIFY DEVICE with the size from READ NATIVE MAX ADDRESS. If the reported size is smaller, there is an HPA."
+  },
+  {
+   "q": "How does DCO removal differ from HPA removal?",
+   "a": "HPA removal can be temporary until power is cycled. DCO reset is permanent."
+  },
+  {
+   "q": "Why can a matching hash still miss data?",
+   "a": "The hash covers only what the tool read. Hidden areas may not be included."
+  }
+ ],
+ "tools": [
+  "sleuthkit"
+ ],
+ "related": [
+  "what-is-forensic-imaging",
+  "write-blocker",
+  "physical-image",
+  "slack-and-unallocated-space"
+ ],
+ "learn": [
+  {
+   "label": "Wikipedia: Host protected area",
+   "url": "https://en.wikipedia.org/wiki/Host_protected_area"
+  },
+  {
+   "label": "Wikipedia: Device configuration overlay",
+   "url": "https://en.wikipedia.org/wiki/Device_configuration_overlay"
+  },
+  {
+   "label": "KillDisk manual: Disk hidden zones",
+   "url": "https://www.killdisk.com/manual/KB/HPA-DCO.html"
+  },
+  {
+   "label": "SWGDE: Computer Forensic Acquisitions (17-F-002)",
+   "url": "https://www.swgde.org/17-f-002"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

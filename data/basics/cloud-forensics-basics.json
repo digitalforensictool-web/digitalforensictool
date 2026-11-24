@@ -1,0 +1,104 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "cloud-forensics-basics",
+ "branch": "cloud",
+ "title": "What is cloud forensics?",
+ "quick": "Cloud forensics is the investigation of data and activity held in cloud services. The examiner often works with logs and exports from the provider, because the physical systems are not under the examiner's control.",
+ "sections": [
+  {
+   "title": "What is different",
+   "text": [
+    "In a normal case you seize a device and image it. In the cloud, data sits on systems run by a provider, may be spread over several places and may change fast. NIST IR 8006 collects the challenges that this brings for forensic work.",
+    "Access usually goes through the account owner, the provider or a legal request. Procedures and laws differ by country and agency, so follow your lab's own procedure."
+   ]
+  },
+  {
+   "title": "Shared responsibility",
+   "text": [
+    "Cloud providers and customers share duties. The provider looks after the underlying systems. The customer looks after its own accounts, data and settings. Which logs exist depends on the service type and on what the customer switched on.",
+    "Read the provider's documentation to learn what is logged and for how long."
+   ]
+  },
+  {
+   "title": "Typical evidence",
+   "text": [
+    "Most cloud evidence is log and account data."
+   ],
+   "points": [
+    "Sign-in and audit logs.",
+    "Records of who created, changed or deleted resources.",
+    "Storage contents and access records.",
+    "Snapshots of virtual machines, where available.",
+    "Billing and account details."
+   ]
+  },
+  {
+   "title": "Good practice",
+   "text": [
+    "Act early, because logs are kept for a limited time. Collect with proper authority, keep a record of each export, and hash the files you receive. Note the time zone, as providers often use UTC."
+   ]
+  }
+ ],
+ "mistakes": [
+  "Waiting too long, so logs expire.",
+  "Assuming the provider keeps every log forever.",
+  "Using an account's own credentials without authority.",
+  "Forgetting time zones, since many logs use UTC."
+ ],
+ "terms": [
+  {
+   "term": "Cloud service",
+   "meaning": "Computing, storage or software offered over the internet by a provider."
+  },
+  {
+   "term": "Audit log",
+   "meaning": "A record of actions taken in an account or service."
+  },
+  {
+   "term": "Shared responsibility",
+   "meaning": "The split of security duties between provider and customer."
+  },
+  {
+   "term": "Snapshot",
+   "meaning": "A saved copy of a disk or machine at one moment."
+  },
+  {
+   "term": "Tenant",
+   "meaning": "A customer account inside a cloud service."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Why is cloud evidence harder to collect?",
+   "a": "The data is on provider systems, may be spread across locations and changes quickly, so access and logs depend on the provider and the customer settings."
+  },
+  {
+   "q": "What is the most common evidence type?",
+   "a": "Logs, such as sign-in and audit logs."
+  }
+ ],
+ "tools": [
+  "microsoft-extractor-suite",
+  "invictus-aws",
+  "microsoft-analyzer-suite",
+  "untitled-goose-tool",
+  "rclone"
+ ],
+ "related": [
+  "log-analysis-basics",
+  "timeline-analysis",
+  "chain-of-custody",
+  "evidence-integrity"
+ ],
+ "learn": [
+  {
+   "label": "NIST IR 8006: Cloud Computing Forensic Science Challenges",
+   "url": "https://csrc.nist.gov/pubs/ir/8006/final"
+  },
+  {
+   "label": "NIST SP 800-86: Guide to Integrating Forensic Techniques into Incident Response",
+   "url": "https://csrc.nist.gov/pubs/sp/800/86/final"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

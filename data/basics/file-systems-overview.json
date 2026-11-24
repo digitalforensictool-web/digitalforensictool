@@ -1,0 +1,151 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "file-systems-overview",
+ "branch": "disk",
+ "title": "File systems: NTFS, FAT, exFAT, ext4, APFS",
+ "quick": "A file system is the set of rules an operating system uses to name, store and find files on a drive. Each type keeps different metadata, so each leaves different evidence.",
+ "sections": [
+  {
+   "title": "What a file system does",
+   "text": [
+    "A drive is just a long row of numbered sectors. The file system adds structure on top. It decides how files and folders are named, where their data sits, and what extra details (metadata) are kept, such as size and times.",
+    "Most file systems group sectors into larger units called clusters or blocks. A file is stored in one or more of these units. A table or index tells the system which units belong to which file."
+   ]
+  },
+  {
+   "title": "The common types",
+   "text": [
+    "The type of file system tells you what artifacts to expect and which tool can read it."
+   ],
+   "points": [
+    "FAT (FAT12, FAT16, FAT32): simple, old, still common on small USB drives and memory cards. A file allocation table links each cluster to the next one.",
+    "exFAT: made for flash media such as SD cards and USB sticks. It allows files larger than 4 GB and has no journal.",
+    "NTFS: the main Windows file system. It keeps a record for every file in the Master File Table, and it has a journal and alternate data streams.",
+    "ext4: the usual Linux file system. Each file has an inode (a record of its metadata) and the file system has a journal.",
+    "APFS: the Apple file system on modern Mac, iPhone and iPad. It uses copy-on-write, snapshots and timestamps with nanosecond detail."
+   ]
+  },
+  {
+   "title": "Why it matters to an examiner",
+   "text": [
+    "The file system decides what happens when a file is deleted, what times are stored, and how precise they are. For example, FAT stores the last modified time with a two second step, while ext4 and APFS store times with nanosecond detail.",
+    "A journal or snapshot may also hold older copies of data. Always identify the file system first, then choose tools that support it. Procedures differ by lab, so follow your lab's own procedure."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "Common file systems side by side",
+  "headers": [
+   "",
+   "FAT32",
+   "exFAT",
+   "NTFS",
+   "ext4",
+   "APFS"
+  ],
+  "rows": [
+   [
+    "Typical use",
+    "Small USB drives, cards",
+    "SD cards, large USB sticks",
+    "Windows disks",
+    "Linux disks",
+    "Apple devices"
+   ],
+   [
+    "Journal",
+    "No",
+    "No",
+    "Yes",
+    "Yes",
+    "Uses copy-on-write instead"
+   ],
+   [
+    "Max file size",
+    "Just under 4 GB",
+    "Far above 4 GB",
+    "Very large",
+    "16 TiB with 4 KiB blocks",
+    "Very large"
+   ],
+   [
+    "File records",
+    "Directory entries",
+    "Directory entries",
+    "Master File Table",
+    "Inodes",
+    "B-tree records"
+   ]
+  ]
+ },
+ "example": "An examiner receives a memory card from a camera and a laptop drive. The card is FAT32 or exFAT, so there is no journal and times are less precise. The laptop uses NTFS, so the MFT and the USN journal can be checked for file history.",
+ "mistakes": [
+  "Assuming every drive uses NTFS.",
+  "Reading a file system with a tool that does not support it and then trusting the empty result.",
+  "Forgetting that a USB drive may use a different file system than the computer it came from.",
+  "Ignoring the journal or snapshots, which can keep older data."
+ ],
+ "terms": [
+  {
+   "term": "File system",
+   "meaning": "Rules and data structures that organise files on a volume."
+  },
+  {
+   "term": "Cluster",
+   "meaning": "A group of sectors that the file system allocates as one unit. Linux often calls it a block."
+  },
+  {
+   "term": "Metadata",
+   "meaning": "Data about a file, such as its name, size and times."
+  },
+  {
+   "term": "Inode",
+   "meaning": "A record in Unix-style file systems that holds a file's metadata."
+  },
+  {
+   "term": "Journal",
+   "meaning": "A log of recent changes used to repair the file system after a crash."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Why identify the file system first?",
+   "a": "It decides which tool can read the volume, what metadata exists, and how deleted files and times behave."
+  },
+  {
+   "q": "Name two differences between FAT32 and NTFS.",
+   "a": "FAT32 has no journal and a file size limit just under 4 GB. NTFS keeps a Master File Table, has a journal and supports alternate data streams."
+  }
+ ],
+ "tools": [
+  "sleuthkit",
+  "autopsy",
+  "testdisk",
+  "dissect"
+ ],
+ "related": [
+  "partitions-mbr-gpt",
+  "mft-and-file-metadata",
+  "deleted-files-and-recovery",
+  "file-timestamps"
+ ],
+ "learn": [
+  {
+   "label": "NIST SP 800-86: Guide to Integrating Forensic Techniques into Incident Response",
+   "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-86.pdf"
+  },
+  {
+   "label": "Microsoft Learn: NTFS overview",
+   "url": "https://learn.microsoft.com/en-us/windows-server/storage/file-server/ntfs-overview"
+  },
+  {
+   "label": "Wikipedia: Design of the FAT file system",
+   "url": "https://en.wikipedia.org/wiki/Design_of_the_FAT_file_system"
+  },
+  {
+   "label": "Wikipedia: exFAT",
+   "url": "https://en.wikipedia.org/wiki/ExFAT"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

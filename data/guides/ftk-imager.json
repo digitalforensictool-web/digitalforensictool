@@ -1,0 +1,184 @@
+{
+ "reviewed": "2026-11-24",
+ "lead": "Make a forensic copy of a drive, a folder or a memory dump from a simple Windows program. It also lets you open the copy afterwards and look inside without changing it.",
+ "use_when": [
+  "You need a disk image of a drive that is attached to a Windows computer.",
+  "You want to preview a drive or an image before deciding what to do with it.",
+  "You need to save only chosen files and folders in a protected image.",
+  "You want a hash report to show that the copy matches the source."
+ ],
+ "features": [
+  {
+   "title": "Creates images",
+   "items": [
+    "Images physical and logical drives, CDs and DVDs, USB devices, folders and single files",
+    "Writes Raw (dd), SMART, E01 and AFF images",
+    "Can split an image into fragments of a size you choose",
+    "Asks for case number, evidence number, description, examiner and notes in some versions"
+   ]
+  },
+  {
+   "title": "Checks the copy",
+   "items": [
+    "Calculates MD5 and SHA1 hashes while it works",
+    "A verify option compares the hashes of the drive and the image",
+    "Reports bad sectors",
+    "Saves a text log next to the image with the drive details, hashes, start and end times and verification result"
+   ]
+  },
+  {
+   "title": "Looks inside evidence",
+   "items": [
+    "Add Evidence Item loads an image and shows its folders, including deleted data",
+    "Image Mounting shows an image as a drive in read-only mode",
+    "Export Files copies chosen files and folders out of an image"
+   ]
+  },
+  {
+   "title": "Memory and protected data",
+   "items": [
+    "Capture Memory saves the memory of a running computer to a file",
+    "Obtain Protected Files recovers files such as registry files that are locked on a live system",
+    "Can detect files encrypted with EFS",
+    "Custom content images can be encrypted with a password"
+   ]
+  }
+ ],
+ "formats": [
+  "Raw (dd)",
+  "SMART",
+  "E01",
+  "AFF",
+  "AD1 (custom content image)"
+ ],
+ "requirements": "It is a Windows program. Download it from the vendor, Exterro, and install or run it on the computer that the evidence drive is attached to. You need enough free space at the destination for the image, and you should use a write blocker for the source drive.",
+ "steps": [
+  {
+   "title": "Get the program",
+   "text": "Download FTK Imager from the vendor page (see the link in the Learn section) and install it on a Windows computer. Check that the destination drive has more free space than the source drive holds."
+  },
+  {
+   "title": "Protect the source",
+   "text": "Attach the evidence drive through a write blocker. A guide from SANS notes that the program does not promise to avoid writing to a drive, so a blocker is recommended. Note the make, model and serial number of the drive."
+  },
+  {
+   "title": "Start a new image",
+   "text": "Open the File menu and choose Create Disk Image. Pick the type of source, for example a physical drive, then choose the drive."
+  },
+  {
+   "title": "Choose the image type and destination",
+   "text": "Click Add and pick the image type: Raw (dd), SMART, E01 or AFF. Fill in the case details if asked. Choose the destination folder and file name. Set a fragment size if you want split files, then click Finish."
+  },
+  {
+   "title": "Turn on verification",
+   "text": "Tick the option to verify images after they are created, so the program calculates the hashes. Click Start and wait for the progress window to close. Large drives can take hours."
+  },
+  {
+   "title": "Check the result",
+   "text": "When it finishes, read the hash results and any bad sector report. Open the text log saved next to the image and keep it with the case notes. Record the hash values in your own notes as well."
+  },
+  {
+   "title": "Look inside the image",
+   "text": "Use File, then Add Evidence Item to load the image and browse its folders. Use Export Files to copy out items you need. Always work from a copy of the image, not the only original."
+  }
+ ],
+ "options": [
+  {
+   "cmd": "File > Create Disk Image",
+   "what": "Starts the imaging wizard for a drive, CD, DVD or folder."
+  },
+  {
+   "cmd": "File > Capture Memory",
+   "what": "Saves the memory of the running computer to a file in a folder you choose."
+  },
+  {
+   "cmd": "File > Add Evidence Item",
+   "what": "Loads an image or drive so you can browse it."
+  },
+  {
+   "cmd": "File > Image Mounting",
+   "what": "Mounts an image so Windows shows it as a drive."
+  },
+  {
+   "cmd": "File > Export Files",
+   "what": "Copies files and folders out of an image."
+  },
+  {
+   "cmd": "File > Obtain Protected Files",
+   "what": "Recovers protected files such as registry files from a live system."
+  }
+ ],
+ "cases": [
+  {
+   "title": "Seized laptops and desktop computers",
+   "why": "A drive attached through a write blocker can be imaged and hashed, and the image can then be opened in an analysis tool."
+  },
+  {
+   "title": "Quick checks at the scene",
+   "why": "You can preview a drive and browse its files before deciding whether a full image is needed."
+  },
+  {
+   "title": "USB sticks, memory cards and optical discs",
+   "why": "Small removable media can be imaged with the same wizard and checked with the same hash report."
+  },
+  {
+   "title": "Targeted collection of files",
+   "why": "A custom content image saves only chosen files or folders and can be protected with a password."
+  },
+  {
+   "title": "Live computers",
+   "why": "Memory capture and protected file collection let you save data that is lost when the computer is switched off."
+  }
+ ],
+ "strengths": [
+  "Simple graphical wizard that students can learn in one session.",
+  "Writes several common image formats, so other tools can open the result.",
+  "Hashing, verification and a log file are part of the normal imaging flow.",
+  "Free to download from the vendor."
+ ],
+ "limits": [
+  "It is free but closed source. You cannot read or change its code.",
+  "It runs on Windows. Linux and macOS users need a different imaging tool.",
+  "It does not stop writes to the source drive by itself. Use a write blocker.",
+  "It images and previews. Deep analysis such as timelines and keyword indexing needs another tool.",
+  "Menu names and options can differ between versions, so check the version you have.",
+  "The vendor's own pages say little about technical details. Learn from the user guide and test the tool yourself."
+ ],
+ "works_with": [
+  {
+   "id": "autopsy",
+   "note": "Open the finished image for analysis"
+  },
+  {
+   "id": "iped",
+   "note": "Process the image and search it"
+  },
+  {
+   "id": "arsenal-image-mounter",
+   "note": "Another way to mount an image as a disk"
+  },
+  {
+   "id": "volatility3",
+   "note": "Analyse a memory capture"
+  },
+  {
+   "id": "hashdeep",
+   "note": "Hash the exported files again"
+  }
+ ],
+ "learn": [
+  {
+   "label": "FTK Imager (vendor page)",
+   "url": "https://www.exterro.com/ftk-imager"
+  },
+  {
+   "label": "SANS: Forensics 101, acquiring an image with FTK Imager",
+   "url": "https://www.sans.org/blog/forensics-101-acquiring-an-image-with-ftk-imager/"
+  },
+  {
+   "label": "Hacking Articles: Comprehensive guide on FTK Imager",
+   "url": "https://www.hackingarticles.in/comprehensive-guide-on-ftk-imager"
+  }
+ ],
+ "sources_note": "Written in our own words from the FTK Imager vendor page and published tutorials."
+}

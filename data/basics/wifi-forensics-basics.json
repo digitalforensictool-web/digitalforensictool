@@ -1,0 +1,101 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "wifi-forensics-basics",
+ "branch": "network",
+ "title": "Wi-Fi forensics basics",
+ "quick": "Wi-Fi forensics studies wireless traffic and device records, such as captured 802.11 frames, access point logs and saved network lists, to show which devices were present or connected.",
+ "sections": [
+  {
+   "title": "Two kinds of evidence",
+   "text": [
+    "Wi-Fi evidence comes from the air and from devices. Over the air, a capture adapter in monitor mode can record frames from the wireless network. On devices, operating systems keep lists of known networks and connection history.",
+    "Access points and controllers also keep logs of which device connected and when."
+   ]
+  },
+  {
+   "title": "Monitor mode and channels",
+   "text": [
+    "In monitor mode, an adapter records all frames on the selected channel, from every network, not only your own. It can capture only one channel at a time. Hopping across channels helps find networks but loses packets, so a fixed channel is better when you study one access point. Not every adapter or driver supports this.",
+    "Management and control frames are normally hidden by drivers and are visible only in monitor mode."
+   ]
+  },
+  {
+   "title": "What can be learned",
+   "text": [
+    "Frames show device hardware addresses (MAC addresses), network names (SSIDs) and when devices joined or left. They can show that a device was near an access point. Content of protected networks cannot be read by a passive capture without the right keys."
+   ],
+   "points": [
+    "MAC address: can be randomised by modern phones, so it may not identify a device over time.",
+    "SSID: the name of a network, which can be copied by anyone.",
+    "Access point logs: often the most useful source for who connected."
+   ]
+  },
+  {
+   "title": "Care and limits",
+   "text": [
+    "Capturing other people's wireless traffic may be restricted. Procedures and laws differ by country and agency, so follow your lab's own procedure.",
+    "Signal location is only approximate. Do not claim an exact place from signal alone."
+   ]
+  }
+ ],
+ "mistakes": [
+  "Treating a MAC address as a fixed identity when it may be randomised.",
+  "Capturing without checking authority.",
+  "Forgetting that an adapter in monitor mode sees only one channel.",
+  "Trusting an SSID, which an attacker can copy."
+ ],
+ "terms": [
+  {
+   "term": "SSID",
+   "meaning": "The name of a wireless network."
+  },
+  {
+   "term": "MAC address",
+   "meaning": "A hardware address used by a network interface."
+  },
+  {
+   "term": "Monitor mode",
+   "meaning": "An adapter mode that records all frames on a channel."
+  },
+  {
+   "term": "Access point",
+   "meaning": "A device that connects wireless clients to a network."
+  },
+  {
+   "term": "Management frame",
+   "meaning": "A frame used to join, leave and manage a wireless network."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Why use monitor mode?",
+   "a": "It lets the adapter record all frames on a channel, including management frames, from networks other than your own."
+  },
+  {
+   "q": "Why is a MAC address not always reliable?",
+   "a": "Many devices use random addresses for privacy, so one device can appear under several addresses."
+  }
+ ],
+ "tools": [
+  "wireshark",
+  "tcpdump",
+  "zeek"
+ ],
+ "related": [
+  "packet-capture-pcap",
+  "network-forensics-overview",
+  "mobile-artifacts",
+  "tcp-ip-dns-basics"
+ ],
+ "learn": [
+  {
+   "label": "Wireshark wiki: Capture setup for WLAN",
+   "url": "https://wiki.wireshark.org/CaptureSetup/WLAN"
+  },
+  {
+   "label": "NIST SP 800-153: Guidelines for Securing WLANs",
+   "url": "https://csrc.nist.gov/pubs/sp/800/153/final"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

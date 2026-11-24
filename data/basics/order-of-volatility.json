@@ -1,0 +1,134 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "order-of-volatility",
+ "branch": "foundations",
+ "title": "What is the order of volatility?",
+ "quick": "The order of volatility ranks data by how fast it is lost. You collect the most short-lived data first, such as RAM, and the longest-lived data, such as archive media, last.",
+ "sections": [
+  {
+   "title": "The idea",
+   "text": [
+    "Volatile data disappears when power is lost or when the system keeps running and overwrites it. A running computer changes all the time. So the examiner decides what to capture first before it is gone.",
+    "This is the reason many procedures capture memory before shutting a machine down. Follow your lab's own procedure for each case."
+   ]
+  },
+  {
+   "title": "The list from RFC 3227",
+   "text": [
+    "RFC 3227 gives the following order, from most volatile to least volatile."
+   ],
+   "points": [
+    "Registers and cache",
+    "Routing table, ARP cache, process table, kernel statistics and memory",
+    "Temporary file systems",
+    "Disk",
+    "Remote logging and monitoring data",
+    "Physical configuration, network layout and archival media"
+   ]
+  },
+  {
+   "title": "How it is used in practice",
+   "text": [
+    "On a live Windows laptop you might capture RAM, then note network connections and running processes, then image the disk. For servers, logs on remote systems may roll over, so these may need early collection too.",
+    "Every action on a live system changes it a little. Record what you ran and when."
+   ]
+  },
+  {
+   "title": "Limits of the list",
+   "text": [
+    "The list is a guide, not a fixed rule. Case needs, risk and device type can change the plan. For example, a phone may be kept powered and isolated from the network. A device may need to stay on to avoid losing encryption keys held in memory."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "Volatile and non-volatile data",
+  "headers": [
+   "",
+   "Volatile",
+   "Non-volatile"
+  ],
+  "rows": [
+   [
+    "Example",
+    "RAM, network connections, running processes",
+    "Disk files, archive tapes"
+   ],
+   [
+    "After power loss",
+    "Lost",
+    "Kept"
+   ],
+   [
+    "Collection time",
+    "First",
+    "Later"
+   ],
+   [
+    "Typical tool use",
+    "Memory capture tools",
+    "Imagers behind a write blocker"
+   ]
+  ]
+ },
+ "example": "A suspected infected PC is still on. The examiner first saves a memory image to an external drive, then lists network connections, and only after that powers the machine down in the way procedure requires and images the disk.",
+ "mistakes": [
+  "Pulling the power plug first and losing everything in RAM.",
+  "Saving the memory capture onto the evidence disk.",
+  "Treating the order as a law that never changes.",
+  "Forgetting to note the commands run on a live system.",
+  "Ignoring remote logs that may be overwritten soon."
+ ],
+ "terms": [
+  {
+   "term": "Volatile data",
+   "meaning": "Data that is lost when power is removed or that changes quickly."
+  },
+  {
+   "term": "RAM",
+   "meaning": "Random access memory, the working memory of a computer."
+  },
+  {
+   "term": "Live acquisition",
+   "meaning": "Collecting data from a system that is still running."
+  },
+  {
+   "term": "ARP cache",
+   "meaning": "A short table that links network addresses to hardware addresses."
+  }
+ ],
+ "exam": [
+  {
+   "q": "What does the order of volatility tell you to do?",
+   "a": "Collect the data that is lost fastest first, and the most lasting data last."
+  },
+  {
+   "q": "Give an example of data that is more volatile than a hard disk.",
+   "a": "RAM, running processes or active network connections."
+  }
+ ],
+ "tools": [
+  "winpmem",
+  "volatility3",
+  "magnet-dumpit",
+  "lime",
+  "avml",
+  "magnet-response"
+ ],
+ "related": [
+  "forensic-process",
+  "evidence-integrity",
+  "good-practice-principles",
+  "chain-of-custody"
+ ],
+ "learn": [
+  {
+   "label": "RFC 3227: Guidelines for Evidence Collection and Archiving",
+   "url": "https://datatracker.ietf.org/doc/html/rfc3227"
+  },
+  {
+   "label": "NIST SP 800-86: Guide to Integrating Forensic Techniques into Incident Response",
+   "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-86.pdf"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

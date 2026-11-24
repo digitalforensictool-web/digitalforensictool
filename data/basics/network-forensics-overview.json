@@ -1,0 +1,101 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "network-forensics-overview",
+ "branch": "network",
+ "title": "What is network forensics?",
+ "quick": "Network forensics is the collection and study of network traffic and network device records to learn what happened between systems, such as who talked to whom, when, and how much data moved.",
+ "sections": [
+  {
+   "title": "What it covers",
+   "text": [
+    "Network forensics looks at data that travels across a network and at records kept by network devices. Examples are captured packets, flow records, DNS logs, firewall logs and alerts from intrusion detection systems.",
+    "NIST SP 800-86 lists network traffic as one of the main data sources in an investigation, next to files, operating systems and applications."
+   ]
+  },
+  {
+   "title": "Why it is different from disk forensics",
+   "text": [
+    "A disk keeps data until it is deleted or overwritten. Network traffic is gone the moment it passes, unless something recorded it. So the main question is often what was recorded and for how long, not what can be recovered later.",
+    "Network evidence also shows activity between machines, which a single disk cannot show."
+   ]
+  },
+  {
+   "title": "Typical sources and questions",
+   "text": [
+    "Investigators ask who contacted which address, at what time, using which service, and how much data was sent. Different sources answer at different levels of detail."
+   ],
+   "points": [
+    "Full packet capture: every packet, including content if not encrypted.",
+    "Flow records: a summary of each conversation, without content.",
+    "Logs: DNS, proxy, firewall, DHCP and server logs.",
+    "Alerts: events flagged by an IDS or IPS."
+   ]
+  },
+  {
+   "title": "Handling and limits",
+   "text": [
+    "Network data can contain private information of many people, so access and collection need authority. Procedures and laws differ by country and agency, so follow your lab's own procedure.",
+    "Clocks on devices can differ, so always note the time source and any offset."
+   ]
+  }
+ ],
+ "example": "An organisation sees large data leaving a server at night. The team checks flow records to find the destination address and the amount sent, then asks for the matching DNS logs to learn which name was used.",
+ "mistakes": [
+  "Thinking that network traffic can be collected later, when it was never recorded.",
+  "Ignoring clock differences between devices when building a timeline.",
+  "Treating an IP address as proof of a person. It only points to a device or connection.",
+  "Collecting more traffic than the authority allows."
+ ],
+ "terms": [
+  {
+   "term": "Packet",
+   "meaning": "A small unit of data sent across a network."
+  },
+  {
+   "term": "Flow",
+   "meaning": "A summary of packets that belong to one conversation."
+  },
+  {
+   "term": "Full packet capture",
+   "meaning": "A recording of every packet, with content."
+  },
+  {
+   "term": "IP address",
+   "meaning": "A number that identifies a device on a network."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Name three sources of network evidence.",
+   "a": "Packet captures, flow records and logs such as DNS, firewall or proxy logs. IDS alerts are another source."
+  },
+  {
+   "q": "Why is network evidence called volatile?",
+   "a": "Traffic is only available while it passes, so it must be recorded at that time or it is lost."
+  }
+ ],
+ "tools": [
+  "wireshark",
+  "zeek",
+  "tcpdump",
+  "networkminer",
+  "security-onion"
+ ],
+ "related": [
+  "packet-capture-pcap",
+  "network-flow-data",
+  "order-of-volatility",
+  "tcp-ip-dns-basics"
+ ],
+ "learn": [
+  {
+   "label": "NIST SP 800-86: Guide to Integrating Forensic Techniques into Incident Response",
+   "url": "https://csrc.nist.gov/pubs/sp/800/86/final"
+  },
+  {
+   "label": "NIST SP 800-94: Guide to Intrusion Detection and Prevention Systems",
+   "url": "https://csrc.nist.gov/pubs/sp/800/94/final"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

@@ -1,0 +1,127 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "forensic-process",
+ "branch": "foundations",
+ "title": "The forensic process from seizure to report",
+ "quick": "The forensic process moves through collection, examination, analysis and reporting. Each stage keeps the evidence intact and is documented so the work can be repeated.",
+ "sections": [
+  {
+   "title": "Before collection",
+   "text": [
+    "First the case is scoped. You confirm who has authority to take the evidence, what the questions are and what devices are involved. Authority and rules differ by country and agency, so follow your lab's own procedure.",
+    "At the scene, evidence is identified, photographed, labelled and bagged. Notes record the device state, such as on or off, and what was connected."
+   ]
+  },
+  {
+   "title": "Collection",
+   "text": [
+    "Collection means acquiring data from the sources. The usual goal is a forensic image, which is a bit-by-bit copy of the storage. A write blocker stops the original from being changed. Volatile data, such as RAM, is usually collected before the device is switched off.",
+    "Every item gets a unique label and enters the chain of custody record."
+   ]
+  },
+  {
+   "title": "Examination and analysis",
+   "text": [
+    "Examination processes the data to find and extract what may be relevant. This includes mounting images, parsing files and searching for keywords. Analysis then studies those results to answer the case questions, for example who did what and when.",
+    "Work on a copy, not on the original. Consider other explanations for what you see."
+   ]
+  },
+  {
+   "title": "Reporting",
+   "text": [
+    "The report explains what was done, what was found and how sure you are. It is written for its reader, who may not be technical. The detail needed varies with the situation.",
+    "After the case, evidence is returned, stored or destroyed as the procedure and the authority direct."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "Stages at a glance",
+  "headers": [
+   "Stage",
+   "Main question",
+   "Typical output"
+  ],
+  "rows": [
+   [
+    "Collection",
+    "What data do we have?",
+    "Images and labelled items"
+   ],
+   [
+    "Examination",
+    "What data is relevant?",
+    "Extracted files and artifacts"
+   ],
+   [
+    "Analysis",
+    "What does it mean?",
+    "Findings and timeline"
+   ],
+   [
+    "Reporting",
+    "How do we explain it?",
+    "Written report"
+   ]
+  ]
+ },
+ "example": "Police seize a phone and a laptop. The team photographs them, bags them and logs them. The laptop drive is imaged behind a write blocker and both hashes match. The examiner searches the image copy, builds a timeline and writes a report that lists each step.",
+ "mistakes": [
+  "Analysing the original device instead of an image.",
+  "Switching off a running computer before capturing RAM when procedure asks for live capture.",
+  "Not labelling items, so they cannot be matched to the notes later.",
+  "Mixing up examination (finding data) and analysis (interpreting data).",
+  "Writing the report from memory instead of from notes."
+ ],
+ "terms": [
+  {
+   "term": "Forensic image",
+   "meaning": "A bit-by-bit copy of a storage device."
+  },
+  {
+   "term": "Acquisition",
+   "meaning": "The act of copying data from a device in a controlled way."
+  },
+  {
+   "term": "Examination",
+   "meaning": "Processing data to find and extract what may be relevant."
+  },
+  {
+   "term": "Analysis",
+   "meaning": "Interpreting the extracted data to answer the case questions."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Name the four phases of the forensic process.",
+   "a": "Collection, examination, analysis and reporting."
+  },
+  {
+   "q": "Why do we examine a copy and not the original?",
+   "a": "The original must stay unchanged. A copy that matches by hash can be used safely and re-made if something goes wrong."
+  }
+ ],
+ "tools": [
+  "ftk-imager",
+  "autopsy",
+  "sleuthkit",
+  "plaso"
+ ],
+ "related": [
+  "digital-forensics-overview",
+  "chain-of-custody",
+  "order-of-volatility",
+  "forensic-report-basics",
+  "evidence-integrity"
+ ],
+ "learn": [
+  {
+   "label": "NIST SP 800-86: Guide to Integrating Forensic Techniques into Incident Response",
+   "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-86.pdf"
+  },
+  {
+   "label": "RFC 3227: Guidelines for Evidence Collection and Archiving",
+   "url": "https://datatracker.ietf.org/doc/html/rfc3227"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

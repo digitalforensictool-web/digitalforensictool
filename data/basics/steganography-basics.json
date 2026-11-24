@@ -1,0 +1,121 @@
+{
+ "id": "steganography-basics",
+ "title": "What is steganography?",
+ "quick": "Steganography is hiding a message or file inside another harmless file, such as a picture, so that nobody notices it exists. This differs from encryption, which hides the meaning but not the existence.",
+ "sections": [
+  {
+   "title": "The idea",
+   "text": [
+    "The word comes from Greek and means covered writing. The goal is that an observer does not even suspect a hidden message. NIST describes it as concealing data by embedding it within other data.",
+    "The harmless file is called the carrier or cover. The result with the hidden data is the stego file."
+   ]
+  },
+  {
+   "title": "Common carriers",
+   "text": [
+    "Images are the most common carrier. Audio, video, documents and even network traffic can also be used. A simple method changes the least significant bits of pixel values, which changes the picture so little that the eye cannot see it. Data can also be appended after the end of a file or placed in unused fields."
+   ],
+   "points": [
+    "Image files such as PNG, BMP and JPEG.",
+    "Audio and video files.",
+    "Spare space in documents or file headers.",
+    "Text with unusual spacing."
+   ]
+  },
+  {
+   "title": "How examiners notice it",
+   "text": [
+    "Finding stego is called steganalysis. Clues include a file that is larger than expected, data after the normal end of file, odd statistical patterns in pixels, and stego software installed on the computer. Comparing a suspect file with an original copy, if one exists, is very helpful.",
+    "Detection is not always possible. A clean result does not prove that nothing is hidden. Document what you tested and which tools you used."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "Steganography and encryption",
+  "headers": [
+   "",
+   "Steganography",
+   "Encryption"
+  ],
+  "rows": [
+   [
+    "Hides",
+    "That a message exists",
+    "What the message says"
+   ],
+   [
+    "Visible clue",
+    "Often none",
+    "Scrambled data is obvious"
+   ],
+   [
+    "Can be combined",
+    "Yes, encrypt first then hide",
+    "Yes"
+   ]
+  ]
+ },
+ "example": "Two images look identical, but one is 200 KB larger. An examiner compares them, checks the end of the larger file and finds extra data after the normal image end. She extracts it for further study and records the hashes of both files.",
+ "mistakes": [
+  "Thinking steganography and encryption are the same thing.",
+  "Only looking at the picture and not at the file structure.",
+  "Claiming that nothing is hidden because one tool found nothing.",
+  "Overlooking stego software on the suspect computer.",
+  "Editing or resaving the carrier file, which can destroy the hidden data."
+ ],
+ "terms": [
+  {
+   "term": "Carrier",
+   "meaning": "The harmless file that holds the hidden data."
+  },
+  {
+   "term": "Stego file",
+   "meaning": "The carrier after data has been hidden in it."
+  },
+  {
+   "term": "Steganalysis",
+   "meaning": "Looking for or analysing hidden data in files."
+  },
+  {
+   "term": "LSB",
+   "meaning": "Least significant bit, the lowest bit of a value, often used to hide data."
+  },
+  {
+   "term": "Payload",
+   "meaning": "The secret data being hidden."
+  }
+ ],
+ "exam": [
+  {
+   "q": "How is steganography different from encryption?",
+   "a": "Encryption makes data unreadable. Steganography hides that the data exists at all."
+  },
+  {
+   "q": "Give one sign that a file may contain hidden data.",
+   "a": "The file is larger than expected, or there is extra data after the normal end of the file."
+  }
+ ],
+ "tools": [
+  "zsteg",
+  "stegseek",
+  "steghide",
+  "binwalk",
+  "exiftool",
+  "cyberchef"
+ ],
+ "related": [
+  "image-and-video-metadata",
+  "anti-forensics",
+  "file-carving",
+  "hash-values"
+ ],
+ "learn": [
+  {
+   "label": "NIST glossary: steganography",
+   "url": "https://csrc.nist.gov/glossary/term/steganography"
+  }
+ ],
+ "reviewed": "2026-11-24",
+ "branch": "specialist",
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

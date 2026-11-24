@@ -1,0 +1,127 @@
+{
+ "id": "image-and-video-metadata",
+ "title": "Image and video metadata (EXIF)",
+ "quick": "Metadata is data stored inside a photo or video file that describes it, such as camera model, date, and sometimes GPS position. EXIF is the most widely known format for it.",
+ "sections": [
+  {
+   "title": "What metadata is",
+   "text": [
+    "Metadata means data about data. A photo file holds the picture, but it can also hold extra fields written by the camera or phone. These fields can describe the device, the settings and the time of capture.",
+    "EXIF stands for Exchangeable Image File Format. Other common metadata types are XMP and IPTC. Videos can also carry metadata, including timed data such as a GPS track in some formats."
+   ]
+  },
+  {
+   "title": "What examiners look for",
+   "text": [
+    "Examiners read the fields below and then check whether they fit the rest of the case."
+   ],
+   "points": [
+    "Capture date and time, and the camera clock may be wrong.",
+    "Camera or phone make and model.",
+    "GPS coordinates, if location was switched on.",
+    "Editing software names that show a file was saved by an editor.",
+    "Thumbnail images, which can differ from the main picture."
+   ]
+  },
+  {
+   "title": "Limits and care",
+   "text": [
+    "Metadata is easy to remove or change. Many social media sites and messaging apps strip it when a picture is uploaded or sent. Anyone can edit the fields with common tools. So metadata is a lead and not proof. Compare it with other evidence such as file system times, other files and witness accounts.",
+    "Always work on a copy of the file and record the tool and version you used. Procedures and laws differ by country and agency, follow your lab's own procedure."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "File system times and EXIF times",
+  "headers": [
+   "",
+   "File system time",
+   "EXIF time"
+  ],
+  "rows": [
+   [
+    "Stored where",
+    "In the file system record",
+    "Inside the file"
+   ],
+   [
+    "Set by",
+    "Operating system",
+    "Camera or phone"
+   ],
+   [
+    "Changes when copied",
+    "Often yes",
+    "Usually no"
+   ],
+   [
+    "Easy to edit",
+    "Yes",
+    "Yes"
+   ]
+  ]
+ },
+ "example": "A student receives a photo from a case. The file system shows it was created on Monday. The EXIF data says the picture was taken on Friday by a named phone model. The student reports both times, notes that the phone clock may be wrong, and does not state a conclusion without more evidence.",
+ "mistakes": [
+  "Treating metadata as proof instead of a lead.",
+  "Assuming no GPS data means the photo was not taken outdoors.",
+  "Opening and saving the original file, which may change it.",
+  "Ignoring time zone and camera clock settings.",
+  "Forgetting that sending a photo through an app may remove its metadata."
+ ],
+ "terms": [
+  {
+   "term": "Metadata",
+   "meaning": "Data that describes other data."
+  },
+  {
+   "term": "EXIF",
+   "meaning": "A standard for storing camera and capture details inside image files."
+  },
+  {
+   "term": "XMP",
+   "meaning": "A flexible metadata format that can be embedded in many file types."
+  },
+  {
+   "term": "Geotag",
+   "meaning": "Location coordinates saved in a file."
+  },
+  {
+   "term": "Thumbnail",
+   "meaning": "A small preview image stored inside the file."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Why can EXIF data not be fully trusted?",
+   "a": "It can be removed or edited easily, and the camera clock may be wrong. It should be checked against other evidence."
+  },
+  {
+   "q": "Name three things EXIF can show.",
+   "a": "Camera model, capture date and time, and GPS position."
+  }
+ ],
+ "tools": [
+  "exiftool",
+  "mediainfo",
+  "ffmpeg",
+  "sherloq",
+  "forensically",
+  "fotoforensics"
+ ],
+ "related": [
+  "file-timestamps",
+  "steganography-basics",
+  "mobile-artifacts",
+  "osint-basics"
+ ],
+ "learn": [
+  {
+   "label": "ExifTool by Phil Harvey",
+   "url": "https://exiftool.org/"
+  }
+ ],
+ "reviewed": "2026-11-24",
+ "branch": "specialist",
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

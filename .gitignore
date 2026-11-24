@@ -8,3 +8,5 @@ site/
 __pycache__/
 *.pyc
 data/releases.json.tmp
+
+_to_delete/

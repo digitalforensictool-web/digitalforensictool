@@ -1,0 +1,159 @@
+{
+ "reviewed": "2026-11-24",
+ "lead": "Decode, convert and analyse data in your web browser by chaining small operations into a recipe. CyberChef was built by GCHQ and is used for encodings, hashes, compression, encryption and many other tasks.",
+ "use_when": [
+  "You found a string that looks encoded, such as Base64 or hex, and want to see what it hides.",
+  "You need to convert data between formats, or decode several layers one after another.",
+  "You want to repeat the same set of steps on many inputs and save the steps as a recipe."
+ ],
+ "features": [
+  {
+   "title": "Recipe workflow",
+   "items": [
+    "Four areas on screen: Input, Output, a list of Operations and your Recipe",
+    "Drag operations into the recipe and set their options",
+    "The output updates by itself whenever the input or recipe changes (Bake)",
+    "Breakpoints let you stop at one step and go through the recipe step by step"
+   ]
+  },
+  {
+   "title": "Magic",
+   "items": [
+    "The Magic operation tries to find out how data is encoded and which operations can decode it",
+    "It runs in the background, and an icon appears in the Output when it finds a useful decoding",
+    "It has settings for depth, intensive mode and more languages"
+   ]
+  },
+  {
+   "title": "Wide set of operations",
+   "items": [
+    "Encodings such as Base64, hexdumps and character sets",
+    "Encryption and decryption such as AES, DES and Blowfish, and XOR",
+    "Hashes and checksums, and decompression",
+    "Parsing of IPv6 addresses and X.509 certificates"
+   ]
+  },
+  {
+   "title": "Handling files and sharing",
+   "items": [
+    "Drop files of up to 2 GB onto the input box",
+    "Save the output to a file",
+    "Save recipes in the browser, or share a link that contains the recipe and input",
+    "Selecting text shows its offset and length and highlights it in the other box"
+   ]
+  }
+ ],
+ "requirements": "A modern web browser. The project lists Chrome 50 or newer and Firefox 38 or newer. The project states that recipes and input are not sent to the CyberChef server, because everything runs in your browser. For offline use you can download a copy from the link in the app, run the project's Docker image, or build it from source with Node.js.",
+ "steps": [
+  {
+   "title": "Decide online or offline",
+   "text": "The public site runs in your browser and does not send your data to the server, according to the project. For case data, many labs still prefer a local copy. Use the download link at the top left of the app to get a full copy you can run offline."
+  },
+  {
+   "title": "Or run it with Docker",
+   "text": "If Docker Desktop is running, start the project's ready-made image. Then open the address in your browser.",
+   "cmd": "docker run -it -p 8080:8080 ghcr.io/gchq/cyberchef:latest"
+  },
+  {
+   "title": "Open the page and add input",
+   "text": "Open the CyberChef page (http://localhost:8080 for the Docker version). Paste your text into the Input box, or drop a file onto it."
+  },
+  {
+   "title": "Find an operation",
+   "text": "Use the search box above the operation list. Type part of a name, such as base64. Double-click the operation, or drag it into the Recipe area."
+  },
+  {
+   "title": "Let Magic help",
+   "text": "If you do not know the encoding, look for the magic icon in the Output box. Hover over it to see a suggested recipe and a preview. Click it to add those operations to your recipe."
+  },
+  {
+   "title": "Chain more steps",
+   "text": "Add further operations below the first. Each one works on the result of the one above. Use a breakpoint on a step to see its output on its own, if the final result looks wrong."
+  },
+  {
+   "title": "Save the work",
+   "text": "Save the output to a file, and save the recipe, or copy the link that holds the recipe and input. Write the recipe steps in your case notes so another person can repeat them."
+  }
+ ],
+ "cases": [
+  {
+   "title": "Decoding suspicious strings",
+   "why": "Layers of Base64, hex and similar encodings in scripts or logs can be peeled off one at a time, or tried automatically with Magic."
+  },
+  {
+   "title": "Malware and script triage",
+   "why": "Obfuscated commands can be decoded and read without running them, using operations such as XOR and decompression."
+  },
+  {
+   "title": "Converting data for other tools",
+   "why": "Turn timestamps, hex dumps or encoded values into a form that a report or another tool can use."
+  },
+  {
+   "title": "Hashing text and small files",
+   "why": "Compute common hashes of a string or small file quickly, for a check or a lookup."
+  },
+  {
+   "title": "Certificates and network data",
+   "why": "Parse X.509 certificates and IPv6 addresses to read their fields."
+  },
+  {
+   "title": "Teaching encodings",
+   "why": "The step-by-step recipe view helps students see how each encoding changes the data."
+  }
+ ],
+ "strengths": [
+  "Free and open source under the Apache 2.0 licence.",
+  "Needs no install for the online version, and has an offline option.",
+  "The project reports that all processing happens in the browser.",
+  "Recipes can be saved and shared, so work is easy to repeat."
+ ],
+ "limits": [
+  "It works on data you give it, such as text and files. It does not collect evidence or read disk images.",
+  "Magic gives likely answers, not certain ones. Check each suggested decoding yourself.",
+  "Very large inputs can be slow in a browser. You can switch off automatic baking when the input is large.",
+  "Dropped files are limited to 2 GB, according to the project.",
+  "Beginners may find the long list of operations confusing. Use the search box.",
+  "Do not paste sensitive case data into a copy you do not control. Use a local copy."
+ ],
+ "works_with": [
+  {
+   "id": "unfurl",
+   "note": "Break down URLs and decode timestamps inside them"
+  },
+  {
+   "id": "name-that-hash",
+   "note": "Identify the type of a hash you found"
+  },
+  {
+   "id": "dcode",
+   "note": "Decode date and time values"
+  },
+  {
+   "id": "floss",
+   "note": "Extract hidden strings, then decode them here"
+  },
+  {
+   "id": "oletools",
+   "note": "Pull out macro code, then decode its strings"
+  }
+ ],
+ "learn": [
+  {
+   "label": "CyberChef on GitHub (README)",
+   "url": "https://github.com/gchq/CyberChef"
+  },
+  {
+   "label": "CyberChef web app",
+   "url": "https://gchq.github.io/CyberChef"
+  },
+  {
+   "label": "Automatic detection of encoded data using Magic (project wiki)",
+   "url": "https://github.com/gchq/CyberChef/wiki/Automatic-detection-of-encoded-data-using-CyberChef-Magic"
+  },
+  {
+   "label": "Project wiki home",
+   "url": "https://github.com/gchq/CyberChef/wiki"
+  }
+ ],
+ "sources_note": "Written in our own words from the CyberChef project's documentation."
+}

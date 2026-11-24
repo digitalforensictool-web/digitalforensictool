@@ -1,0 +1,129 @@
+{
+ "reviewed": "2026-11-24",
+ "id": "hash-values",
+ "branch": "foundations",
+ "title": "What is a hash value?",
+ "quick": "A hash value is a short fixed-length fingerprint made from data by a hash function. If even one bit of the data changes, the hash changes, so hashes help show data is unchanged.",
+ "sections": [
+  {
+   "title": "How a hash works",
+   "text": [
+    "A hash function reads any amount of data and produces a fixed-length result called a hash value or digest. The same data always gives the same hash. A tiny change in the data gives a very different hash.",
+    "You cannot rebuild the data from the hash. It is a fingerprint, not a compressed copy."
+   ]
+  },
+  {
+   "title": "Common algorithms",
+   "text": [
+    "MD5 and SHA-1 are older. Researchers have shown that attackers can create two different inputs with the same hash for these, called a collision. SHA-256 belongs to the SHA-2 family defined by NIST in the Secure Hash Standard, and it is widely used now. Many labs record more than one algorithm. Follow your lab's own procedure."
+   ]
+  },
+  {
+   "title": "Uses in forensics",
+   "text": [
+    "Hashes are used in several ways."
+   ],
+   "points": [
+    "Check that an image matches the original drive",
+    "Check that a copy or export has not changed",
+    "Find known files, using hash sets such as the NSRL",
+    "Find exact copies of a file across a case"
+   ]
+  },
+  {
+   "title": "Fuzzy hashes",
+   "text": [
+    "A normal hash changes completely if one byte changes. A fuzzy hash, such as one made by ssdeep, gives a similarity score. It helps find files that are similar but not identical."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "Hash algorithms",
+  "headers": [
+   "",
+   "MD5",
+   "SHA-1",
+   "SHA-256"
+  ],
+  "rows": [
+   [
+    "Length of result",
+    "128 bits",
+    "160 bits",
+    "256 bits"
+   ],
+   [
+    "Known collisions",
+    "Yes",
+    "Yes",
+    "None known"
+   ],
+   [
+    "Common use today",
+    "Legacy checks",
+    "Legacy checks",
+    "Main choice"
+   ]
+  ]
+ },
+ "example": "An examiner images a drive and the tool reports a SHA-256 hash for the drive. After copying the image to a server, the examiner hashes the copy. Both values match, so the copy is an exact copy of the image.",
+ "mistakes": [
+  "Thinking a hash shows who made or changed a file.",
+  "Comparing only the first few characters of two hashes.",
+  "Hashing the wrong thing, such as a partition instead of the whole drive.",
+  "Believing the hash is encryption.",
+  "Using a hash made at one time to prove a file is unchanged without a record of when it was made."
+ ],
+ "terms": [
+  {
+   "term": "Hash function",
+   "meaning": "A method that turns any data into a fixed-length value."
+  },
+  {
+   "term": "Digest",
+   "meaning": "Another word for the hash value."
+  },
+  {
+   "term": "Collision",
+   "meaning": "Two different inputs that give the same hash."
+  },
+  {
+   "term": "Hash set",
+   "meaning": "A list of hashes of known files, used to include or filter files."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Why does a matching hash show a copy is exact?",
+   "a": "Any change to the data would change the hash. So if both hashes are equal, the data is the same for practical purposes."
+  },
+  {
+   "q": "Why is SHA-256 preferred to MD5 today?",
+   "a": "MD5 has known collisions, so it is weak for proving that data was not altered on purpose. SHA-256 has no known collisions."
+  }
+ ],
+ "tools": [
+  "hashdeep",
+  "quickhash",
+  "ssdeep",
+  "nsrl",
+  "cyberchef"
+ ],
+ "related": [
+  "evidence-integrity",
+  "what-is-forensic-imaging",
+  "chain-of-custody",
+  "write-blocker"
+ ],
+ "learn": [
+  {
+   "label": "NIST FIPS 180-4: Secure Hash Standard",
+   "url": "https://csrc.nist.gov/pubs/fips/180-4/upd1/final"
+  },
+  {
+   "label": "NIST SP 800-86: Guide to Integrating Forensic Techniques into Incident Response",
+   "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-86.pdf"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

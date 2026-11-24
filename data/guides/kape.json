@@ -1,0 +1,171 @@
+{
+ "reviewed": "2026-11-24",
+ "lead": "KAPE (Kroll Artifact Parser and Extractor) collects the files that matter most from a computer, then runs tools on them to make readable output. It was created by Eric Zimmerman at Kroll.",
+ "use_when": [
+  "You need the key artifacts from a Windows computer in minutes, before a full image is ready.",
+  "You want to collect and parse many computers in the same way.",
+  "You want to start analysis while a full disk image is still being made."
+ ],
+ "features": [
+  {
+   "title": "Two phases",
+   "items": [
+    "Target collection copies the files and folders named by a target",
+    "Module execution runs programs on the collected files, or does other live response tasks",
+    "Kroll reports more than 60 targets and 90 modules"
+   ]
+  },
+  {
+   "title": "Grouped artifacts",
+   "items": [
+    "Targets and modules are grouped by topic, such as evidence of execution, browser history and account usage",
+    "You do not need to know how each artifact type is processed"
+   ]
+  },
+  {
+   "title": "Two ways to run",
+   "items": [
+    "kape.exe is the command-line version",
+    "gkape.exe is the graphical version",
+    "gkape shows the exact kape.exe command that will run and lets you copy it"
+   ]
+  },
+  {
+   "title": "Updates and editing",
+   "items": [
+    "gkape can sync targets and modules from the KapeFiles repository on GitHub",
+    "Targets and modules can be opened and edited in gkape"
+   ]
+  }
+ ],
+ "requirements": "A Windows computer, with administrator rights. gkape.exe must be run from the same folder as kape.exe. KAPE is free for government agencies, education and research, and internal company use. Use on a third-party network or in paid work needs an enterprise licence. The download is behind a form on the Kroll site.",
+ "steps": [
+  {
+   "title": "Check the licence and download",
+   "text": "Read Kroll's licence terms for your situation. Then fill in the form on the Kroll KAPE page to download the zip file. Unzip it to a folder. It contains kape.exe and gkape.exe."
+  },
+  {
+   "title": "Sync targets and modules",
+   "text": "Start gkape.exe as administrator, from the folder that holds kape.exe. Use the sync button at the bottom to update targets and modules from GitHub. Choose whether to overwrite the files that exist."
+  },
+  {
+   "title": "Set the target source and destination",
+   "text": "Tick Use Target options. Enter the target source, which is the drive or folder to collect from, and the target destination, which is where the copied files go. Use an external drive for the destination."
+  },
+  {
+   "title": "Pick targets",
+   "text": "Tick the targets you need in the grid. You can sort and filter the list by column. Targets such as those for evidence of execution and registry hives are examples used in tutorials."
+  },
+  {
+   "title": "Pick modules (optional)",
+   "text": "Tick Use Module options and choose modules that parse the collected data. Leave the module source empty to use the target destination. Set a module destination. Some modules need an extra program downloaded first."
+  },
+  {
+   "title": "Run it",
+   "text": "Check the command line shown at the bottom of the window. Click Execute to run it, or Copy to paste the command into a command prompt. gkape adds a switch that waits for a key press at the end, so remove it before you use the command in a script."
+  },
+  {
+   "title": "Review the output",
+   "text": "Open the destination folder. Check the logs, then open the parsed output in a viewer such as Timeline Explorer. Record the time, the KAPE version and the targets and modules you used."
+  }
+ ],
+ "options": [
+  {
+   "cmd": "--msource C: --mdest FOLDER --module WinPmem",
+   "what": "Runs one module on a source drive and writes the output to a destination folder. A published paper uses this form to capture memory with a WinPmem module."
+  },
+  {
+   "cmd": "Use Target options",
+   "what": "gkape setting that unlocks the target source, destination and target list."
+  },
+  {
+   "cmd": "Use Module options",
+   "what": "gkape setting that unlocks the module source, destination and module list."
+  },
+  {
+   "cmd": "Command line box",
+   "what": "Shows the exact kape.exe command that matches your selections in gkape."
+  }
+ ],
+ "cases": [
+  {
+   "title": "Incident response triage",
+   "why": "It collects the main Windows artifacts quickly so you can decide which computers need a deeper look."
+  },
+  {
+   "title": "Many computers, same process",
+   "why": "The same targets and modules give the same kind of output for each computer, which helps compare them."
+  },
+  {
+   "title": "Collection before imaging",
+   "why": "Results can be read while a full image is still being made."
+  },
+  {
+   "title": "Parsing for a timeline",
+   "why": "Modules run tools on the collected files and write results you can open in a timeline viewer."
+  },
+  {
+   "title": "Training new examiners",
+   "why": "Ready-made targets and modules give beginners a standard workflow."
+  }
+ ],
+ "strengths": [
+  "Fast collection and parsing, reported by Kroll as working in minutes.",
+  "Targets and modules are plain files that can be edited and shared.",
+  "Graphical version shows the command line, which helps students learn the commands.",
+  "Free for several uses, including education and research."
+ ],
+ "limits": [
+  "It is free but closed source, and the download needs a form.",
+  "The licence differs by use. Paid work and third-party networks need an enterprise licence.",
+  "It is for Windows, and you need administrator rights.",
+  "It copies chosen artifacts, not the whole drive. It is not a full disk image.",
+  "Some modules need extra programs, which you must download and place correctly.",
+  "The documentation site needs JavaScript. Read the options and examples there before you use the command line."
+ ],
+ "works_with": [
+  {
+   "id": "ez-tools",
+   "note": "Many modules run these parsers"
+  },
+  {
+   "id": "timeline-explorer",
+   "note": "Open the CSV output"
+  },
+  {
+   "id": "winpmem",
+   "note": "Memory capture module"
+  },
+  {
+   "id": "ftk-imager",
+   "note": "Make a full image when needed"
+  },
+  {
+   "id": "regripper",
+   "note": "Registry parsing module"
+  },
+  {
+   "id": "plaso",
+   "note": "Build a larger timeline"
+  }
+ ],
+ "learn": [
+  {
+   "label": "KAPE documentation (Eric Zimmerman)",
+   "url": "https://ericzimmerman.github.io/KapeDocs/"
+  },
+  {
+   "label": "Kroll: KAPE overview and download",
+   "url": "https://www.kroll.com/en/services/cyber-risk/incident-response-litigation-support/kroll-artifact-parser-extractor-kape"
+  },
+  {
+   "label": "Kroll: exploring the KAPE graphical user interface",
+   "url": "https://www.kroll.com/en/insights/publications/cyber/exploring-kapes-graphical-user-interface"
+  },
+  {
+   "label": "SANS ISC: Introduction to KAPE",
+   "url": "https://isc.sans.edu/diary/Introduction+to+KAPE/24896"
+  }
+ ],
+ "sources_note": "Written in our own words from the KAPE pages of Kroll and published introductions."
+}
