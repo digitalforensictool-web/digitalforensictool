@@ -1,0 +1,227 @@
+{
+ "reviewed": "2026-11-24",
+ "title": "How do I take a first look at a Mac for signs of compromise?",
+ "short": "First look at a Mac",
+ "lead": "A Mac may have run malware or been used by someone else. This workflow shows a first look with free tools: collect from a live Mac, read what starts automatically, read the unified log, and process a disk image for downloads, history and installs.",
+ "level": "Intermediate",
+ "time": "3 to 5 hours",
+ "evidence": "A live Mac, or a disk image or file collection from one",
+ "answers": [
+  "What starts automatically (launch agents, daemons, login items, cron)",
+  "Which files were downloaded, from where, and when",
+  "Which programs were installed and when",
+  "Which commands were typed in Terminal",
+  "Which logins, sudo use and remote access appear in the unified log"
+ ],
+ "need": [
+  "Permission to examine the Mac, and its administrator account if you work live",
+  "A second Mac or a Python 3.10 or later machine for the analysis tools",
+  "External storage for the output",
+  "For encrypted disks: the user's password or recovery key",
+  "A practice image or collection (see the practice section)"
+ ],
+ "steps": [
+  {
+   "title": "Decide: live Mac or image",
+   "text": "Unified log entries held in memory fade within minutes, and the main log files keep only hours or days on a busy Mac. So if the Mac is running and you are allowed to touch it, collect first. Leave the Mac on and do not reboot it. If it is off, image it. An encrypted APFS volume can only be read with the password or recovery key. Write down what you do and when.",
+   "note": "Newer Macs have encrypted internal storage. Plan for this before you power anything off."
+  },
+  {
+   "title": "Collect from a live Mac with Aftermath",
+   "text": "Aftermath is a Swift tool for macOS 12 or later. Run it as root from Terminal. The terminal app needs Full Disk Access. It collects logs, shell history, the quarantine database, persistence items, network connections, the process tree, install history and browser data, and it ends with one archive. It writes to /tmp unless you choose another folder with -o.",
+   "tools": [
+    "aftermath"
+   ],
+   "cmd": [
+    "sudo ./aftermath -o <folder on external storage>"
+   ],
+   "note": "Aftermath writes the output to the folder you give it, so choose an external disk to avoid filling the Mac's own disk."
+  },
+  {
+   "title": "Analyse the Aftermath archive",
+   "text": "Run Aftermath again with --analyze and give it the collection archive. Do this on your own Mac, not on the suspect one. It writes parsed databases, a file time line and a storyline that puts file metadata, database changes and browser data in time order. Use the storyline to look for the first download or file that started an incident.",
+   "tools": [
+    "aftermath"
+   ],
+   "cmd": [
+    "sudo ./aftermath --analyze <path to the collection archive>"
+   ]
+  },
+  {
+   "title": "List what starts automatically with KnockKnock",
+   "text": "KnockKnock lists items that run at start or login, such as launch items, login items, browser extensions, cron jobs and system extensions. It hides Apple-signed items by default. It does not decide what is malicious. By default it looks up file hashes at VirusTotal, which sends information outside your lab. Switch that off with -skipVT when the case is confidential.",
+   "tools": [
+    "knockknock"
+   ],
+   "cmd": [
+    "sudo <path to KnockKnock.app>/Contents/MacOS/KnockKnock -whosthere -skipVT"
+   ],
+   "note": "An item shown in KnockKnock is not malware just because it is listed. Check its code signature and where it came from."
+  },
+  {
+   "title": "Collect and read the unified log",
+   "text": "The unified log shows logins, sudo, SSH and many system events. Create a logarchive with the built-in log command, as root. It writes only to the boot disk, so copy the result to external storage afterwards. The macos-UnifiedLogs project can read a logarchive on any operating system and write CSV or JSON. Search for the sshd and sudo processes and for loginwindow autolaunch messages, then look at the entries around any hit.",
+   "tools": [
+    "macos-unifiedlogs"
+   ],
+   "paths": [
+    "/private/var/db/diagnostics",
+    "/private/var/db/uuidtext"
+   ],
+   "cmd": [
+    "sudo log collect --output <name>.logarchive"
+   ],
+   "note": "Read the project's README for the current name and options of its example program. Entries marked private are hidden in the log and cannot be recovered later."
+  },
+  {
+   "title": "Process a disk image with mac_apt",
+   "text": "mac_apt reads E01, DD, VMDK and other images, and a mounted image or folder. Choose an output folder and name the plugins you want. AUTOSTART covers startup items, QUARANTINE the download database, RECENTITEMS recent files, TERMSESSIONS Terminal history and INSTALLHISTORY installed programs. Results can be written as spreadsheet, CSV or SQLite files.",
+   "tools": [
+    "mac-apt"
+   ],
+   "cmd": [
+    "python3 mac_apt.py -o <output folder> -x E01 <image file> AUTOSTART QUARANTINE RECENTITEMS TERMSESSIONS INSTALLHISTORY"
+   ],
+   "note": "For a DD image, use DD as the input type instead of E01. Leave out -x if you do not want a spreadsheet."
+  },
+  {
+   "title": "Check the places malware starts from",
+   "text": "Launch agents run when a user logs in and daemons run at boot. Look at the files below. Check who owns each file, when it was made, and which program it starts. A property list that points to a file in a temporary or hidden folder, or that has a random name, needs a closer look. Compare with the AUTOSTART output.",
+   "tools": [
+    "mac-apt",
+    "knockknock"
+   ],
+   "paths": [
+    "/Library/LaunchDaemons",
+    "/Library/LaunchAgents",
+    "~/Library/LaunchAgents",
+    "/System/Library/LaunchDaemons",
+    "/System/Library/LaunchAgents"
+   ]
+  },
+  {
+   "title": "Find downloads, installs and commands",
+   "text": "The quarantine database records downloaded files with the time, the app that downloaded them and often the web address they came from. Install history lists installed programs. Terminal history is in the home folder, as .zsh_history or .bash_history. Match a suspicious download with the first appearance of a launch item or an unusual process in the log.",
+   "tools": [
+    "mac-apt"
+   ],
+   "paths": [
+    "~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV2",
+    "/Library/Receipts/InstallHistory.plist",
+    "~/.zsh_history"
+   ]
+  },
+  {
+   "title": "Build one short time line",
+   "text": "Write the key events in one table: first download, install, first run of the new launch item, first network connection or login in the log. Add the source file and tool for each row. Unified log times are in UTC. Convert all other times to UTC first so the order is correct.",
+   "tools": [
+    "aftermath",
+    "macos-unifiedlogs"
+   ]
+  }
+ ],
+ "artifacts": [
+  {
+   "name": "Unified log",
+   "where": "/private/var/db/diagnostics and /private/var/db/uuidtext",
+   "tells": "Logins, sudo, SSH and system events with time stamps"
+  },
+  {
+   "name": "Launch agents and daemons",
+   "where": "/Library, ~/Library and /System/Library (LaunchAgents, LaunchDaemons)",
+   "tells": "Programs that start at login or boot"
+  },
+  {
+   "name": "Quarantine events database",
+   "where": "~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV2",
+   "tells": "Downloaded files, time, downloading app and source address"
+  },
+  {
+   "name": "Install history",
+   "where": "/Library/Receipts/InstallHistory.plist",
+   "tells": "Installed programs and install times"
+  },
+  {
+   "name": "Shell history",
+   "where": "Home folder (.zsh_history, .bash_history)",
+   "tells": "Commands typed in Terminal, if kept"
+  },
+  {
+   "name": "Aftermath archive",
+   "where": "Output folder you chose (default /tmp)",
+   "tells": "Collected logs, databases, persistence items and a time line"
+  },
+  {
+   "name": "mac_apt output",
+   "where": "Output folder you chose",
+   "tells": "Parsed artifacts from the image"
+  }
+ ],
+ "limits": [
+  "Live collection changes the Mac. Anything you run leaves traces, so document it.",
+  "Tools need Full Disk Access and administrator rights. Without them they miss data without always saying so.",
+  "The unified log keeps only a limited time, and private values in it are hidden.",
+  "Tools and artifact formats change with each macOS version. Test your tool on the macOS version you are examining.",
+  "Encrypted internal storage may block imaging unless the password or recovery key is available.",
+  "A listed startup item or a download is not proof of malware or of who did it."
+ ],
+ "practice": {
+  "name": "Magnet Virtual Summit 2026 CTF: macOS Sequoia image",
+  "by": "Hexordia, published by Magnet Forensics",
+  "url": "https://www.magnetforensics.com/blog/announcing-the-winners-of-the-2026-magnet-virtual-summit-ctf/",
+  "text": "The post lists the CTF questions, including a Mac category, and links to the images: iPhone, Android, Takeout and MacBookPro.zip (macOS Sequoia, SHA-256 given on the page). The page does not say how large the file is or what format is inside the zip, and it does not publish answers. It is a normal user image, not a malware case, and it does not state terms of use. We could not confirm that the download is still online.",
+  "task": "Check the SHA-256 of the zip against the post. Then run mac_apt with the AUTOSTART, QUARANTINE, RECENTITEMS and TERMSESSIONS plugins and answer the questions of the Mac category from your own output.",
+  "note": "No public macOS image with a known compromise and published answers was found. For malware practice, build your own: use a test Mac or virtual machine, install a harmless program that adds a launch agent, and collect with Aftermath."
+ },
+ "learn": [
+  {
+   "label": "mac_apt on GitHub (inputs, plugins, outputs)",
+   "url": "https://github.com/ydkhatri/mac_apt"
+  },
+  {
+   "label": "Aftermath on GitHub (Jamf)",
+   "url": "https://github.com/jamf/aftermath"
+  },
+  {
+   "label": "KnockKnock (Objective-See)",
+   "url": "https://objective-see.org/products/knockknock.html"
+  },
+  {
+   "label": "Mandiant: Reviewing macOS unified logs",
+   "url": "https://cloud.google.com/blog/topics/threat-intelligence/reviewing-macos-unified-logs/"
+  },
+  {
+   "label": "Eclectic Light: Inside the unified log, log storage and attrition",
+   "url": "https://eclecticlight.co/2025/09/29/inside-the-unified-log-3-log-storage-and-attrition/"
+  }
+ ],
+ "mistakes": [
+  "Rebooting or shutting down a running Mac before collecting the log and volatile data.",
+  "Running a tool without Full Disk Access, then trusting an output with gaps.",
+  "Sending file hashes to an online service from a confidential case.",
+  "Treating every non-Apple launch item as malware, or every Apple one as safe.",
+  "Mixing local time and UTC when building the time line."
+ ],
+ "verify": [
+  "Confirm a suspicious launch item in both KnockKnock and mac_apt AUTOSTART, then open the property list itself.",
+  "Match a download in the quarantine database with an entry in the unified log or the Aftermath storyline at about the same time.",
+  "For an unknown program, check its code signature and its hash with a second tool."
+ ],
+ "report_line": "The quarantine database shows that [file name] was downloaded at [time] UTC from [address] by [app]. A launch item [label] pointing to [path] was created at [time] UTC. Both findings come from [tool and version] on [evidence item], and the first was confirmed in [second source].",
+ "next": [
+  {
+   "text": "Hash and image the disk before analysis",
+   "workflow": "forensic-image-and-hash"
+  },
+  {
+   "text": "Capture and review memory from a running machine",
+   "workflow": "ram-dump-first-look"
+  },
+  {
+   "text": "Check an iPhone from the same user",
+   "workflow": "iphone-first-look"
+  }
+ ],
+ "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases.",
+ "untested": true
+}

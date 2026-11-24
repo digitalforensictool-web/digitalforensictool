@@ -1,0 +1,195 @@
+{
+ "reviewed": "2026-11-24",
+ "title": "How do I boot an E01 image of a Windows computer in a virtual machine?",
+ "short": "Boot an E01 in a virtual machine",
+ "lead": "A forensic image can be started in a virtual machine so you can see the computer roughly as its user saw it: the desktop, open windows and installed programs. This workflow shows free ways to do it on Windows and on Linux, and how to keep every change the VM makes away from your image.",
+ "level": "Intermediate",
+ "time": "2 to 4 hours for a first try",
+ "evidence": "An E01 image of a Windows computer (or a practice image)",
+ "answers": [
+  "How the desktop, icons and programs looked to the user",
+  "Which programs were installed and visible at first sight",
+  "Whether the computer boots at all, and which user accounts the login screen shows",
+  "A quick visual check of a finding you already made from artifacts"
+ ],
+ "need": [
+  "An E01 image, or a practice image (see the practice section on this page)",
+  "Windows route: Arsenal Image Mounter (free mode) or FTK Imager, plus VirtualBox or VMware Workstation, and administrator rights",
+  "Linux route: ewf-tools (libewf), qemu-utils and QEMU or VirtualBox",
+  "Free disk space of at least the size of the original disk, for the write cache"
+ ],
+ "steps": [
+  {
+   "title": "Work on a copy and hash it",
+   "text": "Never boot from the only copy of the evidence. Copy all segments of the E01 to a working folder and check that the hash of the copy matches the value recorded when the image was made. Keep the original safe and read-only. After your last boot, check the hash of the E01 again, so you can show it stayed the same.",
+   "tools": [
+    "libewf",
+    "ftk-imager"
+   ],
+   "note": "The ewfverify program in libewf checks the media data stored in an E01 file."
+  },
+  {
+   "title": "Windows: mount the image with a write cache",
+   "text": "In Arsenal Image Mounter (free mode) choose Mount Disk Image, pick the E01, choose Disk device with write temporary, and set a location for the differencing file. Then use Advanced, Offline Disk so Windows leaves the disk alone. Run it as administrator. Do not pick Write original. FTK Imager works too: File, Image Mounting, mount type Physical, method Block Device / Writable, and a Write Cache Folder. A read-only mount is fine for browsing, but a VM cannot boot properly from one.",
+   "tools": [
+    "arsenal-image-mounter",
+    "ftk-imager"
+   ],
+   "note": "Free versus paid: Arsenal free mode gives temporary write support with a differencing file, plus BitLocker unlocking if you have the key. Arsenal Professional adds launching a VM straight from the image and password bypass inside the VM. OSForensics, VFC and Mount Image Pro are paid products that also automate the VM boot."
+  },
+  {
+   "title": "Windows: point a VM at the mounted disk",
+   "text": "Find the PhysicalDrive number of the mounted image in Disk Management or in the mapped image list. It changes when other drives are attached. In an administrator prompt, create a raw-disk VMDK with the command below. It holds no copy of the data, it points to the disk. Create a VM without a new disk and attach this VMDK. In VMware Workstation, choose Use a physical disk instead. Writes go to the write cache, not to the E01.",
+   "cmd": "VBoxManage internalcommands createrawvmdk -filename \"C:\\vm\\image.vmdk\" -rawdisk \\\\.\\PhysicalDrive4",
+   "note": "Use your own drive number. Newer VirtualBox manuals also show VBoxManage createmedium disk with --variant RawDisk and --property RawDrive. Use the form your version accepts. Some guides also take the mounted disk offline in diskpart before the first boot, to stop Windows writing to it. Oracle's manual warns that raw disk access is for experts, that the VM needs read and write access to the disk, and that you must never boot the host's own disk this way."
+  },
+  {
+   "title": "Linux: mount the E01 and add an overlay",
+   "text": "Install ewf-tools and run ewfmount image.E01 /mnt/fuse on an empty folder. It shows one file called ewf1 that holds the raw disk, a view of the E01 data. Create a qcow2 overlay that uses ewf1 as its backing file, as below. The backing file is not changed unless you commit, so all writes go to the overlay. Boot the overlay in QEMU with -drive file=overlay.qcow2,format=qcow2 and add -nic none for no network. Delete the overlay to start fresh.",
+   "cmd": "qemu-img create -f qcow2 -b /mnt/fuse/ewf1 -F raw overlay.qcow2",
+   "tools": [
+    "libewf"
+   ],
+   "note": "Do not run qemu-img on an overlay that a running VM is using."
+  },
+  {
+   "title": "Linux: xmount cache or a converted copy",
+   "text": "xmount can present an E01 as a raw, VDI, VHD or VMDK disk and sends writes to a cache file you name with --cache. Its manual shows the E01 input type as aewf, so check xmount --info on your version. Another way is a full conversion. Run qemu-img convert -f raw -O vmdk on the ewf1 file for VMware or VirtualBox, or -O vpc for VHD. The result is a full-size new file, so you need the disk space. Hash the E01, not the copy.",
+   "cmd": "xmount --in aewf ./acquired_disk.E?? --out vdi --cache ./disk.cache /mnt",
+   "note": "The cache file is where your VM writes go. Keep it with your case notes."
+  },
+  {
+   "title": "Set the VM up for a safe first start",
+   "text": "Before the first start, remove or disconnect the network adapter. Do not install Guest Additions or VMware Tools, and leave shared folders off (in VirtualBox they need Guest Additions). Choose BIOS or UEFI to suit the disk: VirtualBox has an Enable EFI box, and its EFI cannot boot Windows 7. Attach the disk on SATA first. Take a snapshot before you start the VM, so you can return to a clean point.",
+   "note": "In VMware Workstation, an independent non-persistent disk keeps changes in a redo log that is deleted when the VM is powered off. Independent disks are left out of snapshots, so choose one method or the other."
+  },
+  {
+   "title": "If Windows will not boot",
+   "text": "A blue screen with STOP 0x7B INACCESSIBLE_BOOT_DEVICE means Windows could not reach its boot disk. Microsoft lists a different or changed disk controller as a cause, and the virtual one differs from the real one. Power off, change the controller type (IDE, SATA, SCSI or NVMe where offered), and try again. One guide reports SCSI worked when SATA failed. Also try the other firmware setting. A VMware converter reportedly fixed one 0x7B case, but it alters the system, so use it only on the copy and record it.",
+   "note": "After the hardware change Windows may ask to activate again. This does not stop you from looking at the system. One SANS article says Safe Mode may avoid the prompt."
+  },
+  {
+   "title": "Encryption, login screens and hibernation",
+   "text": "BitLocker: without the recovery key or password the system will not start. With the key, Arsenal free mode can unlock the volume. Login: use credentials from your case notes, the owner or the legal process. Resetting a password changes the copy and permanently loses data protected by DPAPI, so only do it on the write cache, with authority, and write it down. You can read files from the image without any login. Hibernation: hiberfil.sys can hold memory data, so examine it from the image before you boot.",
+   "tools": [
+    "autopsy",
+    "arsenal-image-mounter"
+   ],
+   "note": "A dirty file system may trigger a disk check at start-up. That only changes the cache or overlay."
+  },
+  {
+   "title": "Look, record, then verify the evidence",
+   "text": "The VM clock follows the host by default, so write down the real date and time, and the time zone, when you boot. VirtualBox has a Hardware Clock in UTC option. In QEMU, -rtc sets the clock base. Take a screenshot or a note of everything you see, and take a snapshot at key points. Then shut down, check the E01 hash, and confirm each finding from the image itself with artifact analysis. Keep the write cache, the notes and the settings.",
+   "tools": [
+    "autopsy",
+    "libewf"
+   ]
+  }
+ ],
+ "artifacts": [
+  {
+   "name": "Working copy of the E01",
+   "where": "Your case folder",
+   "tells": "The only image you mount, with its before and after hash"
+  },
+  {
+   "name": "Write cache or differencing file",
+   "where": "Folder you chose in Arsenal Image Mounter or FTK Imager, or the xmount cache file",
+   "tells": "Every change the VM made. Keep it or delete it, and write down which"
+  },
+  {
+   "name": "Raw-disk VMDK pointer",
+   "where": "VirtualBox VM folder",
+   "tells": "A file that points the VM at the mounted disk, not a copy of the data"
+  },
+  {
+   "name": "qcow2 overlay",
+   "where": "Linux working folder",
+   "tells": "Changes made on top of ewf1. The E01 is untouched"
+  },
+  {
+   "name": "VM snapshots",
+   "where": "VirtualBox or VMware VM folder",
+   "tells": "Saved points you can return to, for example before the first start"
+  },
+  {
+   "name": "Hash record",
+   "where": "Your notes",
+   "tells": "E01 hash before the first boot and after the last one"
+  },
+  {
+   "name": "Boot notes and screenshots",
+   "where": "Your notes",
+   "tells": "VM settings, tool versions, errors and fixes, clock and time zone, what you saw"
+  }
+ ],
+ "limits": [
+  "A VM boot changes the write cache or overlay, not the E01, but it also starts Windows, which writes logs, timestamps and other traces. Do not run artifact analysis on the booted copy and treat its dates as evidence.",
+  "Never use a VM view as your only analysis. It shows what you saw on screen. It is no substitute for artifact analysis of the image, and every finding needs to be confirmed there.",
+  "The virtual hardware is different from the real computer, so drivers, activation, network and the clock can all differ from what the user had.",
+  "A BitLocker-encrypted system will not boot without the recovery key or password.",
+  "Not every image boots. Hardware dongles may not be seen by the VM, and some systems need repairs that change the copy. Write each repair down.",
+  "Suspect programs can run when the system starts, and may even wipe data on the writable copy. Keep the network off and keep the E01 safe.",
+  "Resetting a Windows password is a change to the evidence copy and loses DPAPI-protected data. Do it only with authority, on the write cache, and document it."
+ ],
+ "practice": {
+  "name": "NIST CFReDS: Data Leakage Case",
+  "by": "NIST",
+  "url": "https://cfreds-archive.nist.gov/data_leakage_case/data-leakage-case.html",
+  "answers_url": "https://cfreds-archive.nist.gov/data_leakage_case/leakage-answers.pdf",
+  "text": "A simulated intellectual property theft on a Windows 7 Ultimate computer. The PC image comes as pc.E01 to pc.E04 (about 7.3 GB compressed) or as a DD image, and NIST says it was converted from a VMDK. The page does not state user passwords.",
+  "task": "Download the E01 files, hash the working copy, mount it with a write cache and try the boot. Write down what the desktop and the login screen show. Then confirm the same facts from the image with artifact analysis and check them against the published answers.",
+  "note": "VirtualBox's EFI cannot boot Windows 7, so leave the default firmware. We have not tested whether this image boots with the free route. If it does not, work with the image in a forensic suite."
+ },
+ "learn": [
+  {
+   "label": "Oracle VirtualBox: using a raw host hard disk from a guest",
+   "url": "https://docs.oracle.com/en/virtualization/virtualbox/6.0/admin/adv-storage-config.html"
+  },
+  {
+   "label": "libewf wiki: mounting an E01 with ewfmount",
+   "url": "https://github.com/libyal/libewf/wiki/Mounting"
+  },
+  {
+   "label": "QEMU documentation: qemu-img",
+   "url": "https://www.qemu.org/docs/master/tools/qemu-img.html"
+  },
+  {
+   "label": "Forensic Focus: Imm2Virtual, a GUI to virtualize a disk image",
+   "url": "https://www.forensicfocus.com/articles/imm2virtual-a-windows-gui-to-virtualize-directly-from-disk-image-file/"
+  },
+  {
+   "label": "SANS: Give your forensic images the boot, part I",
+   "url": "https://www.sans.org/blog/give-your-forensic-images-the-boot-part-i"
+  }
+ ],
+ "mistakes": [
+  "Mounting the E01 read-only and then wondering why the VM will not boot. The VM needs a write cache or overlay.",
+  "Choosing Write original in the mounting tool, which writes to the evidence. Always choose a temporary write cache.",
+  "Leaving the network adapter on for the first start, so that the suspect system contacts the internet or a network.",
+  "Pointing the raw-disk VMDK at the wrong PhysicalDrive number, which can be the host's own disk. Check the number in Disk Management first.",
+  "Treating dates and files seen inside the booted VM as evidence. Booting changes the copy, so confirm findings from the image."
+ ],
+ "verify": [
+  "Check the E01 hash (for example with ewfverify) before the first boot and after the last one. The two values must match.",
+  "Confirm each thing you saw in the VM, such as installed programs or user names, from the image with artifact analysis in a forensic suite.",
+  "Compare the VM's user list at the login screen with the user folders and registry data in the image."
+ ],
+ "report_line": "The image [image name] (SHA-256 [hash], unchanged after testing) was started in a virtual machine with a write cache, network off. The login screen showed the accounts [names]. These observations were confirmed from the image by [tool], and the booted copy was not used as evidence.",
+ "next": [
+  {
+   "text": "Check an image and its hash before you boot it",
+   "workflow": "forensic-image-and-hash"
+  },
+  {
+   "text": "Look at USB history from the same Windows image",
+   "workflow": "usb-connected-windows"
+  },
+  {
+   "text": "See which programs ran on the computer",
+   "workflow": "program-execution-windows"
+  }
+ ],
+ "sources_note": "A study guide written in our own words from the vendor and project pages listed here and other public articles. Commands come from those pages, so check them against your software version. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases.",
+ "untested": true
+}

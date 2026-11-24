@@ -1,0 +1,193 @@
+{
+ "reviewed": "2026-11-24",
+ "title": "Can deleted photos be recovered from this camera card?",
+ "short": "Photos from a camera card",
+ "lead": "Photos on a camera card are often deleted or the card is formatted, but the picture data may still be there. This workflow shows how to copy the card safely, recover pictures with two carving tools, and read the camera details inside each picture.",
+ "level": "Beginner to intermediate",
+ "time": "1 to 2 hours on the practice image",
+ "evidence": "An SD or similar memory card from a camera, or an image of one",
+ "answers": [
+  "Whether deleted photos can still be found on the card",
+  "How many pictures were recovered and whether they open",
+  "Which camera made them and when they were taken",
+  "Whether the pictures have GPS positions",
+  "Why some pictures could not be recovered whole"
+ ],
+ "need": [
+  "The card, a card reader and a write blocker, or a practice image (see the practice section on this page)",
+  "A Linux computer or a Windows computer with the tools",
+  "A separate drive with enough free space for the image and the recovered files"
+ ],
+ "steps": [
+  {
+   "title": "Protect the card",
+   "text": "Do not put the card back into the camera or a phone, and do not browse it on a normal computer. Use a hardware write blocker or a reader that your lab has tested. The small lock switch on an SD card is read by the reader, not by the card, so some readers ignore it. Note the card brand, size and any marks, and take a photo of it.",
+   "note": "If the card is damaged or the reader cannot see it, stop and ask a specialist. Repeated tries can make it worse."
+  },
+  {
+   "title": "Copy the whole card to an image",
+   "text": "Image the whole device, not only the drive letter or a folder, so that unallocated space is included. Use a tool that hashes while it copies. Write down the hash. All later steps use the image. On Windows, FTK Imager can do the same job.",
+   "tools": [
+    "dc3dd",
+    "guymager",
+    "ftk-imager"
+   ],
+   "cmd": "sudo dc3dd if=/dev/sdb of=card01.dd hash=sha256 log=card01.log",
+   "note": "Use the real device name of the card instead of sdb. Check it with lsblk first."
+  },
+  {
+   "title": "Make the image read-only",
+   "text": "Keep one master image and work on a copy, or set the file to read-only so that no tool can write to it. Save everything you recover on a different drive from the image.",
+   "note": "Check the hash of the image again before you start, and again at the end."
+  },
+  {
+   "title": "Look at the file system first",
+   "text": "Add the image to Autopsy and open the folder tree. Cameras usually use FAT or exFAT with a DCIM folder. Deleted files that still have a name and date appear in the Deleted Files list. If the card was formatted in the camera, the old names may be gone and you will need carving. The deleted-file workflow on this site covers this part in more detail.",
+   "tools": [
+    "autopsy",
+    "sleuthkit"
+   ]
+  },
+  {
+   "title": "Carve pictures with PhotoRec",
+   "text": "PhotoRec ignores the file system and reads the card sector by sector, looking for the start bytes of known file types such as JPEG. Start it with the image path, then choose the image, the partition, the file types you want, the file system type (use Other for FAT and exFAT), and whether to search free space only or the whole partition. Choose an output folder on another drive. Results go into folders named recup_dir.1, recup_dir.2 and so on.",
+   "tools": [
+    "testdisk"
+   ],
+   "cmd": "sudo photorec card01.dd",
+   "note": "Recovered files get new generic names. The camera file names and dates are not recovered by carving."
+  },
+  {
+   "title": "Run Foremost as a second pass",
+   "text": "Foremost is a different carver and may find or miss other files. Run it on the same image with an output folder of its own, and compare the counts and the files. A mismatch is a lead to check by hand.",
+   "tools": [
+    "foremost"
+   ],
+   "cmd": "foremost -t jpg -i card01.dd -o /path/to/foremost_output -v"
+  },
+  {
+   "title": "Read the camera details in each picture",
+   "text": "ExifTool reads the metadata inside each picture: camera make and model, the time the photo was taken, and GPS if the camera or phone had it. Export a table for all recovered pictures and sort it by the time taken. Pictures that came from the same camera should show the same model.",
+   "tools": [
+    "exiftool"
+   ],
+   "cmd": "exiftool -r -ext jpg -common -csv /path/to/recovered > photos.csv",
+   "note": "The photo time usually has no time zone. It comes from the camera clock, which may be wrong. Test the camera clock if you still have the camera."
+  },
+  {
+   "title": "Check each picture and remove duplicates",
+   "text": "Open each recovered picture. Fragmented JPEG files often show a grey block or wrong colours from a point downward, or only the small preview image inside the file may be good. Hash the files to find exact duplicates from the two tools. Mark every file as complete, partial or damaged, and keep the partial ones separate.",
+   "tools": [
+    "exiftool"
+   ],
+   "note": "The preview image inside a damaged photo is a real image, but it is small. Record it as a preview."
+  },
+  {
+   "title": "Write down what you did",
+   "text": "Record the card details, the image hash, the tool names and versions, the options you chose, the number of files each tool found and your counts of complete, partial and damaged files. Keep the output folders unchanged as your working evidence.",
+   "tools": [
+    "testdisk",
+    "foremost"
+   ]
+  }
+ ],
+ "artifacts": [
+  {
+   "name": "DCIM folder and picture files",
+   "where": "FAT or exFAT file system of the card",
+   "tells": "Pictures that are still listed, with file names and dates"
+  },
+  {
+   "name": "Deleted directory entries",
+   "where": "File system records of the card",
+   "tells": "Names and dates of deleted pictures, if they were not overwritten"
+  },
+  {
+   "name": "Unallocated space",
+   "where": "Free area of the card image",
+   "tells": "Picture data without names, found only by carving"
+  },
+  {
+   "name": "Exif data in a JPEG file",
+   "where": "Inside each picture",
+   "tells": "Camera make and model, time taken, GPS position, and a small preview image"
+  },
+  {
+   "name": "PhotoRec output folders",
+   "where": "recup_dir.1, recup_dir.2 and so on",
+   "tells": "Carved files with new generic names"
+  },
+  {
+   "name": "Video and thumbnail files",
+   "where": "DCIM or other camera folders",
+   "tells": "Movies and small thumbnail files that some cameras keep next to the photos"
+  }
+ ],
+ "limits": [
+  "Carving gives pictures without file names or file system dates. Only the data inside the picture can tell you when it was taken.",
+  "Fragmented files are a weak point of carving. If a picture is stored in pieces, the carver may join the wrong pieces or stop early.",
+  "New photos taken after a delete or a format can overwrite the old ones. Recovery is not possible for overwritten areas.",
+  "A worn or damaged card may not be fully readable, so the image can be incomplete. Record any read errors.",
+  "The camera clock may be wrong, and the Exif time usually has no time zone.",
+  "Recovered pictures show that they were on the card. They do not show who took or deleted them."
+ ],
+ "practice": {
+  "name": "NIST CFReDS: Forensic Images for File Carving",
+  "by": "NIST",
+  "url": "https://cfreds-archive.nist.gov/FileCarving/",
+  "text": "30 small disk images made to test carving tools. They are not camera cards. The Graphic set (images such as L0_Graphic.dd) holds JPG, PNG, BMP, GIF, TIF and PCX files. The page lists the size, start sector and end sector of each file, and the original files, so you can check your result. Images are compressed with bzip2, and the page gives the bunzip2 command.",
+  "task": "Carve L0_Graphic.dd (no fragmentation) with PhotoRec and with Foremost. Compare your recovered files with the file list on the page. Then try one image with fragmented files from the Graphic set and see which files you cannot recover whole.",
+  "note": "The page does not say whether the pictures have camera Exif data, so for the metadata step use your own photos from a camera or phone, put on a test card that you delete and image yourself. The NIST DFR images test recovery from file system records, not carving."
+ },
+ "learn": [
+  {
+   "label": "CGSecurity: PhotoRec step by step",
+   "url": "https://www.cgsecurity.org/wiki/PhotoRec_Step_By_Step"
+  },
+  {
+   "label": "CGSecurity: PhotoRec overview",
+   "url": "https://www.cgsecurity.org/wiki/PhotoRec"
+  },
+  {
+   "label": "Foremost manual page (Debian)",
+   "url": "https://manpages.debian.org/jessie/foremost/foremost.8.en.html"
+  },
+  {
+   "label": "ExifTool documentation",
+   "url": "https://exiftool.org/exiftool_pod.html"
+  },
+  {
+   "label": "DFRWS paper: Recovery of heavily fragmented JPEG files",
+   "url": "https://dfrws.org/wp-content/uploads/2019/06/2016_USA_paper_recovery_of_heavily_fragmented_jpeg_files.pdf"
+  }
+ ],
+ "mistakes": [
+  "Saving the recovered files back onto the card or the same drive as the image. This can overwrite the data you want.",
+  "Plugging the card into the camera or a phone to look at it, which lets the device write to it.",
+  "Reporting a carved file as complete because it opens. Check the whole picture, not only the first part.",
+  "Treating the Exif time as the true time. The camera clock can be wrong and has no time zone.",
+  "Counting duplicates from two carving tools as separate photos."
+ ],
+ "verify": [
+  "Compare the file counts and hashes of PhotoRec and Foremost on the same image and explain every difference.",
+  "Look for a recovered picture in Autopsy, in the unallocated space or the Deleted Files list, and check that it sits where you expect.",
+  "Compare the camera model and photo time of several pictures with the camera itself, or with the other pictures on the card."
+ ],
+ "report_line": "From the card image [image name] (SHA-256 [hash]), PhotoRec [version] recovered [number] pictures and Foremost [version] recovered [number], of which [number] are complete, [number] partial and [number] damaged. The pictures carry camera model [model] and photo times from [first] to [last] (camera clock, time zone not recorded). The data does not show who took or deleted them.",
+ "next": [
+  {
+   "text": "Check the metadata of the recovered photos in detail",
+   "workflow": "photo-metadata"
+  },
+  {
+   "text": "See how deleted files are recovered from file system records",
+   "workflow": "deleted-file-recovery"
+  },
+  {
+   "text": "Learn how to image and hash a drive",
+   "workflow": "forensic-image-and-hash"
+  }
+ ],
+ "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases.",
+ "untested": true
+}

@@ -1,0 +1,246 @@
+{
+ "reviewed": "2026-11-24",
+ "title": "How does malware or an intruder stay on this Windows computer?",
+ "short": "Persistence hunt on Windows",
+ "lead": "Persistence means a program is set to start again after a reboot or logon. This workflow checks the main places where Windows starts programs: run keys, startup folders, services and scheduled tasks. It then uses event logs to date each finding.",
+ "level": "Intermediate",
+ "time": "2 to 4 hours on the practice logs",
+ "evidence": "A disk image or triage collection of a Windows computer, plus its event logs",
+ "answers": [
+  "Which programs are set to start at boot or logon",
+  "Which ones are not from Microsoft or the known software list",
+  "Which services and scheduled tasks were added, and by which account",
+  "When each entry was created, and whether the program ran",
+  "Whether the entry looks like normal software or needs more analysis"
+ ],
+ "need": [
+  "A forensic image or a triage collection of the Windows computer, or the practice event logs (see the practice section)",
+  "A Windows workstation for the analysis tools",
+  "A list of the software that should be on the computer, if the owner can give one",
+  "Permission to analyse the computer, and a copy of the evidence to work on"
+ ],
+ "steps": [
+  {
+   "title": "Choose live check or image check",
+   "text": "On a live computer, take notes first and avoid changes, because tools you run leave traces and can overwrite journals. On an image, collect the files listed below and work on copies. KAPE can collect many of them in one run. Note the computer's time zone, because registry times are UTC and some logs show local time.",
+   "tools": [
+    "kape",
+    "ftk-imager"
+   ],
+   "paths": [
+    "Windows\\System32\\config\\SOFTWARE",
+    "Windows\\System32\\config\\SYSTEM",
+    "Users\\<user name>\\NTUSER.DAT",
+    "Windows\\System32\\Tasks",
+    "Windows\\System32\\winevt\\Logs"
+   ]
+  },
+  {
+   "title": "Get a first list with Autoruns",
+   "text": "Autoruns lists many auto-start locations in one view. Turn on the option to hide signed Microsoft entries and to check signatures, then read what is left. Look at the file path, the publisher and the entry name. The command line version autorunsc writes the same data to CSV, and its documentation lists a -z option for scanning an offline Windows system. Treat the list as a lead list, not as a verdict.",
+   "tools": [
+    "sysinternals"
+   ],
+   "cmd": "autorunsc -a * -c -h -s -m > autoruns.csv",
+   "note": "The command is from the Microsoft documentation. Run it as administrator on a live system. For an image, read the autorunsc help for the offline option."
+  },
+  {
+   "title": "Check run keys and startup folders",
+   "text": "Open the hives in Registry Explorer or run RegRipper plugins. Read the Run and RunOnce keys of the machine (SOFTWARE hive) and of each user (NTUSER.DAT). Also list the two Startup folders on disk. Each value is a command line. Note the program path, the arguments and the key's last write time.",
+   "tools": [
+    "registry-explorer",
+    "regripper"
+   ],
+   "paths": [
+    "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run",
+    "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\RunOnce",
+    "NTUSER.DAT\\Software\\Microsoft\\Windows\\CurrentVersion\\Run",
+    "NTUSER.DAT\\Software\\Microsoft\\Windows\\CurrentVersion\\RunOnce",
+    "ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp",
+    "Users\\<user name>\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup"
+   ]
+  },
+  {
+   "title": "Review services",
+   "text": "Each service is a key under Services in the SYSTEM hive. Read ImagePath (the program), Start (2 means automatic, 4 means disabled), Type and DisplayName. Check every ControlSet, not only the current one. Unusual signs are a path in a user folder or Temp folder, a name that copies a real Windows service, or a start type that does not fit the program.",
+   "tools": [
+    "registry-explorer",
+    "regripper"
+   ],
+   "paths": [
+    "SYSTEM\\ControlSet001\\Services"
+   ]
+  },
+  {
+   "title": "Review scheduled tasks",
+   "text": "Each task has an XML file on disk and entries in the registry. Read the Actions part of the XML for the program and arguments, and the Triggers part for when it runs. In the registry, the Tree key links a task name to an Id, and the Tasks key holds its details. Compare both places, because a task can be hidden from one of them.",
+   "tools": [
+    "registry-explorer"
+   ],
+   "paths": [
+    "Windows\\System32\\Tasks",
+    "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Schedule\\TaskCache\\Tree",
+    "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Schedule\\TaskCache\\Tasks"
+   ]
+  },
+  {
+   "title": "Date the entries with event logs",
+   "text": "Event 7045 in the System log records a new service. Event 4697 in the Security log does too, when auditing is on. Event 4698 in the Security log records a new task, but only if Other Object Access auditing is on. The TaskScheduler Operational log has events 106 (created), 140 (updated), 141 (deleted) and 200 (run), but it is off by default. Parse the logs into CSV and filter on these IDs.",
+   "tools": [
+    "evtxecmd",
+    "timeline-explorer"
+   ],
+   "cmd": "EvtxECmd.exe -d \"C:\\case\\evtx\" --csv \"C:\\case\\out\" --csvf events.csv --inc 7045,4697,4698,106,140,141",
+   "paths": [
+    "Windows\\System32\\winevt\\Logs\\System.evtx",
+    "Windows\\System32\\winevt\\Logs\\Security.evtx",
+    "Windows\\System32\\winevt\\Logs\\Microsoft-Windows-TaskScheduler%4Operational.evtx"
+   ]
+  },
+  {
+   "title": "Run a rule-based scan of the logs",
+   "text": "Hayabusa reads event logs and applies Sigma detection rules. It writes a timeline of alerts that you can sort by level and by rule name. Use it to find service and task events that you may have missed, and to see what else happened at the same time. Check each alert yourself. A rule hit is a pointer, not proof. The name of the timeline command differs between versions, so read the help of your version.",
+   "tools": [
+    "hayabusa",
+    "timeline-explorer"
+   ],
+   "cmd": "hayabusa.exe dfir-timeline -d .\\evtx -o results.csv -w",
+   "note": "Older releases call the same command csv-timeline."
+  },
+  {
+   "title": "Look at less common places",
+   "text": "Check a short list of other start points: the Winlogon values Shell and Userinit, Image File Execution Options (a Debugger value), AppInit DLLs, and WMI event consumers. Autoruns shows most of them. WMI-Activity events such as 5861 can show a new consumer. These are used rarely by normal software, so every entry here needs an explanation.",
+   "tools": [
+    "sysinternals",
+    "registry-explorer"
+   ],
+   "paths": [
+    "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon",
+    "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Image File Execution Options"
+   ]
+  },
+  {
+   "title": "Decide what is normal and what is not",
+   "text": "For each suspect entry, check that the file exists, its signature and hash, its creation time in the $MFT, and whether it ran. Run records such as Prefetch and Amcache help here, and the program execution workflow on this site covers them. An entry is more concerning when the file is new, unsigned, in a user-writable folder and was created near other odd events.",
+   "tools": [
+    "mftecmd",
+    "pecmd",
+    "ez-tools"
+   ]
+  }
+ ],
+ "artifacts": [
+  {
+   "name": "Run and RunOnce keys",
+   "where": "SOFTWARE hive and each user's NTUSER.DAT",
+   "tells": "Commands that start at boot or at a user's logon"
+  },
+  {
+   "name": "Startup folders",
+   "where": "ProgramData and the user's AppData, under Start Menu",
+   "tells": "Programs and shortcuts that start at logon"
+  },
+  {
+   "name": "Services keys",
+   "where": "SYSTEM hive",
+   "tells": "Service program path, start type and account"
+  },
+  {
+   "name": "Task XML files",
+   "where": "Windows\\System32\\Tasks",
+   "tells": "Task triggers, actions and author"
+  },
+  {
+   "name": "TaskCache keys",
+   "where": "SOFTWARE hive",
+   "tells": "Task names, ids and creation details"
+  },
+  {
+   "name": "Event 7045 and 4697",
+   "where": "System and Security event logs",
+   "tells": "A new service, its file path and account"
+  },
+  {
+   "name": "Event 4698 and TaskScheduler events",
+   "where": "Security and TaskScheduler Operational logs",
+   "tells": "A new, changed or deleted task and its action"
+  },
+  {
+   "name": "Winlogon and IFEO keys",
+   "where": "SOFTWARE hive",
+   "tells": "Less common start points that need an explanation"
+  }
+ ],
+ "limits": [
+  "Many persistence entries are normal. An unusual entry is a reason to look closer, not proof of an intruder.",
+  "Service and task auditing is off by default, so the events you want may not exist.",
+  "Registry key times show the last change to that key, not always the first creation of the entry.",
+  "An attacker can remove an entry after use, and logs can be cleared or overwritten.",
+  "This workflow covers common methods only. Other methods exist, such as DLL hijacking and boot-level changes, and they need extra steps.",
+  "A live scan shows what is configured now. An image or log set shows the past. They answer different questions."
+ ],
+ "practice": {
+  "name": "EVTX-ATTACK-SAMPLES (Persistence folder)",
+  "by": "Samir Bousseaden and contributors, on GitHub",
+  "url": "https://github.com/sbousseaden/EVTX-ATTACK-SAMPLES",
+  "text": "A public collection of Windows event log files recorded while attack techniques were tested. It has a folder named Persistence. The files are logs only. There is no disk image, so the registry and file steps need a different source. The repository uses the GPL-3.0 licence.",
+  "task": "Download a few files from the Persistence folder. Parse them with EvtxECmd and with Hayabusa. Find any event 7045 or 4698 and write down the service or task name, the program path and the time.",
+  "note": "No public disk image built for persistence practice was found. To practise the registry steps, set up your own Windows virtual machine, add a harmless test entry (for example a Run key that starts Notepad), then image it and look for your own entry."
+ },
+ "learn": [
+  {
+   "label": "Microsoft: Autoruns for Windows",
+   "url": "https://learn.microsoft.com/en-us/sysinternals/downloads/autoruns"
+  },
+  {
+   "label": "Microsoft: Event 4698, a scheduled task was created",
+   "url": "https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4698"
+  },
+  {
+   "label": "Microsoft: Event 4697, a service was installed",
+   "url": "https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4697"
+  },
+  {
+   "label": "MITRE ATT&CK T1547.001: Registry Run Keys and Startup Folder",
+   "url": "https://attack.mitre.org/techniques/T1547/001/"
+  },
+  {
+   "label": "Hayabusa on GitHub",
+   "url": "https://github.com/Yamato-Security/hayabusa"
+  }
+ ],
+ "mistakes": [
+  "Treating every non-Microsoft entry as malware. Many are normal software updaters.",
+  "Reading only the current ControlSet and missing an older service entry.",
+  "Forgetting that the TaskScheduler log and event 4698 are often not enabled, then concluding that no task was created.",
+  "Running Autoruns live on the evidence computer without noting it, which changes the system and your notes.",
+  "Trusting a rule alert without opening the raw event."
+ ],
+ "verify": [
+  "Match each service from the SYSTEM hive to a 7045 event, or explain why none exists.",
+  "Match each task XML file to its TaskCache registry entry.",
+  "Check the file's creation time in the $MFT against the time of the service or task event.",
+  "Compare your Autoruns list with the Hayabusa alerts and the manual registry findings."
+ ],
+ "report_line": "A [service or scheduled task] named [name] was found on [computer], set to run [program path] at [trigger]. Event [7045 or 4698] shows it was created at [time, UTC] by [account]. The file was [signed or unsigned] and [was or was not] seen running. Further analysis of the program is needed.",
+ "next": [
+  {
+   "text": "Check whether the program ran",
+   "workflow": "program-execution-windows"
+  },
+  {
+   "text": "Check logons around the creation time",
+   "workflow": "windows-logons"
+  },
+  {
+   "text": "Build a timeline of the whole image",
+   "workflow": "super-timeline-plaso-timesketch"
+  },
+  {
+   "text": "Check whether file times were changed",
+   "workflow": "ntfs-timestomping-check"
+  }
+ ],
+ "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases.",
+ "untested": true
+}

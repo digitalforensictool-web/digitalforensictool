@@ -1,0 +1,213 @@
+{
+ "draft": true,
+ "reviewed": "2026-11-24",
+ "id": "booting-forensic-image-in-vm",
+ "branch": "imaging",
+ "title": "Booting a forensic image in a virtual machine",
+ "quick": "Booting an image in a virtual machine lets you see the computer as its user saw it. You never boot the evidence itself. You boot it through a read-only source with a separate file that catches every change.",
+ "sections": [
+  {
+   "title": "Why do it, and what it cannot do",
+   "text": [
+    "A virtual machine (VM) is a pretend computer that runs inside your real one. If you attach a copy of a suspect's disk to it, the old Windows or Linux system may start up. You then see the desktop, the icons, the installed programs and the settings the way the user saw them. This helps you test a user's story, such as what a program did when opened, and it helps you show a non-technical person what the screen looked like.",
+    "It is a view, not a full examination. The VM has different hardware from the original computer, so drivers, activation and security features can fail. A running system also changes itself while it boots. Forensic tools still do the real analysis on the image. Booting adds context and does not remove the need for that work."
+   ],
+   "points": [
+    "Good for: seeing the desktop, running installed apps, testing a user's claim, demonstrations.",
+    "Not good for: finding deleted files, reading unallocated space, or proving what happened at a past time.",
+    "Some images will never boot, for example from a different type of device or with a locked disk."
+   ]
+  },
+  {
+   "title": "Never boot the evidence itself",
+   "text": [
+    "A booting operating system writes to its disk all the time. It updates logs, file times, caches and registry files. If those writes reached your original E01 or your only copy, you would destroy the untouched state you promised to keep.",
+    "So every method on this page follows one pattern. The image is shown to the VM as a disk. Reads come from the image. Writes go into a second file that you can delete when you are done. The next boot then starts fresh from the original. Check the image hash before and after to show it did not change. Procedures and laws differ by country and agency, so follow your lab's own procedure."
+   ]
+  },
+  {
+   "title": "The free approaches in plain words",
+   "text": [
+    "Approach 1: mount the image as a real disk, with writes kept in a side file, then give that disk to the VM. On Windows, tools such as Arsenal Image Mounter free mode, OSFMount and FTK Imager can show an E01 as a disk. Their pages describe a write mode where changes go to a separate cache or difference file. The VM program is then pointed at that disk as a physical disk.",
+    "Approach 2: a wrapper file. A tiny VMDK or similar file describes a real disk instead of holding data. VirtualBox has a command that makes such a file for a physical disk. A free open-source Windows helper called Imm2Virtual automates this with Arsenal Image Mounter and VirtualBox, according to its write-up on Forensic Focus.",
+    "Approach 3: a converted copy. You export the E01 to a raw file, then convert that to a VM disk format such as VMDK or VDI. This is simple but it needs as much free space as the whole disk, and you must boot only the copy. Keep a hash of the copy."
+   ],
+   "points": [
+    "Mounted disk plus side file: fast, no big copy, but needs admin rights and a careful setup.",
+    "Wrapper file: small, but it points to one exact disk on one computer.",
+    "Converted copy: easy to understand, uses a lot of space.",
+    "A logical-only mount, such as a drive letter without the whole disk, cannot boot."
+   ]
+  },
+  {
+   "title": "The Linux route with ewfmount, xmount and qemu",
+   "text": [
+    "On Linux, ewfmount from the libewf project exposes an E01 as one raw file, for example with the command ewfmount image.E01 /mnt/fuse. It creates a file named ewf1 inside the mount point. That file looks like the raw disk to other programs.",
+    "Then you have two free choices. With qemu, you create an overlay file whose base is the raw file: qemu-img create -f qcow2 -b BASEFILE -F raw overlay.qcow2. The qemu manual says the base file is never changed unless you run a commit command, so the overlay catches all writes. With xmount, the cache option redirects writes into a cache file, for example: xmount --cache cache.ovl --in ewf image.E?? --out vhd mountpoint. The xmount manual says this makes it possible to boot images in QEMU, KVM, VirtualBox or VMware."
+   ]
+  },
+  {
+   "title": "Common boot problems and fixes",
+   "text": [
+    "Most failures come from the VM hardware not matching the old computer. Fix one thing at a time, and make every change in the VM settings or in the overlay. Never repair the original image."
+   ],
+   "points": [
+    "Blue screen with stop code 0x7B (inaccessible boot device): Microsoft lists a different storage controller as a cause. Try another controller type in the VM, such as IDE or SATA.",
+    "Black screen or no bootable disk: the VM firmware may not match. A disk that starts through UEFI needs UEFI (EFI) firmware in the VM. An older MBR disk usually needs BIOS. Try the other setting.",
+    "BitLocker asks for a key: Microsoft says a drive moved to another computer fails the TPM check, so you need the recovery key or password. See the full-disk encryption page.",
+    "Windows wants activation or installs drivers: new hardware causes this. Let it finish, or note it in your record. Do not try to bypass licence checks.",
+    "Disk check on boot after unclean shutdown: OSForensics offers an option to skip the automatic check.",
+    "VM says the physical disk is in use: set the mounted disk offline on the host and run the VM program as administrator."
+   ]
+  },
+  {
+   "title": "Safe practice during a boot",
+   "text": [
+    "Turn the VM network off. Malware on the image could otherwise contact the internet, and Windows could sync accounts. Take notes and screenshots of every step with the date and time. Do not log in with online accounts. When finished, shut the VM down, delete or keep the write file as your procedure says, and compare the image hash with the one from acquisition."
+   ]
+  }
+ ],
+ "compare": {
+  "title": "Free and paid facilities, as stated on their own pages",
+  "headers": [
+   "Facility",
+   "Cost",
+   "Keeps original unchanged",
+   "Starts a VM"
+  ],
+  "rows": [
+   [
+    "Arsenal Image Mounter free mode",
+    "Free, vendor page says",
+    "Vendor page lists temporary writes with replayable difference files",
+    "Vendor page lists launching VMs under Professional mode. Tutorials attach the mounted disk to VMware by hand."
+   ],
+   [
+    "Arsenal Image Mounter Professional",
+    "Paid subscription, vendor pages say",
+    "Vendor page lists extra features beyond free mode",
+    "Vendor page says it launches VMs from images and can bypass Windows sign-in inside the VM"
+   ],
+   [
+    "OSFMount",
+    "Free download, vendor page says",
+    "Read-only by default. Write cache mode stores changes in a delta file",
+    "Page does not discuss VMs. Can mount as a physical disk"
+   ],
+   [
+    "FTK Imager mount",
+    "Free to use, but closed source",
+    "User guide lists Block Device read-only and writable with a write cache folder",
+    "Not mentioned on the vendor page"
+   ],
+   [
+    "xmount and qemu overlay",
+    "Free, open source",
+    "Man pages say the cache or overlay takes the writes",
+    "xmount page says you can boot in QEMU, KVM, VirtualBox or VMware"
+   ],
+   [
+    "OSForensics VM feature",
+    "Page does not state a price. It is part of a PassMark product",
+    "Vendor page says writes go to a delta cache file",
+    "Vendor page says it boots in VirtualBox or VMware Workstation"
+   ],
+   [
+    "Mount Image Pro",
+    "Paid, with a 30 day evaluation, user guide says",
+    "User guide lists read only and write to cache",
+    "Guide says Live Boot is a Forensic Explorer feature and needs VMware"
+   ],
+   [
+    "Live View",
+    "A SANS article lists it as free",
+    "Project page says changes go to a separate file",
+    "Project page says it builds a VMware VM from a raw image. Last release listed is 0.7b, so it is old"
+   ]
+  ]
+ },
+ "example": "A student has an E01 of a Windows 10 laptop. She mounts it in write mode so changes go to a side file, sets the disk offline on her host, and gives it to a VM with the network turned off. Windows halts with 0x7B. She changes the VM disk controller and it starts. After the session she deletes the side file and checks that the E01 hash is unchanged.",
+ "mistakes": [
+  "Attaching the original E01 or evidence disk to the VM without a write layer.",
+  "Leaving the VM network on, so the old system contacts the internet.",
+  "Trying to boot after a logical-only mount, which has no boot sector.",
+  "Choosing BIOS for a UEFI disk, or the other way round, and giving up at the first black screen.",
+  "Treating what the booted system shows as proof, without checking it against the image in a forensic tool."
+ ],
+ "terms": [
+  {
+   "term": "Virtual machine (VM)",
+   "meaning": "A software computer that runs inside your real computer."
+  },
+  {
+   "term": "Overlay or difference file",
+   "meaning": "A second file that stores only the changes, so the base file stays untouched."
+  },
+  {
+   "term": "Write cache",
+   "meaning": "A folder or file where a mounting tool puts changes instead of writing to the image."
+  },
+  {
+   "term": "Raw disk wrapper",
+   "meaning": "A small VMDK file that points to a real disk instead of holding data."
+  },
+  {
+   "term": "UEFI",
+   "meaning": "Modern start-up firmware. Older systems use BIOS."
+  },
+  {
+   "term": "Stop code 0x7B",
+   "meaning": "A Windows blue screen that means it cannot reach its boot disk."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Why do you not boot the E01 itself in a VM?",
+   "a": "The booting system writes to its disk. Those writes would change the evidence. You use a read-only source with a separate file for writes, then compare hashes afterwards."
+  },
+  {
+   "q": "A Windows image gives blue screen 0x7B in the VM. What do you try?",
+   "a": "The VM storage controller differs from the old computer. Try another controller type, such as IDE or SATA, and check BIOS or UEFI. Change only the VM settings or the overlay."
+  },
+  {
+   "q": "Give two free ways to boot an E01.",
+   "a": "Mount it with a free mounting tool in write-cache mode and attach the disk to a VM. Or on Linux use ewfmount with a qemu overlay, or xmount with a cache file."
+  },
+  {
+   "q": "What are the limits of booting an image?",
+   "a": "Hardware, drivers, activation and encryption can stop it. It shows the user view only and does not take the place of analysis in a forensic tool."
+  }
+ ],
+ "tools": [
+  "arsenal-image-mounter",
+  "libewf",
+  "ftk-imager",
+  "kali"
+ ],
+ "related": [
+  "what-is-forensic-imaging",
+  "image-formats",
+  "live-vs-dead-acquisition",
+  "full-disk-encryption",
+  "evidence-integrity"
+ ],
+ "learn": [
+  {
+   "label": "OSForensics: Booting a forensic image on a virtual machine",
+   "url": "https://osforensics.com/faqs-and-tutorials/booting-image-virtual-machine.html"
+  },
+  {
+   "label": "SANS: Give your forensic images the boot, part I",
+   "url": "https://www.sans.org/blog/give-your-forensic-images-the-boot-part-i"
+  },
+  {
+   "label": "libewf wiki: Mounting an E01 with ewfmount",
+   "url": "https://github.com/libyal/libewf/wiki/Mounting"
+  },
+  {
+   "label": "Microsoft: Stop error 7B or Inaccessible_Boot_Device troubleshooting",
+   "url": "https://learn.microsoft.com/en-us/troubleshoot/windows-client/performance/stop-error-7b-or-inaccessible-boot-device-troubleshooting"
+  }
+ ],
+ "sources_note": "Written in our own words from public forensic training material and standards."
+}

@@ -1,0 +1,210 @@
+{
+ "reviewed": "2026-11-24",
+ "title": "What do I check first after a ransomware attack on Windows?",
+ "short": "Ransomware first response",
+ "lead": "A study guide for the first hours after files on Windows computers were encrypted. It shows what to keep before it is lost, what to look at first, and how to find out how the attacker got in. On a real incident, follow your organisation's response plan and involve its incident response team. Do not run the ransomware program.",
+ "level": "Intermediate",
+ "time": "Half a day for the reading and a practice run on sample logs",
+ "evidence": "Affected Windows computers (live or imaged), their event logs, the ransom note and a memory capture",
+ "answers": [
+  "Which evidence is most likely to be lost and must be kept first",
+  "Which ransomware family it appears to be",
+  "When the attack started and how files were encrypted",
+  "Whether shadow copies and backups were attacked, and whether logs were cleared",
+  "How the attacker probably got in and which other systems were touched"
+ ],
+ "need": [
+  "Approval to act: a real case needs the owner's permission and your organisation's plan",
+  "A clean external drive with enough space for a memory capture and a triage collection",
+  "Administrator access on the affected computer, and a trusted copy of your collection tools on removable media",
+  "A separate analysis computer or VM for Hayabusa, Chainsaw, Timeline Explorer and Volatility 3",
+  "A hash tool and a place to keep a written log of every action"
+ ],
+ "steps": [
+  {
+   "title": "Stop, write down, isolate",
+   "text": "Start a written log: time, time zone, who did what. Do not run or open the ransomware file, and do not open attachments. Cut the affected computers off the network by unplugging the cable or turning off Wi-Fi, or at the switch. CISA advises to power a device down only if it cannot be isolated another way, because shutdown loses what is in memory. Decisions about payment, reporting and law enforcement belong to the responsible people and your local law.",
+   "note": "Use a phone or another channel the attacker cannot read when you plan the response."
+  },
+  {
+   "title": "Capture memory first",
+   "text": "Memory is the most volatile evidence. If the computer is still on, capture it before you do anything else, using a tool such as WinPmem, Magnet DumpIt or FTK Imager. Write the capture to an external drive, not to the affected disk. Hash the file afterwards and record the tool and version. Running tools changes the system a little, so write down what you ran and when.",
+   "tools": [
+    "winpmem",
+    "magnet-dumpit",
+    "ftk-imager"
+   ]
+  },
+  {
+   "title": "Collect triage artifacts and logs",
+   "text": "Use KAPE or the Velociraptor offline collector to copy key artifacts: event logs, the $MFT, registry hives, Prefetch, Amcache and user data. Run as administrator. KAPE's !SANS_Triage target is a common starting point. Velociraptor's offline collector runs when you start it without arguments and writes a zip file. Choose encryption with the server certificate, as its documents advise. Export the event logs early, before they roll over. Image disks of a sample of affected computers when you can.",
+   "tools": [
+    "kape",
+    "velociraptor"
+   ],
+   "cmd": [
+    "kape.exe --tsource C: --tdest E:\\evidence\\kape_out --target !SANS_Triage"
+   ]
+  },
+  {
+   "title": "Keep the ransom note and a few encrypted files",
+   "text": "Copy the ransom note and a small number of encrypted files, with their original names and time stamps, to your evidence drive. Note the new file extension and the note's file name. The ID Ransomware web service can name a family from a note or sample, but it may keep uploads, and it may share email and Bitcoin addresses it finds. Check policy before using it and remove private data. No More Ransom lists decryptors for some families."
+  },
+  {
+   "title": "Check shadow copies and backups",
+   "text": "Many ransomware programs delete shadow copies and backups first. From an elevated prompt, vssadmin list shadows shows what still exists. Search process creation logs (event 4688, or Sysmon event 1 if installed) and PowerShell logs for vssadmin, wmic, wbadmin and bcdedit. Find out whether your backups are offline, intact or unknown before anyone starts a restore. Listing shadows changes nothing.",
+   "cmd": [
+    "vssadmin list shadows /for=C:"
+   ]
+  },
+  {
+   "title": "Build a first timeline from the event logs",
+   "text": "Run Hayabusa over the exported logs and open the result in Timeline Explorer. Sort by alert level, then look at the time just before the first encryption. Chainsaw can hunt with Sigma rules, and its analyse gaps command points to missing stretches in a log. Check for event 1102 (Security log cleared), event 104 (System log cleared), 7045 (service installed), 4698 (scheduled task created) and 5140 (network share access).",
+   "tools": [
+    "hayabusa",
+    "chainsaw",
+    "timeline-explorer",
+    "evtxecmd"
+   ],
+   "cmd": [
+    "hayabusa.exe dfir-timeline -d .\\logs -o timeline.csv -w",
+    "chainsaw hunt .\\logs -s sigma/ --mapping mappings/sigma-event-logs-all.yml"
+   ],
+   "note": "Older Hayabusa versions call the first command csv-timeline."
+  },
+  {
+   "title": "Look at the memory capture",
+   "text": "Open the capture with Volatility 3. Start with windows.pslist and windows.pstree to see processes and parents, then windows.cmdline for command lines and windows.netscan for network connections. Look for a program in an odd folder, an unusual parent, command lines that mention encryption or deleting backups, and connections to unknown addresses. Memory is a lead, not a full record.",
+   "tools": [
+    "volatility3"
+   ],
+   "cmd": [
+    "python3 vol.py -f memory.raw windows.pslist",
+    "python3 vol.py -f memory.raw windows.pstree",
+    "python3 vol.py -f memory.raw windows.cmdline"
+   ]
+  },
+  {
+   "title": "Find how they got in and how far they spread",
+   "text": "Start with the earliest encrypted or suspicious computer and work backward in time. Common entry points are a phishing email, remote access such as RDP or VPN, stolen valid accounts, an exposed application, or a trusted supplier. Look at logons, new services and tasks, and share access on other computers. Mark each computer as encrypted, touched or clean, with the evidence for each."
+  },
+  {
+   "title": "Write the hand-over notes",
+   "text": "Record every action, each hash, each tool and version, the time zone, the list of computers and their status, and what you did not examine. Keep evidence on write-protected or access-controlled storage. Passing this to the incident lead matters more than finishing alone. Do not wipe or rebuild a computer until its evidence is kept and the owner agrees."
+  }
+ ],
+ "artifacts": [
+  {
+   "name": "Ransom note",
+   "where": "Files dropped into many folders (names often include words such as README or DECRYPT)",
+   "tells": "Family hints, contact details and the extension used. The creation time shows when encryption reached the folder."
+  },
+  {
+   "name": "Memory image",
+   "where": "Capture taken from the running computer",
+   "tells": "Running processes, command lines, network connections and loaded code that disk data may not show"
+  },
+  {
+   "name": "Security event log",
+   "where": "Windows\\System32\\winevt\\Logs\\Security.evtx",
+   "tells": "Logons (4624), process creation (4688, if enabled), share access (5140), task creation (4698) and log clearing (1102)"
+  },
+  {
+   "name": "System event log",
+   "where": "Windows\\System32\\winevt\\Logs\\System.evtx",
+   "tells": "New services (7045) and log clearing (104)"
+  },
+  {
+   "name": "Volume shadow copies",
+   "where": "Volume Shadow Copy Service, listed with vssadmin list shadows",
+   "tells": "Whether earlier versions of files still exist or were deleted"
+  },
+  {
+   "name": "$MFT and file times",
+   "where": "NTFS master file table",
+   "tells": "Bursts of renamed or modified files and the order in which folders were hit"
+  },
+  {
+   "name": "Prefetch and Amcache",
+   "where": "Windows\\Prefetch and Windows\\appcompat\\Programs\\Amcache.hve",
+   "tells": "Evidence that the ransomware, tools and remote access programs ran, with times"
+  },
+  {
+   "name": "Remote access logs",
+   "where": "VPN, RDP gateway, firewall and sign-in logs",
+   "tells": "Where the attacker came in from and which accounts they used"
+  }
+ ],
+ "limits": [
+  "Capturing memory and running tools changes the live system. Write down every action.",
+  "If the computer was shut down, the memory evidence is gone. Disk evidence may still help.",
+  "Attackers often clear logs or delete backups. Missing records do not mean nothing happened.",
+  "Event 4688 and PowerShell logging are only present if they were switched on before the attack.",
+  "Triage tools cannot decrypt files. Whether a decryptor exists depends on the family, so check with a trusted source.",
+  "Evidence rules, reporting duties and law enforcement contact differ by country and organisation. This guide is not legal advice."
+ ],
+ "practice": {
+  "name": "Hayabusa sample event logs (attack logs, no full ransomware case)",
+  "by": "Yamato Security (collected from several public sets)",
+  "url": "https://github.com/Yamato-Security/hayabusa-sample-evtx",
+  "text": "A public repository of sample Windows event log (.evtx) files for testing detection rules. The files are logs, not programs. Its README says antivirus software may flag the repository because of keywords. We could not confirm that it holds a complete ransomware case, and there is no answer key. We found no public ransomware disk image we could verify.",
+  "task": "Run Hayabusa on the folder with the command shown in step 6, open the CSV in Timeline Explorer, sort by level, and list the five most common alert titles. Run Chainsaw hunt on the same folder and compare. Write three sentences on what happened and which events you would look for in a ransomware case.",
+  "note": "The DFRWS 2023 manual (see the links) describes how to build your own simulated ransomware lab with Sysmon, KAPE and Hayabusa. The CryptoWall exercise of 2015-07-24 on malware-traffic-analysis.net is network traffic from a real infection. Treat its files as live malware."
+ },
+ "learn": [
+  {
+   "label": "CISA: #StopRansomware Guide",
+   "url": "https://www.cisa.gov/stopransomware/ransomware-guide"
+  },
+  {
+   "label": "Velociraptor documentation: Offline collections",
+   "url": "https://docs.velociraptor.app/docs/deployment/offline_collections/"
+  },
+  {
+   "label": "Hayabusa documentation: dfir-timeline command",
+   "url": "https://yamato-security.github.io/hayabusa/commands/dfir-timeline/"
+  },
+  {
+   "label": "Chainsaw on GitHub (WithSecure)",
+   "url": "https://github.com/WithSecureLabs/chainsaw"
+  },
+  {
+   "label": "DFRWS 2023: Ransomware simulations, hands-on case studies (manual)",
+   "url": "https://dfrws.org/wp-content/uploads/2023/05/Ransomware_Simulations-HandsOn_Case_Studies-manual.pdf"
+  }
+ ],
+ "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases.",
+ "untested": true,
+ "mistakes": [
+  "Shutting the computer down at once. This throws away the memory, which is the most volatile evidence.",
+  "Saving the memory capture or tool output onto the affected disk.",
+  "Running the ransomware file, or opening attachments, on a normal computer to see what it does.",
+  "Rebuilding or wiping computers before logs, memory and images are kept.",
+  "Looking only at the computer with the ransom note. It is often not the first one that was reached."
+ ],
+ "verify": [
+  "Compare the process and time seen in memory with a Prefetch or Amcache entry for the same program on disk.",
+  "Check each Hayabusa alert against the raw event in the log, using EvtxECmd output or Event Viewer on a copy.",
+  "Compare Hayabusa and Chainsaw results for the same logs. Explain any alert that only one of them shows.",
+  "Check the time of the first ransom note file in the $MFT against the first encryption events in the logs."
+ ],
+ "report_line": "Memory from [computer] was captured at [time, UTC] with [tool and version] (SHA-256 [hash]). The logs show [event, for example Security log cleared] at [time] and a new service [name] at [time]. Encrypted files carry the extension [ext] and the note [file name]. The family is [name or unknown] and the entry point is [probable route or not yet established]. Backups were [status].",
+ "next": [
+  {
+   "text": "Examine the memory capture in more detail",
+   "workflow": "ram-dump-first-look"
+  },
+  {
+   "text": "Follow the logons around the attack",
+   "workflow": "windows-logons"
+  },
+  {
+   "text": "Hunt for new services and tasks the attacker left",
+   "workflow": "windows-persistence-hunt"
+  },
+  {
+   "text": "Examine the email that may have started it",
+   "workflow": "email-phishing-investigation"
+  }
+ ]
+}

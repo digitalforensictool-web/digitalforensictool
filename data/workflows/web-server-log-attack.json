@@ -1,0 +1,200 @@
+{
+ "reviewed": "2026-11-24",
+ "title": "Did attackers scan or break into this web server?",
+ "short": "Web server attack in access logs",
+ "lead": "A web server access log records every request. This workflow shows how to read it for scanning, SQL injection attempts and web shells, how to tell a failed attempt from a successful one, and how to connect the log to what happened on the server.",
+ "level": "Beginner to intermediate",
+ "time": "2 to 3 hours on the practice data",
+ "evidence": "Web server access logs and error logs (Apache or nginx)",
+ "answers": [
+  "Which addresses scanned the server, and when",
+  "Whether there were SQL injection attempts, and whether any seem to have worked",
+  "Whether a web shell was uploaded and used",
+  "When the attack started and when it stopped",
+  "Which requests need to be checked against files on the server"
+ ],
+ "need": [
+  "Copies of the access and error logs, including rotated files such as .1 and .gz",
+  "A Linux, macOS or Windows machine with a shell (grep and awk), or the SOF-ELK virtual machine",
+  "The time zone of the server and the address of any proxy or load balancer in front of it",
+  "For practice: the public data set in the practice section"
+ ],
+ "steps": [
+  {
+   "title": "Collect the logs and note the format",
+   "text": "Copy the access logs and error logs of every site on the server, rotated files included. Work on copies and record their hash values. Look at the first lines to learn the log format. If the server is a full Linux host, UAC collects logs for you. From a disk image, export the log folder with Autopsy.",
+   "tools": [
+    "uac",
+    "autopsy"
+   ],
+   "paths": [
+    "/var/log/apache2/",
+    "/var/log/httpd/",
+    "/var/log/nginx/"
+   ],
+   "note": "Paths differ between systems. The web server configuration (CustomLog or access_log) names the real file."
+  },
+  {
+   "title": "Learn the fields",
+   "text": "Apache's combined format has nine fields: client address, identity, user, time, the request line in quotes, status code, response size, referrer and user agent. The time field includes the offset from UTC. Nginx uses a similar layout by default. Check one line by eye so you know which column is which before you count anything.",
+   "note": "If the server sat behind a proxy or load balancer, the client address may be the proxy. Look for a forwarded-address field or ask the administrator."
+  },
+  {
+   "title": "Get the big picture first",
+   "text": "Count status codes, busiest addresses and user agents. The idea is to find what stands out: one address with thousands of requests, a burst of 404 or 403 codes, or odd user agents. Then narrow to one address and read its requests in time order.",
+   "cmd": [
+    "awk '{print $9}' access.log | sort | uniq -c | sort -nr",
+    "awk '{print $1}' access.log | sort | uniq -c | sort -nr | head",
+    "awk -F\\\" '{print $6}' access.log | sort | uniq -c | sort -nr | head"
+   ],
+   "note": "Column numbers assume the combined format. Change them if your format differs."
+  },
+  {
+   "title": "Look for scanning",
+   "text": "Scanners ask for many paths that do not exist, so they leave a run of 404 or 403 codes in a short time. Some tools name themselves in the user agent. sqlmap, for example, sends a user agent that starts with sqlmap by default, but it can send a random one instead. Treat the user agent as a clue, not as proof.",
+   "cmd": [
+    "awk '($9 ~ /404/)' access.log | awk '{print $1,$7}' | sort | uniq -c | sort -nr | head"
+   ]
+  },
+  {
+   "title": "Look for SQL injection attempts",
+   "text": "Search the request lines for typical injection text: a single quote or its encoded form %27, double hyphen, and words such as UNION, SELECT, INSERT or DECLARE. Matches are leads only. A long run of requests that differ by a few characters, with 500 errors or changing response sizes, points to testing. Decode the text with CyberChef (URL Decode) to read it.",
+   "tools": [
+    "cyberchef"
+   ],
+   "cmd": [
+    "grep -iE \"%27|union|select|insert|declare|--\" access.log | head -50"
+   ],
+   "note": "Access logs usually do not record the body of a POST request. An injection sent by POST may show only the page name."
+  },
+  {
+   "title": "Look for web shells",
+   "text": "A web shell is a script on the server that runs commands for the attacker. In the log it often looks like a page that is requested alone, with no referrer, by only one or two addresses and user agents, often by POST. An image or style file that receives POST requests is a warning sign. List the pages that receive POST requests and count them, then look at the rare ones.",
+   "cmd": [
+    "awk -F\\\" '$2 ~ /^POST/ {print $2}' access.log | awk '{print $2}' | sort | uniq -c | sort -n | head -30"
+   ],
+   "note": "Then check the file on the server. A web shell is often new, newer than the last site update, and contains functions such as eval."
+  },
+  {
+   "title": "Decode what was sent",
+   "text": "Attackers hide payloads in Base64 or URL encoding in the path, a cookie or a form field. Paste the text into CyberChef and use the From Base64 or URL Decode operations. CyberChef runs in your browser and does not send your data to a server, and you can download a copy to use offline. Never run decoded code. Read it only.",
+   "tools": [
+    "cyberchef"
+   ]
+  },
+  {
+   "title": "Use SOF-ELK for large logs",
+   "text": "Millions of lines are hard to read with grep. SOF-ELK is a virtual machine with the Elastic stack. Log in as elk_user and put Apache logs in common, combined or vhost-combined format into /logstash/httpd/. Wait for them to load, then open the HTTPD Log dashboard to see requests over time, status codes and top addresses.",
+   "tools": [
+    "sof-elk"
+   ],
+   "paths": [
+    "/logstash/httpd/"
+   ]
+  },
+  {
+   "title": "Decide what worked, then follow it",
+   "text": "A request is only a try. Check the status code and response size, whether the same address came back, and whether the error log shows a matching error. If a web shell or exploit is suspected, look at the files on the server and the login and process records. The Linux triage workflow on this site covers that next step. Write down the first and last request, by time zone.",
+   "note": "A 200 status shows that the server answered. It does not by itself show that the attack worked."
+  }
+ ],
+ "artifacts": [
+  {
+   "name": "Access log",
+   "where": "/var/log/apache2, /var/log/httpd or /var/log/nginx (varies)",
+   "tells": "Client address, time, request line, status, size, referrer and user agent"
+  },
+  {
+   "name": "Error log",
+   "where": "Same folder as the access log",
+   "tells": "Server and script errors that may match an attack time"
+  },
+  {
+   "name": "Rotated logs",
+   "where": "Same folder (.1, .gz files)",
+   "tells": "Older days of the same logs"
+  },
+  {
+   "name": "Web root files",
+   "where": "For example /var/www",
+   "tells": "New or changed scripts that may be web shells"
+  },
+  {
+   "name": "Server configuration",
+   "where": "Apache or nginx configuration files",
+   "tells": "Log file locations and log format"
+  },
+  {
+   "name": "Authentication log",
+   "where": "/var/log/auth.log or secure",
+   "tells": "Logins that followed the web attack"
+  }
+ ],
+ "limits": [
+  "Logs show requests, not the content of POST bodies, unless the site was set up to log them.",
+  "A proxy, CDN or load balancer can hide the real client address.",
+  "Attackers can change user agents, spread requests over many addresses and slow them down.",
+  "A matching word such as select can come from normal pages. Each hit needs checking.",
+  "Logs can be deleted or edited by an attacker who gained control of the server.",
+  "Web logs alone cannot prove who was behind an address."
+ ],
+ "practice": {
+  "name": "AIT Log Data Set V1.0",
+  "by": "AIT Austrian Institute of Technology and TU Wien (Landauer, Skopik, Wurzenberger, Hotwagner, Rauber)",
+  "url": "https://zenodo.org/records/3723083",
+  "text": "Synthetic logs from four test networks, each with web servers running Horde Webmail and OkayCMS. The logs include Apache access and error logs. The data also has label files that mark the attack lines. Attacks on the fifth day include an nmap scan, a nikto scan, a brute force login, and a web shell upload. The download is one zip file of about 3.3 GB. It is licensed CC BY-NC-SA 4.0, so use it for study and credit the authors.",
+  "task": "Pick one web server folder. Without the labels, find the day and time when scanning starts, then find the web shell upload and the first request to it. Afterwards compare your times with the label files.",
+  "note": "The authors say the labels were not corrected by hand and may be wrong for some lines, and attack times differ between servers. The attacks the authors list do not include SQL injection, so practice that step on a test site you own."
+ },
+ "learn": [
+  {
+   "label": "Apache HTTP Server: Log files",
+   "url": "https://httpd.apache.org/docs/2.4/logs.html"
+  },
+  {
+   "label": "CrowdStrike: Web server log analysis for web shells",
+   "url": "https://www.crowdstrike.com/en-us/blog/mo-shells-mo-problems-web-server-log-analysis/"
+  },
+  {
+   "label": "Australian Cyber Security Centre: Web shells",
+   "url": "https://www.cyber.gov.au/sites/default/files/2023-02/ACSC_Web_Shells.pdf"
+  },
+  {
+   "label": "OWASP: SQL injection",
+   "url": "https://community.owasp.org/attacks/SQL_Injection"
+  },
+  {
+   "label": "SOF-ELK: Inputs and preprocessing",
+   "url": "https://github.com/philhagen/sof-elk/wiki/Inputs-and-Preprocessing"
+  }
+ ],
+ "mistakes": [
+  "Counting columns for the wrong log format, so the numbers mean something else.",
+  "Ignoring the time zone offset, or the proxy address, when comparing with other logs.",
+  "Reading only the current log and skipping rotated and compressed files.",
+  "Calling every 200 status a successful attack.",
+  "Opening or running a suspected web shell on a normal computer instead of reading it safely."
+ ],
+ "verify": [
+  "Check each suspected web shell request against a file on the server: does the file exist, and when was it created or changed?",
+  "Compare the attack time in the access log with the error log and with the authentication log.",
+  "Load the same logs into SOF-ELK and check that its counts match your command line counts."
+ ],
+ "report_line": "The access log [file name] shows [number] requests from [IP address] between [start time] and [end time] ([time zone]), including [number] requests with SQL keywords in the URL. A POST request to [file path] at [time] received status [code]. The file [file path] was found on the server with creation time [time].",
+ "next": [
+  {
+   "text": "Check the server itself for logins, new accounts and persistence",
+   "workflow": "linux-compromise-triage"
+  },
+  {
+   "text": "If you have a packet capture of the same period, compare it with the logs",
+   "workflow": "pcap-first-look"
+  },
+  {
+   "text": "Make sure the image and logs are hashed",
+   "workflow": "forensic-image-and-hash"
+  }
+ ],
+ "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases.",
+ "untested": true
+}

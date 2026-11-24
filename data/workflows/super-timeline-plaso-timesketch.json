@@ -1,0 +1,200 @@
+{
+ "reviewed": "2026-11-24",
+ "title": "How do I build and read a super timeline of a Windows image?",
+ "short": "Super timeline with Plaso",
+ "lead": "A super timeline puts events from many sources, such as file times, logs, the registry and browser data, into one list sorted by time. This workflow builds one with Plaso, then reads it in Timeline Explorer and Timesketch.",
+ "level": "Intermediate to advanced",
+ "time": "Half a day, mostly for processing",
+ "evidence": "A disk image, or a mounted image or folder of collected artifacts",
+ "answers": [
+  "What happened on the computer in a chosen time window",
+  "Which sources show the same event",
+  "What happened just before and after a known event",
+  "Which events matter to the question, after noise is filtered out"
+ ],
+ "need": [
+  "A forensic image, or the practice image",
+  "A computer with enough RAM and disk space. Plaso can take hours for a large disk",
+  "Plaso installed as its documentation describes",
+  "Timeline Explorer on Windows, and optionally a Timesketch server for team work",
+  "A clear question and time window before you start"
+ ],
+ "steps": [
+  {
+   "title": "Write the question and the window first",
+   "text": "A super timeline can hold millions of events. Without a question you will drown in noise. Write what you want to know, the dates that matter and the user accounts involved. Decide the time zone for your output. Keep everything in UTC if you can, and convert at the end.",
+   "tools": [
+    "autopsy"
+   ]
+  },
+  {
+   "title": "Create the Plaso storage file",
+   "text": "Run log2timeline on the image. It reads the file systems and parsers pull out events. The first run can take hours, so use the status view to watch progress. The default settings are a good start. You can limit parsers, for example with the win7 preset, and set the time zone of the source computer for logs that lack one. Save the output to a .plaso file.",
+   "tools": [
+    "plaso"
+   ],
+   "cmd": "log2timeline.py --status_view linear --storage-file timeline.plaso image.E01",
+   "note": "Use --partitions or --volumes if the image holds more than one volume. --hashers md5,sha256 adds hashes but makes the run slower. Check log2timeline.py --help for your version."
+  },
+  {
+   "title": "Check what was processed",
+   "text": "Use pinfo to see the number of events, the parsers that produced them and any warnings or errors. A parser with zero events may mean a missing file or an unsupported version. Note the Plaso version in your notes, since results can differ between versions.",
+   "tools": [
+    "plaso"
+   ],
+   "cmd": "pinfo.py --sections sources timeline.plaso"
+  },
+  {
+   "title": "Export a focused CSV",
+   "text": "Use psort to write events to a CSV file. Add a date filter so the file stays small. psort removes duplicate events by default and writes times in UTC unless you set another time zone. Split big exports by day if your viewer is slow.",
+   "tools": [
+    "plaso"
+   ],
+   "cmd": "psort.py -w timeline.csv timeline.plaso \"date > '2015-03-23 00:00:00' and date < '2015-03-26 00:00:00'\"",
+   "note": "Run psort.py -o list to see the output formats of your install. The filter in the command is a sample window. Use your own."
+  },
+  {
+   "title": "Read the timeline in Timeline Explorer",
+   "text": "Open the CSV in Timeline Explorer. Use column filters on the source and type columns, the group-by area and the search box. Start narrow: a known event such as a USB connection, then look at the events a few minutes either side. Hide noisy sources only after you note what you hide. Keep a separate list of the events you will use as findings.",
+   "tools": [
+    "timeline-explorer"
+   ]
+  },
+  {
+   "title": "Use Timesketch for team work",
+   "text": "Timesketch is a web tool for working together on timelines. Make a sketch, then upload the Plaso file, or a CSV with the columns message, datetime and timestamp_desc (the file name must end in .csv). Search with a query such as data_type:\"windows:evtx:record\" AND event_identifier:4624, star important events, and add labels. Hayabusa results can also be loaded as a CSV.",
+   "tools": [
+    "timesketch",
+    "hayabusa"
+   ],
+   "note": "Timesketch needs a server. Follow its installation guide. The importer tool timesketch_importer.py can upload a file from the command line."
+  },
+  {
+   "title": "Pivot around a known event",
+   "text": "Pick an event you trust and view what happened around it. Plaso can cut a slice around a time stamp. The default window is five minutes either side. Then read the events in order: which file was created, which program ran, which site was opened. A pattern of several source types in the same minute is stronger than one entry alone.",
+   "tools": [
+    "plaso",
+    "timeline-explorer"
+   ],
+   "cmd": "psort.py -q --slice \"2015-03-24T10:01:23\" -w slice.csv timeline.plaso"
+  },
+  {
+   "title": "Cross-check and write it up",
+   "text": "Check key events in the original artifact with a second tool, for example a file time in MFTECmd output or a log event in EvtxECmd output. Watch for time zone mistakes, and for events from files copied in bulk that all show the same time. Record the tool versions, the commands, the filters and the time zone, so that another examiner can repeat your work.",
+   "tools": [
+    "mftecmd",
+    "evtxecmd"
+   ]
+  }
+ ],
+ "artifacts": [
+  {
+   "name": ".plaso storage file",
+   "where": "The output of log2timeline",
+   "tells": "All extracted events with their source and parser"
+  },
+  {
+   "name": "File system times",
+   "where": "$MFT or the file system of the image",
+   "tells": "Created, modified, accessed and changed times of files"
+  },
+  {
+   "name": "Windows event logs",
+   "where": "Windows\\System32\\winevt\\Logs",
+   "tells": "Logons, services, program and system events"
+  },
+  {
+   "name": "Registry hives",
+   "where": "Windows\\System32\\config and user profiles",
+   "tells": "Key write times and recorded activity"
+  },
+  {
+   "name": "Prefetch, LNK and jump lists",
+   "where": "Windows\\Prefetch and user profile",
+   "tells": "Program runs and files opened"
+  },
+  {
+   "name": "Browser history",
+   "where": "User's browser profile",
+   "tells": "Sites visited and files downloaded"
+  },
+  {
+   "name": "CSV export for Timeline Explorer",
+   "where": "The output of psort",
+   "tells": "A filtered view that you can sort and search"
+  }
+ ],
+ "limits": [
+  "A super timeline shows what happened, not why. Each event still needs meaning from the artifact it came from.",
+  "File system times can be changed by users and tools, and some events have only a first or last time.",
+  "A very large timeline can hide the important events. Always filter by your question and time window.",
+  "Parsers differ between Plaso versions, and some artifacts are not supported. A missing event does not mean it did not happen.",
+  "Time zones and clock errors can move events by hours. Check the computer's time zone and clock.",
+  "Bulk copy, install or update actions produce thousands of events with the same time."
+ ],
+ "practice": {
+  "name": "NIST CFReDS: Data Leakage Case",
+  "by": "NIST",
+  "url": "https://cfreds-archive.nist.gov/data_leakage_case/data-leakage-case.html",
+  "answers_url": "https://cfreds-archive.nist.gov/data_leakage_case/leakage-answers.pdf",
+  "text": "A simulated data leak from a Windows 7 PC. The PC image is about 5 GB compressed as DD or about 7.3 GB as E01. NIST also publishes an answer document with events and times, which you can use to check your timeline.",
+  "task": "Build a Plaso timeline of the PC image and filter it to 23 to 25 March 2015. Find the first connection of the USB drive RM#2 and the time the file winter_whether_advisory.zip was opened from it. Compare the times with the NIST answers.",
+  "note": "The image is a Windows 7 virtual disk. Build time depends on your computer. Write the time zone setting of the PC (NIST question 4) before you compare times."
+ },
+ "learn": [
+  {
+   "label": "Plaso on GitHub",
+   "url": "https://github.com/log2timeline/plaso"
+  },
+  {
+   "label": "Plaso documentation: Using log2timeline",
+   "url": "https://plaso.readthedocs.io/en/latest/sources/user/Using-log2timeline.html"
+  },
+  {
+   "label": "Plaso documentation: Using psort",
+   "url": "https://plaso.readthedocs.io/en/latest/sources/user/Using-psort.html"
+  },
+  {
+   "label": "Timesketch: Import from JSON or CSV",
+   "url": "https://timesketch.org/guides/user/import-from-json-csv/"
+  },
+  {
+   "label": "Timesketch: Search query guide",
+   "url": "https://timesketch.org/guides/user/search-query-guide/"
+  }
+ ],
+ "mistakes": [
+  "Building a timeline of everything and then trying to read it all. Filter by question and time window.",
+  "Mixing UTC and local times between tools and exports.",
+  "Treating 'accessed' file times as proof of use. They can be off or changed by the system.",
+  "Not recording the Plaso version, the command and the filters used.",
+  "Using a Timesketch CSV with missing message, datetime or timestamp_desc columns."
+ ],
+ "verify": [
+  "Open the source artifact for a few key events with its own parser and compare the time.",
+  "Compare event counts in pinfo with what you expect from the image, for example event logs present.",
+  "Check a known event from another workflow, such as a USB connection time, against the timeline.",
+  "Repeat the export with a different filter or time zone and make sure the key events stay the same."
+ ],
+ "report_line": "A timeline of [image name] was created with Plaso version [X] and filtered to [dates], with all times shown in [UTC or time zone]. It shows that [event A] at [time] was followed by [event B] at [time], seen in [sources]. File system times were not checked for tampering.",
+ "next": [
+  {
+   "text": "Check file times for tampering",
+   "workflow": "ntfs-timestomping-check"
+  },
+  {
+   "text": "Follow logons during the window",
+   "workflow": "windows-logons"
+  },
+  {
+   "text": "Add USB history to the timeline",
+   "workflow": "usb-connected-windows"
+  },
+  {
+   "text": "Check program runs in the window",
+   "workflow": "program-execution-windows"
+  }
+ ],
+ "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases.",
+ "untested": true
+}

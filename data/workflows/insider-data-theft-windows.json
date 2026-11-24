@@ -1,0 +1,236 @@
+{
+ "reviewed": "2026-11-24",
+ "title": "Did an employee copy company data off this Windows PC?",
+ "short": "Insider data theft on Windows",
+ "lead": "An insider can move data out of a computer in several ways: a USB drive, a cloud sync folder, e-mail, a web upload or a burned disc. This workflow checks each route in turn and builds one timeline of who touched which file and when.",
+ "level": "Intermediate",
+ "time": "A full day on the practice image",
+ "evidence": "A disk image of the employee's Windows computer, and the e-mail and cloud account details if the case allows",
+ "answers": [
+  "Which USB or other external storage was connected, and when",
+  "Which files were opened from external drives or network shares",
+  "Whether a cloud sync client was installed, which account it used and which files it synced or deleted",
+  "Which e-mail account and data file the user had, and whether files were sent out",
+  "Which sites the user visited or searched for, and whether web upload sites were used",
+  "Whether files were packed, deleted or wiped before the computer was taken"
+ ],
+ "need": [
+  "A forensic image of the Windows computer, or the practice image (see the practice section on this page)",
+  "A Windows workstation with the free tools named in the steps",
+  "A written question from the case owner, with the names of people and the date range that matter",
+  "Free disk space of about three times the image size"
+ ],
+ "steps": [
+  {
+   "title": "Set the question and the time window",
+   "text": "Write down what is suspected, which user account is involved and the dates that matter. Work only on a forensic image, never the original disk. Open the image in Autopsy and run the ingest modules for recent activity, web artifacts and file type detection. Treat its results as leads that you confirm in the later steps.",
+   "tools": [
+    "ftk-imager",
+    "autopsy"
+   ]
+  },
+  {
+   "title": "Record the computer baseline",
+   "text": "Note the Windows version, install date, computer name, time zone and user accounts. The time zone matters most, because registry times are in UTC while some logs use local time. Open the SYSTEM and SOFTWARE hives in Registry Explorer, or run RegRipper plugins over them. Do this first, so that every later time can be put on one clock.",
+   "tools": [
+    "registry-explorer",
+    "regripper"
+   ],
+   "paths": [
+    "SYSTEM\\ControlSet001\\Control\\TimeZoneInformation",
+    "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion"
+   ]
+  },
+  {
+   "title": "Find external storage",
+   "text": "Look for USB storage devices, their serial numbers and first and last connection times. The NIST answer document for the practice case points to setupapi.dev.log, MountedDevices, USBSTOR, MountPoints2 and the System event log. The USB workflow on this site walks through each of them. Keep a list of the drive letters and volume names, because step 4 uses them.",
+   "tools": [
+    "registry-explorer",
+    "regripper",
+    "evtxecmd"
+   ],
+   "paths": [
+    "Windows\\INF\\setupapi.dev.log",
+    "SYSTEM\\MountedDevices",
+    "SYSTEM\\ControlSet001\\Enum\\USBSTOR",
+    "NTUSER.DAT\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MountPoints2"
+   ]
+  },
+  {
+   "title": "Find recently opened files",
+   "text": "Shortcut (LNK) files, jump lists, shellbags and the Office recent-file lists show files and folders the user opened, including ones on USB drives, discs and network shares. Parse them with the tools in Eric Zimmerman's suite and match the drive letters from step 3. In the practice case, NIST cites jump lists, LNK files and Office file MRU keys for files opened from a network drive.",
+   "tools": [
+    "ez-tools",
+    "timeline-explorer"
+   ],
+   "paths": [
+    "Users\\<user name>\\AppData\\Roaming\\Microsoft\\Windows\\Recent",
+    "Users\\<user name>\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\AutomaticDestinations",
+    "Users\\<user name>\\AppData\\Roaming\\Microsoft\\Windows\\Recent\\CustomDestinations"
+   ]
+  },
+  {
+   "title": "Check cloud sync clients",
+   "text": "Look for installed sync clients such as Google Drive, OneDrive or Dropbox in Program Files, in the user's AppData folder and in the Uninstall registry key. Find the sync folder in the user profile and list its files. Clients keep logs and small SQLite databases. In the practice case, the Google Drive sync_log.log gave the account name and delete events, and snapshot.db held file records. Open databases with DB Browser for SQLite and try FQLite for deleted rows.",
+   "tools": [
+    "autopsy",
+    "db4s",
+    "fqlite"
+   ],
+   "note": "Folder names and file formats differ by client and version. Check the vendor's current layout on a test machine before you rely on a path."
+  },
+  {
+   "title": "Look at e-mail",
+   "text": "Find out which mail program was used and which account. Outlook stores mail in OST or PST files under the user's AppData folder. Export the messages with libpff or open the file in Autopsy, and read the sent items, the attachment names and the dates. Web mail leaves traces only in the browser data, so use step 7 for it. Check the Deleted Items folder and the unused space of the file too.",
+   "tools": [
+    "libpff",
+    "autopsy"
+   ],
+   "paths": [
+    "Users\\<user name>\\AppData\\Local\\Microsoft\\Outlook",
+    "Users\\<user name>\\AppData\\Local\\Microsoft\\Office"
+   ]
+  },
+  {
+   "title": "Review browser history, searches and uploads",
+   "text": "List the browsers used and parse their history, downloads and search terms. Look for cloud storage, personal mail, file sharing and paste sites, and for searches about copying data or hiding traces. A visit to an upload site is a lead only. It does not show which file was sent. Match the visit time to file access times from step 4. The browser history workflow on this site has the details.",
+   "tools": [
+    "hindsight",
+    "db4s",
+    "autopsy"
+   ],
+   "paths": [
+    "Users\\<user name>\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\History"
+   ]
+  },
+  {
+   "title": "Look for packing, deletion and wiping",
+   "text": "Insiders often put files in a folder or archive first and clean up afterward. Parse the $MFT and the $J change journal with MFTECmd and search for archive names, staging folders and deleted files. Check Prefetch and other run records for cleaning or wiping tools. In the practice case, NIST names Eraser and CCleaner. Journal entries can be overwritten within days on a busy disk.",
+   "tools": [
+    "mftecmd",
+    "pecmd",
+    "timeline-explorer"
+   ],
+   "cmd": "MFTECmd.exe -f \"C:\\case\\$MFT\" --csv \"C:\\case\\out\" --csvf mft.csv"
+  },
+  {
+   "title": "Build one timeline and report",
+   "text": "Put the findings from steps 3 to 8 into one table with time in UTC, source file, user and what it shows. Load CSV output into Timeline Explorer to sort and filter it. For a very large case, build a super timeline with Plaso. Look for a pattern, for example: files opened, then packed, then a device connected or an upload site visited. Write what each record shows and what it does not show.",
+   "tools": [
+    "timeline-explorer",
+    "plaso"
+   ]
+  }
+ ],
+ "artifacts": [
+  {
+   "name": "USBSTOR and MountedDevices",
+   "where": "SYSTEM hive",
+   "tells": "Which USB storage was connected and which drive letters it had"
+  },
+  {
+   "name": "setupapi.dev.log",
+   "where": "Windows\\INF",
+   "tells": "First install time of each USB device, in local time"
+  },
+  {
+   "name": "LNK files and jump lists",
+   "where": "User profile, Recent folder",
+   "tells": "Files opened, with the drive and volume serial number"
+  },
+  {
+   "name": "Shellbags and Office file lists",
+   "where": "User registry hive (NTUSER.DAT and UsrClass.dat)",
+   "tells": "Folders browsed and documents opened, including on drives that are gone"
+  },
+  {
+   "name": "Cloud sync client logs and databases",
+   "where": "User's AppData folder",
+   "tells": "Account name, synced files and delete events"
+  },
+  {
+   "name": "Outlook OST or PST file",
+   "where": "User's AppData folder",
+   "tells": "Messages, attachments and deleted items"
+  },
+  {
+   "name": "Browser history and downloads",
+   "where": "User's browser profile",
+   "tells": "Sites visited, searches and files downloaded"
+  },
+  {
+   "name": "$MFT and $UsnJrnl",
+   "where": "NTFS volume",
+   "tells": "File names, creation and deletion times, and recent changes"
+  }
+ ],
+ "limits": [
+  "A record that a file was opened or a device was connected does not show who sat at the keyboard.",
+  "Opening a file is not the same as copying it. Copying needs its own evidence, for example the files found on the USB drive itself.",
+  "Cloud and web mail content is mostly stored on the provider's servers. The disk shows only local traces, and getting the account data needs legal authority.",
+  "Logs, journals and shadow copies are overwritten with time, and cleaning tools remove traces on purpose.",
+  "The practice computer runs Windows 7. Newer Windows versions change some artifact names, paths and event logs.",
+  "A suspicion about a person is not a finding. Report only what the records show, and follow your agency's rules for insider cases."
+ ],
+ "practice": {
+  "name": "NIST CFReDS: Data Leakage Case",
+  "by": "NIST",
+  "url": "https://cfreds-archive.nist.gov/data_leakage_case/data-leakage-case.html",
+  "answers_url": "https://cfreds-archive.nist.gov/data_leakage_case/leakage-answers.pdf",
+  "text": "A simulated intellectual property leak from a Windows 7 PC. The data set has the PC image (about 5 GB compressed as DD, or about 7.3 GB as E01), two USB drive images and a CD-R image. The scenario uses USB drives, a CD-R, a cloud drive, e-mail and printing. NIST publishes 60 questions and an answer document.",
+  "task": "Work through questions 22 (external storage), 26 (files opened from the USB drive), 29 to 31 (cloud storage) and 18 to 20 (e-mail). Then try question 58, a timeline of the whole leak, and compare your result with the published answers.",
+  "note": "The case is from 2015, so it does not show current Microsoft 365 or OneDrive behavior."
+ },
+ "learn": [
+  {
+   "label": "NIST CFReDS: Data Leakage Case",
+   "url": "https://cfreds-archive.nist.gov/data_leakage_case/data-leakage-case.html"
+  },
+  {
+   "label": "NIST CFReDS: Data Leakage Case answers (PDF)",
+   "url": "https://cfreds-archive.nist.gov/data_leakage_case/leakage-answers.pdf"
+  },
+  {
+   "label": "IBM X-Force: Identifying exfiltrated data, part 2 (disk forensics)",
+   "url": "https://www.ibm.com/think/x-force/identifying-exfiltrated-data-part-2"
+  },
+  {
+   "label": "Eric Zimmerman's Tools",
+   "url": "https://ericzimmerman.github.io/"
+  }
+ ],
+ "mistakes": [
+  "Reading a USB connection time as the time files were copied. It only shows the device was there.",
+  "Mixing UTC registry times with local-time logs without writing down the computer's time zone.",
+  "Stopping at the browser history and never checking e-mail, cloud folders or the $MFT.",
+  "Blaming a user from a shared or generic account. Link each record to a profile first.",
+  "Opening the original disk or running the suspect's programs, which changes the evidence."
+ ],
+ "verify": [
+  "Confirm each USB device from two sources, for example the SYSTEM hive and setupapi.dev.log.",
+  "Match a file in a jump list or LNK file to the same name and time in the $MFT or the $J journal.",
+  "Check cloud client log entries against the file list in its database.",
+  "Compare your findings with the published NIST answers on the practice image."
+ ],
+ "report_line": "The records show that a USB storage device (make and model [X], serial number [Y]) was connected to [computer] on [date and time, UTC], and that [file name] was opened from drive [letter] by user [account] at [time]. These records do not show that the file was copied or who was at the keyboard.",
+ "next": [
+  {
+   "text": "Go deeper on USB devices",
+   "workflow": "usb-connected-windows"
+  },
+  {
+   "text": "Review browser history in detail",
+   "workflow": "browser-history-windows"
+  },
+  {
+   "text": "Check which programs ran, such as wiping tools",
+   "workflow": "program-execution-windows"
+  },
+  {
+   "text": "Build a super timeline of the whole image",
+   "workflow": "super-timeline-plaso-timesketch"
+  }
+ ],
+ "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases.",
+ "untested": true
+}

@@ -1,0 +1,191 @@
+{
+ "reviewed": "2026-11-24",
+ "title": "How do I read an app database from an Android extraction?",
+ "short": "Android app databases (SQLite)",
+ "lead": "Most Android apps keep their data in SQLite database files. This workflow shows how to find them in an extracted image, open them safely, turn the odd-looking numbers into dates, and look at the write-ahead log and deleted records that a simple viewer can miss.",
+ "level": "Intermediate",
+ "time": "2 to 3 hours on the practice image",
+ "evidence": "A file system extraction or disk image of an Android phone",
+ "answers": [
+  "Which databases an app has and what tables and columns they hold",
+  "What the records say, in readable form",
+  "The real date and time of each record",
+  "Whether newer records are still waiting in the write-ahead log",
+  "Whether deleted records can still be found"
+ ],
+ "need": [
+  "An Android extraction that includes app data, or the practice data (see the practice section on this page)",
+  "A Windows, Linux or macOS computer with DB Browser for SQLite and ALEAPP",
+  "FQLite if you want to look for deleted records",
+  "Enough free disk space for a working copy of each database"
+ ],
+ "steps": [
+  {
+   "title": "Hash the extraction and work on copies",
+   "text": "Write down the file name and hash value of the extraction before you open anything. Never open the only copy of a database in a viewer. Copy the files you need into a working folder, and keep the original extraction closed.",
+   "note": "Some viewers write to a database when they open or close it. A copy protects the evidence."
+  },
+  {
+   "title": "Find the app databases",
+   "text": "Apps store their private data in a folder named after the app package. In a full file system extraction, look under /data/data/<package name>/. Databases are usually in a databases folder, and settings are in shared_prefs. A database often has no .db extension, so sort by size and check files with the header text SQLite format 3.",
+   "paths": [
+    "/data/data/<package name>/databases/",
+    "/data/data/<package name>/shared_prefs/",
+    "/data/user/0/<package name>/"
+   ],
+   "note": "A logical or backup extraction may hold only some apps, or none. Apps that block backups leave no database in such an extraction."
+  },
+  {
+   "title": "Get an overview with ALEAPP",
+   "text": "Run ALEAPP on the extraction. It reads many known apps and writes an HTML report. Use it to see which apps it recognised and to get a first look at the records. An app it does not know will not appear, so go on to read the database yourself.",
+   "tools": [
+    "aleapp"
+   ],
+   "cmd": "python aleapp.py -t <zip | tar | fs | gz | raw> -i <path_to_extraction> -o <path_for_report_output>",
+   "note": "Pick one input type from the list. fs is for a folder, and raw is for a disk image."
+  },
+  {
+   "title": "Open a copy in DB Browser for SQLite",
+   "text": "Open the copied database. If you have a version that offers it, use the read-only open option. The Database Structure tab lists the tables and columns. Browse Data shows the rows. The Execute SQL tab lets you run a SELECT query to filter and sort. Start by finding the table that holds messages, visits or events, then read its column names.",
+   "tools": [
+    "db4s"
+   ],
+   "note": "Run only SELECT queries on evidence copies. A query that changes data changes the copy."
+  },
+  {
+   "title": "Turn numbers into dates",
+   "text": "Apps store time as a number. A 10-digit number is usually seconds since 1970. A 13-digit number is usually milliseconds since 1970. Chrome-based apps use microseconds since 1601. Apple-style values count seconds from 2001. SQLite can convert them in a query. The result is in UTC.",
+   "tools": [
+    "db4s"
+   ],
+   "cmd": "SELECT datetime(timestamp_column/1000, 'unixepoch') FROM table_name;",
+   "note": "This line is for 13-digit milliseconds. For 10-digit seconds, use datetime(timestamp_column, 'unixepoch'). Add 'localtime' only if you know the time zone of the phone."
+  },
+  {
+   "title": "Check for a write-ahead log",
+   "text": "Look beside the database for files with the same name plus -wal and -shm. A -wal file holds committed changes that are not yet copied into the main file, so the main file alone can be old or even look empty. Copy the database and its -wal and -shm files together into the same folder.",
+   "paths": [
+    "<database name>",
+    "<database name>-wal",
+    "<database name>-shm"
+   ],
+   "note": "Opening a database in a normal tool can merge the log into the main file when the tool closes it. Always do this on the working copy."
+  },
+  {
+   "title": "Look for deleted records",
+   "text": "When a row is deleted, its bytes often stay inside the file, in free pages, in gaps in a page, in the journal or in the write-ahead log. A normal viewer will not show them. Open the database copy and its -wal file in FQLite, which scans for these remains, and export the result. Mark recovered rows as recovered, not as normal records.",
+   "tools": [
+    "fqlite"
+   ],
+   "note": "FQLite is a graphical tool only. Recovered rows can be partial or damaged."
+  },
+  {
+   "title": "Compare the tools and write the result",
+   "text": "Take a few records and compare them in ALEAPP, in DB Browser for SQLite and, for deleted ones, in FQLite. Check that the text, the other party and the converted time agree. In your notes, record the package name, the file path, the file hash, the tool versions and whether the -wal file was used.",
+   "tools": [
+    "aleapp",
+    "db4s",
+    "fqlite"
+   ]
+  }
+ ],
+ "artifacts": [
+  {
+   "name": "App database (SQLite)",
+   "where": "/data/data/<package name>/databases/",
+   "tells": "The structured data of the app, such as messages, visits, contacts or events"
+  },
+  {
+   "name": "Write-ahead log (-wal) and -shm file",
+   "where": "Beside the database, same name",
+   "tells": "Recent committed changes not yet written into the main file"
+  },
+  {
+   "name": "Rollback journal (-journal)",
+   "where": "Beside the database",
+   "tells": "Older page copies from an unfinished change, if the journal mode is not WAL"
+  },
+  {
+   "name": "Free pages and gaps inside the database",
+   "where": "Inside the database file",
+   "tells": "Remains of deleted rows that a normal viewer does not show"
+  },
+  {
+   "name": "shared_prefs XML files",
+   "where": "/data/data/<package name>/shared_prefs/",
+   "tells": "App settings, and sometimes account names or last-used values"
+  },
+  {
+   "name": "ALEAPP report",
+   "where": "The output folder you chose",
+   "tells": "A readable summary of the apps ALEAPP knows, for a first look"
+  }
+ ],
+ "limits": [
+  "A database shows what the app stored. It does not show who was using the phone.",
+  "Deleted records are not always there. Vacuuming, reuse of space and checkpoints can remove them, and recovered rows may be partial.",
+  "App databases change with each app version. A parser can lag behind, so a missing table in a report does not mean the data is absent.",
+  "Some apps encrypt their database or protect it with a key kept elsewhere on the phone. A viewer then cannot read it without that key.",
+  "A time zone is not stored with most timestamps. Check the phone's settings and the app before you call a time local.",
+  "A logical extraction or backup may hold no app databases at all, depending on the app and the Android version."
+ ],
+ "practice": {
+  "name": "Digital Corpora: Android 13 image",
+  "by": "Joshua Hickman, hosted by Digital Corpora",
+  "url": "https://digitalcorpora.org/android-13-image/",
+  "text": "A Google Pixel 5a with stock apps and several popular apps filled with test data. The page offers a data archive, a Cellebrite Reader file and an XRY file. It lists a solutions file, but the page says it is encrypted, so read the page to see how it is meant to be opened. I could not check the folder layout inside the archive, so look inside it first.",
+  "task": "Find the app package folders in the archive. Pick one app that has a database, open a copy in DB Browser for SQLite, convert one timestamp column to a date, and compare a record with the ALEAPP report.",
+  "note": "The page warns that the time zone changes over the data period and that some app data was synced from data created earlier. Read its time notes before you compare times."
+ },
+ "learn": [
+  {
+   "label": "SQLite documentation: Write-Ahead Logging",
+   "url": "https://www.sqlite.org/wal.html"
+  },
+  {
+   "label": "Forensic Focus: Forensic analysis of SQLite databases (free lists, write-ahead log, unallocated space and carving)",
+   "url": "https://www.forensicfocus.com/articles/forensic-analysis-of-sqlite-databases-free-lists-write-ahead-log-unallocated-space-and-carving/"
+  },
+  {
+   "label": "Forensic Focus: Using SQL as a date/time conversion tool",
+   "url": "https://www.forensicfocus.com/articles/using-sql-as-a-datetime-conversion-tool/"
+  },
+  {
+   "label": "ALEAPP on GitHub",
+   "url": "https://github.com/abrignoni/ALEAPP"
+  },
+  {
+   "label": "FQLite on GitHub",
+   "url": "https://github.com/pawlaszczyk/fqlite"
+  }
+ ],
+ "mistakes": [
+  "Copying only the .db file and leaving the -wal file behind. The newest records stay in the log and are lost from view.",
+  "Opening the original database in a viewer and closing it. The viewer can merge the log and change the file.",
+  "Reading a 13-digit time as seconds. The date lands thousands of years in the future.",
+  "Assuming a deleted row is gone because the viewer does not list it.",
+  "Trusting the ALEAPP report alone. If the app is not supported, its data is missing from the report but still in the database."
+ ],
+ "verify": [
+  "Open the same record in the ALEAPP report and in DB Browser for SQLite and compare the text and the converted time.",
+  "Open the database and its -wal file in FQLite and check that live rows match what DB Browser for SQLite shows.",
+  "Check a converted time against another source on the phone, such as a photo date or a notification time."
+ ],
+ "report_line": "The database [file name] (SHA-256 [hash]) of the app [package name] was taken from [path] in the extraction [name]. It holds [number] records in the table [table]. Times were converted from [format] to UTC. The file [was / was not] examined together with its -wal file. The data does not show who used the phone.",
+ "next": [
+  {
+   "text": "Read WhatsApp chats from an Android phone",
+   "workflow": "whatsapp-android"
+  },
+  {
+   "text": "Learn how to hash and image a source first",
+   "workflow": "forensic-image-and-hash"
+  },
+  {
+   "text": "Recover deleted files from a drive or card",
+   "workflow": "deleted-file-recovery"
+  }
+ ],
+ "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases.",
+ "untested": true
+}

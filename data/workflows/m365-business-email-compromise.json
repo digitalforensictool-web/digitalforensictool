@@ -1,0 +1,215 @@
+{
+ "reviewed": "2026-11-24",
+ "title": "How do I investigate a business email compromise in Microsoft 365?",
+ "short": "M365 business email compromise",
+ "lead": "In a business email compromise an attacker gets into a mailbox, often hides their tracks with mail rules, and uses the mailbox to read mail or cheat others. This workflow shows how to collect the Microsoft 365 logs and read them for the sign-in, the rules, the mail that was read and the changes that were made.",
+ "level": "Intermediate",
+ "time": "3 to 5 hours",
+ "evidence": "Microsoft 365 and Entra ID logs exported from the tenant",
+ "answers": [
+  "When and from which address the account was signed in by someone else",
+  "Whether inbox rules or forwarding were created, and when",
+  "Which mail was opened, searched for or sent",
+  "Whether mailbox permissions, MFA methods or app consents were changed",
+  "Which time window and which accounts are affected"
+ ],
+ "need": [
+  "Written authority from the tenant owner, and an account with an audit log role (Audit Logs or View-Only Audit Logs)",
+  "A Windows machine with PowerShell, to run the collection tools",
+  "A clear list of the affected users and the first date of suspicion",
+  "For practice: the public data set in the practice section"
+ ],
+ "steps": [
+  {
+   "title": "Agree scope, authority and retention",
+   "text": "Ask who owns the tenant, who may sign in, and who handles containment. Then check the clock. Audit records are kept 180 days by default, and one year for Entra ID, Exchange and SharePoint records with E5-level licences. Entra sign-in logs in the portal were reported as kept about 30 days. Check that audit search is on in Exchange Online PowerShell. Export early, because old data disappears.",
+   "cmd": [
+    "Get-AdminAuditLogConfig | Format-List UnifiedAuditLogIngestionEnabled"
+   ],
+   "note": "Your own sign-in and searches will appear in the logs too. Record the account you used and the time."
+  },
+  {
+   "title": "Install and connect Microsoft Extractor Suite",
+   "text": "Microsoft Extractor Suite is a PowerShell module from Invictus IR that collects logs from Microsoft 365 and Entra ID. Install it from the PowerShell Gallery. It uses the Exchange Online, Az and Microsoft Graph modules too, so install those if they are missing. Sign in before you run its functions.",
+   "tools": [
+    "microsoft-extractor-suite"
+   ],
+   "cmd": [
+    "Install-Module -Name Microsoft-Extractor-Suite",
+    "Connect-M365"
+   ]
+  },
+  {
+   "title": "Pull the Unified Audit Log",
+   "text": "Get-UAL collects the audit log. Give it the user and the date range, and keep the range wide enough to include the first suspicious sign-in. By default it writes CSV into a folder named UnifiedAuditLog. Dates without a time are taken as midnight, and times are converted to UTC. The search returns at most 5,000 records per call, so the tool splits the range and large pulls are slow.",
+   "tools": [
+    "microsoft-extractor-suite"
+   ],
+   "cmd": [
+    "Get-UAL -UserIds <user principal name> -StartDate <yyyy-mm-dd> -EndDate <yyyy-mm-dd>",
+    "Get-UAL -Operation New-InboxRule"
+   ],
+   "note": "Run a second pull without a user filter, for the whole tenant, to find actions by other accounts such as a new look-alike account."
+  },
+  {
+   "title": "Read the sign-in logs",
+   "text": "Export the Entra ID sign-in logs with Get-GraphEntraSignInLogs. Read interactive and non-interactive sign-ins. Look at the IP address, user agent, application, device, whether MFA was applied, and whether the sign-in was flagged as risky. A sign-in from a new address, followed soon by rule changes, is a strong lead. Non-interactive sign-ins show sessions an attacker may keep using, and they are not in the audit log.",
+   "tools": [
+    "microsoft-extractor-suite"
+   ],
+   "note": "An IP address location can be wrong, especially behind a VPN or a mobile network. Use it as a clue only."
+  },
+  {
+   "title": "Check inbox rules and forwarding",
+   "text": "Attackers often create rules that hide replies, move mail to rarely used folders, mark it read, or forward it. Look at the rules that exist now, including hidden ones, and at the forwarding settings of the mailbox. Odd patterns are single-character rule names, rules that move mail to RSS folders, and rules matching words such as scam, hacked or phishing. The audit log tells you when a rule was made or removed.",
+   "tools": [
+    "microsoft-extractor-suite"
+   ],
+   "cmd": [
+    "Get-InboxRule -Mailbox <identity> -IncludeHidden | Format-List Name,Enabled,RedirectTo,Forward*,Identity",
+    "Get-Mailbox -Identity <identity> | Format-List Forwarding*Address,DeliverTo*"
+   ],
+   "note": "These two commands are Exchange Online PowerShell. Microsoft Extractor Suite also has Get-MailboxRules to export rules."
+  },
+  {
+   "title": "See what the attacker read, searched and sent",
+   "text": "In the audit log look for MailItemsAccessed, which shows mail that was opened, and SearchQuery, which shows what the attacker searched for. Also look at sent and deleted items and at mailbox permission changes. Get-MessageTraceLog lists messages sent and received. Whether MailItemsAccessed exists depends on your licence and audit settings, so check before you rely on its absence.",
+   "tools": [
+    "microsoft-extractor-suite"
+   ]
+  },
+  {
+   "title": "Analyse with Microsoft Analyzer Suite",
+   "text": "Microsoft Analyzer Suite is a set of PowerShell scripts that read the output of Microsoft Extractor Suite. UAL-Analyzer reads the Get-UAL output, EntraSignInLogs-Analyzer reads the sign-in export and MTL-Analyzer reads the message trace. The UAL analyzer lets you give a file path or pick the file in a dialog. Its screenshots show tables, charts and statistics, such as risk levels and ATT&CK techniques for risky detections. Match the analyzer version to the extractor version.",
+   "tools": [
+    "microsoft-analyzer-suite"
+   ]
+  },
+  {
+   "title": "Consider Untitled Goose Tool for wider collection",
+   "text": "Untitled Goose Tool, from the US cyber agency CISA, collects Entra ID, Azure and Microsoft 365 data including inbox rules and the audit log. It is read-only, but setup needs a service principal with many read permissions, so the tenant owner must take part. Run goosey conf, then goosey auth, then goosey honk with a switch such as --m365 or --entraid. It writes to an output folder.",
+   "tools": [
+    "untitled-goose-tool"
+   ],
+   "cmd": [
+    "goosey conf",
+    "goosey auth",
+    "goosey honk --m365 --entraid"
+   ],
+   "note": "In its configuration, the audit log filters for operation, user and client IP cannot be used together, so run a separate pull for each."
+  },
+  {
+   "title": "Build the time line and look for persistence",
+   "text": "Sort the key events by UTC time: first unusual sign-in, rule creation, mail opened, mail sent, permission change. Then look for ways the attacker could return: new mailbox permissions, new MFA methods, consented apps and role changes. Containment, such as disabling the account or revoking sessions, belongs to the tenant administrator. Agree the time of each action first so it is not confused with the attacker's actions.",
+   "tools": [
+    "sof-elk"
+   ],
+   "note": "Get-UAL can write output in a SOF-ELK format, and SOF-ELK has a microsoft365 input folder, if you want a searchable dashboard."
+  }
+ ],
+ "artifacts": [
+  {
+   "name": "Unified Audit Log",
+   "where": "Microsoft Purview, Exchange Online (Search-UnifiedAuditLog)",
+   "tells": "Admin and user actions: rules, permissions, mail access, sign-ins to Microsoft 365"
+  },
+  {
+   "name": "Entra ID sign-in logs",
+   "where": "Entra admin center, Graph API",
+   "tells": "Sign-ins with IP, application, device and MFA result, including non-interactive ones"
+  },
+  {
+   "name": "Entra ID audit logs",
+   "where": "Entra admin center, Graph API",
+   "tells": "Changes to users, roles, apps and authentication methods"
+  },
+  {
+   "name": "Inbox rules and forwarding settings",
+   "where": "Exchange Online mailbox",
+   "tells": "Rules that hide, move or forward mail, as they exist now"
+  },
+  {
+   "name": "Message trace",
+   "where": "Exchange Online",
+   "tells": "Messages sent and received through the account"
+  },
+  {
+   "name": "MailItemsAccessed and SearchQuery",
+   "where": "Unified Audit Log, if enabled by licence and settings",
+   "tells": "Which mail was opened and what was searched for"
+  },
+  {
+   "name": "Mailbox permissions",
+   "where": "Exchange Online",
+   "tells": "Other accounts with access to the mailbox"
+  }
+ ],
+ "limits": [
+  "Retention depends on licence. Data older than the retention time is gone.",
+  "The audit log holds interactive sign-ins only. Non-interactive sign-ins are in the Entra sign-in logs.",
+  "Rules can be deleted by the attacker, so the current state of a mailbox is not the whole story. Use the audit log for history.",
+  "IP address locations are estimates. VPNs and mobile networks make them less reliable.",
+  "Logs show what an account did, not who was at the keyboard.",
+  "Collection tools need the right roles and licences. Missing data may show as an empty result, not an error.",
+  "This is cloud evidence under the tenant owner's control. Rules on access and privacy depend on your country and employer."
+ ],
+ "practice": {
+  "name": "Invictus IR: O365 Unified Audit Log dataset",
+  "by": "Invictus Incident Response",
+  "url": "https://github.com/invictus-ir/o365_dataset",
+  "text": "Audit records from Business Email Compromise cases, in one file, auditrecords.7z (extract with 7-Zip). The README says the data is JSON or CSV, one JSON object per line, and licensed CC BY 4.0, with credit to Invictus IR. It covers inbox rule changes used for invoice fraud and mailbox permission abuse where a look-alike account was given access, and it reports that the activity comes from real incidents. The README gives no answers.",
+  "task": "Find every New-InboxRule and rule-related record. Then find the mailbox permission changes. For each, write who did it, from which IP address and at what UTC time, and put the records in time order.",
+  "note": "The data holds real malicious activity. Do not scan or contact the addresses in it. It is audit log data only, so the sign-in and current rule steps cannot be practiced with it."
+ },
+ "learn": [
+  {
+   "label": "Microsoft: Responding to a compromised email account",
+   "url": "https://learn.microsoft.com/en-gb/defender-office-365/responding-to-a-compromised-email-account"
+  },
+  {
+   "label": "Microsoft Purview: Search the audit log",
+   "url": "https://learn.microsoft.com/en-us/purview/audit-search"
+  },
+  {
+   "label": "Pen Test Partners: BEC-ware the phish, investigating incidents in M365",
+   "url": "https://pentestpartners.com/security-blog/bec-ware-the-phish-part-1-investigating-incidents-in-m365"
+  },
+  {
+   "label": "Microsoft Extractor Suite documentation",
+   "url": "https://microsoft-365-extractor-suite.readthedocs.io/en/latest/"
+  },
+  {
+   "label": "Awesome-BEC: resources for BEC investigations",
+   "url": "https://github.com/randomaccess3/Awesome-BEC"
+  }
+ ],
+ "mistakes": [
+  "Resetting the password and revoking sessions before the logs were exported.",
+  "Searching only the victim's account and missing actions by other accounts, such as a look-alike account.",
+  "Mixing local time and UTC when building the time line.",
+  "Relying on the current inbox rules and forgetting that the attacker may have deleted them.",
+  "Reading a truncated export as complete, when the search or export limit was reached."
+ ],
+ "verify": [
+  "Compare the IP address of a rule creation in the audit log with the sign-in in the Entra sign-in logs.",
+  "Check each rule found in the audit log against the rules that exist in the mailbox now.",
+  "Compare the messages the analyzers list as sent with the message trace and the Sent Items folder."
+ ],
+ "report_line": "The audit log shows that at [time] UTC the account [user] created the inbox rule [rule name] from IP address [address]. The Entra sign-in log shows a sign-in at [time] UTC from the same address using [application]. The data was exported on [date] with [tool and version].",
+ "next": [
+  {
+   "text": "Check the user's browser for the phishing page",
+   "workflow": "browser-history-windows"
+  },
+  {
+   "text": "Check the user's Windows computer for logons",
+   "workflow": "windows-logons"
+  },
+  {
+   "text": "Document how the exported files were stored and hashed",
+   "workflow": "forensic-image-and-hash"
+  }
+ ],
+ "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases.",
+ "untested": true
+}

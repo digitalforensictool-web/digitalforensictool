@@ -1,0 +1,206 @@
+{
+ "reviewed": "2026-11-24",
+ "title": "Is this suspicious email a phishing attempt?",
+ "short": "Phishing email investigation",
+ "lead": "A user reports a strange email. This workflow shows how to examine it safely: read the headers, check who really sent it, take the links apart without clicking them, and list the attachments. Start with the safety step. Phishing emails can carry live links and harmful files.",
+ "level": "Beginner to intermediate",
+ "time": "1 to 2 hours",
+ "evidence": "One suspicious email saved as an .eml or .msg file (or a PST mailbox export)",
+ "answers": [
+  "Which servers handled the message and when",
+  "Whether the sender identity matches the sending servers (SPF, DKIM, DMARC, Reply-To)",
+  "Where each link really leads",
+  "What files are attached and what type they really are",
+  "Which indicators to hand to the security team (defanged)"
+ ],
+ "need": [
+  "The original message saved as a file, not a screenshot and not a normal forward",
+  "A virtual machine with the network switched off, for anything that touches links or attachments",
+  "A plain text editor and a hash tool (sha256sum or Get-FileHash)",
+  "Python, if you want to use extract-msg or the Didier Stevens scripts"
+ ],
+ "steps": [
+  {
+   "title": "Handle it safely first",
+   "text": "Do not click links and do not open attachments on a normal computer. Save the email as a file, make it read-only and write down its SHA-256 hash. Work on a copy. Do the parts that touch links or attachments inside a virtual machine with its network off and shared folders and clipboard sharing disabled. When you write notes, defang links, for example hxxps://example[.]com.",
+   "cmd": [
+    "sha256sum suspicious.eml",
+    "Get-FileHash .\\suspicious.eml -Algorithm SHA256"
+   ],
+   "note": "A normal forward rewrites the headers. Ask the user to forward the message as an attachment, or export it from the mail system as .eml or .msg."
+  },
+  {
+   "title": "Get the full headers",
+   "text": "The headers hold the delivery path. In classic Outlook, open the message and choose File, then Properties, and read the Internet headers box. In Gmail, open the message and choose Show original. For an .eml file, open it in a text editor: the headers are the lines at the top, before the first blank line. Use the copy the recipient received. The sender's own copy is not useful.",
+   "tools": [
+    "mha",
+    "google-messageheader"
+   ]
+  },
+  {
+   "title": "Read the route the message took",
+   "text": "Paste the headers into Message Header Analyzer or the Google Admin Toolbox Messageheader. Each mail server adds its Received line on top, so the first server that accepted the message is at the bottom. Only the lines added by your own mail servers can be trusted. Lines further down can be made up by the sender. Note the first outside server, its IP address and the time stamps. Do not paste headers from a real case into an online tool unless your lab policy allows it.",
+   "tools": [
+    "mha",
+    "google-messageheader"
+   ]
+  },
+  {
+   "title": "Compare the sender identity with the sending servers",
+   "text": "Find the Authentication-Results line. It shows SPF, DKIM and DMARC results, and in Microsoft 365 also compauth. Then compare four names: From, Return-Path, Reply-To and the smtp.mailfrom domain. Look for look-alike domains and a display name that does not match the address. A pass does not make a message safe, because an attacker can own a look-alike domain and set it up correctly.",
+   "paths": [
+    "Authentication-Results",
+    "Received-SPF",
+    "Return-Path",
+    "Reply-To",
+    "X-Forefront-Antispam-Report (Microsoft 365)"
+   ]
+  },
+  {
+   "title": "Take the links apart without clicking",
+   "text": "View the HTML body as text. The words a user sees can differ from the real address in the href. Paste the body into CyberChef and use Extract URLs, then Defang URL. Use Unfurl to split a long link into parts and to read redirect targets and encoded values. Run Unfurl locally with remote lookups off, because lookups send data to third parties. Never open the link to see where it goes.",
+   "tools": [
+    "cyberchef",
+    "unfurl"
+   ]
+  },
+  {
+   "title": "List and extract the attachments",
+   "text": "For an .eml file, the Didier Stevens script emldump.py lists the MIME parts, and its -s and -d options select and dump one. For an Outlook .msg file, extract-msg saves the body and attachments. For a PST mailbox, libpff reads the items. Save each attachment into its own folder inside the lab VM and hash it.",
+   "tools": [
+    "msg-extractor",
+    "libpff"
+   ],
+   "cmd": [
+    "python -m extract_msg suspicious.msg --out extracted"
+   ]
+  },
+  {
+   "title": "Identify what each attachment really is",
+   "text": "The file name can lie. A .pdf name may hide a script or an archive. Check the content type with Detect It Easy or oleid. Office files go to the macro workflow and programs go to the static triage workflow, both linked below. Search public reputation services by hash only. Files uploaded to online scanners can be seen by others, so do not upload files from a real case without permission.",
+   "tools": [
+    "oletools"
+   ]
+  },
+  {
+   "title": "Find out who else received it and who clicked",
+   "text": "The email file cannot tell you this. Ask the mail administrator to search for the same sender, subject or link in the mail logs. Ask for web proxy or DNS logs that show visits to the link domain. On a user's computer, browser history and download records show a click. Report the indicators (defanged links, domains, sender address, attachment hashes) to the security team.",
+   "tools": [
+    "cyberchef"
+   ]
+  },
+  {
+   "title": "Write the verdict with care",
+   "text": "Write what you saw and how sure you are. Use words such as consistent with phishing, not proven. List indicators, hashes, the tool names and versions, and the time zone of each time stamp. Say what you did not check, such as whether the user clicked."
+  }
+ ],
+ "artifacts": [
+  {
+   "name": "Received headers",
+   "where": "Message headers (.eml, .msg, PST item)",
+   "tells": "The servers that handled the message, with IP addresses and times. The bottom line is the earliest hop."
+  },
+  {
+   "name": "Authentication-Results and Received-SPF",
+   "where": "Message headers, added by the receiving server",
+   "tells": "SPF, DKIM and DMARC results for the message"
+  },
+  {
+   "name": "From, Return-Path, Reply-To, Message-ID",
+   "where": "Message headers",
+   "tells": "The claimed sender, the bounce address, where replies go and the system that made the message"
+  },
+  {
+   "name": "X-Forefront-Antispam-Report",
+   "where": "Message headers (Microsoft 365 only)",
+   "tells": "Connecting IP, filter verdict (SFV) and threat category (CAT, for example phishing)"
+  },
+  {
+   "name": "HTML body and href values",
+   "where": "Message body",
+   "tells": "The real link targets behind the visible text"
+  },
+  {
+   "name": "Attachments",
+   "where": "MIME parts of the message",
+   "tells": "File names, real file types, hashes and possible embedded macros or scripts"
+  },
+  {
+   "name": "Mail gateway, proxy and DNS logs",
+   "where": "Mail server and network systems, not in the email file",
+   "tells": "Who else received the message and who visited the link"
+  }
+ ],
+ "limits": [
+  "Headers added by outside servers can be forged. Only the lines added by your own servers are reliable.",
+  "SPF, DKIM and DMARC results show how the message was authenticated. They do not show whether the content is harmful.",
+  "A forwarded copy or a screenshot loses or changes the headers. Always ask for the original.",
+  "The email file does not show whether the user clicked or opened anything. You need other logs for that.",
+  "Links can be dead, changed or show different content to different visitors. Do not visit them from an ordinary computer.",
+  "Rules for evidence handling and for reporting differ by country and organisation. Follow your own procedure."
+ ],
+ "practice": {
+  "name": "phishing_pot: public collection of real phishing emails",
+  "by": "rf-peixoto and contributors (GitHub)",
+  "url": "https://github.com/rf-peixoto/phishing_pot",
+  "text": "A public GitHub collection of real phishing emails in .eml format, gathered with honeypot mailboxes. The README says contributors swap private values such as the honeypot address for a placeholder. These are real phishing messages: links may still be live and attachments may be harmful. There is no answer key.",
+  "task": "Pick three messages. For each one, read the headers, compare From, Return-Path and Reply-To, extract and defang every link, and write a short verdict in the style of the sample sentence below. Open the files only as text, in a lab VM with the network off.",
+  "note": "For a case with published answers, malware-traffic-analysis.net has an exercise called Email roulette (2016-07-07) with six malicious emails and a traffic capture. Its zip files contain live malware and use a password given on the site's about page. Use an isolated lab for it too."
+ },
+ "learn": [
+  {
+   "label": "Microsoft: Message headers in Microsoft 365 (Authentication-Results and X-Forefront-Antispam-Report)",
+   "url": "https://learn.microsoft.com/en-us/defender-office-365/message-headers-eop-mdo"
+  },
+  {
+   "label": "Microsoft: Message Header Analyzer",
+   "url": "https://learn.microsoft.com/en-us/connectivity-analyzer/message-header-analyzer"
+  },
+  {
+   "label": "freeCodeCamp: How to read email headers",
+   "url": "https://www.freecodecamp.org/news/reading-email-headers/"
+  },
+  {
+   "label": "Unfurl on GitHub",
+   "url": "https://github.com/obsidianforensics/unfurl"
+  },
+  {
+   "label": "CyberChef recipes collection (see the recipes on OOXML files and URL extraction)",
+   "url": "https://github.com/mattnotmax/cyberchef-recipes"
+  }
+ ],
+ "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases.",
+ "untested": true,
+ "mistakes": [
+  "Analysing a normal forward. The headers then show the forwarder's path, not the original delivery.",
+  "Clicking the link or opening the attachment on a normal computer to see what it does.",
+  "Reading the Received lines from the top as if the top line were the first hop. The first hop is at the bottom.",
+  "Treating an SPF or DKIM pass as proof that the message is safe.",
+  "Pasting headers or links from a real case into online tools without checking whether the policy allows it."
+ ],
+ "verify": [
+  "Parse the same headers in Message Header Analyzer and in the Google Messageheader tool. The hops and times should agree.",
+  "Read the Authentication-Results line by hand and compare it with the tool's table. Check the domain's SPF record with a DNS lookup.",
+  "Extract the same attachment with two tools, for example emldump.py and a mail client export. The hashes must match.",
+  "Compare the link list from CyberChef with the href values you read in the raw HTML."
+ ],
+ "report_line": "The message [file name] (SHA-256 [hash]) was received on [date, UTC] from [first outside server and IP]. SPF [result] and DKIM [result] were recorded, and the Reply-To domain [domain] differs from the From domain [domain]. It contains [number] links and [number] attachments (hashes in the annex). This is consistent with phishing. Clicks were not checked.",
+ "next": [
+  {
+   "text": "Examine an attached Office document for macros",
+   "workflow": "office-macro-malware-triage"
+  },
+  {
+   "text": "Look at an attached program without running it",
+   "workflow": "malware-static-triage"
+  },
+  {
+   "text": "Check the user's browser history for a visit to the link",
+   "workflow": "browser-history-windows"
+  },
+  {
+   "text": "Look at network traffic from the user's computer",
+   "workflow": "pcap-first-look"
+  }
+ ]
+}

@@ -71,3 +71,4 @@ cryptocurrency-forensics-basics
 drone-and-iot-forensics
 vehicle-forensics-basics
 voip-and-messaging-basics
+booting-forensic-image-in-vm

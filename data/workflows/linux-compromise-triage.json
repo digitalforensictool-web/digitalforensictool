@@ -1,0 +1,239 @@
+{
+ "reviewed": "2026-11-24",
+ "title": "What happened on this Linux server after it was compromised?",
+ "short": "Linux compromise first triage",
+ "lead": "A Linux server may have been broken into. This workflow shows a first triage: collect what is volatile, then read the login logs, new accounts, shell history, scheduled jobs and services to see how the attacker got in and what they left behind.",
+ "level": "Beginner to intermediate",
+ "time": "2 to 4 hours on the practice case",
+ "evidence": "A live Linux server, or a disk image of one",
+ "answers": [
+  "How and from which address someone logged in",
+  "Which accounts or SSH keys were added",
+  "Which commands were run, as far as history survived",
+  "Which programs were set to start again (cron, services)",
+  "Roughly when the first and last suspicious events happened"
+ ],
+ "need": [
+  "Written permission to examine the server, and a plan for who may shut it down",
+  "External storage for the collection, so nothing is written to the suspect disk",
+  "A Linux analysis machine (a forensic Linux distribution is fine)",
+  "For practice: the public case described in the practice section"
+ ],
+ "steps": [
+  {
+   "title": "Decide what you may touch",
+   "text": "If the server is still running, ask whether it can stay on for now. Running processes, network connections and logged-in users are lost at power off, so collect them first. Save all output to external storage, never to the suspect disk. If the machine is off, make a forensic image through a write blocker and work on the image only. Write down every command you run and the time.",
+   "tools": [
+    "guymager",
+    "uac"
+   ]
+  },
+  {
+   "title": "Collect with UAC",
+   "text": "UAC needs no installation. Copy it to external media, run it as root and give it a destination folder. The ir_triage profile covers running processes, network information, a bodyfile of file times, SSH files, shell history and logs, and it includes an osquery artifact. By default the result is one tar file named with the host name, the operating system and the time. It copies many files, so it may contain private data. Handle it as evidence.",
+   "tools": [
+    "uac"
+   ],
+   "cmd": [
+    "./uac --profile list",
+    "./uac -p ir_triage <destination folder on external storage>"
+   ]
+  },
+  {
+   "title": "Read the live view first",
+   "text": "Unpack the collection and start with the live response output: processes, open files, network connections. Look for programs started from /tmp or from hidden folders, processes whose file was deleted, and listening ports nobody expected. On a live server with osquery installed, osqueryi shows the same kind of data as SQL tables. Type .tables to list the tables and .schema <table name> to see the columns.",
+   "tools": [
+    "uac",
+    "osquery"
+   ],
+   "cmd": [
+    "SELECT name, path, pid FROM processes WHERE on_disk = 0;",
+    "SELECT pid, port, address FROM listening_ports;"
+   ],
+   "note": "osquery shows the state of a running system only. It cannot read a disk image."
+  },
+  {
+   "title": "Read the login records",
+   "text": "Debian and Ubuntu write logins to auth.log. Red Hat family systems use secure. Search for failed and accepted SSH logins. Many failures from one address followed by an Accepted line suggest a guessed password. wtmp holds successful logins and btmp failed ones. Read both with last -f. Old logs are rotated into .1 and .gz files, so read those too.",
+   "tools": [
+    "autopsy"
+   ],
+   "paths": [
+    "/var/log/auth.log",
+    "/var/log/secure",
+    "/var/log/wtmp",
+    "/var/log/btmp"
+   ],
+   "cmd": [
+    "grep \"Failed password\" /var/log/auth.log",
+    "grep \"Accepted\" /var/log/auth.log",
+    "last -f <path to wtmp>"
+   ],
+   "note": "On an image, mount it read-only and point these commands at the files in the mount, or open the files in Autopsy."
+  },
+  {
+   "title": "Look for new accounts and extra rights",
+   "text": "Search auth.log for useradd, usermod and sudo COMMAND= lines. Compare /etc/passwd and /etc/group with what the owner expects: unknown users, users with a login shell who should have none, extra members of the sudo group. Then list every authorized_keys file. A new SSH key gives access without a password and survives a password reset.",
+   "paths": [
+    "/etc/passwd",
+    "/etc/group",
+    "/home/<user>/.ssh/authorized_keys",
+    "/root/.ssh/authorized_keys"
+   ],
+   "cmd": [
+    "grep -E \"useradd|adduser|usermod\" /var/log/auth.log",
+    "grep \"sudo:\" /var/log/auth.log | grep \"COMMAND=\"",
+    "find /home /root -name authorized_keys"
+   ]
+  },
+  {
+   "title": "Read shell history with care",
+   "text": "Read .bash_history for root and for each user. Bash writes it when a shell exits, so a session that is still open or was killed may leave nothing. History can be switched off or sent to /dev/null. Lines that start with # are Unix times and can be converted to dates. An empty history is a finding in itself, not proof that nothing happened.",
+   "paths": [
+    "/root/.bash_history",
+    "/home/<user>/.bash_history"
+   ]
+  },
+  {
+   "title": "Check what starts again after a reboot",
+   "text": "Look at cron: /etc/crontab, the /etc/cron.* folders and /var/spool/cron. Look at service unit files in /etc/systemd/system and follow ExecStart to the script it runs. Ask which package owns a file with dpkg -S or rpm -qf. A file that belongs to no package, or sits in /tmp or a hidden folder, needs a closer look.",
+   "tools": [
+    "osquery"
+   ],
+   "paths": [
+    "/etc/crontab",
+    "/etc/cron.d, /etc/cron.daily and related folders",
+    "/var/spool/cron",
+    "/etc/systemd/system"
+   ],
+   "cmd": [
+    "find /etc/cron* /var/spool/cron -mtime -7",
+    "systemctl cat <service name>",
+    "dpkg -S <path to file>"
+   ]
+  },
+  {
+   "title": "Put events on one time line",
+   "text": "The UAC bodyfile lists the time stamps of files. Turn it into a time line with mactime from The Sleuth Kit, then look at the hour around the first suspicious login. A new file in /tmp, a changed /etc/passwd and a new cron file close together tell a story. If the server ran auditd, Zircolite can run Sigma rules on the audit log.",
+   "tools": [
+    "sleuthkit",
+    "zircolite"
+   ],
+   "cmd": [
+    "mactime -b <bodyfile> -d > timeline.csv",
+    "python3 zircolite.py --events auditd.log --ruleset rules/rules_linux.json"
+   ],
+   "note": "Check the time zone of the server (for example /etc/timezone) before you compare logs from different places."
+  }
+ ],
+ "artifacts": [
+  {
+   "name": "auth.log or secure",
+   "where": "/var/log",
+   "tells": "SSH logins, failed logins, sudo use and account changes"
+  },
+  {
+   "name": "wtmp and btmp",
+   "where": "/var/log",
+   "tells": "Successful and failed logins with time and source address"
+  },
+  {
+   "name": ".bash_history",
+   "where": "Home folder of each user and /root",
+   "tells": "Commands typed in a shell, if history was kept"
+  },
+  {
+   "name": "passwd and group",
+   "where": "/etc",
+   "tells": "Accounts, login shells and sudo group members"
+  },
+  {
+   "name": "authorized_keys",
+   "where": ".ssh folder of each user",
+   "tells": "SSH keys that allow login without a password"
+  },
+  {
+   "name": "Cron files",
+   "where": "/etc/crontab, /etc/cron.*, /var/spool/cron",
+   "tells": "Programs that run on a schedule"
+  },
+  {
+   "name": "systemd unit files",
+   "where": "/etc/systemd/system",
+   "tells": "Services that start at boot, and the program they run"
+  },
+  {
+   "name": "UAC bodyfile",
+   "where": "Inside the UAC collection",
+   "tells": "File time stamps for a time line"
+  }
+ ],
+ "limits": [
+  "An attacker with root rights can edit or delete logs and history. Missing data is not proof that nothing happened.",
+  "Collecting from a live server changes the system a little. Record what you ran so others can understand the changes.",
+  "Log names and paths differ between Linux distributions, and containers keep their data elsewhere.",
+  "A successful login shows that credentials were used. It does not show who typed them.",
+  "This workflow does not cover memory analysis, malware analysis or cloud logs.",
+  "Logs are rotated and deleted after some time, so old events may be gone."
+ ],
+ "practice": {
+  "name": "Dr. Ali Hadi: Challenge #1, Web Server Case",
+  "by": "Ali Hadi",
+  "url": "https://www.ashemery.com/dfir.html",
+  "answers_url": "https://digitalinvestigator.blogspot.com/2023/09/linux-web-server-forensics-dr-ali-hadis.html",
+  "text": "A company web server was breached through its website. The author imaged the running Linux system and its memory. The case page links to an archive.org item of about 4.4 GB in total. That item lists a memory dump, a hashes file and a text file for the disk image, so read the hashes file and the author's page to find which download is the disk. There is no official answer key. The linked page is a third-party walkthrough of one solution.",
+  "task": "Work on the disk image only. Answer the author's questions: how many users did the attacker add and how, and which leftover files or tools remain. Write your answer first, then compare it with the walkthrough.",
+  "note": "This is a disk image, so the live steps (UAC and osquery) cannot be done on it. Practice the log, account, history and persistence steps on the mounted image."
+ },
+ "learn": [
+  {
+   "label": "UAC documentation",
+   "url": "https://tclahr.github.io/uac-docs/"
+  },
+  {
+   "label": "osquery: using osqueryi",
+   "url": "https://osquery.readthedocs.io/en/latest/introduction/using-osqueryi/"
+  },
+  {
+   "label": "SANS Internet Storm Center: Improving Bash forensics capabilities",
+   "url": "https://isc.sans.edu/diary/20887"
+  },
+  {
+   "label": "Linux persistence in incident response (LinuxSecurity)",
+   "url": "https://linuxsecurity.com/howtos/harden-my-filesystem/linux-persistence-incident-response"
+  },
+  {
+   "label": "Walkthrough of the practice case (Joseph Moronwi)",
+   "url": "https://digitalinvestigator.blogspot.com/2023/09/linux-web-server-forensics-dr-ali-hadis.html"
+  }
+ ],
+ "mistakes": [
+  "Running tools from, or saving output to, the suspect server's own disk.",
+  "Trusting .bash_history alone. It can be empty, switched off or cut short.",
+  "Comparing times from different logs without checking the time zone and the rotated log files.",
+  "Deleting a suspicious account or file before copying it and writing down its details.",
+  "Treating every Accepted login as the attacker. Some are normal administrators."
+ ],
+ "verify": [
+  "Match each login in auth.log with the same login in wtmp (last -f). A line in one but not the other deserves an explanation.",
+  "Compare the time a new account appears in auth.log with the change time of /etc/passwd in the bodyfile time line.",
+  "Check each cron or service entry against the file times, and ask the owner whether they know the program."
+ ],
+ "report_line": "Between [start time] and [end time] ([time zone]), the log file [file name] shows [number] failed SSH logins from [IP address], followed by an accepted login for user [user name]. The account [new user] was created at [time] according to [source]. This is based on [tool and version].",
+ "next": [
+  {
+   "text": "Image the disk and prove it did not change",
+   "workflow": "forensic-image-and-hash"
+  },
+  {
+   "text": "If the server entered through its website, read the web server logs",
+   "workflow": "web-server-log-attack"
+  },
+  {
+   "text": "If the machine is still running, capture memory",
+   "workflow": "ram-dump-first-look"
+  }
+ ],
+ "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases.",
+ "untested": true
+}

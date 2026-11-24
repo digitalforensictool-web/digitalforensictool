@@ -1,138 +1,203 @@
 {
-  "reviewed": "2026-11-24",
-  "title": "Which websites were visited on this Windows computer?",
-  "short": "Browser history and downloads",
-  "lead": "Web browsers keep their history, downloads and searches in small database files inside each user's profile. This workflow shows how to find those files, read them with free tools and check the result.",
-  "level": "Beginner",
-  "time": "1 to 2 hours on the practice image",
-  "evidence": "A disk image of a Windows computer",
-  "answers": [
-    "Which browsers were used, and by which user account",
-    "Which websites were visited, and when",
-    "What was typed into search engines",
-    "Which files were downloaded, from where, and where they were saved"
-  ],
-  "need": [
-    "A forensic image of the Windows computer, or a practice image (see the practice section on this page)",
-    "A Windows workstation for the analysis tools"
-  ],
-  "steps": [
-    {
-      "title": "Open the image and let Autopsy do a first pass",
-      "text": "Create a case, add the image and run the Recent Activity module. It reads the common browsers and fills the result lists named Web History, Web Downloads, Web Search, Web Bookmarks and Web Cookies. Start by noting which browsers and which user accounts appear.",
-      "tools": [
-        "autopsy"
-      ]
-    },
-    {
-      "title": "Find and export the browser files",
-      "text": "For each user profile, export the history files of every browser you found. Export the whole profile folder if you can, so that related files stay together.",
-      "tools": [
-        "autopsy",
-        "ftk-imager"
-      ],
-      "paths": [
-        "Users\\<user name>\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\History",
-        "Users\\<user name>\\AppData\\Local\\Microsoft\\Edge\\User Data\\Default\\History",
-        "Users\\<user name>\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\<profile>\\places.sqlite",
-        "Users\\<user name>\\AppData\\Local\\Microsoft\\Windows\\WebCache\\WebCacheV01.dat"
-      ],
-      "note": "The last file belongs to Internet Explorer 10 and 11 and to the old version of Edge. Chrome and the current Edge can have more than one profile folder, named Profile 1, Profile 2 and so on."
-    },
-    {
-      "title": "Build a timeline of Chrome or Edge activity",
-      "text": "Run Hindsight on the exported Chrome or Edge profile folder. It produces one spreadsheet with visits, downloads, searches, cookies and more, sorted by time.",
-      "tools": [
-        "hindsight"
-      ]
-    },
-    {
-      "title": "Confirm important records in the raw database",
-      "text": "Open the History or places.sqlite file in DB Browser for SQLite, using a copy and never the exported original. In Chrome and Edge, look at the urls, visits and downloads tables. Check that the record your tool reported is really there.",
-      "tools": [
-        "db4s"
-      ],
-      "note": "Chrome and Edge store time as microseconds since 1 January 1601 (UTC). Firefox stores microseconds since 1 January 1970 (UTC). Convert before you compare with other evidence."
-    },
-    {
-      "title": "Read what the web addresses mean",
-      "text": "A long web address often contains the search words, a video ID or a time stamp. Paste the address into Unfurl to split it into its parts.",
-      "tools": [
-        "unfurl"
-      ]
-    },
-    {
-      "title": "Check that downloaded files exist",
-      "text": "For each download record, look for the saved file at the recorded path in the image. If it is gone, note that, and check the Recycle Bin and deleted files.",
-      "tools": [
-        "autopsy"
-      ]
-    },
-    {
-      "title": "Cross-check and write it down",
-      "text": "Compare the results of two tools for the records that matter. In your notes, record the tool name and version, the file each value came from, the user profile and the time zone.",
-      "tools": [
-        "nirsoft"
-      ]
-    }
-  ],
-  "artifacts": [
-    {
-      "name": "History (Chrome, Edge)",
-      "where": "User profile, AppData\\Local",
-      "tells": "Visits, typed addresses, search terms and downloads"
-    },
-    {
-      "name": "places.sqlite (Firefox)",
-      "where": "User profile, AppData\\Roaming",
-      "tells": "Visits and bookmarks"
-    },
-    {
-      "name": "WebCacheV01.dat",
-      "where": "User profile, AppData\\Local",
-      "tells": "History, cookies and cache index of Internet Explorer 10 and 11 and the old Edge"
-    },
-    {
-      "name": "Cookies and cache",
-      "where": "Browser profile folder",
-      "tells": "Sites that stored data on the computer, with times"
-    },
-    {
-      "name": "Downloaded files",
-      "where": "Usually the user's Downloads folder",
-      "tells": "The files themselves, to match against download records"
-    }
-  ],
-  "limits": [
-    "A visit record shows that the browser loaded an address under that user account. It does not show who was sitting at the keyboard.",
-    "Private or incognito browsing is not written to the history files.",
-    "History can be cleared by the user or by cleaning tools, so missing history is not proof that nothing happened.",
-    "With browser sync switched on, records created on another device can appear in the history.",
-    "Pages can load other addresses by themselves, through redirects and embedded content. Not every address was chosen by the user.",
-    "File locations and table names change between browser versions. Check what applies to the version you are examining."
-  ],
-  "practice": {
-    "name": "NIST CFReDS: Data Leakage Case",
-    "by": "NIST",
-    "url": "https://cfreds-archive.nist.gov/data_leakage_case/data-leakage-case.html",
-    "answers_url": "https://cfreds-archive.nist.gov/data_leakage_case/leakage-answers.pdf",
-    "text": "A simulated intellectual property theft on a Windows 7 computer. The PC image is about 5 GB to download as a compressed DD image, or about 7.3 GB in E01 format. NIST publishes an answer document, so you can check your result.",
-    "task": "Answer questions 13 to 16 of the case, which ask for the browsers used, the history file paths, the websites visited and the search keywords. Then compare with the published answers."
+ "reviewed": "2026-11-24",
+ "title": "Which websites were visited on this Windows computer?",
+ "short": "Browser history and downloads",
+ "lead": "Web browsers keep their history, downloads and searches in small database files inside each user's profile. This workflow shows how to find those files, read them with free tools, convert the times and check the result against the raw database.",
+ "level": "Beginner",
+ "time": "2 to 3 hours on the practice image",
+ "evidence": "A disk image of a Windows computer",
+ "answers": [
+  "Which browsers were used, and by which user account",
+  "Which websites were visited, and when",
+  "What was typed into search engines",
+  "Which files were downloaded, from where, and where they were saved"
+ ],
+ "need": [
+  "A forensic image of the Windows computer, or a practice image (see the practice section on this page)",
+  "A Windows workstation for the analysis tools",
+  "Hindsight (a Python program, or a ready-made .exe from its releases page) and DB Browser for SQLite"
+ ],
+ "steps": [
+  {
+   "title": "Open the image and let Autopsy do a first pass",
+   "text": "Create a case, add the image and run the Recent Activity module. It reads the common browsers and fills result lists such as Web History, Web Downloads, Web Search, Web Bookmarks and Web Cookies. Start by noting which browsers and which user accounts appear. Autopsy describes this module as a view of recent activity, so older records may be missing. Treat the lists as leads.",
+   "tools": [
+    "autopsy"
+   ]
   },
-  "learn": [
-    {
-      "label": "Autopsy user documentation: Recent Activity module",
-      "url": "https://www.sleuthkit.org/autopsy/docs/user-docs/4.22.1/recent_activity_page.html"
-    },
-    {
-      "label": "Microsoft Incident Response: guides to Windows forensic artifacts",
-      "url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/final/en-us/microsoft-brand/documents/IR-Guidebook-Final.pdf"
-    },
-    {
-      "label": "NIST CFReDS: Data Leakage Case",
-      "url": "https://cfreds-archive.nist.gov/data_leakage_case/data-leakage-case.html"
-    }
-  ],
-  "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases.",
-  "untested": true
+  {
+   "title": "Find and export the browser files",
+   "text": "For each user profile, export the browser profile folder, not only the history file. The History database can have a companion file with the same name plus -journal, and Firefox keeps places.sqlite-wal beside places.sqlite. Recent records can sit only in these companions, so copy them together. Chrome and the current Edge can have several profile folders: Default, Profile 1, Profile 2 and so on.",
+   "tools": [
+    "autopsy",
+    "ftk-imager"
+   ],
+   "paths": [
+    "Users\\<user name>\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\History",
+    "Users\\<user name>\\AppData\\Local\\Microsoft\\Edge\\User Data\\Default\\History",
+    "Users\\<user name>\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\<profile>\\places.sqlite",
+    "Users\\<user name>\\AppData\\Local\\Microsoft\\Windows\\WebCache\\WebCacheV01.dat"
+   ],
+   "note": "The last file belongs to Internet Explorer 10 and 11 and to the old version of Edge. Cookies of current Chrome are in the Network folder of the profile."
+  },
+  {
+   "title": "Build a timeline of Chrome or Edge activity",
+   "text": "Run Hindsight on the exported profile folder. Give it the folder with -i, and a file name without extension with -o. By default it writes one Excel file with visits, downloads, cookies, bookmarks and more, sorted by time. The -t option sets the time zone shown in the output. Hindsight also reads Firefox profiles. Skipped items are marked [ skipped ] in its run output, so you can tell them from items that were not in the profile.",
+   "tools": [
+    "hindsight"
+   ],
+   "cmd": "hindsight -i \"C:\\case\\export\\Chrome\\User Data\\Default\" -o chrome_default",
+   "note": "Hindsight needs Python 3.11 or newer if you install it with pip. A pip install adds the command hindsight."
+  },
+  {
+   "title": "Confirm important records in the raw database",
+   "text": "Open a copy of the History file in DB Browser for SQLite, never the exported original. In Chrome and Edge, the urls table has one row per address and the visits table has one row per visit, linked by urls.id. The downloads table holds the saved path, the source address and the start time. Run the query below and check that a record your tool reported is really there.",
+   "tools": [
+    "db4s"
+   ],
+   "cmd": "SELECT datetime(v.visit_time/1000000-11644473600,'unixepoch') AS visit_utc, u.url, u.title FROM visits v JOIN urls u ON u.id = v.url ORDER BY v.visit_time;",
+   "note": "Chrome and Edge store time as microseconds since 1 January 1601 (UTC). The number 11644473600 is the seconds between 1601 and 1970. Firefox stores microseconds since 1 January 1970 (UTC), so only divide by 1000000."
+  },
+  {
+   "title": "Read Firefox and Internet Explorer history",
+   "text": "For Firefox, open places.sqlite in DB Browser. The moz_places table holds the addresses and moz_historyvisits holds each visit, linked by place_id. A visit_type of 2 means the address was typed, and 7 means a downloaded resource. For Internet Explorer 10 and 11 and the old Edge, use NirSoft BrowsingHistoryView, which can read a whole Users folder from an exported or mounted image and reads WebCacheV01.dat.",
+   "tools": [
+    "db4s",
+    "nirsoft"
+   ],
+   "paths": [
+    "places.sqlite: tables moz_places, moz_historyvisits"
+   ],
+   "note": "WebCacheV01.dat is often locked on a live system, so work on the copy from the image."
+  },
+  {
+   "title": "Read what the web addresses mean",
+   "text": "A long web address often contains the search words, a video ID or a time stamp. Paste the address into Unfurl to split it into its parts. In Chrome's visits table the transition column shows how the page was opened, such as a typed address, a clicked link or a redirect. This helps you tell what the user chose from what the page loaded by itself.",
+   "tools": [
+    "unfurl"
+   ]
+  },
+  {
+   "title": "Check that downloaded files exist",
+   "text": "For each download record, look for the saved file at the recorded path in the image. Compare the file size with the size in the record. If the file is gone, note that, and check the Recycle Bin and deleted files. On NTFS, files saved by modern browsers may carry a stream named Zone.Identifier, which can hold the address they came from.",
+   "tools": [
+    "autopsy",
+    "sleuthkit"
+   ]
+  },
+  {
+   "title": "Cross-check and write it down",
+   "text": "Compare the results of two tools for the records that matter, for example Hindsight and BrowsingHistoryView for the same day. In your notes, record the tool name and version, the file each value came from, the user profile, the browser profile folder and the time zone you display.",
+   "tools": [
+    "nirsoft",
+    "hindsight"
+   ]
+  }
+ ],
+ "artifacts": [
+  {
+   "name": "History (Chrome, Edge)",
+   "where": "User profile, AppData\\Local",
+   "tells": "Visits, typed addresses, search terms and downloads"
+  },
+  {
+   "name": "places.sqlite (Firefox)",
+   "where": "User profile, AppData\\Roaming",
+   "tells": "Visits, bookmarks and the type of each visit"
+  },
+  {
+   "name": "WebCacheV01.dat",
+   "where": "User profile, AppData\\Local",
+   "tells": "History, cookies and cache index of Internet Explorer 10 and 11 and the old Edge"
+  },
+  {
+   "name": "Cookies and cache",
+   "where": "Browser profile folder",
+   "tells": "Sites that stored data on the computer, with times"
+  },
+  {
+   "name": "Downloaded files",
+   "where": "Usually the user's Downloads folder",
+   "tells": "The files themselves, to match against download records"
+  },
+  {
+   "name": "Sessions and Preferences",
+   "where": "Browser profile folder",
+   "tells": "Tabs that were open, and browser settings such as the signed-in account"
+  }
+ ],
+ "limits": [
+  "A visit record shows that the browser loaded an address under that user account. It does not show who was sitting at the keyboard.",
+  "Private or incognito browsing is not written to the history files.",
+  "History can be cleared by the user or by cleaning tools, so missing history is not proof that nothing happened. Browsers also delete old history on their own after some time.",
+  "With browser sync switched on, records created on another device can appear in the history.",
+  "Pages can load other addresses by themselves, through redirects and embedded content. Not every address was chosen by the user.",
+  "A download record shows that a download started or finished. It does not show that the file was opened.",
+  "File locations and table names change between browser versions. Check what applies to the version you are examining."
+ ],
+ "practice": {
+  "name": "NIST CFReDS: Data Leakage Case",
+  "by": "NIST",
+  "url": "https://cfreds-archive.nist.gov/data_leakage_case/data-leakage-case.html",
+  "answers_url": "https://cfreds-archive.nist.gov/data_leakage_case/leakage-answers.pdf",
+  "text": "A simulated intellectual property theft on a Windows 7 computer. The PC image is about 5 GB to download as a compressed DD image, or about 7.3 GB in E01 format. NIST publishes an answer document, so you can check your result. The page was online when this workflow was reviewed.",
+  "task": "Answer questions 13 to 16 of the case: the browsers used, the history file paths, the websites visited and the search keywords. Then compare with the published answers, which give times in US Eastern time. Write a list with the time, the address and the browser for the searches from 23 March 2015.",
+  "note": "The case uses Internet Explorer 11 and Chrome 41, both old. If a tool shows odd or empty columns for such an old Chrome, open the History file in DB Browser instead. Question 17 (words typed into the Windows Explorer search bar) is a good extra task."
+ },
+ "learn": [
+  {
+   "label": "Autopsy user documentation: Recent Activity module",
+   "url": "https://www.sleuthkit.org/autopsy/docs/user-docs/4.22.1/recent_activity_page.html"
+  },
+  {
+   "label": "Hindsight on GitHub: usage and supported browsers",
+   "url": "https://github.com/obsidianforensics/hindsight"
+  },
+  {
+   "label": "NirSoft BrowsingHistoryView",
+   "url": "https://www.nirsoft.net/utils/browsing_history_view.html"
+  },
+  {
+   "label": "Magnet Forensics: Artifact profile, Google Chrome",
+   "url": "https://www.magnetforensics.com/blog/artifact-profile-google-chrome/"
+  },
+  {
+   "label": "NIST CFReDS: Data Leakage Case",
+   "url": "https://cfreds-archive.nist.gov/data_leakage_case/data-leakage-case.html"
+  }
+ ],
+ "mistakes": [
+  "Opening or copying only the History file and missing the -journal or -wal file beside it.",
+  "Reading Chrome times as if they started in 1970. They start in 1601, so the dates come out hundreds of years in the future.",
+  "Looking only at the Default folder and missing Profile 1 and other profile folders.",
+  "Opening the original database in DB Browser, or in a browser on your own computer, instead of a copy.",
+  "Counting every address as a page the user chose, when many are redirects, ads and embedded content."
+ ],
+ "verify": [
+  "Pick five records from Hindsight and find each one in the raw History or places.sqlite file with a query.",
+  "Load the same profiles in NirSoft BrowsingHistoryView and compare the visits for one day.",
+  "For a download, check the saved file in the image: path, size and, if you can, the file hash.",
+  "Compare the Autopsy Web History list with your tool results. Look into any record that only one of them shows."
+ ],
+ "report_line": "The browser profile <profile folder> of user <user name> in the examined image (hash <hash>) holds a visit record for <web address>, first loaded on <date and time> (<time zone>) by <browser and version>. This shows that the browser opened the address under this user account. It does not show who was using the computer.",
+ "next": [
+  {
+   "text": "Check which programs were run on the same day",
+   "workflow": "program-execution-windows"
+  },
+  {
+   "text": "Check who was logged in at those times",
+   "workflow": "windows-logons"
+  },
+  {
+   "text": "Look for deleted files, including downloads that are gone",
+   "workflow": "deleted-file-recovery"
+  },
+  {
+   "text": "Check whether a USB drive was connected at that time",
+   "workflow": "usb-connected-windows"
+  }
+ ],
+ "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases.",
+ "untested": true
 }

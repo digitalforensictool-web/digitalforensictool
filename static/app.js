@@ -137,10 +137,22 @@
     apply();
   });
 
-  // Evidence map: tap a part of the device to show its panel.
+  // Evidence map: choose a device, then tap a part to show its panel.
   var xpanels = document.querySelector(".xray-panels");
   if (xpanels) {
     var spots = Array.prototype.slice.call(document.querySelectorAll(".xray .spot"));
+    var devs = Array.prototype.slice.call(document.querySelectorAll("svg.xdev"));
+    var tabs = Array.prototype.slice.call(document.querySelectorAll(".xtab"));
+    var intros = Array.prototype.slice.call(document.querySelectorAll(".xintro"));
+    var showDevice = function (id) {
+      devs.forEach(function (d) { d.classList.toggle("on", d.getAttribute("data-device") === id); });
+      tabs.forEach(function (b) {
+        var on = b.getAttribute("data-device") === id;
+        b.classList.toggle("on", on);
+        b.setAttribute("aria-selected", on ? "true" : "false");
+      });
+      intros.forEach(function (p) { p.classList.toggle("on", p.getAttribute("data-device") === id); });
+    };
     var showPart = function (id, scroll) {
       var found = false;
       xpanels.querySelectorAll(".xpanel").forEach(function (p) {
@@ -150,8 +162,18 @@
       });
       spots.forEach(function (sp) { sp.classList.toggle("on", sp.getAttribute("data-part") === id); });
       xpanels.classList.toggle("idle", !found);
+      if (found) showDevice(found.getAttribute("data-device"));
       if (found && scroll && window.innerWidth < 900) found.scrollIntoView({ behavior: "smooth", block: "nearest" });
     };
+    tabs.forEach(function (b) {
+      b.addEventListener("click", function () {
+        showDevice(b.getAttribute("data-device"));
+        xpanels.querySelectorAll(".xpanel").forEach(function (p) { p.classList.remove("on"); });
+        spots.forEach(function (sp) { sp.classList.remove("on"); });
+        xpanels.classList.add("idle");
+        try { window.history.replaceState(null, "", window.location.pathname + "#dev-" + b.getAttribute("data-device")); } catch (e) {}
+      });
+    });
     spots.forEach(function (sp) {
       sp.addEventListener("click", function (ev) {
         ev.preventDefault();
@@ -160,7 +182,13 @@
         showPart(id, true);
       });
     });
-    showPart((window.location.hash || "").replace("#part-", ""), false);
+    var hash = window.location.hash || "";
+    if (hash.indexOf("#dev-") === 0) {
+      showDevice(hash.replace("#dev-", ""));
+    } else {
+      showPart(hash.replace("#part-", ""), false);
+    }
+    if (!devs.some(function (d) { return d.classList.contains("on"); }) && devs.length) showDevice(devs[0].getAttribute("data-device"));
   }
 
   // Pocket toolbox: everything is computed locally.

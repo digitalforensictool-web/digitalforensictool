@@ -1,170 +1,211 @@
 {
-  "reviewed": "2026-11-24",
-  "title": "How do I make a forensic copy of a drive and prove it is exact?",
-  "short": "Forensic image and hash values",
-  "lead": "A forensic image is a bit-for-bit copy of a drive, made so that you can examine the copy and leave the original alone. This workflow shows how to block writes, make the image, and use hash values to show that the copy is exact.",
-  "level": "Beginner",
-  "time": "1 to 2 hours on the practice data",
-  "evidence": "A hard disk, SSD, USB stick or memory card",
-  "answers": [
-    "Why you never work on the original drive",
-    "How to stop a computer from writing to the drive you copy",
-    "Which image format to choose, raw (dd) or E01",
-    "How to make an image and record its hash values",
-    "How to check later that the image has not changed",
-    "What to write in your notes and chain-of-custody record"
-  ],
-  "need": [
-    "A drive to copy, or the small practice images described in the practice section",
-    "A write blocker, or a lab computer set up to block writes (see step 2)",
-    "A destination drive with more free space than the source drive holds"
-  ],
-  "steps": [
-    {
-      "title": "Never work on the original",
-      "text": "Even opening a drive in a normal way can change it. Windows may write to a drive when it is connected, and a file system can change its own records. So the original is copied once, and all later work is done on the copy. Before you start, photograph the drive and write down its make, model and serial number, and the date and time.",
-      "note": "On real cases, follow your lab's rules for who may handle the evidence and how."
-    },
-    {
-      "title": "Block writes to the source drive",
-      "text": "A hardware write blocker sits between the drive and the computer and refuses any command that would write. This is the usual choice in a lab. If you work on Linux, software tools can mark a drive read-only, such as the blockdev command, kernel patches, or a live system like CAINE. Software blocking needs a test first: attach a spare drive, try to change it, and confirm that nothing was written.",
-      "tools": [
-        "linux-write-blocker",
-        "util-linux",
-        "caine"
-      ],
-      "cmd": "sudo blockdev --setro /dev/sdb",
-      "note": "Use the real device name of the source drive instead of sdb. Check the name with lsblk first. A wrong name can mark the wrong drive."
-    },
-    {
-      "title": "Choose an image format",
-      "text": "A raw image (also called dd) is a plain copy of every sector. Almost every tool can open it, but it holds no case notes, and it is as large as the drive. An E01 image (Expert Witness format) can store case details, compress the data, split into parts and keep the hash values inside the file. Many labs choose E01. Both formats can be verified with hash values.",
-      "tools": [
-        "libewf"
-      ]
-    },
-    {
-      "title": "Make the image with a graphical tool",
-      "text": "On Windows, open FTK Imager and choose File, then Create Disk Image. Pick Physical Drive, select the source drive, add a destination and choose the image type. Tick the option to verify the image after it is created. On Linux, open Guymager, right-click the source drive and choose Acquire Image, then enter the case details and the destination folder. Save the image on a different drive from the source.",
-      "tools": [
-        "ftk-imager",
-        "guymager"
-      ],
-      "note": "Choose the Physical Drive, not a single volume, so that the copy includes the partition table and unused space."
-    },
-    {
-      "title": "Or image from the command line",
-      "text": "dc3dd is a version of dd made for forensic work. It copies the drive and calculates a hash value while it copies. The log option saves the hash values and any read errors in a text file. If a drive is failing and gives read errors, GNU ddrescue is built for that case: it reads the good areas first and keeps a map of the bad ones.",
-      "tools": [
-        "dc3dd",
-        "ddrescue"
-      ],
-      "cmd": "sudo dc3dd if=/dev/sdb of=evidence01.dd hash=sha256 log=evidence01.log"
-    },
-    {
-      "title": "Understand and compare hash values",
-      "text": "A hash value is a short code calculated from all the data. If one bit changes, the code changes completely. MD5 and SHA-1 are older and still common in lab notes. SHA-256 is stronger, and many labs record two types. Compare the hash of the source, as read during the copy, with the hash of the finished image. They must match.",
-      "tools": [
-        "ftk-imager",
-        "quickhash",
-        "hashdeep"
-      ]
-    },
-    {
-      "title": "Verify the image again later",
-      "text": "Hash the image file again before you start analysis, and again before you give it to anyone else. In FTK Imager you can add the image and use Verify Image. With libewf, the ewfverify tool checks an E01 image. QuickHash GUI and hashdeep can hash raw images and whole folders. A changed hash means the file changed, so stop and report it.",
-      "tools": [
-        "ftk-imager",
-        "libewf",
-        "quickhash",
-        "hashdeep"
-      ]
-    },
-    {
-      "title": "Keep notes and a chain-of-custody record",
-      "text": "Write down who handled the drive, when, and where it went. Record the tool and version, the settings you chose, the hash values, the start and end time, and any errors. A chain-of-custody record is the list of every person who held the evidence, with dates and times. Store the original safely. Keep the first image as a master that nobody opens, and work on a working copy.",
-      "tools": [
-        "robocopy",
-        "teracopy"
-      ],
-      "note": "After you copy the image to a new place, hash the copy and check that it matches the master."
-    },
-    {
-      "title": "Cross-check and write it down",
-      "text": "Confirm the hash values with a second tool, for example the value in the imaging log and a value from QuickHash GUI. In your notes, record the tool names and versions, the hash type, the hash values, the source drive details, any read errors, and the time zone of your computer.",
-      "tools": [
-        "quickhash",
-        "dc3dd"
-      ]
-    }
-  ],
-  "artifacts": [
-    {
-      "name": "Image file",
-      "where": "Destination drive (.dd, .raw or .E01 files)",
-      "tells": "The copy of the drive that all later work uses"
-    },
-    {
-      "name": "Acquisition log or summary file",
-      "where": "Beside the image, for example a .txt or .log file",
-      "tells": "Tool, time, settings, hash values and read errors"
-    },
-    {
-      "name": "Source hash value",
-      "where": "Log or case notes",
-      "tells": "The hash of the data as it was read from the drive"
-    },
-    {
-      "name": "Verification hash value",
-      "where": "Verification report or your notes",
-      "tells": "The hash of the finished image, to compare with the source hash"
-    },
-    {
-      "name": "Chain-of-custody record",
-      "where": "Lab paperwork or case system",
-      "tells": "Who held the evidence, and when"
-    },
-    {
-      "name": "Drive details and photos",
-      "where": "Case notes",
-      "tells": "Make, model, serial number and condition of the original"
-    }
-  ],
-  "limits": [
-    "A matching hash shows that the image equals the data that was read. It does not show that the drive was untouched before you received it.",
-    "Bad sectors cannot be read. The image then holds gaps or filler, and a later read of the same drive may give a different hash.",
-    "An SSD can move and clear data by itself, for example with TRIM and garbage collection. Its content can change even when no one writes to it.",
-    "An encrypted drive gives an encrypted image. You need the key or password to read the files inside it.",
-    "Some drives have hidden areas, called HPA and DCO. A tool or write blocker may not show them unless it is set up to. Check the drive's size against the maker's stated size.",
-    "MD5 and SHA-1 have known weaknesses. Record SHA-256 as well when you can.",
-    "A drive or a user account shows a device, not the person who used it."
-  ],
-  "practice": {
-    "name": "NIST CFReDS: Data Leakage Case (removable media images)",
-    "by": "NIST",
-    "url": "https://cfreds-archive.nist.gov/data_leakage_case/data-leakage-case.html",
-    "text": "The case page lists several small images of removable media, for example an E01 image of about 74.5 MB (RM#1). NIST publishes SHA-1 values for each image file on a separate hash values page, linked from the case page. The PC image on the same page is much larger, about 5 GB or more. NIST publishes an answer document for the case, but it is about the investigation, not about imaging.",
-    "task": "Download the RM#1 image. Calculate its SHA-1 hash with QuickHash GUI and compare it with the value on the NIST hash values page. Then open the image in FTK Imager and run Verify Image. As a second exercise, image your own spare USB stick twice, and check that both hashes match.",
-    "note": "The published hash is for the downloaded file. It is not a hash of a physical drive. Use only a spare USB stick that holds nothing you need."
+ "reviewed": "2026-11-24",
+ "title": "How do I make a forensic copy of a drive and prove it is exact?",
+ "short": "Forensic image and hash values",
+ "lead": "A forensic image is a bit-for-bit copy of a drive, made so that you can examine the copy and leave the original alone. This workflow shows how to block writes, make the image, and use hash values to show that the copy is exact.",
+ "level": "Beginner",
+ "time": "1 to 2 hours on the practice data",
+ "evidence": "A hard disk, SSD, USB stick or memory card",
+ "answers": [
+  "Why you never work on the original drive",
+  "How to stop a computer from writing to the drive you copy",
+  "Which image format to choose, raw (dd) or E01",
+  "How to make an image and record its hash values",
+  "How to check later that the image has not changed",
+  "What to write in your notes and chain-of-custody record"
+ ],
+ "need": [
+  "A drive to copy, or the small practice image described in the practice section",
+  "A write blocker, or a lab computer set up to block writes (see step 2)",
+  "A destination drive with more free space than the source drive holds, and that is not the source"
+ ],
+ "steps": [
+  {
+   "title": "Never work on the original",
+   "text": "Even opening a drive in a normal way can change it. Windows may write to a drive when it is connected, and a file system can change its own records. So the original is copied once, and all later work is done on the copy. Before you start, photograph the drive and write down its make, model, serial number, size, and the date and time. On Linux, the command shows name, size, model and serial number of attached drives.",
+   "cmd": "lsblk -o NAME,SIZE,MODEL,SERIAL",
+   "note": "On real cases, follow your lab's rules for who may handle the evidence and how."
   },
-  "learn": [
-    {
-      "label": "SANS: Forensics 101, acquiring an image with FTK Imager",
-      "url": "https://www.sans.org/blog/forensics-101-acquiring-an-image-with-ftk-imager/"
-    },
-    {
-      "label": "Guymager project page",
-      "url": "https://guymager.sourceforge.io/"
-    },
-    {
-      "label": "dc3dd manual page",
-      "url": "https://manpages.ubuntu.com/manpages/focal/man1/dc3dd.1.html"
-    },
-    {
-      "label": "NIST CFReDS: Data Leakage Case",
-      "url": "https://cfreds-archive.nist.gov/data_leakage_case/data-leakage-case.html"
-    }
-  ],
-  "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases.",
-  "untested": true
+  {
+   "title": "Block writes to the source drive",
+   "text": "A hardware write blocker sits between the drive and the computer and refuses any command that would write. This is the usual choice in a lab. On Linux, blockdev can mark a drive read-only, and a live system such as CAINE is set up to avoid mounting drives. Afterwards, blockdev --getro prints 1 if the drive is read-only. The change does not affect a drive that is already mounted for writing. Test any software method on a spare drive first.",
+   "tools": [
+    "linux-write-blocker",
+    "util-linux",
+    "caine"
+   ],
+   "cmd": "sudo blockdev --setro /dev/sdb",
+   "note": "Use the real device name of the source drive instead of sdb. Check it with lsblk first. A wrong name can mark, or later overwrite, the wrong drive."
+  },
+  {
+   "title": "Choose an image format",
+   "text": "A raw image (also called dd) is a plain copy of every sector. Almost every tool can open it, but it holds no case notes, and it is as large as the drive. An E01 image (Expert Witness format) can store case details, compress the data, split into parts and keep the hash values inside the file. In ewfacquire, -d sha256 adds a SHA-256 next to the MD5, -t sets the file name and -f the format. It asks for case number, examiner and notes.",
+   "tools": [
+    "libewf"
+   ],
+   "cmd": "sudo ewfacquire -d sha256 -t evidence01 /dev/sdb"
+  },
+  {
+   "title": "Make the image with a graphical tool",
+   "text": "In FTK Imager (Windows), choose File, then Create Disk Image, pick Physical Drive, add a destination and an image type, and tick Verify images after they are created. It writes a text log beside the image with the MD5 and SHA1 values and the verification result. In Guymager (Linux), choose Acquire image, fill in the case fields, select the hashes (MD5, SHA-1, SHA-256) and tick the two re-read and verify options. Save to a different drive than the source.",
+   "tools": [
+    "ftk-imager",
+    "guymager"
+   ],
+   "note": "Choose the Physical Drive, not a single volume, so that the copy includes the partition table and unused space."
+  },
+  {
+   "title": "Or image from the command line",
+   "text": "dc3dd is a version of dd made for forensic work. With hof= it writes the image, hashes the output as well as the input and compares the two. log= saves the I/O figures, the hashes and any errors in a text file and the run ends with a completed line. Read the log before you trust the copy. For a failing drive that gives read errors, GNU ddrescue reads the good areas first and keeps a map of the bad ones.",
+   "tools": [
+    "dc3dd",
+    "ddrescue"
+   ],
+   "cmd": "sudo dc3dd if=/dev/sdb hof=evidence01.dd hash=sha256 log=evidence01.log"
+  },
+  {
+   "title": "Understand and compare hash values",
+   "text": "A hash value is a short code calculated from all the data. If one bit changes, the code changes completely. MD5 and SHA-1 are older and still common in lab notes. SHA-256 is stronger, and many labs record two types. Compare the hash of the source, as read during the copy, with the hash of the image. They must match. In an E01 file the stored hash covers the data inside, so hashing the .E01 file itself gives another value, which only shows the file was not changed afterwards.",
+   "tools": [
+    "ftk-imager",
+    "quickhash",
+    "hashdeep"
+   ],
+   "cmd": "sha256sum evidence01.dd",
+   "note": "On Windows PowerShell, Get-FileHash evidence01.dd -Algorithm SHA256 prints Algorithm, Hash and Path. SHA256 is its default."
+  },
+  {
+   "title": "Verify the image again later",
+   "text": "Hash the image again before you start analysis, and again before you give it to anyone else. ewfverify checks an E01 image: it prints the hash stored in the file and the hash it calculates over the data, and ends with ewfverify: SUCCESS when they match. In FTK Imager add the image and use Verify Image. QuickHash GUI and hashdeep can hash raw images and whole folders. A changed hash means the file changed, so stop and report it.",
+   "tools": [
+    "libewf",
+    "ftk-imager",
+    "quickhash",
+    "hashdeep"
+   ],
+   "cmd": "ewfverify evidence01.E01"
+  },
+  {
+   "title": "Keep notes and a chain-of-custody record",
+   "text": "Write down who handled the drive, when, and where it went. Record the tool and version, the settings you chose, the hash values, the start and end time, and any errors. A chain-of-custody record is the list of every person who held the evidence, with dates and times. Keep the first image as a master that nobody opens, and work on a working copy. After you copy the image to a new place, hash the copy and check that it matches the master.",
+   "tools": [
+    "robocopy",
+    "teracopy"
+   ]
+  },
+  {
+   "title": "Cross-check and write it down",
+   "text": "Confirm the hash values with a second tool, for example the value in the imaging log and a value from QuickHash GUI or sha256sum. For a raw image you can also hash the source drive itself through the write blocker and compare. In your notes, record the tool names and versions, the hash type, the hash values, the source drive details, any read errors, and the time zone of your computer.",
+   "tools": [
+    "quickhash",
+    "dc3dd"
+   ]
+  }
+ ],
+ "artifacts": [
+  {
+   "name": "Image file",
+   "where": "Destination drive (.dd, .raw or .E01 files)",
+   "tells": "The copy of the drive that all later work uses"
+  },
+  {
+   "name": "Acquisition log or summary file",
+   "where": "Beside the image, for example a .txt or .log file",
+   "tells": "Tool, time, settings, hash values and read errors"
+  },
+  {
+   "name": "Source hash value",
+   "where": "Log or case notes",
+   "tells": "The hash of the data as it was read from the drive"
+  },
+  {
+   "name": "Verification hash value",
+   "where": "Verification report or your notes",
+   "tells": "The hash of the finished image, to compare with the source hash"
+  },
+  {
+   "name": "Hash values stored in an E01 file",
+   "where": "Inside the E01 file, shown by ewfverify or ewfinfo",
+   "tells": "The hash of the data when it was acquired"
+  },
+  {
+   "name": "Chain-of-custody record",
+   "where": "Lab paperwork or case system",
+   "tells": "Who held the evidence, and when"
+  },
+  {
+   "name": "Drive details and photos",
+   "where": "Case notes",
+   "tells": "Make, model, serial number and condition of the original"
+  }
+ ],
+ "limits": [
+  "A matching hash shows that the image equals the data that was read. It does not show that the drive was untouched before you received it.",
+  "Bad sectors cannot be read. The image then holds gaps or filler, and a later read of the same drive may give a different hash.",
+  "An SSD can move and clear data by itself, for example with TRIM and garbage collection. Its content can change even when no one writes to it.",
+  "An encrypted drive gives an encrypted image. You need the key or password to read the files inside it.",
+  "Some drives have hidden areas, called HPA and DCO. A tool or write blocker may not show them unless it is set up to. Check the drive's size against the maker's stated size.",
+  "MD5 and SHA-1 have known weaknesses. Record SHA-256 as well when you can.",
+  "A drive or a user account shows a device, not the person who used it."
+ ],
+ "practice": {
+  "name": "NIST CFReDS: Data Leakage Case (removable media image RM#1)",
+  "by": "NIST",
+  "url": "https://cfreds-archive.nist.gov/data_leakage_case/data-leakage-case.html",
+  "text": "The case page lists several images of removable media, among them an E01 image called rm#1.E01, about 74.5 MB, made with FTK Imager behind a write blocker. NIST publishes SHA-1 values for each download file on a hash values page linked from the case page. For RM#1 the file name there is cfreds_2015_data_leakage_rm#1.E01 and the value begins FFD0F3CB. The PC image on the same page is about 5 GB or more. NIST publishes an answer document for the case, but it is about the investigation, not about imaging.",
+  "task": "Download the RM#1 image. Calculate its SHA-1 with QuickHash GUI, sha1sum or Get-FileHash -Algorithm SHA1 and compare all 40 characters with the NIST page (ignore upper or lower case). Run ewfverify on it and note the stored and calculated hash lines. Then image your own spare USB stick twice with dc3dd or Guymager and check that both hashes match.",
+  "note": "The published hash is for the downloaded file, not for a physical drive. Use only a spare USB stick that holds nothing you need, and check the device name with lsblk before every command."
+ },
+ "learn": [
+  {
+   "label": "SANS: Forensics 101, acquiring an image with FTK Imager",
+   "url": "https://www.sans.org/blog/forensics-101-acquiring-an-image-with-ftk-imager/"
+  },
+  {
+   "label": "Guymager project page",
+   "url": "https://guymager.sourceforge.io/"
+  },
+  {
+   "label": "dc3dd manual page",
+   "url": "https://manpages.ubuntu.com/manpages/focal/man1/dc3dd.1.html"
+  },
+  {
+   "label": "ewfverify manual page (Debian)",
+   "url": "https://manpages.debian.org/testing/ewf-tools/ewfverify.1.en.html"
+  },
+  {
+   "label": "Microsoft: Get-FileHash",
+   "url": "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/get-filehash"
+  }
+ ],
+ "mistakes": [
+  "Typing the wrong device name. A mix-up of source and destination in dd-style commands can overwrite the evidence.",
+  "Imaging a single partition or volume when the whole physical drive was needed.",
+  "Saving the image on the source drive, or on a drive that is too small, so the copy fails or changes the source.",
+  "Comparing the hash of the .E01 file with the hash of the source drive. They are different things.",
+  "Skipping the write-protection test, or mounting the drive before it is set read-only."
+ ],
+ "verify": [
+  "Compare the hash in the imaging log with a hash you calculate yourself with a second tool.",
+  "Run ewfverify, or Verify Image in FTK Imager, and confirm that the stored and calculated values match.",
+  "Compare the image size with the drive size from lsblk or the maker's label. A big difference needs an explanation, for example a hidden area or a read error.",
+  "After every copy to a new place, hash the copy again and compare it with the master."
+ ],
+ "report_line": "The [make and model] drive, serial number [value], was connected through [write blocker or method] and imaged on [date and time, time zone] with [tool and version] to [format]. The source hash ([type]) was [value]. The image hash was [value], and verification matched. The log reported [number] read errors.",
+ "next": [
+  {
+   "text": "Open the image in a virtual machine to see how the system looked to its user",
+   "workflow": "boot-forensic-image-in-vm"
+  },
+  {
+   "text": "Look for deleted files in the image",
+   "workflow": "deleted-file-recovery"
+  },
+  {
+   "text": "Find out whether a USB drive was connected to a Windows computer",
+   "workflow": "usb-connected-windows"
+  }
+ ],
+ "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases.",
+ "untested": true
 }

@@ -9,19 +9,30 @@
    "y": 110,
    "finds": [
     "Websites visited, with dates and times",
-    "Search words typed into search engines",
-    "Files downloaded and where they were saved"
+    "Search words typed into the address bar or search engines",
+    "Files downloaded and the folder they were saved to",
+    "Saved form entries, cookies and cached page content",
+    "Which browser profiles and extensions were in use"
    ],
    "tools": [
-    "autopsy",
     "hindsight",
     "db4s",
-    "unfurl"
+    "foxton-browser-tools",
+    "nirsoft",
+    "unfurl",
+    "autopsy"
    ],
    "workflows": [
     "browser-history-windows"
    ],
-   "category": "browser"
+   "category": "browser",
+   "how": "Examiners copy the browser profile folders from a forensic image and read the SQLite files inside them with a parser or database viewer. Each browser and each profile keeps its own set of files.",
+   "life": "device",
+   "basics": [
+    "browser-artifacts",
+    "sqlite-in-mobile-forensics"
+   ],
+   "tip": "Check every profile, not only the default one. Private browsing leaves fewer traces, but DNS cache, memory and the pagefile may still hold some. Hash the profile folder before you open it."
   },
   {
    "device": "laptop",
@@ -31,19 +42,31 @@
    "y": 110,
    "finds": [
     "Which programs were started, and when",
-    "How many times a program ran",
-    "Which user account ran it"
+    "How many times a program ran (Prefetch run count)",
+    "Which user account ran it",
+    "Recent app activity and network use recorded by SRUM",
+    "Shortcut and jump list entries that point to opened files"
    ],
    "tools": [
     "pecmd",
     "registry-explorer",
     "srum-dump",
-    "ez-tools"
+    "ez-tools",
+    "regripper",
+    "kape"
    ],
    "workflows": [
     "program-execution-windows"
    ],
-   "category": "windows"
+   "category": "windows",
+   "how": "Examiners collect Prefetch files, registry hives, the SRUM database and shortcut files from a forensic image or a targeted collection, then parse each with a dedicated tool.",
+   "life": "device",
+   "basics": [
+    "program-execution-artifacts",
+    "windows-registry",
+    "lnk-jumplists-shellbags"
+   ],
+   "tip": "Prefetch may be switched off or limited, for example on servers and on some systems with SSDs. Compare several sources (Prefetch, registry, SRUM) before saying a program did or did not run."
   },
   {
    "device": "laptop",
@@ -54,18 +77,30 @@
    "finds": [
     "Who logged in, and when",
     "Failed login attempts",
-    "Remote Desktop connections"
+    "Remote Desktop connections",
+    "Account creation, group changes and service installs",
+    "Whether the event log was cleared"
    ],
    "tools": [
     "evtxecmd",
     "hayabusa",
     "chainsaw",
-    "timeline-explorer"
+    "timeline-explorer",
+    "sigma",
+    "deepbluecli"
    ],
    "workflows": [
     "windows-logons"
    ],
-   "category": "logs"
+   "category": "logs",
+   "how": "Examiners copy the .evtx log files from the Windows logs folder of an image or a live system, convert them to a table or run detection rules, and review the results in a timeline.",
+   "life": "overwrite",
+   "basics": [
+    "windows-event-logs",
+    "timeline-analysis",
+    "log-analysis-basics"
+   ],
+   "tip": "Event logs have a size limit and old events are overwritten, so collect them early. Note the oldest event in each log, so you know how far back the record goes."
   },
   {
    "device": "laptop",
@@ -74,39 +109,61 @@
    "x": 330,
    "y": 215,
    "finds": [
-    "Mailbox files stored on the computer",
-    "Messages, attachments and headers",
-    "Traces of deleted messages"
+    "Mailbox files stored on the computer (PST, OST and similar)",
+    "Messages, attachments and full headers",
+    "Traces of deleted messages",
+    "Sender, route and time details in the headers"
    ],
    "tools": [
+    "libpff",
+    "msg-extractor",
     "mha",
     "google-messageheader",
-    "libpff",
-    "msg-extractor"
+    "autopsy",
+    "oletools"
    ],
    "workflows": [],
-   "category": "email"
+   "category": "email",
+   "how": "Examiners locate mailbox data files or exported messages in the image, open them with a mail parser, and read the headers for the route a message took. Web mail needs the provider's data as well.",
+   "life": "device",
+   "basics": [
+    "email-headers",
+    "email-file-formats"
+   ],
+   "tip": "Work on a copy of the mailbox file. A mail client can change a file when it opens it. Headers show the route a message took, but remember that some fields can be forged by a sender."
   },
   {
    "device": "laptop",
    "id": "deleted",
    "label": "Deleted files",
    "x": 480,
-   "y": 162,
+   "y": 145,
    "finds": [
     "Files removed but not yet overwritten",
-    "Contents of the Recycle Bin",
-    "Files rebuilt from their signatures"
+    "Contents of the Recycle Bin and its original names and paths",
+    "Files rebuilt from their signatures (file carving)",
+    "Leftover file names in the file system records"
    ],
    "tools": [
     "autopsy",
     "testdisk",
-    "bulk-extractor"
+    "bulk-extractor",
+    "foremost",
+    "sleuthkit",
+    "mftecmd"
    ],
    "workflows": [
     "deleted-file-recovery"
    ],
-   "category": "recovery"
+   "category": "recovery",
+   "how": "Examiners work on an image of the drive. They read file system records for deleted entries and, where those are gone, carve files from unallocated space by their headers.",
+   "life": "overwrite",
+   "basics": [
+    "deleted-files-and-recovery",
+    "file-carving",
+    "recycle-bin-and-user-activity"
+   ],
+   "tip": "On an SSD, TRIM can clear deleted data soon after deletion, so recovery may fail. Never run recovery tools on the original drive. Save results to a different drive."
   },
   {
    "device": "laptop",
@@ -115,20 +172,31 @@
    "x": 120,
    "y": 372,
    "finds": [
-    "An exact copy of the whole drive",
-    "Hash values that prove the copy is exact",
+    "An exact copy of the whole drive (a forensic image)",
+    "Hash values that show the copy matches the original",
+    "Partitions, file system records and unallocated space",
     "Everything else on this map starts here"
    ],
    "tools": [
     "ftk-imager",
     "guymager",
+    "dc3dd",
     "autopsy",
-    "sleuthkit"
+    "sleuthkit",
+    "libewf"
    ],
    "workflows": [
     "forensic-image-and-hash"
    ],
-   "category": "imaging"
+   "category": "imaging",
+   "how": "The drive is connected through a write blocker, or the machine is booted from a forensic environment, and a bit-for-bit image is written to separate storage with a hash taken before and after.",
+   "life": "device",
+   "basics": [
+    "what-is-forensic-imaging",
+    "write-blocker",
+    "hash-values"
+   ],
+   "tip": "Check first whether the drive is encrypted, for example with BitLocker. If the machine is running and unlocked, collecting the key or a live image may be needed before you power it off."
   },
   {
    "device": "laptop",
@@ -137,20 +205,31 @@
    "x": 270,
    "y": 372,
    "finds": [
-    "Programs running at that moment",
+    "Programs and processes running at that moment",
     "Open network connections",
-    "Code that never touched the disk"
+    "Code that never touched the disk",
+    "Possible passwords, keys and recent commands held in memory"
    ],
    "tools": [
     "volatility3",
     "memprocfs",
     "winpmem",
-    "magnet-dumpit"
+    "magnet-dumpit",
+    "belkasoft-ram-capturer",
+    "yara"
    ],
    "workflows": [
     "ram-dump-first-look"
    ],
-   "category": "memory"
+   "category": "memory",
+   "how": "A memory capture tool is run on the live machine and writes the contents of RAM to an external drive. The image is then analysed on a separate computer.",
+   "life": "volatile",
+   "basics": [
+    "memory-forensics-overview",
+    "ram-acquisition",
+    "order-of-volatility"
+   ],
+   "tip": "Capture memory before you power the machine off, because RAM is lost without power. Save the image to external media, not the suspect drive, and write down the exact time and tool used."
   },
   {
    "device": "laptop",
@@ -161,17 +240,29 @@
    "finds": [
     "Which computers talked to each other",
     "Files sent over the network",
-    "Websites and services contacted"
+    "Websites and services contacted (DNS and connection records)",
+    "Alerts or flow records from network devices"
    ],
    "tools": [
     "wireshark",
     "networkminer",
-    "zeek"
+    "zeek",
+    "tcpdump",
+    "suricata",
+    "zui"
    ],
    "workflows": [
     "pcap-first-look"
    ],
-   "category": "network"
+   "category": "network",
+   "how": "Traffic is recorded at a switch, tap or the machine itself into PCAP files, or read from existing flow logs and firewall logs. The records are then analysed offline.",
+   "life": "network",
+   "basics": [
+    "network-forensics-overview",
+    "packet-capture-pcap",
+    "tls-and-encrypted-traffic"
+   ],
+   "tip": "Network data is gone once it passes, so capture needs to be planned before the event. Encrypted traffic still shows who talked to whom and when, even if the content is hidden."
   },
   {
    "device": "laptop",
@@ -180,103 +271,2137 @@
    "x": 540,
    "y": 372,
    "finds": [
-    "Which USB drives were connected",
+    "Which USB drives were connected (make, model, serial number)",
     "First and last connection times",
-    "Which user account used the drive"
+    "Which user account used the drive",
+    "Drive letter and volume name it received"
    ],
    "tools": [
     "registry-explorer",
     "regripper",
     "autopsy",
-    "evtxecmd"
+    "evtxecmd",
+    "kape",
+    "ez-tools"
    ],
    "workflows": [
     "usb-connected-windows"
    ],
-   "category": "windows"
+   "category": "windows",
+   "how": "Examiners read the SYSTEM, SOFTWARE and NTUSER registry hives, setup logs and event logs from the image, and match the entries to one another to build a picture of each device.",
+   "life": "device",
+   "basics": [
+    "usb-device-artifacts",
+    "windows-registry"
+   ],
+   "tip": "Match the serial number from the registry to the drive you seized. Registry times show connection, not file copying. Look at shortcut files and logs to see what was opened from the drive."
+  },
+  {
+   "device": "laptop",
+   "id": "cloudsync",
+   "label": "Cloud files",
+   "x": 480,
+   "y": 250,
+   "finds": [
+    "Local sync folders for OneDrive, Dropbox or Google Drive",
+    "Sync logs and settings that name the linked account",
+    "Recently opened documents and shortcut files",
+    "Author, editor and dates stored inside Office and PDF files",
+    "Version history and files held only online"
+   ],
+   "tools": [
+    "exiftool",
+    "oletools",
+    "ez-tools",
+    "autopsy",
+    "kape",
+    "rclone"
+   ],
+   "workflows": [
+    "insider-data-theft-windows"
+   ],
+   "category": "windows",
+   "how": "Examiners collect the sync folders, app settings and logs from the image, read file metadata with a metadata tool, and ask the provider for online data through the proper legal channel.",
+   "life": "provider",
+   "basics": [
+    "cloud-forensics-basics",
+    "image-and-video-metadata",
+    "lnk-jumplists-shellbags"
+   ],
+   "tip": "A file shown in a sync folder may be online only, with no content on the disk. Do not open it in a way that downloads it without noting this. Metadata inside a file can differ from file system dates."
   },
   {
    "device": "phone",
    "id": "chat",
    "label": "Chat apps",
    "x": 120,
-   "y": 120,
+   "y": 95,
    "finds": [
     "Chats and contacts stored on the phone",
     "Media sent and received",
-    "Traces of deleted messages"
+    "Traces of deleted messages in database files",
+    "Group names, members and message times"
    ],
    "tools": [
     "aleapp",
     "ileapp",
     "whatsapp-chat-exporter",
-    "wa-crypt-tools"
+    "wa-crypt-tools",
+    "signalbackup-tools",
+    "db4s"
    ],
    "workflows": [
     "whatsapp-android"
    ],
-   "category": "messaging"
+   "category": "messaging",
+   "how": "Examiners take a file system or app-level extraction, locate each chat app database and parse it. Some apps keep encrypted databases, so a key or the original account may be needed.",
+   "life": "device",
+   "basics": [
+    "mobile-artifacts",
+    "sqlite-in-mobile-forensics",
+    "voip-and-messaging-basics"
+   ],
+   "tip": "Deleted messages may still sit in the database file or its WAL file. Keep both files together when you copy them, and check whether disappearing messages was switched on."
   },
   {
    "device": "phone",
    "id": "photos",
    "label": "Photos",
    "x": 120,
-   "y": 205,
+   "y": 171,
    "finds": [
     "When a photo was taken",
     "Where it was taken, if location was on",
-    "Which camera or phone took it"
+    "Which camera or phone took it",
+    "Thumbnails and entries for photos that were deleted",
+    "Edited or shared copies with different dates"
    ],
    "tools": [
     "exiftool",
     "sherloq",
-    "forensically"
+    "forensically",
+    "fotoforensics",
+    "mediainfo",
+    "aleapp"
    ],
    "workflows": [
     "photo-metadata"
    ],
-   "category": "multimedia"
+   "category": "multimedia",
+   "how": "Examiners copy the camera and gallery folders and the gallery database from the extraction, then read the EXIF data of each file with a metadata tool.",
+   "life": "device",
+   "basics": [
+    "image-and-video-metadata",
+    "mobile-artifacts"
+   ],
+   "tip": "Many apps strip EXIF data when a photo is sent, so a missing location does not mean it was never recorded. Compare EXIF time with the file dates and the phone's own gallery records."
   },
   {
    "device": "phone",
    "id": "location",
    "label": "Location",
    "x": 120,
-   "y": 290,
+   "y": 247,
    "finds": [
-    "Places the phone has been",
-    "Saved Wi-Fi networks",
-    "Routes and map searches"
+    "Places the phone has been, with times",
+    "Routes and map searches",
+    "Location history kept by map and weather apps",
+    "Locations saved inside photos and app data"
    ],
    "tools": [
     "aleapp",
-    "ileapp"
+    "ileapp",
+    "exiftool",
+    "gpsbabel",
+    "google-earth-pro",
+    "apollo"
    ],
    "workflows": [],
-   "category": "gps"
+   "category": "gps",
+   "how": "Examiners parse location databases and app caches from the extraction, then place points on a map. Cloud location history, where used, is held by the provider.",
+   "life": "device",
+   "basics": [
+    "mobile-artifacts",
+    "image-and-video-metadata"
+   ],
+   "tip": "Location points have an accuracy value. Treat a point as a rough area, not an exact spot, and confirm with a second source such as a photo, cell data or a Wi-Fi record."
   },
   {
    "device": "phone",
    "id": "phonedata",
    "label": "Phone data",
    "x": 120,
-   "y": 375,
+   "y": 323,
    "finds": [
-    "Calls, messages and contacts",
-    "Installed apps and their data",
-    "Accounts used on the phone"
+    "Call history with numbers, times and length",
+    "Contacts, including photos and linked accounts",
+    "SMS and MMS messages",
+    "Notes, calendar entries and reminders"
    ],
    "tools": [
     "aleapp",
     "ileapp",
     "andriller",
+    "mvt",
+    "db4s",
+    "fqlite"
+   ],
+   "workflows": [
+    "iphone-first-look",
+    "android-app-database-sqlite"
+   ],
+   "category": "android",
+   "how": "Examiners run a logical or file system extraction and parse the call, contact, message and notes databases. Tools differ in how much of the phone they can read.",
+   "life": "device",
+   "basics": [
+    "mobile-forensics-overview",
+    "mobile-extraction-levels",
+    "mobile-artifacts"
+   ],
+   "tip": "Isolate the phone from the network first, for example in airplane mode or a Faraday bag, so new data or remote commands cannot reach it. Record the extraction type, because it limits what you can find."
+  },
+  {
+   "device": "phone",
+   "id": "apps",
+   "label": "Apps and accounts",
+   "x": 120,
+   "y": 399,
+   "finds": [
+    "Which apps are installed, and when they were added or updated",
+    "Accounts signed in on the phone",
+    "App databases and cache files",
+    "Browser history, downloads and saved logins on the phone",
+    "App permissions and usage records"
+   ],
+   "tools": [
+    "aleapp",
+    "ileapp",
+    "mobsf",
+    "jadx",
+    "db4s",
+    "fqlite"
+   ],
+   "workflows": [
+    "android-app-database-sqlite"
+   ],
+   "category": "android",
+   "how": "Examiners take a file system extraction, list the installed apps, and open each app's folder and databases. Apps not known to a tool may need a manual look at their SQLite files.",
+   "life": "device",
+   "basics": [
+    "sqlite-in-mobile-forensics",
+    "sqlite-wal-and-deleted-records",
+    "mobile-spyware-basics"
+   ],
+   "tip": "A logical extraction often skips app private folders. Note which apps the tool did not parse, and open their databases by hand. Look for hidden or renamed apps in the full app list."
+  },
+  {
+   "device": "phone",
+   "id": "connections",
+   "label": "Wi-Fi and Bluetooth",
+   "x": 120,
+   "y": 475,
+   "finds": [
+    "Wi-Fi networks the phone has joined, with times where recorded",
+    "Bluetooth devices that were paired",
+    "Cell and network connection records, where the system keeps them",
+    "Hotspot and tethering use"
+   ],
+   "tools": [
+    "aleapp",
+    "ileapp",
+    "wigle",
+    "wireshark",
     "mvt"
+   ],
+   "workflows": [],
+   "category": "wifi",
+   "how": "Examiners read the Wi-Fi and Bluetooth settings files and system databases in a file system extraction. Network names can then be looked up in public Wi-Fi maps to estimate a place.",
+   "life": "device",
+   "basics": [
+    "wifi-forensics-basics",
+    "mobile-artifacts"
+   ],
+   "tip": "A saved Wi-Fi name shows the phone knew a network, not that it was at that place on a given day. Look for join times, and use public Wi-Fi maps only as a lead to check."
+  },
+  {
+   "device": "phone",
+   "id": "backup",
+   "label": "Backups and cloud",
+   "x": 120,
+   "y": 551,
+   "finds": [
+    "Local backups made with a computer (such as iTunes or Finder backups)",
+    "Phone backups kept in iCloud or a Google account",
+    "Older copies of data that was later deleted on the phone",
+    "What a backup holds, and what it leaves out"
+   ],
+   "tools": [
+    "ileapp",
+    "aleapp",
+    "libimobiledevice",
+    "pymobiledevice3",
+    "mvt",
+    "ufade"
    ],
    "workflows": [
     "iphone-first-look"
    ],
-   "category": "android"
+   "category": "ios",
+   "how": "Local backups are found on the user's computer and read with a backup parser. Cloud backups are held by the provider, so access normally comes through the account owner or a legal request.",
+   "life": "provider",
+   "basics": [
+    "cloud-forensics-basics",
+    "ios-acquisition-basics",
+    "android-acquisition-basics"
+   ],
+   "tip": "A backup is not a full copy of the phone. Some data, such as items protected by device keys or kept only in the cloud, may be missing. Check whether the backup is encrypted before you plan."
+  },
+  {
+   "device": "storage",
+   "id": "storage-filesystem",
+   "label": "File system, files",
+   "finds": [
+    "Files and folders still present, with names, sizes and paths",
+    "Created, modified and accessed times, kept differently by FAT, exFAT and NTFS",
+    "Folder structure that shows how the owner organised the data",
+    "Documents, programs or archives copied onto the drive from a computer"
+   ],
+   "tools": [
+    "autopsy",
+    "sleuthkit",
+    "ftk-imager",
+    "arsenal-image-mounter",
+    "mftecmd",
+    "hashdeep"
+   ],
+   "workflows": [
+    "forensic-image-and-hash",
+    "usb-connected-windows"
+   ],
+   "category": "suites",
+   "how": "The drive is attached through a write blocker, a forensic image is made and hashed, and the file system is then read from the image, not from the original device.",
+   "life": "device",
+   "basics": [
+    "file-systems-overview",
+    "write-blocker",
+    "file-timestamps"
+   ],
+   "tip": "FAT stores local time with coarse resolution. exFAT stores local time plus an offset that is not always set. NTFS uses UTC. Note the file system type before you compare dates with a PC or phone."
+  },
+  {
+   "device": "storage",
+   "id": "storage-deleted",
+   "label": "Deleted data",
+   "finds": [
+    "Deleted file entries whose names and sizes are still in the directory",
+    "Deleted files whose content has not been overwritten yet",
+    "Files found by carving, even when the directory entry is gone",
+    "Remains of earlier contents after a quick format"
+   ],
+   "tools": [
+    "testdisk",
+    "sleuthkit",
+    "autopsy",
+    "foremost",
+    "bulk-extractor",
+    "ddrescue"
+   ],
+   "workflows": [
+    "deleted-file-recovery",
+    "sd-card-photo-recovery"
+   ],
+   "category": "recovery",
+   "how": "Examiners read deleted directory entries from the image and also carve file contents by their headers. Work is done on the image, so the card itself is never written to.",
+   "life": "overwrite",
+   "basics": [
+    "deleted-files-and-recovery",
+    "file-carving",
+    "ssd-trim-and-forensics"
+   ],
+   "tip": "Never plug the card into a normal computer to look for deleted files. Image it first, because any new write can overwrite what you are trying to recover."
+  },
+  {
+   "device": "storage",
+   "id": "storage-hidden",
+   "label": "Hidden, unallocated",
+   "finds": [
+    "Unallocated space that can still hold old file fragments",
+    "Slack space at the end of files, with leftovers of earlier data",
+    "Gaps between partitions or a second partition that is not mounted",
+    "On some drives, a host protected area or device configuration overlay"
+   ],
+   "tools": [
+    "sleuthkit",
+    "autopsy",
+    "bulk-extractor",
+    "testdisk",
+    "hxd",
+    "dc3dd"
+   ],
+   "workflows": [
+    "forensic-image-and-hash",
+    "bitlocker-encrypted-drive"
+   ],
+   "category": "recovery",
+   "how": "A full physical image copies every sector the device exposes, including unallocated and unpartitioned areas, so these places can be searched with carving and keyword tools. HPA and DCO areas may need special handling to reach.",
+   "life": "overwrite",
+   "basics": [
+    "slack-and-unallocated-space",
+    "partitions-mbr-gpt",
+    "hpa-and-dco"
+   ],
+   "tip": "Make a physical image, not just a copy of the files. HPA and DCO are mainly an issue on hard drives, so check whether they apply to the device type in front of you."
+  },
+  {
+   "device": "storage",
+   "id": "storage-identity",
+   "label": "Identity, history",
+   "finds": [
+    "Vendor, product and serial details the drive reports to a computer",
+    "Volume name and volume serial number made when it was formatted",
+    "Traces on a Windows PC showing when this drive was plugged in",
+    "Link files and recent-file entries that point to files opened from the drive"
+   ],
+   "tools": [
+    "ez-tools",
+    "registry-explorer",
+    "regripper",
+    "nirsoft",
+    "evtxecmd",
+    "plaso"
+   ],
+   "workflows": [
+    "usb-connected-windows",
+    "insider-data-theft-windows"
+   ],
+   "category": "windows",
+   "how": "Identity details are read from the device itself, and use history is read from the computers it was connected to, mainly the registry, event logs and shortcut files.",
+   "life": "device",
+   "basics": [
+    "usb-device-artifacts",
+    "windows-registry",
+    "lnk-jumplists-shellbags"
+   ],
+   "tip": "Some cheap drives share or lack a serial number, so say in your notes how reliable the match is before linking a drive to a particular computer."
+  },
+  {
+   "device": "storage",
+   "id": "storage-camera",
+   "label": "Camera, photo data",
+   "finds": [
+    "Photos and videos in the camera folder, often named DCIM",
+    "EXIF data such as camera model, date and time, and sometimes GPS position",
+    "Embedded thumbnails that can survive after the full photo is deleted",
+    "Gaps in the file numbering that may hint at removed pictures"
+   ],
+   "tools": [
+    "exiftool",
+    "ftk-imager",
+    "testdisk",
+    "autopsy",
+    "mediainfo",
+    "foremost"
+   ],
+   "workflows": [
+    "sd-card-photo-recovery",
+    "photo-metadata"
+   ],
+   "category": "multimedia",
+   "how": "The card is imaged first. Metadata is then read from each picture, and deleted pictures are recovered by carving from the image.",
+   "life": "device",
+   "basics": [
+    "image-and-video-metadata",
+    "file-carving",
+    "deleted-files-and-recovery"
+   ],
+   "tip": "Camera clocks are set by the owner and may be wrong. Compare EXIF time with file system time and note any offset instead of assuming either is correct."
+  },
+  {
+   "device": "network",
+   "id": "network-firewall",
+   "label": "Firewall logs",
+   "finds": [
+    "Allowed and blocked connections with source, destination, port and time",
+    "Which internal host talked to an outside address, and how much data moved",
+    "Repeated blocked attempts that suggest scanning or probing",
+    "Policy change records showing who altered a rule and when"
+   ],
+   "tools": [
+    "sof-elk",
+    "zui",
+    "sigma",
+    "zircolite",
+    "timesketch",
+    "plaso"
+   ],
+   "workflows": [
+    "ransomware-first-response",
+    "insider-data-theft-windows"
+   ],
+   "category": "logs",
+   "how": "Logs are exported from the firewall or from the central log server, with the export time and the device clock offset noted.",
+   "life": "overwrite",
+   "basics": [
+    "network-flow-data",
+    "log-analysis-basics",
+    "timeline-analysis"
+   ],
+   "tip": "Ask for logs early. Many firewalls keep only a small circular buffer, and a central log server may hold older records than the device itself."
+  },
+  {
+   "device": "network",
+   "id": "network-router",
+   "label": "Router, DHCP",
+   "finds": [
+    "DHCP leases linking an internal IP address to a device MAC address and name",
+    "The router's ARP table and list of connected devices",
+    "Wi-Fi client records, and port forwarding or NAT settings",
+    "Configuration changes and admin logins"
+   ],
+   "tools": [
+    "wireshark",
+    "networkminer",
+    "zeek",
+    "kismet",
+    "wigle",
+    "cyberchef"
+   ],
+   "workflows": [
+    "pcap-first-look",
+    "linux-compromise-triage"
+   ],
+   "category": "network",
+   "how": "Records are exported through the router's own interface or log service, ideally while it is still powered on, because lease tables are often held in memory on many models.",
+   "life": "volatile",
+   "basics": [
+    "tcp-ip-dns-basics",
+    "wifi-forensics-basics",
+    "network-forensics-overview"
+   ],
+   "tip": "An IP address alone does not name a device. Use the lease time and MAC address from the DHCP records to match an address to a device at a specific moment."
+  },
+  {
+   "device": "network",
+   "id": "network-dns",
+   "label": "DNS logs",
+   "finds": [
+    "Which names a host asked to look up, and at what time",
+    "Lookups for unusual or newly seen domains",
+    "Failed lookups that can show malware trying to reach a server",
+    "Which resolver or client made each request"
+   ],
+   "tools": [
+    "zeek",
+    "wireshark",
+    "zui",
+    "sof-elk",
+    "sigma",
+    "unfurl"
+   ],
+   "workflows": [
+    "pcap-first-look",
+    "ransomware-first-response"
+   ],
+   "category": "network",
+   "how": "Query logs are collected from the DNS server or resolver, or rebuilt from packet captures when the server did not log queries.",
+   "life": "overwrite",
+   "basics": [
+    "tcp-ip-dns-basics",
+    "network-flow-data",
+    "log-analysis-basics"
+   ],
+   "tip": "Query logging is often switched off by default. Check early whether it was on, and if not, look for packet captures or flow data instead."
+  },
+  {
+   "device": "network",
+   "id": "network-weblogs",
+   "label": "Web server logs",
+   "finds": [
+    "Client address, time, requested page and response code for each request",
+    "Login attempts and requests to admin pages",
+    "Unusual strings in requested addresses that point to attacks such as injection",
+    "Files uploaded or downloaded and the user agent that was used"
+   ],
+   "tools": [
+    "sof-elk",
+    "zui",
+    "sigma",
+    "cyberchef",
+    "plaso",
+    "timesketch"
+   ],
+   "workflows": [
+    "web-server-log-attack",
+    "linux-compromise-triage"
+   ],
+   "category": "logs",
+   "how": "Access and error logs are copied from the server with their original time stamps, then searched and sorted offline.",
+   "life": "overwrite",
+   "basics": [
+    "log-analysis-basics",
+    "timeline-analysis",
+    "network-forensics-overview"
+   ],
+   "tip": "Check the log time zone and whether a load balancer or proxy sits in front. The client address in the log may then be the proxy, not the real visitor."
+  },
+  {
+   "device": "network",
+   "id": "network-pcap",
+   "label": "Packet captures",
+   "finds": [
+    "Full traffic between hosts, if a capture was running at the time",
+    "Connection summaries, file names and transferred files from unencrypted protocols",
+    "Host names and timing, and in older TLS versions certificate details, even when content is encrypted",
+    "Evidence of data leaving the network"
+   ],
+   "tools": [
+    "wireshark",
+    "tcpdump",
+    "networkminer",
+    "zeek",
+    "zui",
+    "security-onion"
+   ],
+   "workflows": [
+    "pcap-first-look",
+    "ransomware-first-response"
+   ],
+   "category": "network",
+   "how": "Captures are taken at a tap, mirror port or sensor, then saved as PCAP files and hashed before analysis.",
+   "life": "network",
+   "basics": [
+    "packet-capture-pcap",
+    "tls-and-encrypted-traffic",
+    "network-flow-data"
+   ],
+   "tip": "Traffic is gone unless someone captured it. If an incident is ongoing and capture is lawful and approved, start it early and record where and when it began."
+  },
+  {
+   "device": "network",
+   "id": "network-ids-vpn",
+   "label": "IDS, VPN logs",
+   "finds": [
+    "Alerts naming the rule that fired, with source and destination",
+    "Who logged in to the VPN, from which address, and for how long",
+    "Failed or unusual remote logins",
+    "Alert details that point to the exact traffic worth reviewing"
+   ],
+   "tools": [
+    "suricata",
+    "security-onion",
+    "zeek",
+    "sof-elk",
+    "sigma",
+    "zui"
+   ],
+   "workflows": [
+    "ransomware-first-response",
+    "insider-data-theft-windows"
+   ],
+   "category": "network",
+   "how": "Alerts and VPN session records are exported from the sensor, the gateway or the central log platform, together with the rule set version.",
+   "life": "overwrite",
+   "basics": [
+    "ids-and-ips-alerts",
+    "log-analysis-basics",
+    "network-forensics-overview"
+   ],
+   "tip": "An alert is a lead, not proof. Confirm it against packet data or other logs, and record which rule version produced it."
+  },
+  {
+   "device": "cloud",
+   "id": "cloud-signin",
+   "label": "Sign-in, audit logs",
+   "finds": [
+    "Sign-in times, IP addresses, locations and devices used",
+    "Failed logins and multi-factor prompts",
+    "Admin actions such as new users, role changes and mail rules",
+    "Consent given to new apps that can reach the account"
+   ],
+   "tools": [
+    "microsoft-extractor-suite",
+    "microsoft-analyzer-suite",
+    "untitled-goose-tool",
+    "sigma",
+    "timesketch",
+    "unfurl"
+   ],
+   "workflows": [
+    "m365-business-email-compromise",
+    "insider-data-theft-windows"
+   ],
+   "category": "cloud",
+   "how": "With the owner's consent or legal authority, logs are exported from the provider's admin portal or its API and saved with a record of who exported them and when.",
+   "life": "provider",
+   "basics": [
+    "cloud-forensics-basics",
+    "log-analysis-basics",
+    "timeline-analysis"
+   ],
+   "tip": "Audit logs are kept for a limited time that depends on the service and licence. Check the retention period first and export early."
+  },
+  {
+   "device": "cloud",
+   "id": "cloud-mailbox",
+   "label": "Mailbox",
+   "finds": [
+    "Messages, attachments and folders, including some deleted items",
+    "Mail rules and forwarding settings added to the account",
+    "Message headers showing the route a message took",
+    "Records of which mail items were opened, where auditing was switched on"
+   ],
+   "tools": [
+    "microsoft-extractor-suite",
+    "mha",
+    "google-messageheader",
+    "libpff",
+    "msg-extractor",
+    "oletools"
+   ],
+   "workflows": [
+    "m365-business-email-compromise",
+    "email-phishing-investigation"
+   ],
+   "category": "email",
+   "how": "Mail is exported as PST, MBOX or EML through the provider's export or search tools, or collected through legal process, and then opened in an offline viewer.",
+   "life": "provider",
+   "basics": [
+    "email-headers",
+    "email-file-formats",
+    "cloud-forensics-basics"
+   ],
+   "tip": "Look at inbox rules and forwarding settings early. They are a common sign that someone else controlled the mailbox."
+  },
+  {
+   "device": "cloud",
+   "id": "cloud-files",
+   "label": "File storage",
+   "finds": [
+    "Files, folders and earlier versions kept by the service",
+    "Sharing links and who was given access",
+    "Upload, download and delete activity with time stamps",
+    "Recycle or trash contents that have not yet been emptied"
+   ],
+   "tools": [
+    "rclone",
+    "microsoft-extractor-suite",
+    "exiftool",
+    "hashdeep",
+    "timesketch",
+    "plaso"
+   ],
+   "workflows": [
+    "insider-data-theft-windows",
+    "m365-business-email-compromise"
+   ],
+   "category": "cloud",
+   "how": "Files are copied with authorised credentials or exports, hashed on arrival, and compared with synced copies on the user's own devices.",
+   "life": "provider",
+   "basics": [
+    "cloud-forensics-basics",
+    "evidence-integrity",
+    "hash-values"
+   ],
+   "tip": "Sync time stamps can show when a file arrived on a device, not when it was written. Treat them with care and compare with the activity log."
+  },
+  {
+   "device": "cloud",
+   "id": "cloud-chat",
+   "label": "Chat, collaboration",
+   "finds": [
+    "Channel and direct messages with sender, time and attachments",
+    "Meeting records, files shared and who joined",
+    "Edits and deletions, where the service keeps them",
+    "Membership changes in teams or channels"
+   ],
+   "tools": [
+    "microsoft-extractor-suite",
+    "discordchatexporter",
+    "timesketch",
+    "plaso",
+    "cyberchef",
+    "unfurl"
+   ],
+   "workflows": [
+    "insider-data-theft-windows",
+    "m365-business-email-compromise"
+   ],
+   "category": "messaging",
+   "how": "Content is gathered through the provider's compliance or export features, or through legal process, and kept with the export settings that were used.",
+   "life": "provider",
+   "basics": [
+    "cloud-forensics-basics",
+    "voip-and-messaging-basics",
+    "timeline-analysis"
+   ],
+   "tip": "Exports can leave out edits, reactions or private chats. Write down exactly which scope and date range you asked for."
+  },
+  {
+   "device": "cloud",
+   "id": "cloud-infra",
+   "label": "Cloud infra logs",
+   "finds": [
+    "API calls showing who created, changed or deleted resources",
+    "Access key use and role changes",
+    "Storage access and network flow records, if they were switched on",
+    "Virtual machine and snapshot activity"
+   ],
+   "tools": [
+    "invictus-aws",
+    "untitled-goose-tool",
+    "sof-elk",
+    "sigma",
+    "timesketch",
+    "zircolite"
+   ],
+   "workflows": [
+    "ransomware-first-response",
+    "linux-compromise-triage"
+   ],
+   "category": "cloud",
+   "how": "Logs are pulled from the cloud account's logging service and its storage buckets by authorised staff, and snapshots of affected systems are taken before any change.",
+   "life": "provider",
+   "basics": [
+    "cloud-forensics-basics",
+    "log-analysis-basics",
+    "timeline-analysis"
+   ],
+   "tip": "For AWS CloudTrail, event history covers only 90 days of management events. Only a trail or event data store gives a longer record, so check whether one existed."
+  },
+  {
+   "device": "cloud",
+   "id": "cloud-provider",
+   "label": "Provider-held data",
+   "finds": [
+    "Subscriber and account details, and billing records",
+    "Stored content that may be more complete than what is on a device",
+    "Connection and device records kept by the provider",
+    "Backups of phones and computers kept by the service"
+   ],
+   "tools": [
+    "osint-framework",
+    "bellingcat-toolkit",
+    "maltego-ce",
+    "wayback-machine",
+    "rclone",
+    "timesketch"
+   ],
+   "workflows": [
+    "m365-business-email-compromise",
+    "email-phishing-investigation"
+   ],
+   "category": "cloud",
+   "how": "Investigators send a preservation request, then obtain data from the provider through the legal process that applies where they work. Authority for a device may not cover cloud data.",
+   "life": "provider",
+   "basics": [
+    "cloud-forensics-basics",
+    "chain-of-custody",
+    "osint-basics"
+   ],
+   "tip": "Send a preservation request as soon as you know an account matters, because provider data can be deleted on a schedule. Ask your legal team about the right process."
+  },
+  {
+   "device": "wearable",
+   "id": "wearable-health",
+   "label": "Health, activity",
+   "finds": [
+    "Step counts, heart rate samples, sleep records and workout sessions with timestamps.",
+    "Activity history can show when the wearer was moving, resting or asleep.",
+    "Some devices keep short-term sensor data that is synced to the phone and then cleared from the watch."
+   ],
+   "tools": [
+    "aleapp",
+    "ileapp",
+    "db4s",
+    "mvt"
+   ],
+   "workflows": [
+    "android-app-database-sqlite",
+    "iphone-first-look"
+   ],
+   "category": "android",
+   "how": "Usually read from the paired phone's companion app database or a backup, because the watch itself is hard to image directly.",
+   "life": "device",
+   "basics": [
+    "mobile-artifacts",
+    "sqlite-in-mobile-forensics"
+   ],
+   "tip": "Check the time zone and the watch clock setting before you build a timeline. A wrong clock shifts every health record."
+  },
+  {
+   "device": "wearable",
+   "id": "wearable-location",
+   "label": "Routes",
+   "finds": [
+    "GPS tracks from recorded workouts, with start and end points and times.",
+    "Saved routes, places and sometimes pace and elevation along a path.",
+    "Route files may be exported or stored in the companion app or its cloud account."
+   ],
+   "tools": [
+    "gpsbabel",
+    "google-earth-pro",
+    "aleapp",
+    "ileapp",
+    "db4s"
+   ],
+   "workflows": [
+    "android-app-database-sqlite"
+   ],
+   "category": "gps",
+   "how": "Taken from the companion app data on the phone or from files exported by the fitness service, then loaded into a mapping tool.",
+   "life": "device",
+   "basics": [
+    "mobile-artifacts",
+    "drone-and-iot-forensics"
+   ],
+   "tip": "A workout track only shows where the device was while recording, not where the owner was at other times. Note gaps."
+  },
+  {
+   "device": "wearable",
+   "id": "wearable-notifications",
+   "label": "Notifications",
+   "finds": [
+    "Mirrored notifications from the phone such as message previews and call alerts.",
+    "Quick replies, calendar alerts and reminders that reached the wrist.",
+    "Some content may exist only on the watch, if it was never saved on the phone."
+   ],
+   "tools": [
+    "aleapp",
+    "ileapp",
+    "adb",
+    "db4s"
+   ],
+   "workflows": [
+    "android-app-database-sqlite"
+   ],
+   "category": "messaging",
+   "how": "Collected from the paired phone's notification stores and companion app data; direct watch access depends on the model and is often limited.",
+   "life": "overwrite",
+   "basics": [
+    "mobile-artifacts",
+    "mobile-extraction-levels"
+   ],
+   "tip": "Compare watch notifications with the phone's message databases. A match supports the record, a gap may mean deletion."
+  },
+  {
+   "device": "wearable",
+   "id": "wearable-phone",
+   "label": "Paired phone",
+   "finds": [
+    "Pairing records showing which phone and account the watch is linked to.",
+    "Companion app databases, settings, sync times and the last sync status.",
+    "Device name, model and identifiers used by the app."
+   ],
+   "tools": [
+    "aleapp",
+    "ileapp",
+    "adb",
+    "mvt",
+    "db4s",
+    "autopsy"
+   ],
+   "workflows": [
+    "android-app-database-sqlite",
+    "iphone-first-look"
+   ],
+   "category": "android",
+   "how": "Acquired with the phone through a lawful extraction or backup, then the companion app folder is parsed.",
+   "life": "device",
+   "basics": [
+    "mobile-forensics-overview",
+    "mobile-artifacts",
+    "sqlite-wal-and-deleted-records"
+   ],
+   "tip": "Document the companion app version. Database layouts change between versions and can affect how a parser reads them."
+  },
+  {
+   "device": "wearable",
+   "id": "wearable-storage",
+   "label": "Watch storage",
+   "finds": [
+    "Device model, firmware version, serial number and Bluetooth address.",
+    "System or diagnostic logs on some models, and installed watch apps.",
+    "Whether the watch was reset or unpaired, where logs show it."
+   ],
+   "tools": [
+    "adb",
+    "autopsy",
+    "hxd",
+    "imhex"
+   ],
+   "workflows": [
+    "forensic-image-and-hash"
+   ],
+   "category": "utilities",
+   "how": "Possible only on some models, through a vendor or supported interface, and sometimes only a logical export; test on a similar device first.",
+   "life": "device",
+   "basics": [
+    "drone-and-iot-forensics",
+    "mobile-extraction-levels",
+    "chain-of-custody"
+   ],
+   "tip": "Photograph the watch screen and record battery level before you connect it. Charging or syncing can change stored data."
+  },
+  {
+   "device": "drone",
+   "id": "drone-flightlog",
+   "label": "Flight logs",
+   "finds": [
+    "Flight records with time, position, altitude, speed and battery readings.",
+    "Takeoff and landing times, mode changes and warnings or errors.",
+    "Logs may sit on the aircraft, the controller or the phone app."
+   ],
+   "tools": [
+    "dji-log-parser",
+    "datcon",
+    "mission-planner",
+    "exiftool"
+   ],
+   "workflows": [
+    "drone-flight-log-analysis"
+   ],
+   "category": "drone-iot",
+   "how": "Copied from the aircraft, controller or app folder using a verified copy, then decoded with a parser that supports that make and log version.",
+   "life": "device",
+   "basics": [
+    "drone-and-iot-forensics",
+    "evidence-integrity"
+   ],
+   "tip": "Work on a copy and keep the original log files. Some logs are encrypted by the maker, so parser support varies by version."
+  },
+  {
+   "device": "drone",
+   "id": "drone-sdcard",
+   "label": "SD card media",
+   "finds": [
+    "Photos and videos with embedded metadata such as capture time and sometimes GPS position.",
+    "Deleted media that may still be recoverable from the card.",
+    "Proxy or low-resolution files that point to full-size originals."
+   ],
+   "tools": [
+    "exiftool",
+    "foremost",
+    "testdisk",
+    "autopsy",
+    "ffmpeg",
+    "mediainfo"
+   ],
+   "workflows": [
+    "sd-card-photo-recovery",
+    "photo-metadata"
+   ],
+   "category": "multimedia",
+   "how": "The card is removed and read through a write blocker, imaged and hashed, then examined and carved if needed.",
+   "life": "overwrite",
+   "basics": [
+    "write-blocker",
+    "deleted-files-and-recovery",
+    "image-and-video-metadata"
+   ],
+   "tip": "Image the card before anything else. Further recording or formatting can overwrite deleted files."
+  },
+  {
+   "device": "drone",
+   "id": "drone-gps",
+   "label": "GPS, home point",
+   "finds": [
+    "The recorded home point where the aircraft was set to return.",
+    "Takeoff location and the path flown, which can be plotted on a map.",
+    "GPS fix quality and satellite counts at key times."
+   ],
+   "tools": [
+    "gpsbabel",
+    "google-earth-pro",
+    "dji-log-parser",
+    "mission-planner"
+   ],
+   "workflows": [
+    "drone-flight-log-analysis"
+   ],
+   "category": "gps",
+   "how": "Taken from decoded flight logs and media metadata, then compared and shown on a map.",
+   "life": "device",
+   "basics": [
+    "drone-and-iot-forensics",
+    "image-and-video-metadata"
+   ],
+   "tip": "The home point is set by the aircraft and may differ from where the pilot stood. Treat it as a lead and check it against other data."
+  },
+  {
+   "device": "drone",
+   "id": "drone-controller",
+   "label": "Controller app",
+   "finds": [
+    "App databases, settings and cached flight data on the phone or tablet.",
+    "Account sign-in details and linked aircraft records.",
+    "Cached maps, saved missions and sometimes synced media."
+   ],
+   "tools": [
+    "aleapp",
+    "ileapp",
+    "adb",
+    "db4s",
+    "mvt"
+   ],
+   "workflows": [
+    "android-app-database-sqlite"
+   ],
+   "category": "android",
+   "how": "Collected from the phone or tablet using a lawful extraction, then the app folder is parsed. Some controllers have their own storage.",
+   "life": "device",
+   "basics": [
+    "mobile-artifacts",
+    "sqlite-in-mobile-forensics",
+    "drone-and-iot-forensics"
+   ],
+   "tip": "Record which app and version was used. App folders often hold logs that are missing from the aircraft."
+  },
+  {
+   "device": "drone",
+   "id": "drone-firmware",
+   "label": "Serial, firmware",
+   "finds": [
+    "Aircraft and controller serial numbers that may help tie parts to one owner or sale.",
+    "Firmware versions and update history.",
+    "Registration or account records held by the maker or a service."
+   ],
+   "tools": [
+    "exiftool",
+    "dji-log-parser",
+    "binwalk",
+    "hxd"
+   ],
+   "workflows": [
+    "drone-flight-log-analysis"
+   ],
+   "category": "drone-iot",
+   "how": "Read from log headers, media metadata, labels and app data; maker or service records are requested through lawful process.",
+   "life": "provider",
+   "basics": [
+    "drone-and-iot-forensics",
+    "chain-of-custody"
+   ],
+   "tip": "Photograph serial labels on each part. Match them to the serial numbers inside logs and media to tie items together."
+  },
+  {
+   "device": "car",
+   "id": "car-infotainment",
+   "label": "Contacts, calls",
+   "finds": [
+    "Synced phone contacts, call logs and text message lists.",
+    "Saved media, recent destinations and connected device names.",
+    "Some data may remain after a phone is unpaired."
+   ],
+   "tools": [
+    "autopsy",
+    "sleuthkit",
+    "bulk-extractor",
+    "db4s",
+    "hxd"
+   ],
+   "workflows": [
+    "forensic-image-and-hash"
+   ],
+   "category": "vehicle",
+   "how": "Gathered by specialist tools or a lawful chip-level or interface extraction, since methods differ by make and model.",
+   "life": "device",
+   "basics": [
+    "vehicle-forensics-basics",
+    "drone-and-iot-forensics"
+   ],
+   "tip": "Test the method on a similar unit first if you can. Avoid actions that could erase or reset the system."
+  },
+  {
+   "device": "car",
+   "id": "car-bluetooth",
+   "label": "Paired phones",
+   "finds": [
+    "Names and addresses of phones paired with the car.",
+    "First and last connection times where recorded.",
+    "Can help link a person or phone to a vehicle."
+   ],
+   "tools": [
+    "autopsy",
+    "bulk-extractor",
+    "hxd",
+    "db4s"
+   ],
+   "workflows": [
+    "forensic-image-and-hash"
+   ],
+   "category": "vehicle",
+   "how": "Read from the head unit extraction and matched with the Bluetooth address found on the phone.",
+   "life": "device",
+   "basics": [
+    "vehicle-forensics-basics",
+    "mobile-artifacts"
+   ],
+   "tip": "Match the Bluetooth address from the car with the phone's own records to link both devices."
+  },
+  {
+   "device": "car",
+   "id": "car-navigation",
+   "label": "Navigation",
+   "finds": [
+    "Saved places such as home and work, and recent or favorite destinations.",
+    "Route history and trip records on some systems.",
+    "Location points with time stamps, which can be mapped."
+   ],
+   "tools": [
+    "gpsbabel",
+    "google-earth-pro",
+    "db4s",
+    "autopsy"
+   ],
+   "workflows": [
+    "android-app-database-sqlite"
+   ],
+   "category": "gps",
+   "how": "Taken from the head unit extraction or a linked phone app, then converted to a format a mapping tool can read.",
+   "life": "device",
+   "basics": [
+    "vehicle-forensics-basics",
+    "timeline-analysis"
+   ],
+   "tip": "Confirm the clock source and time zone of the system. Then compare locations with phone or cell data."
+  },
+  {
+   "device": "car",
+   "id": "car-cloud",
+   "label": "Car app, cloud",
+   "finds": [
+    "Connected-car app data on the owner's phone, such as trips, lock events and alerts.",
+    "Maker or service account records held online.",
+    "Remote commands and sign-in history."
+   ],
+   "tools": [
+    "aleapp",
+    "ileapp",
+    "adb",
+    "db4s"
+   ],
+   "workflows": [
+    "android-app-database-sqlite",
+    "iphone-first-look"
+   ],
+   "category": "cloud",
+   "how": "Phone app data is acquired with the phone; provider records need a lawful request to the maker or service.",
+   "life": "provider",
+   "basics": [
+    "cloud-forensics-basics",
+    "mobile-artifacts"
+   ],
+   "tip": "Act early on any provider request, since retention periods differ and records can be removed over time."
+  },
+  {
+   "device": "car",
+   "id": "car-edr",
+   "label": "Crash data",
+   "finds": [
+    "Pre-crash speed, braking, throttle and seatbelt data for a few seconds around an event.",
+    "Records of recent crash events stored in the airbag control unit, where the vehicle supports it.",
+    "Data is read only for supported models."
+   ],
+   "tools": [
+    "hxd",
+    "imhex",
+    "autopsy"
+   ],
+   "workflows": [
+    "forensic-image-and-hash"
+   ],
+   "category": "vehicle",
+   "how": "Read with a tool designed for event data recorders, through the vehicle's diagnostic port or by connecting to the module, then reported with the tool's own software.",
+   "life": "device",
+   "basics": [
+    "vehicle-forensics-basics",
+    "evidence-integrity"
+   ],
+   "tip": "Do not drive the vehicle before the data is read, since new events may overwrite stored ones. Follow the tool maker's guidance on power, and record the vehicle identification number with the report."
+  },
+  {
+   "device": "car",
+   "id": "car-ecu",
+   "label": "ECU data",
+   "finds": [
+    "Messages on the vehicle network between control units.",
+    "Fault codes and module identifiers.",
+    "Mileage, ignition cycles and other counters that some modules keep."
+   ],
+   "tools": [
+    "can-utils",
+    "savvycan",
+    "wireshark",
+    "emba"
+   ],
+   "workflows": [
+    "pcap-first-look"
+   ],
+   "category": "vehicle",
+   "how": "Observed or logged through the diagnostic port with a suitable interface in a controlled, lawful setting.",
+   "life": "network",
+   "basics": [
+    "vehicle-forensics-basics",
+    "network-forensics-overview"
+   ],
+   "tip": "Listen first and avoid sending messages. Writing to a live vehicle network can change vehicle state."
+  },
+  {
+   "device": "camera",
+   "id": "camera-nvr",
+   "label": "DVR, NVR video",
+   "finds": [
+    "Recorded video with camera name, date and time.",
+    "Motion or alarm event markers and exported clips.",
+    "Footage that remains on the disk until the system overwrites it."
+   ],
+   "tools": [
+    "ffmpeg",
+    "mediainfo",
+    "vlc",
+    "autopsy",
+    "foremost",
+    "exiftool"
+   ],
+   "workflows": [
+    "forensic-image-and-hash",
+    "deleted-file-recovery"
+   ],
+   "category": "video",
+   "how": "Exported through the recorder's own function, or the disk is removed, imaged through a write blocker and read with tools that support the recorder's file format.",
+   "life": "overwrite",
+   "basics": [
+    "write-blocker",
+    "what-is-forensic-imaging",
+    "image-and-video-metadata"
+   ],
+   "tip": "Check the recorder clock against a real time source and note the difference, then correct video times with that offset."
+  },
+  {
+   "device": "camera",
+   "id": "camera-logs",
+   "label": "Recorder logs",
+   "finds": [
+    "Login, logout and settings change records.",
+    "Power, network and disk error events.",
+    "Firmware version, device name and serial number."
+   ],
+   "tools": [
+    "wireshark",
+    "hxd",
+    "cyberchef",
+    "autopsy"
+   ],
+   "workflows": [
+    "web-server-log-attack"
+   ],
+   "category": "logs",
+   "how": "Exported from the recorder's menu or web page, or read from the disk image where the format is known.",
+   "life": "device",
+   "basics": [
+    "log-analysis-basics",
+    "drone-and-iot-forensics"
+   ],
+   "tip": "Export logs before you change any setting. Photograph the screen with the date and time shown."
+  },
+  {
+   "device": "camera",
+   "id": "camera-cloud",
+   "label": "Cloud accounts",
+   "finds": [
+    "Account details, linked devices and sharing settings.",
+    "Stored clips and snapshots in the service, subject to the plan and retention.",
+    "Alerts, sign-in and access history."
+   ],
+   "tools": [
+    "aleapp",
+    "ileapp",
+    "db4s",
+    "unfurl"
+   ],
+   "workflows": [
+    "android-app-database-sqlite",
+    "iphone-first-look"
+   ],
+   "category": "cloud",
+   "how": "Owner-approved access or a lawful request to the provider, plus app data from the phone.",
+   "life": "provider",
+   "basics": [
+    "cloud-forensics-basics",
+    "mobile-artifacts"
+   ],
+   "tip": "Note retention limits early. Many services delete older clips after a set time."
+  },
+  {
+   "device": "camera",
+   "id": "camera-voice",
+   "label": "Voice history",
+   "finds": [
+    "Account activity of voice requests and responses, when the service keeps them.",
+    "Linked accounts, routines and device names.",
+    "Voice recordings may be stored in the account, depending on settings."
+   ],
+   "tools": [
+    "aleapp",
+    "ileapp",
+    "db4s",
+    "cyberchef"
+   ],
+   "workflows": [
+    "android-app-database-sqlite"
+   ],
+   "category": "cloud",
+   "how": "Collected from the companion app on the phone and from the provider's account data under lawful authority.",
+   "life": "provider",
+   "basics": [
+    "cloud-forensics-basics",
+    "drone-and-iot-forensics"
+   ],
+   "tip": "The speaker itself often stores little. Focus on the app and account, and record exact settings."
+  },
+  {
+   "device": "camera",
+   "id": "camera-router",
+   "label": "Router list",
+   "finds": [
+    "List of connected devices with names, addresses and last seen times.",
+    "DHCP leases and, on some routers, traffic or connection logs.",
+    "Wi-Fi settings and router firmware version."
+   ],
+   "tools": [
+    "wireshark",
+    "zeek",
+    "kismet",
+    "wigle"
+   ],
+   "workflows": [
+    "pcap-first-look"
+   ],
+   "category": "network",
+   "how": "Read from the router's admin page or exported configuration with permission, and optionally a lawful network capture.",
+   "life": "volatile",
+   "basics": [
+    "network-forensics-overview",
+    "wifi-forensics-basics",
+    "order-of-volatility"
+   ],
+   "tip": "Capture the device list first. A restart or reset can clear leases and logs."
+  },
+  {
+   "device": "media",
+   "id": "media-exif",
+   "label": "Image metadata",
+   "finds": [
+    "EXIF fields such as capture date and time, camera make and model, lens and exposure settings.",
+    "GPS latitude, longitude and sometimes altitude if location tagging was on.",
+    "Software tags that name the editing program or phone app that last saved the file.",
+    "Serial numbers of the camera body, which can link several photos to one device."
+   ],
+   "tools": [
+    "exiftool",
+    "mediainfo",
+    "sherloq",
+    "forensically",
+    "autopsy"
+   ],
+   "workflows": [
+    "photo-metadata",
+    "sd-card-photo-recovery"
+   ],
+   "category": "multimedia",
+   "how": "Read with a metadata reader on a working copy of the file, then record the values and the file hash.",
+   "life": "device",
+   "basics": [
+    "image-and-video-metadata",
+    "file-timestamps"
+   ],
+   "tip": "Compare EXIF time with file system times and the device time zone. Many apps and chat tools strip EXIF, so empty fields are common and not suspicious by themselves."
+  },
+  {
+   "device": "media",
+   "id": "media-authenticity",
+   "label": "Image authenticity",
+   "finds": [
+    "Signs of editing such as a different software tag, recompression traces or mixed quality levels.",
+    "Error level analysis (ELA) maps that highlight areas saved at a different compression level.",
+    "Possible cloned areas where the same patch of pixels appears twice.",
+    "Mismatches between the picture, its thumbnail and its metadata."
+   ],
+   "tools": [
+    "sherloq",
+    "forensically",
+    "fotoforensics",
+    "exiftool"
+   ],
+   "workflows": [
+    "photo-metadata"
+   ],
+   "category": "multimedia",
+   "how": "Run several visual analysis filters on a copy of the image and compare the results with the metadata.",
+   "life": "device",
+   "basics": [
+    "image-and-video-metadata",
+    "digital-forensics-overview"
+   ],
+   "tip": "ELA and similar filters only give hints. Resizing and re-saving also change results, so never call an image fake from one filter. Report the limits and combine with other evidence."
+  },
+  {
+   "device": "media",
+   "id": "media-video",
+   "label": "Video files",
+   "finds": [
+    "Container type and streams, such as MP4 or MOV, with video and audio codecs.",
+    "Frame rate, resolution, duration and bitrate that help match a video to a source device.",
+    "Creation and modification tags, and sometimes encoder or device names in the header.",
+    "Individual frames that can be exported as still images for review."
+   ],
+   "tools": [
+    "mediainfo",
+    "ffmpeg",
+    "exiftool",
+    "vlc",
+    "autopsy"
+   ],
+   "workflows": [
+    "photo-metadata"
+   ],
+   "category": "video",
+   "how": "Inspect the container and stream details of a copy, then export frames for review without changing the original.",
+   "life": "device",
+   "basics": [
+    "image-and-video-metadata",
+    "file-timestamps"
+   ],
+   "tip": "Note the hash of the original before any conversion. Export frames to a separate folder and log the exact command or setting used so another examiner can repeat it."
+  },
+  {
+   "device": "media",
+   "id": "media-audio",
+   "label": "Audio recordings",
+   "finds": [
+    "Audio format, sample rate, channels and codec of voice notes and recordings.",
+    "Metadata tags such as creation time, recording app or device name.",
+    "Spectrogram views that can show cuts, joins, background noise changes or added tones.",
+    "Voice messages saved by chat apps in their own data folders."
+   ],
+   "tools": [
+    "audacity",
+    "ffmpeg",
+    "mediainfo",
+    "exiftool"
+   ],
+   "workflows": [
+    "whatsapp-android"
+   ],
+   "category": "multimedia",
+   "how": "Open a copy in an audio editor in view-only use, check the format details and look at the waveform and spectrogram.",
+   "life": "device",
+   "basics": [
+    "image-and-video-metadata",
+    "mobile-artifacts"
+   ],
+   "tip": "A sudden change in background noise or a sharp line in the spectrogram can mark an edit, but compression can cause similar effects. Treat it as a lead and seek a specialist for speech analysis."
+  },
+  {
+   "device": "media",
+   "id": "media-thumbnails",
+   "label": "Thumbs, previews",
+   "finds": [
+    "Thumbnail caches that still show pictures after the original file was deleted.",
+    "Thumbnails embedded inside photos, which can differ from the edited full image.",
+    "Preview files created by gallery apps, chat apps and the operating system.",
+    "Leftover copies in cache, temp and recycle folders."
+   ],
+   "tools": [
+    "autopsy",
+    "exiftool",
+    "bulk-extractor",
+    "sleuthkit"
+   ],
+   "workflows": [
+    "deleted-file-recovery",
+    "photo-metadata"
+   ],
+   "category": "recovery",
+   "how": "Search cache folders and databases in the image, and carve embedded thumbnails from files and unallocated space.",
+   "life": "overwrite",
+   "basics": [
+    "deleted-files-and-recovery",
+    "file-carving"
+   ],
+   "tip": "A thumbnail can show that an image once existed on the device even when the original is gone. Note the cache path and times, since they may show when it was viewed or stored."
+  },
+  {
+   "device": "media",
+   "id": "media-web-copies",
+   "label": "Web, social copies",
+   "finds": [
+    "Downloaded pictures and videos in the downloads folder or app storage.",
+    "Social media copies that often have metadata stripped and the file re-compressed by the platform.",
+    "Saved web pages and their media files, with the page address in browser history.",
+    "Original posts and upload times that are held by the online service."
+   ],
+   "tools": [
+    "yt-dlp",
+    "wayback-machine",
+    "exiftool",
+    "autopsy",
+    "hashdeep"
+   ],
+   "workflows": [
+    "browser-history-windows",
+    "photo-metadata"
+   ],
+   "category": "osint",
+   "how": "Match local files with browser history and app data, and capture public posts in a documented way, using lawful requests for provider-held originals.",
+   "life": "provider",
+   "basics": [
+    "image-and-video-metadata",
+    "osint-basics",
+    "browser-artifacts"
+   ],
+   "tip": "Platforms often remove EXIF and rename files, so compare hashes and sizes carefully. Record the source page, the capture time and your method when saving public content."
+  },
+  {
+   "device": "special",
+   "id": "special-malware",
+   "label": "Suspicious files",
+   "finds": [
+    "Files with odd names, double extensions or unusual locations such as temp and startup folders.",
+    "File type, packer and compile details found by static checks without running the file.",
+    "Readable strings, such as web addresses, commands and file paths inside the program.",
+    "Hash values that can be looked up in reputation services and known-file lists."
+   ],
+   "tools": [
+    "detect-it-easy",
+    "pestudio",
+    "floss",
+    "yara",
+    "capa",
+    "remnux"
+   ],
+   "workflows": [
+    "malware-static-triage",
+    "office-macro-malware-triage"
+   ],
+   "category": "malware",
+   "how": "Copy the file to an isolated analysis system and do static checks first. Do not open or run it.",
+   "life": "device",
+   "basics": [
+    "malware-analysis-basics",
+    "hash-values"
+   ],
+   "tip": "Work in an isolated virtual machine with no network and keep the sample in a protected archive. Static triage tells you what a file may do, not that it did it."
+  },
+  {
+   "device": "special",
+   "id": "special-encrypted",
+   "label": "Encrypted data",
+   "finds": [
+    "Encrypted containers and archives, recognised by header, size and file type.",
+    "Signs of full disk encryption, such as a protected volume with a recovery key option.",
+    "Password-protected documents and archives stored in user folders.",
+    "Recovery keys saved in cloud accounts, printouts or files."
+   ],
+   "tools": [
+    "hashcat",
+    "john",
+    "dislocker",
+    "name-that-hash",
+    "hxd"
+   ],
+   "workflows": [
+    "bitlocker-encrypted-drive"
+   ],
+   "category": "passwords",
+   "how": "Identify the type of protection first, then look lawfully for keys in memory, accounts or case material, and record every attempt.",
+   "life": "device",
+   "basics": [
+    "full-disk-encryption",
+    "password-cracking-basics"
+   ],
+   "tip": "Capture RAM from a running, unlocked system before shutdown because keys may only exist there. Password guessing is slow and may not succeed, so also search for stored keys."
+  },
+  {
+   "device": "special",
+   "id": "special-crypto",
+   "label": "Crypto wallets",
+   "finds": [
+    "Wallet software, wallet files and browser wallet extensions on the device.",
+    "Seed phrases or addresses noted in files, notes or screenshots.",
+    "Addresses and transaction IDs that can be followed on the public blockchain.",
+    "Exchange account emails, apps and web history that point to provider records."
+   ],
+   "tools": [
+    "bip39",
+    "mempool",
+    "blockchair",
+    "etherscan",
+    "walletexplorer",
+    "btcrecover"
+   ],
+   "workflows": [
+    "crypto-wallet-trace"
+   ],
+   "category": "crypto",
+   "how": "Find wallet files and addresses on the device, then check them on public block explorers and request exchange records through legal channels.",
+   "life": "provider",
+   "basics": [
+    "cryptocurrency-forensics-basics",
+    "osint-basics"
+   ],
+   "tip": "Never move or touch funds. Record addresses exactly, take screenshots of explorer pages with the date, and follow your authority's procedure for seizing assets."
+  },
+  {
+   "device": "special",
+   "id": "special-osint",
+   "label": "Online profiles",
+   "finds": [
+    "Usernames, email addresses and profile links found in the device and browser data.",
+    "Public posts, photos and account details linked to the same person or handle.",
+    "Older versions of web pages saved in public web archives.",
+    "Domain, host and company details from open sources."
+   ],
+   "tools": [
+    "spiderfoot",
+    "maltego-ce",
+    "sherlock",
+    "theharvester",
+    "wayback-machine",
+    "osint-framework"
+   ],
+   "workflows": [
+    "browser-history-windows"
+   ],
+   "category": "osint",
+   "how": "Collect only public information with a written log of sources, dates and screenshots, and keep it apart from device evidence.",
+   "life": "provider",
+   "basics": [
+    "osint-basics",
+    "browser-artifacts"
+   ],
+   "tip": "Use a clean, non-personal research setup, log every page you visit and save a copy as you go. Public pages change or vanish quickly, and username matches need checking before use."
+  },
+  {
+   "device": "special",
+   "id": "special-database",
+   "label": "Database files",
+   "finds": [
+    "SQLite databases from phones, browsers and apps holding messages, history and settings.",
+    "Deleted records still present in free pages, the write-ahead log or journal files.",
+    "Tables and columns that show timestamps, users and linked file names.",
+    "Other database types such as Access or server databases found in the image."
+   ],
+   "tools": [
+    "db4s",
+    "fqlite",
+    "autopsy",
+    "bstrings",
+    "hxd"
+   ],
+   "workflows": [
+    "android-app-database-sqlite"
+   ],
+   "category": "database",
+   "how": "Copy the database together with its WAL and journal files, then open the copy read-only and also check raw pages for deleted rows.",
+   "life": "device",
+   "basics": [
+    "sqlite-in-mobile-forensics",
+    "sqlite-wal-and-deleted-records",
+    "database-forensics-basics"
+   ],
+   "tip": "Always keep the -wal and -journal files next to the database. Opening the original in a normal viewer can merge the log and change the data you wanted to keep."
+  },
+  {
+   "device": "special",
+   "id": "special-hidden",
+   "label": "Hidden data",
+   "finds": [
+    "Files hidden inside pictures or audio, a method called steganography.",
+    "Archives or other files appended after the end of a normal file.",
+    "Odd file sizes or statistics that suggest extra data in an image.",
+    "Renamed files whose real type shows in the header bytes."
+   ],
+   "tools": [
+    "zsteg",
+    "steghide",
+    "stegseek",
+    "binwalk",
+    "hxd",
+    "imhex"
+   ],
+   "workflows": [
+    "malware-static-triage"
+   ],
+   "category": "steganalysis",
+   "how": "Check file headers and sizes, run detection tools on copies and carve embedded files from the raw bytes.",
+   "life": "device",
+   "basics": [
+    "steganography-basics",
+    "anti-forensics",
+    "file-carving"
+   ],
+   "tip": "Hidden data is uncommon compared with plain evidence. Compare the file with other copies from the same source first, and note that a failed extraction does not show that nothing is hidden."
+  },
+  {
+   "device": "database",
+   "id": "database-txlog",
+   "label": "Transaction logs",
+   "finds": [
+    "SQL Server keeps a log of every data change in its transaction log file, and an undocumented function such as fn_dblog can show delete, update and insert operations with a transaction ID and begin time.",
+    "MySQL and MariaDB keep a binary log of data changes (not plain SELECT statements), which with row format can hold before and after values.",
+    "PostgreSQL writes a write-ahead log (WAL), and the pg_waldump tool prints its records by relation or transaction ID.",
+    "MongoDB replica sets keep a capped oplog of data-changing operations in local.oplog.rs.",
+    "Log files can be truncated, rotated or purged, so the time window that survives depends on settings and backups."
+   ],
+   "tools": [
+    "autopsy",
+    "ftk-imager",
+    "sof-elk",
+    "zui"
+   ],
+   "workflows": [
+    "forensic-image-and-hash",
+    "deleted-file-recovery"
+   ],
+   "category": "database",
+   "how": "Copy the log files from the stopped server or an image, then read them with the vendor tools on a working copy and record hashes.",
+   "life": "overwrite",
+   "basics": [
+    "database-forensics-basics",
+    "timeline-analysis"
+   ],
+   "tip": "Check the recovery model or log expiry setting first. It tells you how far back the log can reach. Do not run an undocumented log function on the live production server if a copy is possible."
+  },
+  {
+   "device": "database",
+   "id": "database-audit",
+   "label": "Audit and query logs",
+   "finds": [
+    "MySQL has an optional general query log that records client connections and every statement received, but it is off by default.",
+    "PostgreSQL can log connections, disconnections and statements, but log_statement is none by default, so the settings decide what exists.",
+    "SQL Server Audit can write events to a binary file or to the Windows Security or Application log.",
+    "Query text in these logs can hold sensitive data such as passwords, and log times may use a different time zone from the host."
+   ],
+   "tools": [
+    "evtxecmd",
+    "hayabusa",
+    "sof-elk",
+    "zui",
+    "sigma"
+   ],
+   "workflows": [
+    "windows-logons",
+    "super-timeline-plaso-timesketch"
+   ],
+   "category": "logs",
+   "how": "Collect the log files or audit targets from the server or its image, note the logging settings in force, and parse the files on a working copy.",
+   "life": "overwrite",
+   "basics": [
+    "database-forensics-basics",
+    "log-analysis-basics"
+   ],
+   "tip": "A missing log line may only mean logging was off. Record the logging settings before you draw any conclusion from silence."
+  },
+  {
+   "device": "database",
+   "id": "database-deleted",
+   "label": "Deleted and updated",
+   "finds": [
+    "PostgreSQL keeps old row versions after UPDATE or DELETE until VACUUM removes them, because other transactions may still need them.",
+    "SQLite pages freed by a delete go to a freelist and stay there until reused, unless secure_delete is on.",
+    "Deleted data may also sit in unallocated space inside pages, in the WAL file, or in log files that recorded the change.",
+    "Changes seen in a transaction log can show what a row held before it was changed or removed."
+   ],
+   "tools": [
+    "fqlite",
+    "db4s",
+    "autopsy",
+    "andriller"
+   ],
+   "workflows": [
+    "android-app-database-sqlite",
+    "deleted-file-recovery"
+   ],
+   "category": "database",
+   "how": "Work from a read-only copy of the database file and its log or WAL files, then use a recovery tool that reads pages directly.",
+   "life": "overwrite",
+   "basics": [
+    "sqlite-wal-and-deleted-records",
+    "database-forensics-basics",
+    "deleted-files-and-recovery"
+   ],
+   "tip": "Maintenance jobs such as VACUUM, a rebuild or a restore can wipe these traces. Ask when they last ran and record the answer."
+  },
+  {
+   "device": "database",
+   "id": "database-backups",
+   "label": "Backups, snapshots",
+   "finds": [
+    "SQL Server stores backup and restore history in the msdb database, including backup type and start and finish times.",
+    "Full, differential and log backups can hold older copies of data that were later changed or deleted.",
+    "MySQL point-in-time recovery restores a backup and then replays binary log events written after it.",
+    "Snapshots, dump files and replica copies may sit on other servers or storage with their own retention."
+   ],
+   "tools": [
+    "ftk-imager",
+    "autopsy",
+    "fqlite",
+    "db4s"
+   ],
+   "workflows": [
+    "forensic-image-and-hash",
+    "deleted-file-recovery"
+   ],
+   "category": "database",
+   "how": "List backup history from the server or its image, then locate and copy the backup files or snapshots and hash them.",
+   "life": "device",
+   "basics": [
+    "database-forensics-basics",
+    "evidence-integrity"
+   ],
+   "tip": "A backup is a view of the data at one moment. Compare several backups to see when a row changed, and restore only into a lab copy."
+  },
+  {
+   "device": "database",
+   "id": "database-accounts",
+   "label": "Accounts, logins",
+   "finds": [
+    "SQL Server lists logins and roles in sys.server_principals with create and last modify dates.",
+    "MySQL holds accounts and grants in system tables such as user and db, plus a password_history table in the mysql schema.",
+    "PostgreSQL pg_stat_activity shows live sessions with user, client address, application name and start time, but only while they run.",
+    "Connection history after a session ends depends on connection logging, audit settings or network logs."
+   ],
+   "tools": [
+    "wireshark",
+    "zeek",
+    "sof-elk",
+    "evtxecmd"
+   ],
+   "workflows": [
+    "windows-logons",
+    "pcap-first-look"
+   ],
+   "category": "database",
+   "how": "Query account catalogs on a copy or live server using a read-only account, and collect connection logs and network records for history.",
+   "life": "volatile",
+   "basics": [
+    "database-forensics-basics",
+    "log-analysis-basics"
+   ],
+   "tip": "Live session views vanish at restart, so capture them early. Shared application accounts hide the real person, so match them with application logs."
+  },
+  {
+   "device": "database",
+   "id": "database-sqlite",
+   "label": "SQLite and files",
+   "finds": [
+    "Most phone and desktop apps keep data in SQLite files, often with a -wal and a -shm file beside them.",
+    "The WAL holds changed pages until a checkpoint copies them into the main file, so it may contain data that is not yet in the database.",
+    "The file system around a database adds file timestamps, rotated logs and temporary or journal files.",
+    "Opening a database with ordinary tools can commit the WAL and change the evidence."
+   ],
+   "tools": [
+    "db4s",
+    "fqlite",
+    "aleapp",
+    "ileapp",
+    "adb",
+    "autopsy"
+   ],
+   "workflows": [
+    "android-app-database-sqlite",
+    "whatsapp-android"
+   ],
+   "category": "database",
+   "how": "Copy the database with its -wal and -shm files together from the extraction, hash them, and open only the copies.",
+   "life": "device",
+   "basics": [
+    "sqlite-in-mobile-forensics",
+    "sqlite-wal-and-deleted-records",
+    "mobile-artifacts"
+   ],
+   "tip": "Always copy the database and its WAL file as a set. SWGDE advises checking parsed results against the raw database and its journal or WAL."
+  },
+  {
+   "device": "voice",
+   "id": "voice-handset",
+   "label": "Call log, voicemail",
+   "finds": [
+    "Android call logs sit in a database in the contacts provider, with number, date, duration and call type.",
+    "The iOS call history database, CallHistory.storedata, lists the address, date, duration and direction, and iOS dates count from 2001.",
+    "Handset records can differ from carrier records, so some mismatch is expected.",
+    "Device time may be set by the network or by the user, so check the time zone and clock."
+   ],
+   "tools": [
+    "aleapp",
+    "ileapp",
+    "andriller",
+    "mvt",
+    "db4s"
+   ],
+   "workflows": [
+    "iphone-first-look",
+    "android-app-database-sqlite"
+   ],
+   "category": "android",
+   "how": "Take a logical or file system extraction, then read the call and voicemail databases with a parser and check the result against the raw database.",
+   "life": "device",
+   "basics": [
+    "mobile-artifacts",
+    "sqlite-in-mobile-forensics",
+    "mobile-extraction-levels"
+   ],
+   "tip": "Check the parsed list against what the handset screen shows and against the raw database, as SWGDE advises. Tools can miss or mislabel entries."
+  },
+  {
+   "device": "voice",
+   "id": "voice-carrier",
+   "label": "Carrier call records",
+   "finds": [
+    "Providers keep call detail records for billing, usually with date and time, the numbers involved, duration and cell site information.",
+    "Data session records can add bytes sent and received and IP details.",
+    "Records do not show who was using the phone, and cell site data cannot give an exact place.",
+    "Providers may report times in different time zones, and retention is limited, so preservation requests should be prompt."
+   ],
+   "tools": [
+    "sof-elk",
+    "zui"
+   ],
+   "workflows": [
+    "super-timeline-plaso-timesketch"
+   ],
+   "category": "network",
+   "how": "Obtained from the provider through lawful process, with the carrier key that explains the layout of the records.",
+   "life": "provider",
+   "basics": [
+    "mobile-forensics-overview",
+    "timeline-analysis"
+   ],
+   "tip": "Ask for the carrier key and the time zone used. A virtual network operator may rely on a second provider that also holds records."
+  },
+  {
+   "device": "voice",
+   "id": "voice-voip",
+   "label": "VoIP and app calls",
+   "finds": [
+    "SIP traffic shows INVITE and BYE messages, response codes and a Call-ID that ties the messages of one call together.",
+    "A PBX or SIP server may keep logs and call records with caller, callee and times.",
+    "Chat and calling apps keep call history in their own databases, often with time and duration but not the voice content.",
+    "Encrypted media such as SRTP cannot be played back without the keys."
+   ],
+   "tools": [
+    "sngrep",
+    "wireshark",
+    "tcpdump",
+    "zeek",
+    "networkminer",
+    "aleapp"
+   ],
+   "workflows": [
+    "pcap-first-look",
+    "whatsapp-android"
+   ],
+   "category": "voip",
+   "how": "Read SIP flows from a packet capture or server logs on a working copy, and parse app call history from the device extraction.",
+   "life": "network",
+   "basics": [
+    "voip-and-messaging-basics",
+    "packet-capture-pcap",
+    "tls-and-encrypted-traffic"
+   ],
+   "tip": "Search a capture by Call-ID to follow one call. If media is encrypted, the signalling still shows who called whom and when."
+  },
+  {
+   "device": "voice",
+   "id": "voice-recordings",
+   "label": "Audio recordings",
+   "finds": [
+    "Recorder apps save audio files such as AAC or ALAC in m4a containers on iPhones, with file system times and embedded tags.",
+    "Container and stream details such as codec, bitrate and duration can be read with media tools.",
+    "Edits may change encoding parameters and leave traces in temporary files or app records.",
+    "File times show when a file was saved or copied, not always when the sound was recorded."
+   ],
+   "tools": [
+    "mediainfo",
+    "ffmpeg",
+    "exiftool",
+    "audacity",
+    "vlc"
+   ],
+   "workflows": [
+    "photo-metadata",
+    "deleted-file-recovery"
+   ],
+   "category": "multimedia",
+   "how": "Copy the audio file with its file system metadata, hash it, and inspect it on a working copy with a metadata reader.",
+   "life": "device",
+   "basics": [
+    "image-and-video-metadata",
+    "file-timestamps",
+    "mobile-artifacts"
+   ],
+   "tip": "Never play or edit the original file. Work on a hashed copy and keep the tool report with the case notes."
+  },
+  {
+   "device": "voice",
+   "id": "voice-assistant",
+   "label": "Smart speakers",
+   "finds": [
+    "Amazon Alexa cloud records can hold each voice request with device, time, a text transcript and the intent.",
+    "Audio recordings can be fetched from the cloud, but users can delete them, and the transcript may stay.",
+    "Google Assistant activity is saved to the account only if Web and App Activity is on, and users can delete it.",
+    "The device itself may keep little, such as wake-word logs, which one study found deleted after about three days."
+   ],
+   "tools": [
+    "mvt",
+    "aleapp",
+    "ileapp",
+    "microsoft-extractor-suite"
+   ],
+   "workflows": [
+    "iphone-first-look"
+   ],
+   "category": "cloud",
+   "how": "Use lawful account access or a provider request for cloud history, and read the companion app data on the phone extraction.",
+   "life": "provider",
+   "basics": [
+    "cloud-forensics-basics",
+    "mobile-artifacts"
+   ],
+   "tip": "Retention depends on the account settings, so note them. Profile attribution can be wrong, so check who spoke by listening to the audio."
+  },
+  {
+   "device": "voice",
+   "id": "voice-chat",
+   "label": "Chat voice messages",
+   "finds": [
+    "WhatsApp on Android stores voice messages as .opus files in a WhatsApp Voice Notes folder.",
+    "The WhatsApp database records the media type, size, duration and file name for each audio message.",
+    "On iOS the WhatsApp media table records the local path, file size and duration of each item.",
+    "If the audio file was deleted, the database row may still show that a voice message existed."
+   ],
+   "tools": [
+    "aleapp",
+    "ileapp",
+    "whatsapp-chat-exporter",
+    "wa-crypt-tools",
+    "db4s",
+    "ffmpeg"
+   ],
+   "workflows": [
+    "whatsapp-android",
+    "android-app-database-sqlite"
+   ],
+   "category": "messaging",
+   "how": "Extract the app folder and database from the device or backup, match database rows to the audio files, and hash both.",
+   "life": "device",
+   "basics": [
+    "voip-and-messaging-basics",
+    "sqlite-in-mobile-forensics",
+    "mobile-artifacts"
+   ],
+   "tip": "Match each database row to its audio file by name and time. A row without a file, or a file without a row, is worth noting."
   }
  ]
 }

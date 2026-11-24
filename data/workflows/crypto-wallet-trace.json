@@ -1,0 +1,171 @@
+{
+ "reviewed": "2026-11-24",
+ "title": "Where did the money in this crypto address go?",
+ "short": "Follow a crypto address",
+ "lead": "Public blockchains record every transfer. This workflow shows how to look up an address on free explorers, follow the money one step at a time, understand what address grouping can and cannot tell you, and know where a trace has to stop and a legal request begins.",
+ "level": "Beginner to intermediate",
+ "time": "1 to 2 hours on the practice transaction",
+ "evidence": "A cryptocurrency address or transaction ID, for example from a phone, a document or a victim statement",
+ "answers": [
+  "Which blockchain the address belongs to",
+  "When it received and sent funds, and how much",
+  "Where the funds went next, hop by hop",
+  "Whether the funds reached a service such as an exchange",
+  "How sure each link in the trace is"
+ ],
+ "need": [
+  "The address or transaction ID, with a note of where it came from",
+  "A web browser and a place to write notes and take screenshots",
+  "A rule from your lab on using public websites for case work"
+ ],
+ "steps": [
+  {
+   "title": "Record the address and where it came from",
+   "text": "Write down the full address, the place you found it (phone, paper, message, statement) and the date. Copy and paste it, do not retype it, because one wrong character gives a different address. Then work out the chain. Bitcoin addresses start with 1, 3 or bc1. Ethereum addresses start with 0x followed by 40 characters.",
+   "note": "The same text can be valid on several chains in some cases. Confirm the chain from the app or the document that gave you the address."
+  },
+  {
+   "title": "Look up a Bitcoin address",
+   "text": "Search the address in the mempool explorer. You see the balance, the number of transactions and the list of transfers with their times. Open a transaction to see its inputs, outputs, fee, block and time. Copy the transaction ID of every transfer you plan to use. Times are usually in UTC, so say so in your notes.",
+   "tools": [
+    "mempool"
+   ],
+   "note": "Searches go to a third-party website. Follow your lab's rules about what may be searched."
+  },
+  {
+   "title": "Compare with a second explorer",
+   "text": "Search the same address in Blockchair, which covers many chains. Compare the balance, the transaction count and the first and last times with the first explorer. A small difference in recent data can be a delay. A big difference needs an explanation before you go on.",
+   "tools": [
+    "blockchair"
+   ]
+  },
+  {
+   "title": "Look up an Ethereum address",
+   "text": "In Etherscan, an address page has separate tabs. Normal transactions are started by a person or a program with a key. Internal transactions are transfers made by a contract. Token transfers show tokens such as ERC-20 coins. Look at all three, because value can move without showing in the first tab.",
+   "tools": [
+    "etherscan"
+   ],
+   "note": "Labels on Etherscan are added by the site or its users. Treat them as a lead and check them."
+  },
+  {
+   "title": "Follow the money one hop at a time",
+   "text": "For each output, check whether it was spent. If it was, open the spending transaction and look at where the money went. Write each hop in a table: transaction ID, time, amount, from, to. Bitcoin has no named change output, so a payment may have an output that goes back to the sender. Mark such a guess as a guess.",
+   "tools": [
+    "mempool",
+    "blockchair"
+   ],
+   "note": "Stop when the trail splits into very many outputs, or when it reaches a service."
+  },
+  {
+   "title": "Group addresses, with care",
+   "text": "WalletExplorer groups Bitcoin addresses into wallets and labels some known services. The idea behind it is that addresses spent together as inputs of one transaction probably have the same owner. This is a guess, not proof. CoinJoin transactions are made to break that guess, and one wrong merge can spread to many addresses.",
+   "tools": [
+    "walletexplorer"
+   ],
+   "note": "Use a label from a website only as a lead. Report it as a label from that site."
+  },
+  {
+   "title": "Know where a trace stops",
+   "text": "Funds that reach an exchange or other service end the public trace. The service holds the account details, and it normally releases them only on a formal request from the proper authority, not to a student or a phone call. Mixers, CoinJoin and privacy coins such as Monero and Zcash make tracing harder. Tell the case lead what you found and who should ask next."
+  },
+  {
+   "title": "Save the evidence of the trace",
+   "text": "Save the address, every transaction ID, block, time (UTC), amount and the explorer used. Take a dated screenshot of each page and save a CSV export where the site offers one. Explorers can change their labels and layout, so a screenshot shows what you saw. Keep a note of which steps are fact and which are inference."
+  }
+ ],
+ "artifacts": [
+  {
+   "name": "Address",
+   "where": "Phone wallet app, document, message or statement",
+   "tells": "The public identifier you start from"
+  },
+  {
+   "name": "Transaction ID (hash)",
+   "where": "Blockchain, shown by explorers",
+   "tells": "One transfer, with inputs, outputs, fee, block and time"
+  },
+  {
+   "name": "Block height and time",
+   "where": "Blockchain, shown by explorers",
+   "tells": "When the network accepted the transfer"
+  },
+  {
+   "name": "Spent or unspent output status",
+   "where": "Bitcoin explorers",
+   "tells": "Whether an output was used later, and by which transaction"
+  },
+  {
+   "name": "Contract and token tabs",
+   "where": "Etherscan address page",
+   "tells": "Transfers made by contracts and token movements"
+  },
+  {
+   "name": "Wallet group and service label",
+   "where": "WalletExplorer or similar sites",
+   "tells": "A guess about which addresses belong together, and known services"
+  }
+ ],
+ "limits": [
+  "An address is not a name. The blockchain does not show who controls it.",
+  "Address grouping and change guesses are inferences, and they can be wrong, so report them with their uncertainty.",
+  "A trace usually ends at an exchange or other service. Names and account data need a formal request.",
+  "Mixers, CoinJoin, bridges and privacy coins make a trace weaker or impossible with free tools.",
+  "Labels on explorers can be incomplete or wrong.",
+  "Blockchain data can be read by anyone, so it shows a transfer. It does not show why it was made."
+ ],
+ "practice": {
+  "name": "Bitcoin block 170 transaction",
+  "by": "Public Bitcoin blockchain, read with the mempool explorer",
+  "url": "https://mempool.space/tx/f4184fc596403b9d638783cf57adfe4c75c605f6356fbc91338530e9831e9e16",
+  "text": "No public practice set with an answer key for address tracing was found that I could check. As a safe start, use an early public transaction. I opened this one: it is in block 170, dated 2009-01-12 03:30 UTC, has one input of 50 BTC, two outputs of 10 BTC and 40 BTC, and no fee. Its outputs use an old format, so the explorer shows shortened keys and not normal addresses.",
+  "task": "Open the transaction. Write down its inputs, outputs, block and time. Find out whether each output was spent later, follow one hop, and compare the same transaction in Blockchair.",
+  "note": "There is no official answer sheet. For better practice, make your own: send small amounts between wallets you own on a Bitcoin test network, keep notes of the transaction IDs, and trace them without looking at your notes."
+ },
+ "learn": [
+  {
+   "label": "OSCE: Decoding Crypto Crime, a guide for law enforcement",
+   "url": "https://cdn.osce.org/sites/default/files/f/documents/2/1/587475.pdf"
+  },
+  {
+   "label": "Paper: Resurrecting address clustering in Bitcoin",
+   "url": "https://arxiv.org/pdf/2107.05749.pdf"
+  },
+  {
+   "label": "SitePoint: Ethereum internal transactions and token transfers",
+   "url": "https://www.sitepoint.com/ethereum-internal-transactions-token-transfers/"
+  },
+  {
+   "label": "WalletExplorer",
+   "url": "https://www.walletexplorer.com/"
+  }
+ ],
+ "mistakes": [
+  "Retyping an address by hand and tracing the wrong one.",
+  "Treating an address group or a service label as proof of who owns an address.",
+  "Looking only at the first Etherscan tab and missing contract and token transfers.",
+  "Forgetting that explorer times are usually UTC and mixing them with local times.",
+  "Writing that funds were sent to a person when the trace only reached an exchange address."
+ ],
+ "verify": [
+  "Look up the same transaction on a second explorer and compare amounts, block and time.",
+  "Check that the amounts add up: inputs minus outputs should equal the fee.",
+  "Compare the trace with other evidence, such as messages, receipts or exchange statements, before drawing a conclusion."
+ ],
+ "report_line": "The address [address] on the [chain] blockchain received [amount] in [number] transactions between [first time] and [last time] (UTC). The funds in transaction [ID] were then sent to [address], which [is labelled as / appears to be] [service] on [site] and is [not] confirmed. This is based on public data. It does not show who controls the addresses.",
+ "next": [
+  {
+   "text": "Learn how to image and hash a phone or drive first",
+   "workflow": "forensic-image-and-hash"
+  },
+  {
+   "text": "Look for wallet apps and addresses on an iPhone",
+   "workflow": "iphone-first-look"
+  },
+  {
+   "text": "Read app data from an Android extraction",
+   "workflow": "android-app-database-sqlite"
+  }
+ ],
+ "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases.",
+ "untested": true
+}

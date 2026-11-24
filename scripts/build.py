@@ -222,7 +222,7 @@ def page(path, title, desc, body, current=""):
 </main>
 <footer class="site-foot"><div class="wrap">
 <p class="about">{name} is an independent educational resource. It is not affiliated with, sponsored by or endorsed by any vendor or project listed here. Credit for every tool belongs to its developers. Product names are trademarks of their owners. Downloads come from third parties: validate every tool yourself before using it on real evidence.</p>
-<nav aria-label="Footer">{basics_link}<a href="{px}compare.html">Compare tools</a><a href="{px}toolbox.html">Pocket toolbox</a><a href="{px}nist.html">Browse by NIST functionality</a><a href="{px}about.html">About and disclaimer</a><a href="{px}about.html#corrections">Corrections and removal requests</a><a href="{px}about.html#privacy">Privacy</a>{maint}</nav>
+<nav aria-label="Footer">{basics_link}<a href="{px}compare.html">Compare tools</a><a href="{px}lab.html">Evidence lab</a><a href="{px}toolbox.html">Pocket toolbox</a><a href="{px}nist.html">Browse by NIST functionality</a><a href="{px}about.html">About and disclaimer</a><a href="{px}about.html#corrections">Corrections and removal requests</a><a href="{px}about.html#privacy">Privacy</a>{maint}</nav>
 </div></footer>
 <script src="{px}assets/app.js" defer></script>
 </body>
@@ -320,6 +320,7 @@ def build_home():
         ("basics.html", "Basics", "What is imaging? A write blocker? Start here")] * int(bool(BASICS)) + [
         ("map.html", "Evidence map", "Tap a laptop or phone to see where evidence lives")] * int((DATA / "xray.json").exists() and (PREVIEW or not json.load(open(DATA / "xray.json", encoding="utf-8")).get("draft"))) + [
         ("workflows.html", "Case workflows", "Step by step, with practice data")] * int(bool(WORKFLOWS)) + [
+        ("lab.html", "Evidence lab", "Try it: read photo metadata and more"),
         ("compare.html", "Compare tools", "Two or three tools side by side"),
         ("toolbox.html", "Pocket toolbox", "Timestamp, hash and text decoders")] + [
         ("hotseat.html", "Examiner's hot seat", "Hard viva and court questions")] * int((DATA / "hotseat.json").exists() and (PREVIEW or not json.load(open(DATA / "hotseat.json", encoding="utf-8")).get("draft"))))
@@ -630,15 +631,18 @@ def build_workflows():
         return
     cards = []
     for wid, w in WORKFLOWS.items():
-        cards.append('<article class="card"><div class="top"><h3><a href="workflows/%s.html">%s</a></h3>%s</div>'
+        cards.append('<article class="card" data-section="%s"><div class="top"><h3><a href="workflows/%s.html">%s</a></h3>%s</div>'
                      '<div class="by">Evidence: %s</div><p class="sum">%s</p>'
                      '<div class="tags"><span class="tag">%s</span><span class="tag">%d steps</span></div></article>'
-                     % (wid, e(w["title"]), '<span class="badge warn">Draft</span>' if w.get("draft") else "",
+                     % (e((w["title"] + " " + w["evidence"] + " " + w["lead"] + " " + w["short"]).lower()), wid, e(w["title"]), '<span class="badge warn">Draft</span>' if w.get("draft") else "",
                         e(w["evidence"]), e(w["lead"]), e(w["level"]), len(w["steps"])))
     body = ('<div class="wrap"><div class="page-head"><h1>Case workflows</h1>'
             '<p class="lead">Start from the question you need to answer. Each workflow gives the steps in order, the free tool for each step, '
-            'where the evidence is stored, and a public practice image to try it on.</p></div>'
-            '<section class="section" style="padding-top:8px"><div class="grid">%s</div></section></div>' % "".join(cards))
+            'where the evidence is stored, and a public practice image to try it on.</p>'
+            '<div class="stats"><span><b>%d</b> workflows</span></div>'
+            '<div class="filters"><div class="row"><label class="label" for="wq">Find a workflow</label>'
+            '<input id="wq" type="search" data-section-filter placeholder="For example USB, email, memory or phone" autocomplete="off"></div></div></div>'
+            '<section class="section" style="padding-top:8px"><div class="grid">%s</div><p class="empty" data-empty hidden>No match yet. Try a shorter word.</p></section></div>' % (len(WORKFLOWS), "".join(cards)))
     page("workflows.html", "Case workflows", "Step-by-step forensic workflows for students, using free and open-source tools and public practice data.", body, "workflows")
 
     for wid, w in WORKFLOWS.items():
@@ -657,8 +661,9 @@ def build_workflows():
         for n, st in enumerate(w["steps"], 1):
             extra = ""
             if st.get("cmd"):
-                extra += ('<div class="cmd-row" style="margin-top:10px"><pre class="cmd">%s</pre>'
-                          '<button type="button" class="btn small" data-copy="%s">Copy</button></div>' % (e(st["cmd"]), e(st["cmd"])))
+                for one in (st["cmd"] if isinstance(st["cmd"], list) else [st["cmd"]]):
+                    extra += ('<div class="cmd-row" style="margin-top:10px"><pre class="cmd">%s</pre>'
+                              '<button type="button" class="btn small" data-copy="%s">Copy</button></div>' % (e(one), e(one)))
             if st.get("paths"):
                 extra += '<div class="paths">%s</div>' % "".join("<code>%s</code>" % e(p) for p in st["paths"])
             if st.get("note"):
@@ -675,6 +680,16 @@ def build_workflows():
                     '<div class="opts arts">%s</div>' % "".join(
                         '<div><code>%s</code><span><strong>%s</strong><br>%s</span></div>' % (e(a["name"]), e(a["where"]), e(a["tells"]))
                         for a in w["artifacts"]))
+        if w.get("verify"):
+            section("verify", "Check your result",
+                    '<div class="card"><ul class="tight" style="margin-top:0">%s</ul></div>' % "".join("<li>%s</li>" % e(x) for x in w["verify"]))
+        if w.get("mistakes"):
+            section("mistakes", "Common mistakes",
+                    '<div class="card"><ul class="tight" style="margin-top:0">%s</ul></div>' % "".join("<li>%s</li>" % e(x) for x in w["mistakes"]))
+        if w.get("report_line"):
+            section("report", "Write it up",
+                    '<div class="card"><p class="sum">A short, careful way to state this kind of finding in a report. Change the details to match your own results.</p>'
+                    '<blockquote class="reportline">%s</blockquote></div>' % e(w["report_line"]))
         if w.get("limits"):
             section("limits", "What this does not prove",
                     '<div class="card"><ul class="tight" style="margin-top:0">%s</ul></div>' % "".join("<li>%s</li>" % e(x) for x in w["limits"]))
@@ -686,6 +701,11 @@ def build_workflows():
                     '<div class="card-btns"><a class="btn small on-card solid" href="%s" rel="noopener">Open the data set</a>%s</div></div>'
                     % (e(pr["name"]), e(pr["by"]), e(pr["text"]), e(pr["task"]),
                        ('<p class="sum" style="font-size:13.5px">%s</p>' % e(pr["note"])) if pr.get("note") else "", e(pr["url"]), ans))
+        nxt = [n for n in w.get("next", []) if n]
+        if nxt:
+            items = "".join('<li>%s</li>' % (('<a href="%s.html" style="font-weight:600">%s</a> <span class="muted">%s</span>' % (n["workflow"], e(WORKFLOWS[n["workflow"]]["title"]), e(n["text"])))
+                                              if n.get("workflow") in WORKFLOWS else e(n["text"])) for n in nxt)
+            section("next", "Where to go next", '<ul class="tight on-blue">%s</ul>' % items)
         if w.get("learn"):
             section("learn", "Sources and further reading",
                     '<ul class="list-plain">%s</ul><p class="muted" style="font-size:13px;margin-top:12px">%s Last reviewed %s.</p>'
@@ -772,8 +792,93 @@ def build_compare():
     page("compare.html", "Compare tools", "Compare free and open-source digital forensics tools side by side: functions, licence, platforms and project activity.", body, "compare")
 
 
+XRAY_DEVICES = [
+    ("laptop", "Laptop or PC", "Where a user works: browsers, programs, logins, documents and the drive."),
+    ("phone", "Phone", "Chats, photos, location and app data kept in a pocket computer."),
+    ("storage", "USB and memory cards", "Small storage that moves files from place to place."),
+    ("network", "Network and servers", "Logs and captures from routers, firewalls and servers."),
+    ("cloud", "Cloud accounts", "Evidence held by online services, not on the device."),
+    ("wearable", "Smartwatch", "Health, movement and notification data on the wrist."),
+    ("drone", "Drone", "Flight logs, camera media and controller data."),
+    ("car", "Car", "Infotainment, paired phones, location and vehicle data."),
+    ("camera", "Camera and smart home", "CCTV recorders, smart cameras and home devices."),
+    ("database", "Databases", "Business and app databases keep records, logs and traces of changes."),
+    ("voice", "Voice and calls", "Phone calls, voicemail, VoIP, recordings and voice assistants."),
+    ("media", "Photos, video and audio", "Media files carry hidden details about who made them, when, where and with what."),
+    ("special", "Other evidence", "Suspicious files, encrypted data, crypto wallets, online traces and hidden data."),
+]
+XRAY_LIFE = {"volatile": "Lost when power is off", "overwrite": "Stays until overwritten", "device": "Stays on the device",
+             "provider": "Held by a provider", "network": "Travels over the network"}
+# Hotspot positions for devices whose parts do not give x and y (assigned in the order of the data file).
+XRAY_SLOTS = {
+    "storage": [(150, 110), (150, 235), (150, 350), (440, 150), (440, 300)],
+    "network": [(160, 90), (160, 205), (160, 320), (450, 95), (450, 215), (450, 335)],
+    "cloud": [(190, 175), (310, 125), (440, 175), (210, 290), (330, 330), (450, 290)],
+    "drone": [(310, 115), (310, 225), (130, 330), (310, 345), (490, 330)],
+    "car": [(310, 95), (310, 195), (310, 295), (310, 385), (130, 215), (490, 215)],
+    "camera": [(130, 125), (130, 320), (330, 125), (330, 320), (510, 215)],
+    "database": [(150, 100), (150, 225), (150, 350), (450, 100), (450, 225), (450, 350)],
+    "voice": [(130, 110), (130, 240), (130, 370), (450, 110), (450, 240), (450, 370)],
+    "media": [(140, 110), (140, 240), (140, 370), (450, 110), (450, 240), (450, 370)],
+    "special": [(130, 110), (310, 110), (490, 110), (130, 300), (310, 300), (490, 300)],
+    "wearable": [(120, 130), (120, 215), (120, 300), (120, 385), (120, 470)],
+}
+XRAY_SVG = {
+    "laptop": ("0 0 620 450", ""),
+    "phone": ("0 0 240 620", "phone"),
+    "wearable": ("0 0 240 620", "phone"),
+    "storage": ("0 0 620 450", '<rect class="shell" x="40" y="40" width="210" height="140" rx="14"/><rect class="glass" x="62" y="64" width="150" height="92" rx="6"/><rect class="shell" x="250" y="74" width="62" height="72" rx="6"/><rect class="faint" x="262" y="84" width="14" height="22"/><rect class="faint" x="288" y="84" width="14" height="22"/>'
+                '<rect class="shell" x="60" y="230" width="190" height="150" rx="12"/><path class="faint" d="M80 250h150M80 290h150M80 330h150"/>'
+                '<path class="shell" d="M380 60h120l36 36v160a10 10 0 0 1-10 10H380a10 10 0 0 1-10-10V70a10 10 0 0 1 10-10z"/><path class="faint" d="M392 80v34M410 80v34M428 80v34M446 80v34"/>'
+                '<rect class="faint" x="392" y="150" width="112" height="70" rx="6"/><path class="faint" d="M392 200h112"/>'
+                '<rect class="shell" x="380" y="280" width="170" height="110" rx="14"/><circle class="faint" cx="465" cy="335" r="34"/><circle class="faint" cx="465" cy="335" r="8"/>'),
+    "network": ("0 0 620 450", '<rect class="shell" x="50" y="30" width="230" height="390" rx="14"/><rect class="glass" x="68" y="48" width="194" height="106" rx="6"/><rect class="glass" x="68" y="164" width="194" height="106" rx="6"/><rect class="glass" x="68" y="280" width="194" height="106" rx="6"/>'
+                '<path class="faint" d="M84 70h90M84 90h120M84 186h90M84 206h120M84 302h90M84 322h120"/><circle class="faint" cx="238" cy="70" r="6"/><circle class="faint" cx="238" cy="186" r="6"/><circle class="faint" cx="238" cy="302" r="6"/>'
+                '<rect class="shell" x="340" y="60" width="220" height="70" rx="10"/><path class="faint" d="M360 110h18M390 110h18M420 110h18M450 110h18M486 112l18-52M520 112l18-52"/>'
+                '<rect class="shell" x="340" y="180" width="220" height="70" rx="10"/><path class="faint" d="M360 215h180"/><rect class="shell" x="340" y="300" width="220" height="70" rx="10"/><path class="faint" d="M360 335c20-26 40-26 60 0s40 26 60 0"/>'
+                '<path class="faint" d="M280 100h60M280 215h60M280 335h60"/>'),
+    "cloud": ("0 0 620 450", '<path class="shell" d="M170 340c-70 0-110-40-110-90s40-84 92-84c10-60 66-100 130-100 72 0 122 44 134 100 60 0 104 36 104 90 0 50-44 84-104 84z"/>'
+              '<path class="faint" d="M150 380v36M310 372v44M470 380v36M110 416h400"/>'),
+    "drone": ("0 0 620 450", '<circle class="faint" cx="150" cy="70" r="46"/><circle class="faint" cx="470" cy="70" r="46"/><path class="shell" d="M180 92l92 48M440 92l-92 48"/>'
+              '<rect class="shell" x="250" y="60" width="120" height="110" rx="26"/><rect class="glass" x="278" y="180" width="64" height="64" rx="12"/><circle class="faint" cx="310" cy="212" r="16"/>'
+              '<rect class="shell" x="60" y="270" width="150" height="130" rx="18"/><path class="faint" d="M84 330h102M84 360h102"/><circle class="faint" cx="110" cy="298" r="10"/><circle class="faint" cx="160" cy="298" r="10"/>'
+              '<rect class="shell" x="260" y="290" width="100" height="120" rx="14"/><rect class="glass" x="272" y="304" width="76" height="80" rx="6"/>'
+              '<rect class="shell" x="440" y="290" width="86" height="100" rx="8"/><path class="faint" d="M456 290v22M474 290v22M492 290v22M510 290v22"/>'),
+    "car": ("0 0 620 450", '<rect class="shell" x="210" y="24" width="200" height="404" rx="80"/><rect class="glass" x="228" y="70" width="164" height="70" rx="22"/><rect class="glass" x="228" y="150" width="164" height="150" rx="14"/><rect class="glass" x="228" y="310" width="164" height="70" rx="22"/>'
+            '<rect class="faint" x="170" y="70" width="40" height="70" rx="12"/><rect class="faint" x="410" y="70" width="40" height="70" rx="12"/><rect class="faint" x="170" y="320" width="40" height="70" rx="12"/><rect class="faint" x="410" y="320" width="40" height="70" rx="12"/>'),
+    "database": ("0 0 620 450", '<path class="shell" d="M70 70c0-30 160-30 160 0v90c0 30-160 30-160 0z"/><path class="faint" d="M70 70c0 30 160 30 160 0M70 115c0 30 160 30 160 0"/>'
+                 '<path class="shell" d="M70 210c0-30 160-30 160 0v90c0 30-160 30-160 0z"/><path class="faint" d="M70 210c0 30 160 30 160 0M70 255c0 30 160 30 160 0"/>'
+                 '<rect class="shell" x="360" y="50" width="200" height="140" rx="10"/><path class="faint" d="M360 90h200M360 130h200M420 50v140M490 50v140"/>'
+                 '<rect class="shell" x="360" y="210" width="200" height="90" rx="10"/><path class="faint" d="M380 240h160M380 266h110"/>'
+                 '<rect class="shell" x="360" y="320" width="200" height="90" rx="10"/><path class="faint" d="M380 350h60M380 376h120M470 340l20 20-20 20"/>'
+                 '<path class="faint" d="M230 110h130M230 255h130M230 370h130"/>'),
+    "voice": ("0 0 620 450", '<path class="shell" d="M70 70c40-30 90-30 130 0l-18 36c-12-10-34-10-46 0z"/><rect class="shell" x="60" y="200" width="150" height="110" rx="14"/><path class="faint" d="M84 230h102M84 256h102M84 282h60"/>'
+              '<rect class="shell" x="80" y="340" width="110" height="70" rx="10"/><path class="faint" d="M96 376h78M96 360h30"/>'
+              '<rect class="shell" x="400" y="50" width="100" height="150" rx="50"/><path class="faint" d="M370 130c0 50 30 80 80 80s80-30 80-80M450 210v30M420 240h60"/>'
+              '<rect class="shell" x="360" y="270" width="190" height="130" rx="12"/><path class="faint" d="M380 335h20l10-34 14 70 14-52 12 30 12-20 14 14 16-24 12 16"/>'
+              '<path class="faint" d="M210 255h150"/>'),
+    "media": ("0 0 620 450", '<rect class="shell" x="50" y="40" width="190" height="140" rx="10"/><path class="faint" d="M62 160l50-60 34 36 26-24 56 48M190 78a12 12 0 1 0 0.1 0"/>'
+              '<rect class="shell" x="50" y="190" width="190" height="130" rx="10"/><rect class="faint" x="80" y="206" width="130" height="14"/><path class="faint" d="M66 240h160M66 262h160M66 284h110"/>'
+              '<rect class="shell" x="60" y="330" width="170" height="90" rx="10"/><path class="faint" d="M76 375h14l8-26 12 52 12-36 10 18h16l8-14 10 20 12-30 8 16h16"/>'
+              '<rect class="shell" x="360" y="40" width="200" height="140" rx="8"/><path class="faint" d="M380 40v140M420 40v140M500 40v140M540 40v140M380 70h40M380 110h40M380 150h40M500 70h40M500 110h40M500 150h40"/><path class="faint" d="M446 84l32 26-32 26z"/>'
+              '<rect class="shell" x="360" y="190" width="200" height="130" rx="10"/><path class="faint" d="M380 255h20l10-34 14 70 14-52 12 30 12-20 14 14 16-24 12 16h30"/>'
+              '<rect class="shell" x="440" y="330" width="40" height="64" rx="20"/><path class="faint" d="M420 372c0 26 20 40 40 40s40-14 40-40M460 412v18M436 430h48"/>'),
+    "special": ("0 0 620 450", '<path class="shell" d="M80 50h90l34 34v110a8 8 0 0 1-8 8H80a8 8 0 0 1-8-8V58a8 8 0 0 1 8-8z"/><path class="faint" d="M96 110h92M96 134h92M96 158h60"/>'
+                '<rect class="shell" x="250" y="96" width="120" height="100" rx="14"/><path class="faint" d="M280 96v-26a30 30 0 0 1 60 0v26"/><circle class="faint" cx="310" cy="146" r="10"/>'
+                '<circle class="shell" cx="490" cy="130" r="64"/><path class="faint" d="M466 150v-40h24a10 10 0 0 1 0 20h-24M490 94v10M490 156v10"/>'
+                '<circle class="shell" cx="130" cy="330" r="60"/><path class="faint" d="M70 330h120M130 270c-30 30-30 90 0 120M130 270c30 30 30 90 0 120"/>'
+                '<path class="shell" d="M250 280c0-14 120-14 120 0v90c0 14-120 14-120 0z"/><path class="faint" d="M250 280c0 14 120 14 120 0M250 325c0 14 120 14 120 0"/>'
+                '<rect class="shell" x="430" y="270" width="120" height="120" rx="12"/><path class="faint" d="M446 306h88M446 330h60M446 354h74"/>'),
+    "camera": ("0 0 620 450", '<rect class="shell" x="50" y="60" width="170" height="90" rx="14"/><circle class="faint" cx="150" cy="105" r="28"/><path class="faint" d="M220 105h40v50"/>'
+               '<rect class="shell" x="60" y="250" width="150" height="130" rx="14"/><circle class="faint" cx="135" cy="315" r="34"/><circle class="faint" cx="135" cy="315" r="10"/>'
+               '<rect class="shell" x="270" y="70" width="170" height="110" rx="12"/><path class="faint" d="M290 100h130M290 124h130M290 148h70"/><circle class="faint" cx="414" cy="150" r="6"/>'
+               '<rect class="shell" x="270" y="250" width="170" height="130" rx="12"/><path class="faint" d="M290 280h130M290 304h130M290 328h90"/>'
+               '<rect class="shell" x="480" y="150" width="80" height="130" rx="40"/><circle class="faint" cx="520" cy="215" r="14"/>'),
+}
+
+
 def build_xray():
-    """Evidence map: a see-through laptop and phone. Tap a part to see what evidence lives there."""
+    """Evidence map: see-through devices. Tap a part to see what evidence lives there."""
     f = DATA / "xray.json"
     if not f.exists():
         return
@@ -781,10 +886,22 @@ def build_xray():
         x = json.load(fh)
     if x.get("draft") and not PREVIEW:
         return
+    parts = x["parts"]
+    present = [d for d in XRAY_DEVICES if any(p["device"] == d[0] for p in parts)]
+    # positions
+    seen = {}
+    for p in parts:
+        if "x" not in p:
+            i = seen.get(p["device"], 0)
+            slots = XRAY_SLOTS.get(p["device"], [])
+            if i >= len(slots):
+                sys.exit("Evidence map: device %s has more parts than hotspots" % p["device"])
+            p["x"], p["y"] = slots[i]
+            seen[p["device"]] = i + 1
 
     def spots(device):
         out = []
-        for p in x["parts"]:
+        for p in parts:
             if p["device"] != device:
                 continue
             out.append('<a class="spot" href="#part-%s" data-part="%s" aria-label="%s"><circle class="ring" cx="%d" cy="%d" r="22"/>'
@@ -792,45 +909,63 @@ def build_xray():
                        % (p["id"], p["id"], e(p["label"]), p["x"], p["y"], p["x"], p["y"], p["x"], p["y"] + 44, e(p["label"])))
         return "".join(out)
 
-    laptop = ('<svg class="xray" viewBox="0 0 620 450" role="group" aria-label="Laptop: tap a part">'
-              '<rect class="shell" x="40" y="24" width="540" height="270" rx="16"/>'
-              '<rect class="glass" x="58" y="42" width="504" height="234" rx="8"/>'
-              '<path class="shell" d="M14 318 H606 L582 432 H38 Z"/>'
-              '<path class="faint" d="M40 318 V294 M580 318 V294"/>'
-              '<rect class="faint" x="64" y="338" width="112" height="70" rx="8"/><circle class="faint" cx="120" cy="373" r="24"/>'
-              '<rect class="faint" x="222" y="346" width="96" height="54" rx="4"/><path class="faint" d="M234 400v10M250 400v10M266 400v10M282 400v10M298 400v10"/>'
-              '<path class="faint" d="M380 392c16-30 44-30 60 0M392 398c10-18 26-18 36 0"/>'
-              '<rect class="faint" x="514" y="358" width="52" height="28" rx="4"/>'
-              '<rect class="faint" x="84" y="64" width="132" height="92" rx="6"/><path class="faint" d="M84 82h132"/>'
-              '<rect class="faint" x="264" y="64" width="132" height="92" rx="6"/><path class="faint" d="M300 96l24 14-24 14z"/>'
-              '<rect class="faint" x="84" y="172" width="132" height="86" rx="6"/><path class="faint" d="M100 196h100M100 214h100M100 232h64"/>'
-              '<rect class="faint" x="264" y="172" width="132" height="86" rx="6"/><path class="faint" d="M264 180l66 44 66-44"/>'
-              '<path class="faint" d="M452 122h56l-6 84h-44zM444 122h72M468 112h24"/>'
-              '%s</svg>' % spots("laptop"))
-    phone = ('<svg class="xray phone" viewBox="0 0 240 450" role="group" aria-label="Phone: tap a part">'
-             '<rect class="shell" x="24" y="14" width="192" height="422" rx="30"/>'
-             '<rect class="glass" x="38" y="50" width="164" height="350" rx="10"/>'
-             '<path class="faint" d="M100 32h40"/><circle class="faint" cx="120" cy="418" r="8"/>'
-             '%s</svg>' % spots("phone"))
+    laptop_art = ('<rect class="shell" x="40" y="24" width="540" height="270" rx="16"/>'
+                  '<rect class="glass" x="58" y="42" width="504" height="234" rx="8"/>'
+                  '<path class="shell" d="M14 318 H606 L582 432 H38 Z"/>'
+                  '<path class="faint" d="M40 318 V294 M580 318 V294"/>'
+                  '<rect class="faint" x="64" y="338" width="112" height="70" rx="8"/><circle class="faint" cx="120" cy="373" r="24"/>'
+                  '<rect class="faint" x="222" y="346" width="96" height="54" rx="4"/><path class="faint" d="M234 400v10M250 400v10M266 400v10M282 400v10M298 400v10"/>'
+                  '<path class="faint" d="M380 392c16-30 44-30 60 0M392 398c10-18 26-18 36 0"/>'
+                  '<rect class="faint" x="514" y="358" width="52" height="28" rx="4"/>'
+                  '<rect class="faint" x="84" y="64" width="132" height="92" rx="6"/><path class="faint" d="M84 82h132"/>'
+                  '<rect class="faint" x="264" y="64" width="132" height="92" rx="6"/><path class="faint" d="M300 96l24 14-24 14z"/>'
+                  '<rect class="faint" x="84" y="172" width="132" height="86" rx="6"/><path class="faint" d="M100 196h100M100 214h100M100 232h64"/>'
+                  '<rect class="faint" x="264" y="172" width="132" height="86" rx="6"/><path class="faint" d="M264 180l66 44 66-44"/>'
+                  '<path class="faint" d="M452 100h56l-6 70h-44zM444 100h72M468 90h24"/>')
+    phone_art = ('<rect class="shell" x="24" y="14" width="192" height="592" rx="30"/><rect class="glass" x="38" y="50" width="164" height="520" rx="10"/>'
+                 '<path class="faint" d="M100 32h40"/><circle class="faint" cx="120" cy="588" r="8"/>')
+    watch_art = ('<rect class="faint" x="88" y="2" width="64" height="70" rx="10"/><rect class="faint" x="88" y="548" width="64" height="70" rx="10"/>'
+                 '<rect class="shell" x="30" y="70" width="180" height="480" rx="44"/><rect class="glass" x="46" y="92" width="148" height="436" rx="32"/><path class="faint" d="M210 280h12v50h-12"/>')
+    arts = {"laptop": laptop_art, "phone": phone_art, "wearable": watch_art}
+    svgs = []
+    for did, label, _intro in present:
+        vb, art = XRAY_SVG[did]
+        if did in arts:
+            art = arts[did]
+            vb = XRAY_SVG[did][0]
+        cls = "xray phone" if did in ("phone", "wearable") else "xray"
+        svgs.append('<svg class="%s xdev" data-device="%s" viewBox="%s" role="group" aria-label="%s: tap a part">%s%s</svg>'
+                    % (cls, did, vb, e(label), art, spots(did)))
 
+    dev_label = {d[0]: d[1] for d in XRAY_DEVICES}
     panels = []
-    for p in x["parts"]:
+    for p in parts:
         tools = "".join('<a class="tool-chip" href="tools/%s.html">%s</a>' % (tid, e(TOOL[tid]["name"])) for tid in p["tools"] if tid in TOOL)
         wfs = "".join('<li><a href="workflows/%s.html">%s</a></li>' % (wid, e(WORKFLOWS[wid]["title"])) for wid in p.get("workflows", []) if wid in WORKFLOWS)
-        panels.append('<section class="card xpanel" id="part-%s" data-panel="%s"><div class="label">%s</div><h2>%s</h2>'
-                      '<h3>What you can find here</h3><ul class="tight">%s</ul>'
-                      '<h3>Free tools that read it</h3><div class="tool-chips on-card">%s</div>%s'
+        bas = "".join('<li><a href="basics/%s.html">%s</a></li>' % (bid, e(BASICS[bid]["title"])) for bid in p.get("basics", []) if bid in BASICS)
+        life = XRAY_LIFE.get(p.get("life", ""), "")
+        panels.append('<section class="card xpanel" id="part-%s" data-panel="%s" data-device="%s"><div class="top"><div class="label">%s</div>%s</div><h2>%s</h2>'
+                      '<h3>What you can find here</h3><ul class="tight">%s</ul>%s'
+                      '<h3>Free tools that read it</h3><div class="tool-chips on-card">%s</div>%s%s%s'
                       '<p><a href="categories/%s.html" style="font-weight:600">See all tools for %s</a></p></section>'
-                      % (p["id"], p["id"], "Laptop" if p["device"] == "laptop" else "Phone", e(p["label"]),
-                         "".join("<li>%s</li>" % e(i) for i in p["finds"]), tools,
+                      % (p["id"], p["id"], p["device"], e(dev_label[p["device"]]), ('<span class="badge life-%s">%s</span>' % (p["life"], e(life))) if life else "",
+                         e(p["label"]), "".join("<li>%s</li>" % e(i) for i in p["finds"]),
+                         ('<h3>How it is collected</h3><p>%s</p>' % e(p["how"])) if p.get("how") else "",
+                         tools,
                          ('<h3>Step-by-step workflow</h3><ul class="list-plain">%s</ul>' % wfs) if wfs else "",
+                         ('<h3>Learn the basics</h3><ul class="list-plain">%s</ul>' % bas) if bas else "",
+                         ('<div class="note xtip"><strong>Examiner tip.</strong> %s</div>' % e(p["tip"])) if p.get("tip") else "",
                          p["category"], e(CAT[p["category"]]["name"])))
+    tabs = "".join('<button type="button" class="xtab" role="tab" data-device="%s" aria-selected="false">%s</button>' % (d[0], e(d[1])) for d in present)
+    intro = "".join('<p class="xintro" data-device="%s">%s</p>' % (d[0], e(d[2])) for d in present)
+    legend = "".join('<span class="badge life-%s">%s</span>' % (k, e(v)) for k, v in XRAY_LIFE.items())
     body = ('<div class="wrap"><div class="page-head"><div class="label y">Evidence map</div><h1>Where does the evidence live?</h1>'
-            '<p class="lead">Tap any part of the laptop or the phone to see what an investigator can find there and which free tool reads it.</p>%s</div>'
+            '<p class="lead">Choose a device, then tap any part to see what an investigator can find there, how long it lasts, and which free tool reads it.</p>%s'
+            '<div class="xtabs" role="tablist" aria-label="Choose a device">%s</div><div class="xlegend"><span class="muted">How long it lasts:</span>%s</div></div>'
             '<div class="xray-layout"><div class="xray-stage">%s%s</div><div class="xray-panels" aria-live="polite">'
             '<p class="xhint">Tap a yellow dot to start.</p>%s</div></div></div>'
-            % (draft_banner(x), laptop, phone, "".join(panels)))
-    page("map.html", "Evidence map", "A see-through laptop and phone: tap a part to see what evidence it holds and which free tool reads it.", body, "map")
+            % (draft_banner(x), tabs, legend, intro, "".join(svgs), "".join(panels)))
+    page("map.html", "Evidence map", "See-through devices: choose a laptop, phone, drone, car, cloud account and more, tap a part to see what evidence it holds and which free tool reads it.", body, "map")
 
 
 def build_hotseat():
@@ -987,6 +1122,54 @@ def build_basics():
             '<nav class="jump az" aria-label="Letters"><span class="label">Jump to</span>%s</nav></div>'
             '<div class="prose wide" style="padding-bottom:64px">%s<p class="empty" data-empty hidden>No term found.</p></div></div>' % (len(terms), az, "".join(gl)))
     page("glossary.html", "Forensics glossary", "Plain-English definitions of digital forensics terms for students.", body, "basics")
+
+
+def build_lab():
+    def link(wid, label):
+        return ('<a href="workflows/%s.html">%s</a>' % (wid, label)) if wid in WORKFLOWS else ""
+    def tl(*ids):
+        return "".join('<a class="tool-chip" href="tools/%s.html">%s</a>' % (i, e(TOOL[i]["name"])) for i in ids if i in TOOL)
+    def basic(bid):
+        return ('<a href="basics/%s.html">%s</a>' % (bid, e(BASICS[bid]["title"]))) if bid in BASICS else ""
+    body = """<div class="wrap"><div class="page-head"><div class="label y">Hands-on practice</div><h1>Evidence lab</h1>
+<p class="lead">Small experiments you can do right now. Pick a file, see what it hides, and learn what to look for. Everything runs on your own device. No file is uploaded.</p>
+<p class="note" style="max-width:820px">Use your own photos or practice files only. Do not open real case evidence in a web page. On real cases, work on a verified copy with a proper tool.</p></div>
+<div class="grid two lab-grid" style="padding-bottom:64px">
+<section class="card tb" id="image"><div class="label">Lab 1</div><h2>Does this photo hide something?</h2>
+<p class="sum">Photos often carry a hidden block of information called EXIF metadata: the camera, the time, sometimes the place. Choose a JPEG or PNG, or use our sample photo.</p>
+<div class="lab-btns"><button type="button" class="btn small on-card solid" id="lab-img-sample">Use the sample photo</button><button type="button" class="btn small on-card" id="lab-img-dl">Download the sample</button></div>
+<label class="label" for="lab-img">Or choose your own photo</label><input id="lab-img" type="file" accept="image/jpeg,image/png">
+<div id="lab-img-prev" class="lab-prev"></div><div class="tb-out lab-out" id="lab-img-out" aria-live="polite">The details will appear here.</div>
+<div class="note"><strong>Try this.</strong> Use the sample photo. Find the time it was taken and the time it was saved again. Then find the GPS position and write down in one sentence what it proves and what it does not.</div>
+<p class="sum" style="font-size:13.5px">Next: %s %s %s</p><div class="tool-chips on-card">%s</div></section>
+<section class="card tb" id="signature"><div class="label">Lab 2</div><h2>Is this file what its name says?</h2>
+<p class="sum">Every file type starts with a few fixed bytes, a signature. Choose any file to see its first bytes and what type they say it is. A name that does not match the content is worth a closer look.</p>
+<label class="label" for="lab-sig">File</label><input id="lab-sig" type="file">
+<div class="tb-out lab-out" id="lab-sig-out" aria-live="polite">The result will appear here.</div>
+<div class="note"><strong>Try this.</strong> Make a copy of a photo and rename it to end in .pdf. Choose the copy here. What does the lab say?</div>
+<p class="sum" style="font-size:13.5px">Next: %s %s</p><div class="tool-chips on-card">%s</div></section>
+<section class="card tb" id="compare"><div class="label">Lab 3</div><h2>Are these two files identical?</h2>
+<p class="sum">A hash value is a fingerprint of a file. If two files give the same SHA-256, they are identical. This is how examiners show that a copy matches the original.</p>
+<label class="label" for="lab-cmp-a">File A</label><input id="lab-cmp-a" type="file"><label class="label" for="lab-cmp-b">File B</label><input id="lab-cmp-b" type="file">
+<div class="tb-out lab-out" id="lab-cmp-out" aria-live="polite">Choose two files.</div>
+<div class="note"><strong>Try this.</strong> Download the sample photo twice and compare the two copies. Then open one copy in an image editor, save it again and compare once more.</div>
+<p class="sum" style="font-size:13.5px">Next: %s %s</p><div class="tool-chips on-card">%s</div></section>
+<section class="card tb" id="strings"><div class="label">Lab 4</div><h2>What text is inside this file?</h2>
+<p class="sum">Programs and documents often contain readable text: paths, names, web addresses, error messages. Examiners pull this out first to get a feeling for a file. This lab reads the first 4 MB.</p>
+<label class="label" for="lab-str">File</label><input id="lab-str" type="file">
+<div class="lab-row"><label class="label" for="lab-str-min">Shortest string</label><input id="lab-str-min" type="number" min="4" max="40" value="8" style="max-width:90px">
+<label class="lab-check"><input type="checkbox" id="lab-str-wide"> also Windows (UTF-16) text</label></div>
+<label class="label" for="lab-str-q">Filter</label><input id="lab-str-q" type="search" placeholder="For example http or .dll" autocomplete="off">
+<div class="tb-out lab-out" id="lab-str-out" aria-live="polite">The strings will appear here.</div>
+<div class="note"><strong>Try this.</strong> Choose a small program or a Word document you made yourself. Filter for "http" or "C:". What can you learn without opening it?</div>
+<p class="sum" style="font-size:13.5px">Next: %s</p><div class="tool-chips on-card">%s</div></section>
+</div><script src="assets/lab.js" defer></script><noscript><p class="note">The evidence lab needs JavaScript.</p></noscript></div>""" % (
+        link("photo-metadata", "Photo metadata workflow"), basic("image-and-video-metadata"), basic("hash-values"), tl("exiftool", "mediainfo", "sherloq", "forensically"),
+        basic("file-carving"), basic("image-formats"), tl("detect-it-easy", "binwalk", "cyberchef"),
+        basic("hash-values"), basic("evidence-integrity"), tl("hashdeep", "quickhash", "ftk-imager"),
+        basic("malware-analysis-basics"), tl("floss", "bstrings", "cyberchef"))
+    body = body.replace("Next:  ", "Next: ").replace("Next:  ", "Next: ")
+    page("lab.html", "Evidence lab", "Hands-on practice in your browser: read photo metadata, check a file signature, compare file hashes and pull text out of a file. Nothing is uploaded.", body, "lab")
 
 
 def build_toolbox():
@@ -1222,7 +1405,7 @@ def main():
     assets = OUT / "assets"
     shutil.copytree(ROOT / "static", assets, dirs_exist_ok=True)
     build_home(); build_tools_index(); build_categories(); build_tool_pages()
-    build_workflows(); build_xray(); build_compare(); build_hotseat(); build_basics(); build_toolbox(); build_alternatives(); build_inside(); build_vendor_free(); build_nist(); build_practice(); build_learn(); build_about(); build_404()
+    build_workflows(); build_xray(); build_compare(); build_hotseat(); build_basics(); build_lab(); build_toolbox(); build_alternatives(); build_inside(); build_vendor_free(); build_nist(); build_practice(); build_learn(); build_about(); build_404()
     (OUT / ".nojekyll").write_text("", encoding="utf-8")
     domain = SITE.get("domain", "").strip()
     if domain:

@@ -1,0 +1,204 @@
+{
+ "reviewed": "2026-11-24",
+ "title": "Were the file times on this NTFS disk changed on purpose?",
+ "short": "Check NTFS files for timestomping",
+ "lead": "Timestomping means changing the dates of a file to hide when it was made or used. NTFS keeps two sets of times for each file and a change journal. This workflow compares them to find files whose times do not fit.",
+ "level": "Intermediate to advanced",
+ "time": "2 to 3 hours",
+ "evidence": "The $MFT and $UsnJrnl:$J files from an NTFS volume, or a disk image that holds them",
+ "answers": [
+  "Which files have $STANDARD_INFORMATION times that do not fit their $FILE_NAME times",
+  "Which files have times that end in all zeros",
+  "Whether the change journal shows a time change for the file",
+  "Whether other artifacts show the file was used at a time that contradicts its dates",
+  "How strong the evidence of time change is, and what else could explain it"
+ ],
+ "need": [
+  "A forensic image of an NTFS volume, or the extracted $MFT and $J files",
+  "A Windows workstation with MFTECmd and Timeline Explorer",
+  "Free disk space for the CSV output. A large $MFT can give a CSV of several gigabytes",
+  "A short list of the files or time window of interest, if the case gives one"
+ ],
+ "steps": [
+  {
+   "title": "Learn the two sets of times",
+   "text": "Each file record in the $MFT holds times in the $STANDARD_INFORMATION attribute ($SI) and in the $FILE_NAME attribute ($FN). Windows and most tools show the $SI times. Programs can set $SI times through normal calls, while the $FN times are normally kept by the system. So a stomped file often has $SI times that no longer match $FN. Skilled attackers can change both sets.",
+   "tools": [
+    "sleuthkit"
+   ]
+  },
+  {
+   "title": "Get the NTFS files",
+   "text": "Extract the $MFT from the image. For the change journal, extract the $J stream of $UsnJrnl. FTK Imager and Autopsy can export them from an image. KAPE can collect them from a live system or a mounted image. Note the image hash and the extraction method in your notes. Do not run the tools on the original disk.",
+   "tools": [
+    "ftk-imager",
+    "autopsy",
+    "kape"
+   ],
+   "paths": [
+    "$MFT",
+    "$Extend\\$UsnJrnl:$J",
+    "$LogFile"
+   ]
+  },
+  {
+   "title": "Parse the $MFT into CSV",
+   "text": "MFTECmd reads the $MFT and writes a CSV with the $SI and $FN times of every record. By default it lists the $FN times only when they differ from the $SI times. Use the --at option to include all of them. The output also has extra columns that flag zeroed sub-seconds and $SI earlier than $FN. Check the column names in your version.",
+   "tools": [
+    "mftecmd"
+   ],
+   "cmd": "MFTECmd.exe -f \"C:\\case\\$MFT\" --csv \"C:\\case\\out\" --csvf mft.csv"
+  },
+  {
+   "title": "Filter the output in Timeline Explorer",
+   "text": "Load the CSV in Timeline Explorer. Filter on the flag for $SI earlier than $FN, and on the flag for times that end in zero sub-seconds. Many hits are normal, so narrow by folder, file type and time window. Put the created time of the $SI next to the created time of the $FN. Look at files in system folders or user folders that were made recently, but claim old dates.",
+   "tools": [
+    "timeline-explorer"
+   ],
+   "note": "Copying or moving files can change $SI times and create harmless mismatches. Treat each hit as a lead."
+  },
+  {
+   "title": "Check the change journal",
+   "text": "Parse $J with MFTECmd and give it the $MFT so it can resolve folder paths. In the CSV, look for the file you suspect and read its entries in order: create, rename, data change, and a change of basic information. A basic-information change right after the file appears can fit a time change. The journal keeps only a limited history, so old entries may be gone.",
+   "tools": [
+    "mftecmd",
+    "timeline-explorer"
+   ],
+   "cmd": "MFTECmd.exe -f \"C:\\case\\$J\" -m \"C:\\case\\$MFT\" --csv \"C:\\case\\out\" --csvf usn.csv"
+  },
+  {
+   "title": "Look at the $LogFile if you have it",
+   "text": "The $LogFile records recent NTFS operations. It may hold entries about changes to the $FN attribute that the $MFT does not show. It is small and is overwritten quickly on a busy disk, so it often covers only a short period. MFTECmd can parse it with the $MFT. A shadow copy of the volume may hold an older version.",
+   "tools": [
+    "mftecmd"
+   ],
+   "cmd": "MFTECmd.exe -f \"C:\\case\\$LogFile\" -m \"C:\\case\\$MFT\" --csv \"C:\\case\\out\" --csvf logfile.csv"
+  },
+  {
+   "title": "Cross-check with other artifacts",
+   "text": "Look for proof that a file was used or created at a time that contradicts its dates. Shortcut (LNK) files are made when a file is opened, and they record the target's times. Prefetch shows when a program ran. Office documents and photos hold their own metadata. A file that claims to be a year old but shows up in a recent shortcut or in a program's run record is a strong clue.",
+   "tools": [
+    "ez-tools",
+    "pecmd",
+    "exiftool"
+   ]
+  },
+  {
+   "title": "State the result with care",
+   "text": "Write down each file, its $SI and $FN times, the journal evidence and the other artifacts. Say whether the evidence fits a time change or has another explanation, such as a copy, a move or a program that sets times. Do not say who changed the times. Add the tool versions and the time zone.",
+   "tools": [
+    "timeline-explorer"
+   ]
+  }
+ ],
+ "artifacts": [
+  {
+   "name": "$STANDARD_INFORMATION times ($SI)",
+   "where": "Each file record in the $MFT",
+   "tells": "The created, modified, MFT-changed and accessed times that Windows normally shows"
+  },
+  {
+   "name": "$FILE_NAME times ($FN)",
+   "where": "Each file record in the $MFT",
+   "tells": "A second set of times, which many simple tools do not change"
+  },
+  {
+   "name": "$UsnJrnl:$J",
+   "where": "$Extend folder of the NTFS volume",
+   "tells": "A list of changes to files, for example create, rename and a change of basic information"
+  },
+  {
+   "name": "$LogFile",
+   "where": "Root of the NTFS volume",
+   "tells": "Recent NTFS operations, kept only for a short time"
+  },
+  {
+   "name": "LNK files",
+   "where": "User's Recent folder",
+   "tells": "The target file's times at the time it was opened"
+  },
+  {
+   "name": "Prefetch files",
+   "where": "Windows\\Prefetch",
+   "tells": "When a program ran, to compare with the file's creation date"
+  },
+  {
+   "name": "File metadata",
+   "where": "Inside the document or photo",
+   "tells": "Created and edited dates that the file system cannot change"
+  }
+ ],
+ "limits": [
+  "A mismatch between $SI and $FN is not proof. Normal actions such as moving or copying files can cause it.",
+  "A check that finds nothing does not clear a file. A skilled person can change both sets of times.",
+  "Times that end in zero sub-seconds can be set by tools, but many programs and file types also make them normally.",
+  "The $UsnJrnl and $LogFile are overwritten over time, so older changes may be gone.",
+  "This workflow is for NTFS. FAT, exFAT and Linux file systems keep times differently.",
+  "Clock changes, time zones and daylight saving can look like a time change if you do not check them."
+ ],
+ "practice": {
+  "name": "NIST CFReDS: Data Leakage Case (PC image) as an NTFS baseline",
+  "by": "NIST",
+  "url": "https://cfreds-archive.nist.gov/data_leakage_case/data-leakage-case.html",
+  "answers_url": "https://cfreds-archive.nist.gov/data_leakage_case/leakage-answers.pdf",
+  "text": "The PC image is an NTFS Windows 7 disk (about 5 GB compressed as DD, or about 7.3 GB as E01). It is not a timestomping case, and no one has marked files as changed. It is useful as a baseline: you can see how many harmless mismatches a normal disk with copied and renamed files produces.",
+  "task": "Export the $MFT and $J, parse them with MFTECmd and count the files flagged for $SI earlier than $FN. Open five flagged files in the NIST answer context, for example files the user copied, and explain why they are or are not suspicious.",
+  "note": "No public NTFS image with known timestomped files was verified. To practise on real changes, create your own: in a test virtual machine make a file, change its dates with a known tool, then image the disk and analyse it. Another public exercise from CAS Cyber (cas-cyber.gitbook.io, Timestomping Exercise) offers a USB image with time anomalies. Its page does not state the file system, so it may not be NTFS."
+ },
+ "learn": [
+  {
+   "label": "Kroll: How to identify timestomping with KAPE (PDF)",
+   "url": "https://media-cdn.kroll.com/-/media/kroll-images/pdfs/how-to-identify-timestomping-with-kape.pdf"
+  },
+  {
+   "label": "MITRE ATT&CK T1070.006: Timestomp",
+   "url": "https://attack.mitre.org/techniques/T1070/006/"
+  },
+  {
+   "label": "Magnet Forensics: NTFS timestamp mismatch artifact",
+   "url": "https://www.magnetforensics.com/blog/expose-evidence-of-timestomping-with-the-ntfs-timestamp-mismatch-artifact/"
+  },
+  {
+   "label": "inversecos: Timestomping detection, NTFS forensics",
+   "url": "https://inversecos.com/2022/04/defence-evasion-technique-timestomping.html"
+  },
+  {
+   "label": "MFTECmd on GitHub",
+   "url": "https://github.com/EricZimmerman/MFTECmd"
+  }
+ ],
+ "mistakes": [
+  "Calling a file stomped only because its $SI time is earlier than its $FN time.",
+  "Reading the Windows Explorer dates and never opening the $MFT.",
+  "Mixing up the $SI and $FN columns in the CSV, or comparing only the created time.",
+  "Forgetting that MFTECmd hides $FN times that match $SI unless you use --at.",
+  "Ignoring the journal and other artifacts, and relying on one test."
+ ],
+ "verify": [
+  "Confirm the $SI and $FN times of a flagged file in a second tool, for example Autopsy or the Sleuth Kit.",
+  "Look for the same file in the $J journal and read its entries in order.",
+  "Check LNK files, Prefetch or file metadata for an opening or run time that conflicts with the file's dates.",
+  "Compare the flagged files with a baseline from the same volume, to see what normal mismatches look like."
+ ],
+ "report_line": "The $MFT record of [file path] shows a created time of [time, UTC] in $STANDARD_INFORMATION and [time, UTC] in $FILE_NAME. [Other evidence, for example a journal entry or a shortcut file] shows the file at [time]. This is consistent with a change of file times. It is not proof, and it does not show who made the change.",
+ "next": [
+  {
+   "text": "Build a super timeline around the file",
+   "workflow": "super-timeline-plaso-timesketch"
+  },
+  {
+   "text": "Check whether the program ran",
+   "workflow": "program-execution-windows"
+  },
+  {
+   "text": "Check for a hidden start-up entry",
+   "workflow": "windows-persistence-hunt"
+  },
+  {
+   "text": "Recover deleted files from the volume",
+   "workflow": "deleted-file-recovery"
+  }
+ ],
+ "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases.",
+ "untested": true
+}

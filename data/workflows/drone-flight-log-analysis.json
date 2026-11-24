@@ -1,0 +1,193 @@
+{
+ "reviewed": "2026-11-24",
+ "title": "What did this drone do, and where did it fly?",
+ "short": "Drone flight log analysis",
+ "lead": "A drone and its controller or phone app keep flight logs. This workflow shows how to find them, turn them into readable tables and maps, and check the result against photos and video from the same flight. It uses DJI drones as the main example and ArduPilot logs as a second case.",
+ "level": "Intermediate",
+ "time": "2 to 3 hours on the practice data",
+ "evidence": "Flight log files from a drone, its controller or the phone or tablet that ran the flight app",
+ "answers": [
+  "Which drone and which controller or phone were used",
+  "When each flight started and ended",
+  "Where it took off, where it flew and where it landed",
+  "How high and how fast it flew",
+  "Which photos and videos belong to which flight"
+ ],
+ "need": [
+  "Flight logs, or an extraction of the phone, tablet or controller that ran the app, or the practice data (see the practice section on this page)",
+  "A computer with the parsing tools",
+  "A map viewer that opens KML or GPX files, such as Google Earth Pro"
+ ],
+ "steps": [
+  {
+   "title": "Work out where the logs may be kept",
+   "text": "There are three places: the phone, tablet or controller that ran the app; the drone itself, which keeps its own log; and the maker's cloud account, if the pilot used one. Start with the app device because its logs are easier to read. Make a list of the devices and accounts that can hold a log for the flight in question.",
+   "note": "Logs can be removed from the app device after a cloud sync, and a flight under another account will not show in the first account."
+  },
+  {
+   "title": "Preserve the logs before you open them",
+   "text": "Image or copy the phone, tablet or controller by your lab's method, and hash the files. Take the drone's memory card out if the model has one, and image it. Avoid powering on the drone or flying it, because that can write new logs. Photograph the drone and its serial number.",
+   "tools": [
+    "adb"
+   ],
+   "note": "Some drones have the card fixed to the board, and some cannot be read without special methods. Ask a specialist."
+  },
+  {
+   "title": "Find the app logs for a DJI drone",
+   "text": "The DJI Fly app saves flight records as .txt files named DJIFlightRecord with a date and time. On Android phones and DJI controllers, a published location is the FlightRecord folder under Android/data/dji.go.v5/files. On iPhone, they are in the app's file sharing area. The DJI GO 4 app keeps its records in its own app folder. Check the path against the app version in your case.",
+   "paths": [
+    "Android/data/dji.go.v5/files/FlightRecord/DJIFlightRecord_YYYY-MM-DD_[HH-MM-SS].txt",
+    "/data/data/dji.go.v5/ (appdb.db, analytics.db, shared_prefs)"
+   ],
+   "note": "Newer Android versions block normal file managers from the Android/data folder. Read it from a computer over USB or use an extraction."
+  },
+  {
+   "title": "Decode the DJI app log",
+   "text": "dji-log-parser reads the .txt record and writes the frames as JSON. It can also write a CSV and a KML or GeoJSON track. Logs of version 13 and later are encrypted and need keys fetched from DJI's service with a developer key. Save the fetched keys with the log so you can work offline later. Ask your lab whether contacting the service is allowed.",
+   "tools": [
+    "dji-log-parser"
+   ],
+   "cmd": "dji-log --api-key __DJI_API_KEY__ --output frames.json DJIFlightRecord.txt",
+   "note": "Run dji-log --help for the options that write CSV, KML and GeoJSON files."
+  },
+  {
+   "title": "Read the aircraft .DAT log with DatCon",
+   "text": "The drone's own log is a .DAT file, for example with a name that has the date, time and FLY and a number. DatCon converts it to a CSV, and can add a ground track as KML for Google Earth. Copy the DAT files from the drone's storage or from the card to a working folder first. Newer drones often encrypt the .DAT file, and then DatCon may not read it.",
+   "tools": [
+    "datcon"
+   ],
+   "note": "DatCon is run with Java. Its settings differ between versions, so use the manual for the one you have."
+  },
+  {
+   "title": "For ArduPilot drones, review the log in Mission Planner",
+   "text": "Many hobby and home-built drones run ArduPilot. Their logs are .bin or .log files. In Mission Planner, open Flight Data, then the Dataflash Logs tab, then Review a Log, and choose the file. Click a message type, pick a column and use Graph this data. A KMZ track is created when logs are downloaded from the autopilot.",
+   "tools": [
+    "mission-planner"
+   ]
+  },
+  {
+   "title": "Convert tracks and look at them on a map",
+   "text": "Use GPSBabel to change a track between formats, for example from KML to GPX, so that your map tool and your timeline tool can read it. Open the track in Google Earth Pro. Mark takeoff, landing and the highest point, and note the times of each. Keep the original file and the converted file in separate folders.",
+   "tools": [
+    "gpsbabel",
+    "google-earth-pro"
+   ],
+   "cmd": "gpsbabel -i kml -f track.kml -o gpx -F track.gpx"
+  },
+  {
+   "title": "Match photos and videos to the flight",
+   "text": "Photos from the drone carry GPS and time in their Exif data. Videos may have a small .SRT file with positions, if the feature was on. Read them with ExifTool and compare the positions and times with your track. A picture taken at a place and time that the log does not show is a problem to explain.",
+   "tools": [
+    "exiftool"
+   ],
+   "cmd": "exiftool -r -ext jpg -common -csv /path/to/photos > photos.csv"
+  },
+  {
+   "title": "Compare sources and write the result",
+   "text": "Compare the app log, the aircraft log and the media for the same flight: start time, takeoff point, route and highest point. Differences can come from time zones, a wrong clock or a partly synced log. Record the file names, hashes, tool versions, the time zone you assumed and whether any online service was used.",
+   "tools": [
+    "dji-log-parser",
+    "datcon"
+   ]
+  }
+ ],
+ "artifacts": [
+  {
+   "name": "DJIFlightRecord .txt",
+   "where": "App folder on the phone, tablet or controller",
+   "tells": "Route, height, speed, battery and drone details for one flight"
+  },
+  {
+   "name": "Aircraft .DAT log",
+   "where": "Drone storage or card",
+   "tells": "Detailed sensor and GPS data recorded by the drone itself"
+  },
+  {
+   "name": "App databases (appdb.db, analytics.db)",
+   "where": "/data/data/dji.go.v5/ (needs a full file system extraction)",
+   "tells": "Drone identifiers and app events"
+  },
+  {
+   "name": "Photo Exif data and .SRT video files",
+   "where": "Media folder of the drone card or the phone",
+   "tells": "Positions and times of photos and video"
+  },
+  {
+   "name": "Media caches",
+   "where": "Android/data/dji.go.v5/files/MediaCaches",
+   "tells": "Small previews and thumbnails from flights"
+  },
+  {
+   "name": "ArduPilot .bin or .log file",
+   "where": "Autopilot storage or ground station computer",
+   "tells": "Full flight data for ArduPilot-based drones"
+  }
+ ],
+ "limits": [
+  "Logs show what the aircraft and the app recorded. They do not show who was holding the controller.",
+  "Newer log files are encrypted. A parser may need an online key fetch, or may not support the log at all.",
+  "Logs can be missing or partial. A cloud sync can remove them from the phone, and a pilot can delete them.",
+  "Some free web viewers publish uploaded logs. Do not upload evidence to a public service.",
+  "GPS positions can be wrong or missing, especially near buildings or when the signal is poor.",
+  "File names, folder paths and fields change between app and drone versions. Check what applies to your case."
+ ],
+ "practice": {
+  "name": "NIST CFReDS: Drone images",
+  "by": "NIST, data from the VTO Inc. Drone Forensics Program",
+  "url": "https://cfreds-archive.nist.gov/drone-images.html",
+  "text": "Forensic images from 79 drones of about 30 models, including many DJI models and one ArduPilot drone, with the controller and connected phone where available. Each Google Drive folder has a data sheet with the flight date, the coordinate limits of the flight and the hash of each file. The page does not give file sizes or formats, so expect large downloads.",
+  "task": "Pick one DJI drone from the list. Find its flight log, decode it, make a KML track and check that the track lies inside the coordinate limits and the date in the data sheet.",
+  "note": "The images are test data from flights made for the project. They do not show real-world behaviour. I did not open the Google Drive folders, so the contents of each one are unchecked."
+ },
+ "learn": [
+  {
+   "label": "NIST CFReDS: Drone images",
+   "url": "https://cfreds-archive.nist.gov/drone-images.html"
+  },
+  {
+   "label": "dji-log-parser on GitHub",
+   "url": "https://github.com/lvauvillier/dji-log-parser"
+  },
+  {
+   "label": "Forensic Focus: Crime scene investigation of GPS data in UAVs",
+   "url": "https://www.forensicfocus.com/articles/crime-scene-investigation-of-gps-data-in-unmanned-aerial-vehicles-uavs/"
+  },
+  {
+   "label": "Magnet Forensics: How to access and examine DJI artifacts",
+   "url": "https://www.magnetforensics.com/blog/i-spy-with-a-drones-little-eye-how-to-access-and-examine-dji-artifacts-in-magnet-axiom/"
+  },
+  {
+   "label": "ArduPilot: Downloading and analyzing data logs in Mission Planner",
+   "url": "https://ardupilot.org/planner/docs/common-downloading-and-analyzing-data-logs-in-mission-planner.html"
+  }
+ ],
+ "mistakes": [
+  "Uploading a real flight log to a public web viewer.",
+  "Powering on or flying the drone to see what is on it, which can write new logs.",
+  "Assuming every flight is in the app, when some logs were removed after a cloud sync.",
+  "Mixing times from different sources without checking the time zone and the clock of each.",
+  "Taking the converted KML track as proof of the route without checking it against photos or the aircraft log."
+ ],
+ "verify": [
+  "Compare the takeoff point and time in the app log with the aircraft .DAT log for the same flight.",
+  "Read the Exif position and time of a photo with ExifTool and check that it lies on the track at that time.",
+  "Open the KML track in Google Earth Pro and check that the start and end make sense on the map and in the case facts."
+ ],
+ "report_line": "The log file [name] (SHA-256 [hash]) from [device] was decoded with [tool and version]. It shows a flight of the drone [model, serial number] from [start time] to [end time] ([time zone]), taking off near [place] and reaching a height of [number] metres. [Number] photos on the drone card match the track. The log does not show who flew the drone.",
+ "next": [
+  {
+   "text": "Check the metadata of photos from the flight",
+   "workflow": "photo-metadata"
+  },
+  {
+   "text": "Learn how to image and hash a source first",
+   "workflow": "forensic-image-and-hash"
+  },
+  {
+   "text": "Build one timeline from several sources",
+   "workflow": "super-timeline-plaso-timesketch"
+  }
+ ],
+ "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases.",
+ "untested": true
+}

@@ -1,0 +1,197 @@
+{
+ "reviewed": "2026-11-24",
+ "title": "How do I open a BitLocker-encrypted drive in an investigation?",
+ "short": "BitLocker encrypted drives",
+ "lead": "BitLocker encrypts a whole Windows volume. This workflow shows how to recognise one in an image, find out which key you need and where it may be kept, and open the volume read-only with a key you are legally allowed to use. Password guessing is explained only as a concept.",
+ "level": "Intermediate",
+ "time": "1 to 2 hours on the practice image",
+ "evidence": "A forensic image of a drive or partition that uses BitLocker, plus a lawful key",
+ "answers": [
+  "Whether the volume is protected by BitLocker",
+  "Which kind of key protects it (recovery password, startup key, password, TPM)",
+  "Where a recovery key might be kept",
+  "How to read the files in the volume without changing the evidence",
+  "What can be done if there is no key"
+ ],
+ "need": [
+  "A forensic image of the drive, still encrypted, or the practice data (see the practice section on this page)",
+  "The recovery password, the .bek startup key file or the user password, obtained lawfully",
+  "A Linux computer for Dislocker, or a Windows computer for Arsenal Image Mounter",
+  "Free disk space of about the size of the volume if you want a decrypted copy"
+ ],
+ "steps": [
+  {
+   "title": "Check authority, then image the drive as it is",
+   "text": "Make sure you have the legal authority to open the volume. Then image the whole physical drive through a write blocker and record its hash. A physical image stays encrypted, which is what you want. Keep this encrypted image as your master. If the computer is running and unlocked, ask a senior examiner before you power it off, because the keys may be in memory.",
+   "tools": [
+    "ftk-imager",
+    "guymager"
+   ],
+   "note": "Imaging a logical drive letter on a running, unlocked computer can give you decrypted data instead. Know which one you made and write it down."
+  },
+  {
+   "title": "Recognise a BitLocker volume",
+   "text": "A normal NTFS volume has the text NTFS from byte 3 of its first sector. A BitLocker volume has the text -FVE-FS- from byte 3 instead. Look at the first bytes of each partition. Many forensic tools also flag the partition as encrypted. If your image is in E01 format, first expose it as a raw file with ewfmount from libewf.",
+   "tools": [
+    "libewf",
+    "autopsy"
+   ],
+   "cmd": "xxd -s <partition start in bytes> -l 16 evidence01.dd",
+   "note": "Use your own image name. Take the start in bytes from the partition table. A start sector of 2048 with 512-byte sectors is 1048576 bytes."
+  },
+  {
+   "title": "Find out which key protects it",
+   "text": "A volume can have several protectors: a recovery password, a startup key file, a user password, a TPM, or a clear key. The data is encrypted with a volume key, and each protector locks a copy of that key. A clear key means the key material is stored in the image itself, so no secret is needed. Note which protectors you can see before you try anything.",
+   "tools": [
+    "dislocker"
+   ],
+   "note": "Tools can read the BitLocker metadata. The libbde project also has a bdeinfo tool for this."
+  },
+  {
+   "title": "Look for the recovery key in the right places",
+   "text": "A recovery password is 48 digits in eight groups. It may be on a printout, in a text file, on a USB stick as a .bek file, in the owner's Microsoft account, in the work or school account, or in the company's Active Directory. Each recovery password has an ID, shown on the recovery screen, which you match against the saved keys. Ask the owner or the administrator through the proper channel.",
+   "note": "Some tools reject spaces, and a trailing space can make a key fail. Check your tool's help for the accepted form."
+  },
+  {
+   "title": "Linux: open the volume read-only with Dislocker",
+   "text": "Dislocker reads the BitLocker metadata and decrypts on the fly. Give it the image with -V and use -r so that nothing is written. If the image holds the whole disk, give the partition start in bytes with -O. Use -p alone to be asked for the recovery password, so it stays out of your shell history. A file called dislocker-file appears in the mount folder.",
+   "tools": [
+    "dislocker"
+   ],
+   "cmd": "sudo dislocker -r -V evidence01.dd -O 1048576 -p -- /mnt/bitlocker",
+   "note": "Use -f path/to/key.BEK for a startup key file, or -u for a user password. The mount folder must exist first. Ask your own lab which options to use."
+  },
+  {
+   "title": "Mount the decrypted volume",
+   "text": "The dislocker-file is a virtual NTFS volume. Mount it read-only as a loop device, then browse it or add the folder to your analysis tools. When you finish, unmount the decrypted volume first, and then the dislocker folder. If you need a decrypted raw image for other tools, copy dislocker-file to another drive and hash the copy.",
+   "tools": [
+    "dislocker"
+   ],
+   "cmd": "sudo mount -o loop,ro /mnt/bitlocker/dislocker-file /mnt/clear",
+   "note": "A copy of dislocker-file needs about as much space as the whole volume."
+  },
+  {
+   "title": "Windows: mount the image with Arsenal Image Mounter",
+   "text": "On Windows, Arsenal Image Mounter can mount the image as a real disk and unlock a BitLocker volume when you give the recovery password. In its free mode it can identify, unlock and fully decrypt BitLocker volumes. Choose the read-only mount option, then use your normal tools on the new drive letter.",
+   "tools": [
+    "arsenal-image-mounter"
+   ],
+   "note": "Check your version for the read-only option in the mount window, and for what the free mode includes."
+  },
+  {
+   "title": "If you have no key: understand the options",
+   "text": "Without a key, the options are limited. Keys can sometimes be found in other evidence: a memory image taken while the volume was unlocked, or a hibernation file. A password protector may be attacked by guessing, using hashcat or John the Ripper on a hash taken from the volume. This is slow, may never work with a strong password, and needs legal authority. A TPM-only volume cannot be opened from the image alone.",
+   "tools": [
+    "hashcat",
+    "john"
+   ],
+   "note": "This step is a concept. Use a method only if your authority and your lab approve it."
+  },
+  {
+   "title": "Check the result and record the key source",
+   "text": "Check that the decrypted volume is a valid NTFS volume and that the file count looks right. Record which key you used, where it came from, who gave it to you and when, and the tool versions. Never write the key itself into a report that many people will read.",
+   "tools": [
+    "autopsy"
+   ]
+  }
+ ],
+ "artifacts": [
+  {
+   "name": "BitLocker volume header (-FVE-FS-)",
+   "where": "First sector of the encrypted partition",
+   "tells": "That the volume uses BitLocker"
+  },
+  {
+   "name": "BitLocker metadata blocks",
+   "where": "Inside the encrypted volume",
+   "tells": "Which key protectors exist and the recovery password ID"
+  },
+  {
+   "name": "Recovery password printout or text file",
+   "where": "Owner's papers or files",
+   "tells": "The 48-digit key and its ID"
+  },
+  {
+   "name": "Startup key file (.bek)",
+   "where": "A USB stick",
+   "tells": "A key file named after its ID"
+  },
+  {
+   "name": "Online key backup",
+   "where": "Microsoft account, work or school account, Active Directory",
+   "tells": "Stored recovery passwords and their IDs"
+  },
+  {
+   "name": "Memory image or hibernation file",
+   "where": "Live capture or the drive of the computer",
+   "tells": "Possible key material if the volume was unlocked"
+  }
+ ],
+ "limits": [
+  "Without a valid key, a BitLocker volume cannot be read. The image alone is not enough, in particular when a TPM is the only protector.",
+  "A strong password may not be recoverable by guessing in any useful time.",
+  "A memory image or hibernation file helps only if it was taken while the volume was unlocked.",
+  "Imaging the physical drive and imaging a drive letter on a live computer give different results, encrypted or decrypted.",
+  "Tool support depends on the BitLocker version and the encryption method. Newer methods may not work with older tools.",
+  "Opening the volume shows its files. It does not show who used the computer."
+ ],
+ "practice": {
+  "name": "CAS Cybersecurity course: Bitunlocker exercise",
+  "by": "CAS Cybersecurity course notes on GitBook",
+  "url": "https://cas-cyber.gitbook.io/cas-cybersecurity/forensic-exercises/windows-forensics/bitunlocker",
+  "text": "A community exercise with a BitLocker-encrypted disk image in a zip file. The write-up shows mounting with Arsenal Image Mounter on Windows or with Dislocker on Linux, and it includes the recovery key. I read the write-up, but I did not download the zip, so check the download works before you plan a class around it. I found no BitLocker practice image from NIST or Digital Corpora.",
+  "task": "Mount the image read-only. Unlock it with the recovery key from the write-up, first on Windows and then with Dislocker. Open the file the exercise asks for and confirm it is the same on both systems.",
+  "note": "You can also make your own practice data. In a Windows virtual machine, make a small virtual disk, turn on BitLocker To Go, save the recovery key, copy a few files, then image the virtual disk."
+ },
+ "learn": [
+  {
+   "label": "Dislocker manual page",
+   "url": "https://manpages.debian.org/testing/dislocker/dislocker.1.en.html"
+  },
+  {
+   "label": "Microsoft: BitLocker recovery overview",
+   "url": "https://learn.microsoft.com/en-us/windows/security/operating-system-security/data-protection/bitlocker/recovery-overview"
+  },
+  {
+   "label": "Forensics Wiki: BitLocker disk encryption",
+   "url": "https://forensics.wiki/bitlocker_disk_encryption/"
+  },
+  {
+   "label": "Forensic Focus: Process a clear-key BitLocker image to a decrypted raw image",
+   "url": "https://www.forensicfocus.com/articles/how-to-process-a-clear-key-bitlocker-image-file-to-generate-a-decrypted-raw-image/"
+  },
+  {
+   "label": "Forensics Wiki: How to image a BitLocker drive",
+   "url": "https://forensics.wiki/bitlocker_how_to_image/"
+  }
+ ],
+ "mistakes": [
+  "Imaging a logical drive on a running computer and thinking you have the encrypted drive.",
+  "Mounting the decrypted volume read-write, or working on a decrypted copy that you did not hash.",
+  "Giving Dislocker the image of the whole disk without the partition offset, then deciding the key is wrong.",
+  "Switching off a running, unlocked computer before anyone thought about the keys in memory.",
+  "Pasting the recovery password into a report or a chat, where it stays."
+ ],
+ "verify": [
+  "Open the same volume with a second tool, for example Dislocker on Linux and Arsenal Image Mounter on Windows, and compare the file list.",
+  "Hash a few files from the decrypted volume in both tools and compare the hash values.",
+  "Check that the decrypted volume is a normal NTFS volume and that the files open as expected."
+ ],
+ "report_line": "The volume at offset [number] of the image [name] (SHA-256 [hash]) uses BitLocker, with the protector types [list]. It was opened read-only with [tool and version] using the [recovery password / startup key / user password] received from [source] on [date] under [authority]. The decrypted volume is NTFS and holds [number] files.",
+ "next": [
+  {
+   "text": "Learn how to image and hash a drive first",
+   "workflow": "forensic-image-and-hash"
+  },
+  {
+   "text": "Look into a memory image that might hold keys",
+   "workflow": "ram-dump-first-look"
+  },
+  {
+   "text": "Boot the unlocked image in a virtual machine",
+   "workflow": "boot-forensic-image-in-vm"
+  }
+ ],
+ "sources_note": "A study guide written in our own words. It is not a legal or laboratory procedure. Follow your own lab's approved method on real cases.",
+ "untested": true
+}

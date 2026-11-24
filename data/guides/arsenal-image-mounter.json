@@ -1,0 +1,162 @@
+{
+ "draft": true,
+ "reviewed": "2026-11-24",
+ "lead": "Arsenal Image Mounter makes a forensic disk image show up in Windows as a real disk, so other tools and programs can use it. It is made by Arsenal Recon and runs in a free mode when no licence is installed.",
+ "use_when": [
+  "You have an E01 or raw image and want Windows to treat it as a disk, without making a full copy first.",
+  "You want to read an image without any change, or let a program write to it while the changes go to a side file.",
+  "You want a disk that a virtual machine program can use, to see the system as the user saw it."
+ ],
+ "features": [
+  {
+   "title": "Free mode, as listed on the vendor page",
+   "items": [
+    "Shows raw, forensic and virtual machine images to Windows as complete disks",
+    "Temporary writes that go to difference files you can replay",
+    "Saves a mounted object to several disk image formats",
+    "Finds, unlocks and can fully decrypt BitLocker volumes, or turn BitLocker off or pause it",
+    "Exposes disks, volumes and Volume Shadow Copies as virtual dd files"
+   ]
+  },
+  {
+   "title": "More in free mode",
+   "items": [
+    "Command line programs and PowerShell modules",
+    "Fake disk signatures, MBR injection and removable disk emulation",
+    "Virtual mounting of optical images and archives, and RAM disks"
+   ]
+  },
+  {
+   "title": "Professional mode, as listed on the vendor page",
+   "items": [
+    "Starts virtual machines from disk images, physical disks and remote disks",
+    "Bypasses Windows sign-in, DPAPI and S Mode inside the virtual machine, and Linux passwords too",
+    "Mounts Volume Shadow Copies in several ways, and can launch VMs from them",
+    "Writes a mounted image out to a physical disk",
+    "Bypasses the Windows file system driver for several file systems, and exposes NTFS metadata, slack and unallocated space"
+   ]
+  },
+  {
+   "title": "Mount options shown in published tutorials",
+   "items": [
+    "Read only: no writes are allowed",
+    "Write temporary: writes go to a separate difference file and the image stays unchanged",
+    "Write original: writes go straight into the image, so avoid it on evidence",
+    "Fake disk signature, sector size and a removable disk option"
+   ]
+  }
+ ],
+ "formats": [
+  "Raw disk images",
+  "Forensic images such as E01 (shown in tutorials)",
+  "Virtual machine disk images"
+ ],
+ "requirements": "It runs on Windows. The vendor pages name no other platform and list no versions. A tutorial notes that the VM program had to run as administrator. The downloads page says antivirus software may flag the tools because of obfuscation, so ask your lab or tutor before changing antivirus settings. The page also says versions from 3.11.290 on changed the licensing.",
+ "steps": [
+  {
+   "title": "Download it",
+   "text": "Use the download link on this page, which leads to the Arsenal Recon downloads page. At the time of checking, the current build was hosted on Mega. Download it only from the vendor's page."
+  },
+  {
+   "title": "Install and start it as administrator",
+   "text": "Install it and start the program. With no licence it opens in free mode. Write down the version you use in your notes."
+  },
+  {
+   "title": "Choose the image",
+   "text": "Use the mount image button or the File menu entry for mounting an image, then pick your E01 or raw file."
+  },
+  {
+   "title": "Pick a mount option",
+   "text": "For viewing only, choose Read only. If a program must write, such as a virtual machine, choose Write temporary and, if offered, choose where the difference file goes. Do not choose Write original on evidence."
+  },
+  {
+   "title": "Check the new disk",
+   "text": "The image appears in the main window as a disk. Open Disk Management or diskpart to see its disk number. A tutorial for VMware also sets the disk offline, so Windows itself does not write to it."
+  },
+  {
+   "title": "Use the disk",
+   "text": "Open it with your analysis tool, or add it to a virtual machine program as a physical disk. A published tutorial does this with VMware Workstation and turns the VM network off. Keep notes of every step."
+  },
+  {
+   "title": "Remove the mounted image",
+   "text": "Select the image and use the remove button, or remove all. Then delete or keep the difference file as your lab procedure says, and check the image hash is unchanged."
+  }
+ ],
+ "cases": [
+  {
+   "title": "Read-only look at an image",
+   "why": "A mounted read-only disk lets you browse folders in Windows or open the disk in other tools."
+  },
+  {
+   "title": "Running a tool that needs a real disk",
+   "why": "Some programs only accept a physical disk. Mounting as a disk makes the image look like one."
+  },
+  {
+   "title": "Seeing the user's desktop",
+   "why": "A write-temporary disk can be given to a virtual machine program so the old system starts, with changes kept in a side file."
+  },
+  {
+   "title": "BitLocker images",
+   "why": "The vendor page says free mode can identify and unlock BitLocker volumes. You still need the key or password."
+  },
+  {
+   "title": "Practice and teaching",
+   "why": "The free mode lets students try mounting, offline disks and virtual machine boots without buying a licence."
+  }
+ ],
+ "strengths": [
+  "Free mode covers whole-disk mounting and temporary writes, as the vendor page lists.",
+  "The source code is published under a dual licence: AGPL v3 or a separate licence from Arsenal Recon.",
+  "It has command line and PowerShell support, so mounting can be scripted.",
+  "Published tutorials show it working with VMware Workstation and, through Imm2Virtual, with VirtualBox."
+ ],
+ "limits": [
+  "Windows only.",
+  "Starting a virtual machine directly from an image is a Professional mode feature on the vendor page. In free mode you attach the disk to the VM program yourself.",
+  "The vendor pages do not list every image format. Test your format before relying on it.",
+  "Write original changes the image. Pick it by mistake and the evidence is changed.",
+  "Antivirus programs may flag it, and licence rules changed in later versions, so read the downloads page.",
+  "A mounted disk can still fail to boot in a VM because of controller, UEFI, driver or BitLocker problems. The tool does not fix these."
+ ],
+ "works_with": [
+  {
+   "id": "ftk-imager",
+   "note": "Create the E01 first, or mount images another way"
+  },
+  {
+   "id": "libewf",
+   "note": "Verify or export E01 files, or mount them on Linux"
+  },
+  {
+   "id": "guymager",
+   "note": "Create the image on Linux"
+  },
+  {
+   "id": "autopsy",
+   "note": "Analyse the same image in a full case tool"
+  }
+ ],
+ "learn": [
+  {
+   "label": "Arsenal Image Mounter product page (Arsenal Recon)",
+   "url": "https://arsenalrecon.com/products/arsenal-image-mounter"
+  },
+  {
+   "label": "Arsenal Recon downloads page",
+   "url": "https://arsenalrecon.com/downloads"
+  },
+  {
+   "label": "Arsenal Image Mounter on GitHub",
+   "url": "https://github.com/ArsenalRecon/Arsenal-Image-Mounter"
+  },
+  {
+   "label": "Imm2Virtual: virtualize an image with Arsenal Image Mounter and VirtualBox",
+   "url": "https://www.forensicfocus.com/articles/imm2virtual-a-windows-gui-to-virtualize-directly-from-disk-image-file/"
+  },
+  {
+   "label": "Tutorial: booting an E01 in VMware with Arsenal Image Mounter",
+   "url": "https://dev.to/sum3sh1/booting-an-os-from-a-preserved-e01-ewf-disk-image-file-using-arsenal-image-mounter-cdf"
+  }
+ ],
+ "sources_note": "Written in our own words from the Arsenal Image Mounter project's documentation."
+}
