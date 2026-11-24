@@ -369,3 +369,5 @@ dl.terms .gl dd:last-child, dl.terms dd:last-child { border-bottom: 0; }
 .basic-group { padding-bottom: 28px; }
 .prose.basic .note p { color: inherit; }
 @media (max-width: 560px) { .pn { grid-template-columns: 1fr; } .pn a:last-child { text-align: left; } }
+
+.card .top .badge { white-space: normal; max-width: 52%; text-align: right; overflow-wrap: anywhere; }

@@ -2,74 +2,6 @@
  "rule": "An entry is published only with a link to the vendor's own page. Wording stays neutral and describes only what the source says.",
  "integrations": [
   {
-   "product": "Magnet AXIOM",
-   "vendor": "Magnet Forensics",
-   "relation": "runs",
-   "open_source": "Volatility",
-   "tool_ids": [
-    "volatility3"
-   ],
-   "statement": "Since AXIOM 2.0, memory analysis integrates core Volatility plugins behind the AXIOM interface.",
-   "source_label": "Magnet Forensics blog",
-   "source_url": "https://www.magnetforensics.com/blog/magnet-axiom-memory-analysis-faq/",
-   "checked": "2026-11-23"
-  },
-  {
-   "product": "Magnet AXIOM Cyber",
-   "vendor": "Magnet Forensics",
-   "relation": "runs",
-   "open_source": "YARA rules",
-   "tool_ids": [
-    "yara"
-   ],
-   "statement": "AXIOM Cyber processes evidence with YARA rules, ships with a set of common rules and can sync rule repositories from Git.",
-   "source_label": "Magnet Forensics blog",
-   "source_url": "https://www.magnetforensics.com/blog/yara-rule-processing-in-magnet-axiom-cyber/",
-   "checked": "2026-11-23"
-  },
-  {
-   "product": "Belkasoft X",
-   "vendor": "Belkasoft",
-   "relation": "accepts",
-   "open_source": "YARA and Sigma rules",
-   "tool_ids": [
-    "yara",
-    "sigma"
-   ],
-   "statement": "Standard YARA and Sigma rules can be imported and run against evidence. The vendor lists YARA under the X Corporate edition.",
-   "source_label": "Belkasoft walkthrough",
-   "source_url": "https://belkasoft.com/walkthrough-sigma-rules-in-belkasoft-x",
-   "checked": "2026-11-23"
-  },
-  {
-   "product": "Binalyze AIR",
-   "vendor": "Binalyze",
-   "relation": "runs",
-   "open_source": "YARA, Sigma and osquery",
-   "tool_ids": [
-    "yara",
-    "sigma",
-    "osquery"
-   ],
-   "statement": "AIR performs triage across many assets using YARA, Sigma and osquery rules.",
-   "source_label": "Binalyze knowledge base",
-   "source_url": "https://kb.binalyze.com/",
-   "checked": "2026-11-23"
-  },
-  {
-   "product": "Rapid7 InsightIDR",
-   "vendor": "Rapid7",
-   "relation": "includes",
-   "open_source": "Velociraptor",
-   "tool_ids": [
-    "velociraptor"
-   ],
-   "statement": "InsightIDR Ultimate customers get a version of the open-source Velociraptor tool integrated with the Rapid7 agent.",
-   "source_label": "Rapid7 documentation",
-   "source_url": "https://docs.rapid7.com/insightidr/velociraptor-integration/",
-   "checked": "2026-11-23"
-  },
-  {
    "product": "KAPE",
    "vendor": "Kroll",
    "relation": "ships with",
@@ -83,7 +15,894 @@
    "statement": "KAPE keeps the EZ Tools binaries in its Modules folder and runs them as modules to parse what it collects. KAPE itself is free for many uses but is not open source.",
    "source_label": "Kroll KAPE quarterly update",
    "source_url": "https://www.kroll.com/en/publications/cyber/kape-quarterly-update-q4-2021",
-   "checked": "2026-11-23"
+   "checked": "2026-11-23",
+   "group": "Incident response, EDR and SIEM"
+  },
+  {
+   "product": "Magnet AXIOM",
+   "vendor": "Magnet Forensics",
+   "relation": "includes",
+   "open_source": "Volatility",
+   "tool_ids": [
+    "volatility3"
+   ],
+   "group": "Computer and mobile forensics suites",
+   "statement": "Documented in AXIOM 2.0 (2018): the product integrates core plugins from the Volatility framework, so examiners can run memory analysis inside AXIOM and see processes, drivers, DLLs and network connections.",
+   "source_label": "Vendor blog (April 2018)",
+   "source_url": "https://www.magnetforensics.com/blog/enhance-investigations-with-memory-artifacts-through-volatility-in-axiom-2-0/",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Magnet AXIOM Cyber",
+   "vendor": "Magnet Forensics",
+   "relation": "includes",
+   "open_source": "YARA",
+   "tool_ids": [
+    "yara"
+   ],
+   "group": "Computer and mobile forensics suites",
+   "statement": "Documented in 2022: AXIOM Cyber processes YARA rules, ships with a set of common rules, lets users add their own, and can pull rules from a Git repository link. Matches appear as artifacts.",
+   "source_label": "Vendor blog (April 2022)",
+   "source_url": "https://magnetforensics.com/blog/yara-rule-processing-in-magnet-axiom-cyber",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Magnet AXIOM Cyber",
+   "vendor": "Magnet Forensics",
+   "relation": "runs",
+   "open_source": "Sigma rules",
+   "tool_ids": [
+    "sigma"
+   ],
+   "group": "Computer and mobile forensics suites",
+   "statement": "Documented in 2024: the ATT&CK integration in AXIOM Cyber can run Sigma rules to identify techniques, and the post suggests using them on Windows event logs and Linux audit logs.",
+   "source_label": "Vendor blog (August 2024)",
+   "source_url": "https://www.magnetforensics.com/blog/bridging-the-gap-between-df-ir-mitre-attck-framework-integration-in-magnet-axiom-cyber/",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Magnet AXIOM",
+   "vendor": "Magnet Forensics",
+   "relation": "accepts",
+   "open_source": "iLEAPP",
+   "tool_ids": [
+    "ileapp"
+   ],
+   "group": "Computer and mobile forensics suites",
+   "statement": "Documented in 2020: custom artifacts written by the iLEAPP author let AXIOM process iLEAPP parser output. They were shared through the Magnet Artifact Exchange.",
+   "source_label": "Vendor blog (September 2020)",
+   "source_url": "https://www.magnetforensics.com/blog/highlighting-some-custom-artifacts-in-the-artifact-exchange/",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Magnet AXIOM",
+   "vendor": "Magnet Forensics",
+   "relation": "accepts",
+   "open_source": "bulk_extractor",
+   "tool_ids": [
+    "bulk-extractor"
+   ],
+   "group": "Computer and mobile forensics suites",
+   "statement": "Documented in 2020: a Magnet employee wrote Artifact Exchange custom artifacts for bulk_extractor output, so that results from the open tool can be loaded into AXIOM.",
+   "source_label": "Vendor blog (September 2020)",
+   "source_url": "https://www.magnetforensics.com/blog/highlighting-some-custom-artifacts-in-the-artifact-exchange/",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "libyara.NET",
+   "vendor": "Magnet Forensics",
+   "relation": "builds on",
+   "open_source": "YARA (libyara)",
+   "tool_ids": [
+    "yara"
+   ],
+   "group": "Computer and mobile forensics suites",
+   "statement": "Magnet Forensics publishes this open repository, a .NET wrapper for libyara that gives C# and PowerShell code a simpler way to use the YARA scanning engine.",
+   "source_label": "Magnet Forensics GitHub",
+   "source_url": "https://github.com/MagnetForensics/libyara.NET",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "VideoProcessorNative",
+   "vendor": "Magnet Forensics",
+   "relation": "builds on",
+   "open_source": "FFmpeg",
+   "tool_ids": [
+    "ffmpeg"
+   ],
+   "group": "Computer and mobile forensics suites",
+   "statement": "This Magnet Forensics repository holds a native video library. Its README says it needs an LGPL static build of ffmpeg 5.1.x, which is not included, and suggests vcpkg for compiling FFmpeg.",
+   "source_label": "Magnet Forensics GitHub",
+   "source_url": "https://github.com/MagnetForensics/VideoProcessorNative",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Belkasoft X",
+   "vendor": "Belkasoft",
+   "relation": "runs",
+   "open_source": "YARA",
+   "tool_ids": [
+    "yara"
+   ],
+   "group": "Computer and mobile forensics suites",
+   "statement": "Belkasoft X can apply YARA rules during data source analysis and lists matched files with offsets and conditions. The page says this is available in the Corporate edition only.",
+   "source_label": "Vendor walkthrough",
+   "source_url": "https://belkasoft.com/walkthrough-yara-rules-in-belkasoft-x",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Belkasoft X",
+   "vendor": "Belkasoft",
+   "relation": "runs",
+   "open_source": "Sigma rules",
+   "tool_ids": [
+    "sigma"
+   ],
+   "group": "Computer and mobile forensics suites",
+   "statement": "Belkasoft X can apply Sigma rules to Windows event logs and shows the matched rule name, product and category. The page says this is available in the Corporate edition only.",
+   "source_label": "Vendor walkthrough",
+   "source_url": "https://belkasoft.com/walkthrough-sigma-rules-in-belkasoft-x",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Belkasoft X",
+   "vendor": "Belkasoft",
+   "relation": "integrates",
+   "open_source": "Volatility",
+   "tool_ids": [
+    "volatility3"
+   ],
+   "group": "Computer and mobile forensics suites",
+   "statement": "Belkasoft says the product integrates Volatility features for memory analysis. Users download Volatility separately and point Belkasoft X to its executable in the settings.",
+   "source_label": "Vendor article",
+   "source_url": "https://belkasoft.com/ram-forensics-tools-techniques",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Belkasoft X",
+   "vendor": "Belkasoft",
+   "relation": "integrates",
+   "open_source": "hashcat",
+   "tool_ids": [
+    "hashcat"
+   ],
+   "group": "Computer and mobile forensics suites",
+   "statement": "Belkasoft X can use hashcat to brute-force some password hashes found during analysis. The help page covers attack modes such as mask and dictionary, plus extra hashcat arguments.",
+   "source_label": "Vendor help article",
+   "source_url": "https://belkasoft.com/hashcat-brute-force-options",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Cellebrite Endpoint Inspector",
+   "vendor": "Cellebrite",
+   "relation": "includes",
+   "open_source": "YARA rules (ReversingLabs open-source set)",
+   "tool_ids": [
+    "yara"
+   ],
+   "group": "Computer and mobile forensics suites",
+   "statement": "Vendor update post: open-source YARA rules from ReversingLabs are already included for computer collections. Users can also import or write their own rules and pick rule sets before a scan.",
+   "source_label": "Vendor blog",
+   "source_url": "https://cellebrite.com/en/enterprise/cellebrite-endpoint-inspectors-new-features-improves-incident-response/",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "EnCase Forensic (Volatility Plugin script)",
+   "vendor": "OpenText",
+   "relation": "integrates",
+   "open_source": "Volatility",
+   "tool_ids": [
+    "volatility3"
+   ],
+   "group": "Computer and mobile forensics suites",
+   "statement": "An EnCase App Central script (release 1.5.0, 2024) makes Volatility easier to use in EnCase, with multithreading. It needs the standalone Volatility program and is listed as not tested with Volatility 3.",
+   "source_label": "OpenText marketplace listing",
+   "source_url": "https://marketplace.opentext.com/cybersecurity/content/volatility-plugin",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "EnCase Forensic (Yara Scanner script)",
+   "vendor": "OpenText",
+   "relation": "integrates",
+   "open_source": "YARA",
+   "tool_ids": [
+    "yara"
+   ],
+   "group": "Computer and mobile forensics suites",
+   "statement": "An EnCase App Central script scans selected items with YARA rule files through the libyara.NET API. Release 2.1 (August 2024) targets YARA 4.5.1. Results go to bookmarks and optional JSON.",
+   "source_label": "OpenText marketplace listing",
+   "source_url": "https://marketplace.opentext.com/cybersecurity/content/yara-scanner",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Nuix Workstation (Yara Integration script)",
+   "vendor": "Nuix",
+   "relation": "integrates",
+   "open_source": "YARA",
+   "tool_ids": [
+    "yara"
+   ],
+   "group": "Computer and mobile forensics suites",
+   "statement": "A script in the Nuix GitHub organisation links YARA to Nuix Workbench. Selected case items are scanned with chosen rules and matches become tags. It is under Apache 2.0 and was last tested in Nuix 9.0.",
+   "source_label": "Nuix GitHub repository",
+   "source_url": "https://github.com/Nuix/Yara-Integration",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Nuix Workstation (RegRipper extension)",
+   "vendor": "Nuix",
+   "relation": "integrates",
+   "open_source": "RegRipper",
+   "tool_ids": [
+    "regripper"
+   ],
+   "group": "Computer and mobile forensics suites",
+   "statement": "Nuix blog guide: the RegRipper extension for Nuix Workstation works with RegRipper downloaded from its GitHub page and extracted on the analysis system. A matching extension exists for YARA.",
+   "source_label": "Vendor blog",
+   "source_url": "https://www.nuix.com/blog/step-step-guide-adding-yara-and-regripper-nuix-workstation",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Passware Kit",
+   "vendor": "Passware",
+   "relation": "accepts",
+   "open_source": "hashcat and John the Ripper rule syntax",
+   "tool_ids": [
+    "hashcat",
+    "john"
+   ],
+   "group": "Computer and mobile forensics suites",
+   "statement": "Passware says its Apply Rules attack is compatible with the rule syntax of hashcat and John the Ripper, and it checks rule files made for those tools.",
+   "source_label": "Vendor support article",
+   "source_url": "https://support.passware.com/hc/en-us/articles/115002145927-What-Password-Recovery-Attacks-can-I-use",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Passware Kit 2026 v1",
+   "vendor": "Passware",
+   "relation": "accepts",
+   "open_source": "Zip2John (John the Ripper)",
+   "tool_ids": [
+    "john"
+   ],
+   "group": "Computer and mobile forensics suites",
+   "statement": "Release post for 2026 v1: Passware Kit can recover ZIP passwords from hash files extracted with the Zip2John tool, which belongs to John the Ripper.",
+   "source_label": "Vendor release post",
+   "source_url": "https://blog.passware.com/passware-kit-2026-v1/",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Amped FIVE",
+   "vendor": "Amped Software",
+   "relation": "includes",
+   "open_source": "FFmpeg",
+   "tool_ids": [
+    "ffmpeg"
+   ],
+   "group": "Computer and mobile forensics suites",
+   "statement": "Amped blog (2024): FIVE offers separate video engines, including an FFMS engine described as built on FFmpeg and an FFmpeg engine that uses the native FFmpeg decoder.",
+   "source_label": "Vendor blog (November 2024)",
+   "source_url": "https://blog.ampedsoftware.com/2024/11/22/video-decoding-from-file-conversion-to-forensic-integrity",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Elcomsoft iOS Forensic Toolkit",
+   "vendor": "Elcomsoft",
+   "relation": "includes",
+   "open_source": "Open-source sub-projects",
+   "tool_ids": [],
+   "group": "Computer and mobile forensics suites",
+   "statement": "Elcomsoft blog (May 2023): the toolkit has almost eighty sub-projects, many of them open source. The company says it must publish its changes to those under their permissive licences.",
+   "source_label": "Vendor blog (May 2023)",
+   "source_url": "https://blog.elcomsoft.com/2023/05/ios-forensic-toolkit-and-open-source/",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Binalyze AIR",
+   "vendor": "Binalyze",
+   "relation": "runs",
+   "open_source": "YARA, Sigma and osquery rulesets",
+   "tool_ids": [
+    "yara",
+    "sigma",
+    "osquery"
+   ],
+   "group": "Incident response, EDR and SIEM",
+   "statement": "The page says AIR can run YARA, Sigma and osquery rulesets across many endpoints. Users can write their own rules or deploy rules from a shared library.",
+   "source_label": "Vendor use case page",
+   "source_url": "https://www.binalyze.com/use-case/proactive-threat-hunting-binalyze-air",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Binalyze AIR detection engineering",
+   "vendor": "Binalyze",
+   "relation": "integrates",
+   "open_source": "YARA, Sigma, osquery and Suricata rule formats",
+   "tool_ids": [
+    "yara",
+    "sigma",
+    "osquery",
+    "suricata"
+   ],
+   "group": "Incident response, EDR and SIEM",
+   "statement": "The knowledge base names YARA, Sigma, osquery and Suricata as the rule formats its detection engineering feature can generate, validate, convert and test.",
+   "source_label": "Vendor knowledge base",
+   "source_url": "https://kb.binalyze.com/fleet/features/detection-engineering",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Cisco XDR Forensics (MITRE ATT&CK Analyzer, DRONE)",
+   "vendor": "Cisco",
+   "relation": "includes",
+   "open_source": "Sigma rules from SigmaHQ and Hayabusa",
+   "tool_ids": [
+    "sigma",
+    "hayabusa"
+   ],
+   "group": "Incident response, EDR and SIEM",
+   "statement": "The changelog says many releases update DRONE with the latest Sigma rules taken from the SigmaHQ and Hayabusa repositories. Releases are listed from 2024 to 2026.",
+   "source_label": "Vendor knowledge base changelog",
+   "source_url": "https://docs.xdr.security.cisco.com/Content/Forensics/air/features/drone/mitre-att-and-ck-analyzer-changelog.htm",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "InsightIDR (SIEM) with Rapid7 Agent",
+   "vendor": "Rapid7",
+   "relation": "includes",
+   "open_source": "Velociraptor",
+   "tool_ids": [
+    "velociraptor"
+   ],
+   "group": "Incident response, EDR and SIEM",
+   "statement": "For higher license tiers, the Rapid7 Agent carries a client-only build of Velociraptor, so users can pivot to it during investigations. Some open-source features are turned off.",
+   "source_label": "Vendor documentation",
+   "source_url": "https://docs.rapid7.com/insightidr/velociraptor-integration/",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "InsightIDR (SIEM) Velociraptor alerts",
+   "vendor": "Rapid7",
+   "relation": "integrates",
+   "open_source": "Velociraptor artifacts and VQL",
+   "tool_ids": [
+    "velociraptor"
+   ],
+   "group": "Incident response, EDR and SIEM",
+   "statement": "Rapid7 says Velociraptor is its open-source DFIR framework, added to InsightIDR. Community artifacts are written in VQL, and alerts link to the matching Velociraptor endpoint page.",
+   "source_label": "Vendor blog, 2023",
+   "source_url": "https://www.rapid7.com/blog/post/2023/09/29/unlock-broader-detections-forensics-with-velociraptor-in-rapid7-xdr/",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Cado Security Platform",
+   "vendor": "Cado Security (Palo Alto Networks)",
+   "relation": "accepts",
+   "open_source": "Velociraptor collections (Windows.KapeFiles)",
+   "tool_ids": [
+    "velociraptor"
+   ],
+   "group": "Incident response, EDR and SIEM",
+   "statement": "A Rapid7 post says data gathered with a Velociraptor offline collector can be imported into the Cado platform, which processes it and builds timelines. Documented in 2024.",
+   "source_label": "Rapid7 blog, 2024",
+   "source_url": "https://www.rapid7.com/blog/post/2024/06/11/enhancing-velociraptor-with-the-cado-security-platform/",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Cloud SIEM",
+   "vendor": "Sumo Logic",
+   "relation": "integrates",
+   "open_source": "Sigma",
+   "tool_ids": [
+    "sigma"
+   ],
+   "group": "Incident response, EDR and SIEM",
+   "statement": "Sumo Logic documents a pySigma plugin that turns Sigma rules into Cloud SIEM rule JSON, which can be imported by API or UI. Field mappings cover 70 or more log sources.",
+   "source_label": "Vendor documentation",
+   "source_url": "https://www.sumologic.com/help/llm/docs/cse/rules/convert-sigma-rules.md",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Microsoft Sentinel",
+   "vendor": "Microsoft",
+   "relation": "integrates",
+   "open_source": "Sigma",
+   "tool_ids": [
+    "sigma"
+   ],
+   "group": "Incident response, EDR and SIEM",
+   "statement": "A Microsoft blog, updated in 2022, shows a notebook that uses the sigmac converter to turn Sigma rules into KQL for Sentinel. Only a subset of rules converts.",
+   "source_label": "Vendor blog, version 6.0 (2022)",
+   "source_url": "https://techcommunity.microsoft.com/t5/azure-sentinel/importing-sigma-rules-to-azure-sentinel/ba-p/657097",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Livehunt (VirusTotal / Google Threat Intelligence)",
+   "vendor": "VirusTotal",
+   "relation": "runs",
+   "open_source": "YARA",
+   "tool_ids": [
+    "yara"
+   ],
+   "group": "Incident response, EDR and SIEM",
+   "statement": "Livehunt applies YARA rules to files that VirusTotal analyzes. The page says it uses an up-to-date YARA version and lists the YARA modules it allows.",
+   "source_label": "Vendor documentation",
+   "source_url": "https://docs.virustotal.com/docs/livehunt",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Trend Vision One Forensics",
+   "vendor": "Trend Micro",
+   "relation": "runs",
+   "open_source": "YARA",
+   "tool_ids": [
+    "yara"
+   ],
+   "group": "Incident response, EDR and SIEM",
+   "statement": "Users can run custom YARA rules on Windows, Linux and macOS endpoints. Rules can be chosen from Response Management or uploaded as a YARA or text file under 1 MB.",
+   "source_label": "Vendor documentation",
+   "source_url": "https://docs.trendmicro.com/en-us/documentation/article/trend-vision-one-run-yara-task",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Kaspersky Endpoint Agent",
+   "vendor": "Kaspersky",
+   "relation": "runs",
+   "open_source": "YARA",
+   "tool_ids": [
+    "yara"
+   ],
+   "group": "Incident response, EDR and SIEM",
+   "statement": "The YARA Scan task scans objects against rules in .yara or .yar files that follow YARA 4.0.2. A matching rule produces a verdict that is written to the log.",
+   "source_label": "Vendor support page, version 3.14",
+   "source_url": "https://support.kaspersky.com/KEA/3.14/en-US/225455.htm",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Sophos XDR",
+   "vendor": "Sophos",
+   "relation": "builds on",
+   "open_source": "osquery",
+   "tool_ids": [
+    "osquery"
+   ],
+   "group": "Incident response, EDR and SIEM",
+   "statement": "A Sophos community post (2021) says XDR live queries expose osquery tables and let users write SQL against them. It lists the osquery versions used on Windows, Mac and Linux.",
+   "source_label": "Vendor community blog, 2021",
+   "source_url": "https://community.sophos.com/intercept-x-endpoint/b/blog/posts/yara-scanning-rules-with-sophos-xdr",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Sophos XDR YARA table",
+   "vendor": "Sophos",
+   "relation": "integrates",
+   "open_source": "YARA",
+   "tool_ids": [
+    "yara"
+   ],
+   "group": "Incident response, EDR and SIEM",
+   "statement": "The same 2021 post says the osquery YARA table in Sophos XDR takes a signature file and a path and searches for matching files.",
+   "source_label": "Vendor community blog, 2021",
+   "source_url": "https://community.sophos.com/intercept-x-endpoint/b/blog/posts/yara-scanning-rules-with-sophos-xdr",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "GravityZone EDR",
+   "vendor": "Bitdefender",
+   "relation": "runs",
+   "open_source": "YARA",
+   "tool_ids": [
+    "yara"
+   ],
+   "group": "Incident response, EDR and SIEM",
+   "statement": "Bitdefender describes YARA rules as queries that scan endpoints for malicious patterns and raise alerts or incidents. Up to 50 rules are allowed and the include directive is not supported.",
+   "source_label": "Vendor support page",
+   "source_url": "https://www.bitdefender.com/business/support/en/77212-1118491-yara-detection-rules.html",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Tanium Threat Response",
+   "vendor": "Tanium",
+   "relation": "accepts",
+   "open_source": "YARA",
+   "tool_ids": [
+    "yara"
+   ],
+   "group": "Incident response, EDR and SIEM",
+   "statement": "The developer page lists YARA among the intel types Threat Response supports, next to OpenIOC, STIX, CybOX and Tanium Signals.",
+   "source_label": "Vendor developer documentation",
+   "source_url": "https://developer.tanium.com/site/global/docs/how_tos/tr_intel",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Secure Endpoint advanced custom detections",
+   "vendor": "Cisco",
+   "relation": "builds on",
+   "open_source": "ClamAV",
+   "tool_ids": [],
+   "group": "Incident response, EDR and SIEM",
+   "statement": "Cisco's guide says advanced custom detection signatures are built into a database, and tells users to check the ClamAV folder on the endpoint to confirm the new signature set arrived.",
+   "source_label": "Vendor support document",
+   "source_url": "https://www.cisco.com/c/en/us/support/docs/security/secure-endpoint/217688-create-an-advanced-custom-detection-list.html",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Google Security Operations default parsers",
+   "vendor": "Google",
+   "relation": "accepts",
+   "open_source": "osquery, Zeek and ClamAV logs",
+   "tool_ids": [
+    "osquery",
+    "zeek"
+   ],
+   "group": "Incident response, EDR and SIEM",
+   "statement": "The default parser list includes parsers for osquery logs, Zeek (Bro) logs and ClamAV logs, so these sources can be ingested into the SIEM.",
+   "source_label": "Vendor documentation",
+   "source_url": "https://docs.cloud.google.com/chronicle/docs/ingestion/default-parsers/default-parser-configuration",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "KAPE (Hayabusa module)",
+   "vendor": "Kroll",
+   "relation": "includes",
+   "open_source": "Hayabusa",
+   "tool_ids": [
+    "hayabusa"
+   ],
+   "group": "Incident response, EDR and SIEM",
+   "statement": "Kroll's Q3 2022 KAPE update says the modules for Hayabusa were updated, renamed and moved into their own folder.",
+   "source_label": "Vendor publication, Q3 2022",
+   "source_url": "https://www.kroll.com/en/publications/cyber/kape-quarterly-update-q3-2022",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "KAPE (Chainsaw module)",
+   "vendor": "Kroll",
+   "relation": "includes",
+   "open_source": "Chainsaw",
+   "tool_ids": [
+    "chainsaw"
+   ],
+   "group": "Incident response, EDR and SIEM",
+   "statement": "The same Q3 2022 update says the Chainsaw module was changed to match the syntax of Chainsaw 2.0 and newer.",
+   "source_label": "Vendor publication, Q3 2022",
+   "source_url": "https://www.kroll.com/en/publications/cyber/kape-quarterly-update-q3-2022",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Splunk osquery add-on (TA-osquery)",
+   "vendor": "Splunk",
+   "relation": "integrates",
+   "open_source": "osquery",
+   "tool_ids": [
+    "osquery"
+   ],
+   "group": "Incident response, EDR and SIEM",
+   "statement": "A Splunk-hosted GitHub add-on parses osquery logs and results into Splunk fields and data models. It is documented and tested on macOS only.",
+   "source_label": "Vendor GitHub repository",
+   "source_url": "https://github.com/splunk/TA-osquery",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Splunk Enterprise Security",
+   "vendor": "Splunk",
+   "relation": "integrates",
+   "open_source": "Sigma",
+   "tool_ids": [
+    "sigma"
+   ],
+   "group": "Incident response, EDR and SIEM",
+   "statement": "Splunk's Lantern article says Sigma rules must be translated for Splunk. It says the Recorded Future app handles the translation and mapping, and users can then edit the search.",
+   "source_label": "Vendor knowledge article",
+   "source_url": "https://lantern.splunk.com/Security_Use_Cases/Threat_Hunting/Detecting_malicious_activities_with_Sigma_rules",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Elastic Security protections artifacts",
+   "vendor": "Elastic",
+   "relation": "includes",
+   "open_source": "YARA",
+   "tool_ids": [
+    "yara"
+   ],
+   "group": "Incident response, EDR and SIEM",
+   "statement": "Elastic's public repository for its endpoint detection logic has a folder of YARA rules for malware protection. The repository is under the Elastic License 2.0.",
+   "source_label": "Vendor GitHub repository",
+   "source_url": "https://github.com/elastic/protections-artifacts",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Elastic MISP integration",
+   "vendor": "Elastic",
+   "relation": "integrates",
+   "open_source": "MISP",
+   "tool_ids": [],
+   "group": "Incident response, EDR and SIEM",
+   "statement": "Elastic documents an integration that polls the REST API of a MISP instance and indexes its events and attributes as threat data, with decay scores for expiring indicators.",
+   "source_label": "Vendor documentation",
+   "source_url": "https://www.elastic.co/docs/reference/integrations/ti_misp",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Corelight Sensor",
+   "vendor": "Corelight",
+   "relation": "builds on",
+   "open_source": "Zeek",
+   "tool_ids": [
+    "zeek"
+   ],
+   "group": "Network and cloud security",
+   "statement": "Corelight describes Zeek as the core analysis engine of its sensors. Corelight adds management, fleet and log export features on top.",
+   "source_label": "Vendor product page",
+   "source_url": "https://corelight.com/products/zeek",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Corelight Sensor (v19)",
+   "vendor": "Corelight",
+   "relation": "includes",
+   "open_source": "Suricata",
+   "tool_ids": [
+    "suricata"
+   ],
+   "group": "Network and cloud security",
+   "statement": "Corelight v19 runs Zeek and Suricata on the same sensor. Suricata alert logs carry the Zeek UID so analysts can jump to the related Zeek logs.",
+   "source_label": "Vendor blog",
+   "source_url": "https://corelight.com/blog/zeek-and-suricata-corelight-v19",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Clear NDR Enterprise (formerly Stamus Security Platform)",
+   "vendor": "Stamus Networks",
+   "relation": "builds on",
+   "open_source": "Suricata",
+   "tool_ids": [
+    "suricata"
+   ],
+   "group": "Network and cloud security",
+   "statement": "Stamus says the product uses Suricata as its foundation and adds asset visibility, alert triage and other detection features. Stamus handles Suricata updates for customers.",
+   "source_label": "Vendor page",
+   "source_url": "https://go.stamus-networks.com/streamline-suricata",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Cisco Secure Firewall",
+   "vendor": "Cisco",
+   "relation": "runs",
+   "open_source": "Snort 3",
+   "tool_ids": [],
+   "group": "Network and cloud security",
+   "statement": "Cisco's adoption guide says Snort 3 is the inspection engine path for Secure Firewall, with Snort 2 still supported. Custom Snort 2 rules are not syntax-compatible with Snort 3.",
+   "source_label": "Vendor documentation",
+   "source_url": "https://secure.cisco.com/secure-firewall/docs/snort-3-adoption",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Strata Cloud Manager (Advanced Threat Prevention)",
+   "vendor": "Palo Alto Networks",
+   "relation": "accepts",
+   "open_source": "Snort and Suricata rules",
+   "tool_ids": [
+    "suricata"
+   ],
+   "group": "Network and cloud security",
+   "statement": "Strata Cloud Manager can convert Snort and Suricata rules into custom threat signatures for its firewalls. Rules can be uploaded as a text file or pasted in.",
+   "source_label": "Vendor documentation",
+   "source_url": "https://docs.paloaltonetworks.com/advanced-threat-prevention/custom-signatures/custom-application-and-threat-signatures/import-a-custom-threat-signature-from-a-snort-signature-scm",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Sysdig Secure",
+   "vendor": "Sysdig",
+   "relation": "builds on",
+   "open_source": "Falco",
+   "tool_ids": [],
+   "group": "Network and cloud security",
+   "statement": "Sysdig presents Sysdig Secure as an extension of Falco, the runtime detection project it created in 2016 and donated to the CNCF in 2017.",
+   "source_label": "Vendor learning page",
+   "source_url": "https://sysdig.com/learn-cloud-native/container-security/what-is-falco/",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Elastic Agent Suricata integration",
+   "vendor": "Elastic",
+   "relation": "accepts",
+   "open_source": "Suricata EVE JSON logs",
+   "tool_ids": [
+    "suricata"
+   ],
+   "group": "Network and cloud security",
+   "statement": "The Elastic integration reads Suricata's eve.json log file through Elastic Agent and sends the events to Elastic for alerting and threat hunting.",
+   "source_label": "Vendor documentation",
+   "source_url": "https://www.elastic.co/docs/reference/integrations/suricata",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Elastic Agent Zeek integration",
+   "vendor": "Elastic",
+   "relation": "accepts",
+   "open_source": "Zeek logs",
+   "tool_ids": [
+    "zeek"
+   ],
+   "group": "Network and cloud security",
+   "statement": "The Elastic integration reads Zeek JSON logs such as conn, dns, http, ssl and files through Elastic Agent and maps them to the Elastic Common Schema.",
+   "source_label": "Vendor documentation",
+   "source_url": "https://www.elastic.co/docs/reference/integrations/zeek",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Elastic Security Osquery Manager",
+   "vendor": "Elastic",
+   "relation": "integrates",
+   "open_source": "osquery",
+   "tool_ids": [
+    "osquery"
+   ],
+   "group": "Network and cloud security",
+   "statement": "The integration manages osquery on Elastic Agents through Fleet. Users run live or scheduled SQL queries from Kibana and results are stored in Elasticsearch.",
+   "source_label": "Vendor documentation",
+   "source_url": "https://www.elastic.co/docs/reference/integrations/osquery_manager",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "AWS Security Hub CSPM",
+   "vendor": "Amazon Web Services",
+   "relation": "integrates",
+   "open_source": "Prowler",
+   "tool_ids": [],
+   "group": "Network and cloud security",
+   "statement": "The AWS partner list names Prowler, an open source AWS security checking tool, as a third-party product that sends findings to Security Hub.",
+   "source_label": "Vendor documentation",
+   "source_url": "https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-partner-providers.html",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Guardian Threat Intelligence",
+   "vendor": "Nozomi Networks",
+   "relation": "runs",
+   "open_source": "YARA",
+   "tool_ids": [
+    "yara"
+   ],
+   "group": "Network and cloud security",
+   "statement": "Nozomi's threat intelligence documentation says its YARA rules follow the YARA specification and are applied to files seen in HTTP and SMB transfers.",
+   "source_label": "Vendor documentation",
+   "source_url": "https://technicaldocs.nozominetworks.com/products/threat-intelligence/topics/intro/c_ti.html",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Sophos Firewall v20",
+   "vendor": "Sophos",
+   "relation": "includes",
+   "open_source": "Snort",
+   "tool_ids": [],
+   "group": "Libraries and third-party notices",
+   "statement": "The open source licence file for Sophos Firewall 20.0 lists snort (partly) under GPL v2.",
+   "source_label": "Vendor licence file",
+   "source_url": "https://docs.sophos.com/nsg/licenses/sf/20.0/20.0.0.txt",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "X-Ways Forensics",
+   "vendor": "X-Ways Software Technology",
+   "relation": "includes",
+   "open_source": "libPFF",
+   "tool_ids": [
+    "libpff"
+   ],
+   "group": "Libraries and third-party notices",
+   "statement": "The product help file lists an unofficial build of libPFF as contained in X-Ways Forensics, under LGPL version 3.0.",
+   "source_label": "Product help file",
+   "source_url": "https://documentation.help/WinHex-X-Ways/topic16.htm",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "CleverFiles products (Disk Drill)",
+   "vendor": "CleverFiles",
+   "relation": "includes",
+   "open_source": "The Sleuth Kit",
+   "tool_ids": [
+    "sleuthkit"
+   ],
+   "group": "Libraries and third-party notices",
+   "statement": "The CleverFiles licence exhibit lists The Sleuth Kit, distributed under the IBM Public License and the Common Public License.",
+   "source_label": "Vendor EULA exhibit",
+   "source_url": "https://www.cleverfiles.com/help/eula-exhibit/?amp",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Disk Drill for Mac",
+   "vendor": "CleverFiles",
+   "relation": "includes",
+   "open_source": "libimobiledevice",
+   "tool_ids": [
+    "libimobiledevice"
+   ],
+   "group": "Libraries and third-party notices",
+   "statement": "The CleverFiles licence exhibit names libimobiledevice, with libplist and libusbmuxd, for Disk Drill for Mac.",
+   "source_label": "Vendor EULA exhibit",
+   "source_url": "https://www.cleverfiles.com/help/eula-exhibit/?amp",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "RawDigger",
+   "vendor": "LibRaw LLC",
+   "relation": "includes",
+   "open_source": "ExifTool",
+   "tool_ids": [
+    "exiftool"
+   ],
+   "group": "Libraries and third-party notices",
+   "statement": "The acknowledgments page says the program includes the ExifTool utility by Phil Harvey, used under the Perl Artistic License. Documented around the 2013 copyright years.",
+   "source_label": "Vendor acknowledgments page",
+   "source_url": "https://www.rawdigger.com/node/15",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Binalyze products",
+   "vendor": "Binalyze",
+   "relation": "includes",
+   "open_source": "YARA",
+   "tool_ids": [
+    "yara"
+   ],
+   "group": "Libraries and third-party notices",
+   "statement": "Binalyze's open source software list names YARA version 4.5.1, the go-yara binding and YARA rule sets from ReversingLabs.",
+   "source_label": "Vendor knowledge base",
+   "source_url": "https://kb.binalyze.com/general",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Binalyze products",
+   "vendor": "Binalyze",
+   "relation": "includes",
+   "open_source": "osquery",
+   "tool_ids": [
+    "osquery"
+   ],
+   "group": "Libraries and third-party notices",
+   "statement": "Binalyze's open source software list names osquery 5.8.2 and the osquery-go bindings.",
+   "source_label": "Vendor knowledge base",
+   "source_url": "https://kb.binalyze.com/general",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Binalyze products",
+   "vendor": "Binalyze",
+   "relation": "includes",
+   "open_source": "SQLite",
+   "tool_ids": [],
+   "group": "Libraries and third-party notices",
+   "statement": "Binalyze's open source software list names SQLite 3.39.2, the go-sqlite3 driver and a Binalyze fork.",
+   "source_label": "Vendor knowledge base",
+   "source_url": "https://kb.binalyze.com/general",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Binalyze products",
+   "vendor": "Binalyze",
+   "relation": "includes",
+   "open_source": "Sigma rules",
+   "tool_ids": [
+    "sigma"
+   ],
+   "group": "Libraries and third-party notices",
+   "statement": "Binalyze's open source software list names the SigmaHQ detection rule collection, along with Hayabusa rules.",
+   "source_label": "Vendor knowledge base",
+   "source_url": "https://kb.binalyze.com/general",
+   "checked": "2026-11-24"
+  },
+  {
+   "product": "Arcserve ImageManager 8",
+   "vendor": "Arcserve",
+   "relation": "includes",
+   "open_source": "SQLite",
+   "tool_ids": [],
+   "group": "Libraries and third-party notices",
+   "statement": "The May 2026 third-party terms for ImageManager 8 list SQLite 3.46.1 under ImageManager.exe.",
+   "source_label": "Vendor third-party terms",
+   "source_url": "https://www.arcserve.com/hubfs/legal/imagemanager-8-third-party-terms-may2026.pdf?hsLang=ja",
+   "checked": "2026-11-24"
   }
  ],
  "open_on_open": [
@@ -100,7 +919,8 @@
    "statement": "Autopsy describes itself as a graphical platform for The Sleuth Kit and other tools. Its standard ingest modules include a Plaso module for timelines and an iOS analyser based on iLEAPP.",
    "source_label": "Autopsy user documentation",
    "source_url": "https://sleuthkit.org/autopsy/docs/user-docs/4.23.0/quick_start_guide.html",
-   "checked": "2026-11-23"
+   "checked": "2026-11-23",
+   "group": "Computer and mobile forensics suites"
   }
  ]
 }

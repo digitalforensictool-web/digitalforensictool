@@ -1040,26 +1040,74 @@ def build_alternatives():
 
 
 def build_inside():
-    def rows(items):
-        out = []
-        for it in items:
-            links = ", ".join('<a href="tools/%s.html">%s</a>' % (i, e(TOOL[i]["name"])) for i in it.get("tool_ids", []) if i in TOOL)
-            out.append('<div class="card row-card"><div class="v"><div class="t">%s <span>%s</span> %s</div>'
-                       '<p class="sum">%s</p><div class="src-line">Source: <a href="%s" rel="noopener">%s</a>, checked %s</div>'
-                       '%s</div></div>' % (e(it["product"]), e(it["relation"]), e(it["open_source"]), e(it["statement"]),
-                                           e(it["source_url"]), e(it["source_label"]), fmt_date(it.get("checked")),
-                                           ('<p class="sum" style="font-size:13px">In this directory: %s</p>' % links) if links else ""))
-        return "".join(out)
+    GROUPS = ["Computer and mobile forensics suites", "Incident response, EDR and SIEM", "Network and cloud security", "Libraries and third-party notices"]
+
+    def row(it):
+        links = ", ".join('<a href="tools/%s.html">%s</a>' % (i, e(TOOL[i]["name"])) for i in it.get("tool_ids", []) if i in TOOL)
+        key = " ".join([it["product"], it.get("vendor", ""), it["open_source"], it["statement"]]).lower()
+        return ('<div class="card row-card" data-section="%s"><div class="v"><div class="t">%s <span>%s</span> %s</div>'
+                '<p class="sum">%s</p><div class="src-line">Source: <a href="%s" rel="noopener">%s</a>, checked %s</div>'
+                '%s</div></div>' % (e(key), e(it["product"]), e(it["relation"]), e(it["open_source"]), e(it["statement"]),
+                                    e(it["source_url"]), e(it["source_label"]), fmt_date(it.get("checked")),
+                                    ('<p class="sum" style="font-size:13px">In this directory: %s</p>' % links) if links else ""))
+    items = sorted(INTEG["integrations"], key=lambda x: (x["product"].lower(), x["open_source"].lower()))
+    secs = []
+    for gname in GROUPS:
+        mem = [x for x in items if x.get("group") == gname]
+        if mem:
+            secs.append('<section class="section" style="padding-top:8px"><div class="section-head"><h2>%s</h2><span class="muted">%d cases</span></div>'
+                        '<div style="display:flex;flex-direction:column;gap:12px">%s</div></section>' % (e(gname), len(mem), "".join(row(x) for x in mem)))
+    oo = INTEG.get("open_on_open", [])
+    total = len(items) + len(oo)
+    prods = len({x["product"] for x in items})
     body = ('<div class="wrap"><div class="page-head"><h1>Inside commercial tools</h1>'
             '<p class="lead">Documented cases where a commercial product runs, includes or accepts open-source tools and rule formats. Learning the open tool means you already understand what the paid feature does.</p>'
-            '<p class="note">Each entry repeats only what the vendor\'s own page says and links to it. Products change, so follow the source link for the current position. '
-            'Nothing here suggests a vendor endorses this site.</p></div>'
-            '<section class="section" style="padding-top:8px"><div style="display:flex;flex-direction:column;gap:12px">%s</div></section>'
-            '<section class="section"><div class="section-head"><h2>Open source builds on open source</h2></div>'
-            '<div style="display:flex;flex-direction:column;gap:12px">%s</div></section></div>'
-            % (rows(INTEG["integrations"]), rows(INTEG.get("open_on_open", []))))
+            '<p class="note">Each entry repeats only what the vendor\'s own page (or the open project\'s own documentation) says and links to it. Products change, so follow the source link for the current position. '
+            'Nothing here suggests a vendor endorses this site.</p>'
+            '<div class="stats"><span><b>%d</b> documented cases</span><span><b>%d</b> commercial products</span></div>'
+            '<p style="margin:8px 0 16px"><a class="btn small" href="vendor-free.html">Free tools given away by these vendors</a></p>'
+            '<div class="filters"><div class="row"><label class="label" for="iq">Find a product or open tool</label>'
+            '<input id="iq" type="search" data-section-filter placeholder="For example YARA, Velociraptor or Cellebrite" autocomplete="off"></div></div></div>'
+            '%s<section class="section"><div class="section-head"><h2>Open source builds on open source</h2></div>'
+            '<div style="display:flex;flex-direction:column;gap:12px">%s</div></section>'
+            '<p class="empty" data-empty hidden>No match yet. Try a shorter word.</p></div>'
+            % (total, prods, "".join(secs), "".join(row(x) for x in oo)))
     page("inside.html", "Inside commercial tools",
-         "Documented examples of commercial digital forensics products that run or accept open-source tools, each with its vendor source.", body, "inside")
+         "Documented examples of commercial digital forensics and security products that run or accept open-source tools, each with its vendor source.", body, "inside")
+
+
+def build_vendor_free():
+    f = DATA / "vendor-free-tools.json"
+    if not f.exists():
+        return False
+    items = json.load(open(f, encoding="utf-8"))
+    if not items:
+        return False
+    groups = {}
+    for it in items:
+        groups.setdefault(it["technology"], []).append(it)
+    secs = []
+    for tech in sorted(groups, key=str.lower):
+        cards = []
+        for it in sorted(groups[tech], key=lambda x: (x["vendor"].lower(), x["tool"].lower())):
+            here = ('<p class="sum" style="font-size:13px">In this directory: <a href="tools/%s.html">%s page</a></p>' % (it["tool_id"], e(TOOL[it["tool_id"]]["name"]))) if it.get("tool_id") in TOOL else ""
+            cards.append('<article class="card" data-section="%s"><div class="top"><div><h3>%s</h3><div class="by">by %s</div></div><span class="badge">%s</span></div>'
+                         '<p class="sum">%s</p><div class="src-line" style="font-size:13px;color:var(--ink-muted)">Source: <a href="%s" rel="noopener">%s</a>, checked %s</div>%s</article>'
+                         % (e((it["tool"] + " " + it["vendor"] + " " + tech + " " + it["what"]).lower()), e(it["tool"]), e(it["vendor"]), e(it["cost_note"]),
+                            e(it["what"]), e(it["source_url"]), e(it["source_label"]), fmt_date(it.get("checked")), here))
+        secs.append('<section class="section" style="padding-top:8px"><div class="section-head"><h2>%s</h2><span class="muted">%d tools</span></div><div class="grid">%s</div></section>'
+                    % (e(tech), len(groups[tech]), "".join(cards)))
+    body = ('<div class="wrap"><div class="page-head"><div class="crumbs"><a href="index.html">Home</a> / <a href="inside.html">Inside commercial tools</a> / Free vendor tools</div>'
+            '<h1>Free tools from commercial vendors</h1>'
+            '<p class="lead">Many companies that sell forensic and security products also give some tools away. Here they are, sorted by what they do.</p>'
+            '<p class="note">Free does not always mean open source. Some need a registration form or limit use to non-commercial work, and terms can change. Always read the vendor page and licence before use. '
+            'Every entry links to the vendor\'s own page. Nothing here suggests a vendor endorses this site.</p>'
+            '<div class="stats"><span><b>%d</b> free tools</span><span><b>%d</b> vendors</span></div>'
+            '<div class="filters"><div class="row"><label class="label" for="vq">Find a tool or vendor</label>'
+            '<input id="vq" type="search" data-section-filter placeholder="For example Magnet, RAM or imaging" autocomplete="off"></div></div></div>'
+            '%s<p class="empty" data-empty hidden>No match yet. Try a shorter word.</p></div>' % (len(items), len({x["vendor"] for x in items}), "".join(secs)))
+    page("vendor-free.html", "Free tools from commercial vendors", "Free forensic and security tools given away by commercial vendors, sorted by what they do, each linked to the vendor's own page.", body, "inside")
+    return True
 
 
 def simple_list(items, who_key=None):
@@ -1174,7 +1222,7 @@ def main():
     assets = OUT / "assets"
     shutil.copytree(ROOT / "static", assets, dirs_exist_ok=True)
     build_home(); build_tools_index(); build_categories(); build_tool_pages()
-    build_workflows(); build_xray(); build_compare(); build_hotseat(); build_basics(); build_toolbox(); build_alternatives(); build_inside(); build_nist(); build_practice(); build_learn(); build_about(); build_404()
+    build_workflows(); build_xray(); build_compare(); build_hotseat(); build_basics(); build_toolbox(); build_alternatives(); build_inside(); build_vendor_free(); build_nist(); build_practice(); build_learn(); build_about(); build_404()
     (OUT / ".nojekyll").write_text("", encoding="utf-8")
     domain = SITE.get("domain", "").strip()
     if domain:
