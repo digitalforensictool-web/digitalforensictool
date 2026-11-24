@@ -86,7 +86,8 @@
    "title": "Use SOF-ELK for large logs",
    "text": "Millions of lines are hard to read with grep. SOF-ELK is a virtual machine with the Elastic stack. Log in as elk_user and put Apache logs in common, combined or vhost-combined format into /logstash/httpd/. Wait for them to load, then open the HTTPD Log dashboard to see requests over time, status codes and top addresses.",
    "tools": [
-    "sof-elk"
+    "sof-elk",
+    "wazuh"
    ],
    "paths": [
     "/logstash/httpd/"

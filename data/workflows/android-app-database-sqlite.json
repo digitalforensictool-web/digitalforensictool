@@ -85,7 +85,8 @@
    "tools": [
     "aleapp",
     "db4s",
-    "fqlite"
+    "fqlite",
+    "apktool"
    ]
   }
  ],

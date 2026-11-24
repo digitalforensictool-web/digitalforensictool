@@ -440,8 +440,8 @@
    "group": "Incident response, EDR and SIEM",
    "statement": "Users can run custom YARA rules on Windows, Linux and macOS endpoints. Rules can be chosen from Response Management or uploaded as a YARA or text file under 1 MB.",
    "source_label": "Vendor documentation",
-   "source_url": "https://docs.trendmicro.com/en-us/documentation/article/trend-vision-one-run-yara-task",
-   "checked": "2026-11-24"
+   "source_url": "https://docs.trendmicro.com/en-us/documentation/article/trend-vision-one-run-yara-rules-task",
+   "checked": "2026-11-25"
   },
   {
    "product": "Kaspersky Endpoint Agent",
@@ -508,9 +508,9 @@
     "yara"
    ],
    "group": "Incident response, EDR and SIEM",
-   "statement": "The developer page lists YARA among the intel types Threat Response supports, next to OpenIOC, STIX, CybOX and Tanium Signals.",
-   "source_label": "Vendor developer documentation",
-   "source_url": "https://developer.tanium.com/site/global/docs/how_tos/tr_intel",
+   "statement": "Tanium's own Tech Talk says Threat Response supports detection formats including OpenIOC, STIX, Tanium Signals and YARA rules.",
+   "source_label": "Tanium Tech Talks #92 (vendor blog)",
+   "source_url": "https://www.tanium.com/blog/automate-threat-response-endpoint-reactions-tech-talks-92",
    "checked": "2026-11-24"
   },
   {
@@ -791,9 +791,9 @@
     "libpff"
    ],
    "group": "Libraries and third-party notices",
-   "statement": "The product help file lists an unofficial build of libPFF as contained in X-Ways Forensics, under LGPL version 3.0.",
-   "source_label": "Product help file",
-   "source_url": "https://documentation.help/WinHex-X-Ways/topic16.htm",
+   "statement": "The product manual states that X-Ways Forensics contains an unofficial build of libPFF, which is governed by the LGPL.",
+   "source_label": "X-Ways WinHex/X-Ways Forensics manual (PDF), Legalities",
+   "source_url": "https://www.x-ways.net/winhex/manual.pdf",
    "checked": "2026-11-24"
   },
   {
@@ -848,9 +848,9 @@
    ],
    "group": "Libraries and third-party notices",
    "statement": "Binalyze's open source software list names YARA version 4.5.1, the go-yara binding and YARA rule sets from ReversingLabs.",
-   "source_label": "Vendor knowledge base",
-   "source_url": "https://kb.binalyze.com/general",
-   "checked": "2026-11-24"
+   "source_label": "Binalyze knowledge base: Open-Source Software List",
+   "source_url": "https://kb.binalyze.ai/general/licenses-open-source-software-list.html",
+   "checked": "2026-11-25"
   },
   {
    "product": "Binalyze products",
@@ -862,9 +862,9 @@
    ],
    "group": "Libraries and third-party notices",
    "statement": "Binalyze's open source software list names osquery 5.8.2 and the osquery-go bindings.",
-   "source_label": "Vendor knowledge base",
-   "source_url": "https://kb.binalyze.com/general",
-   "checked": "2026-11-24"
+   "source_label": "Binalyze knowledge base: Open-Source Software List",
+   "source_url": "https://kb.binalyze.ai/general/licenses-open-source-software-list.html",
+   "checked": "2026-11-25"
   },
   {
    "product": "Binalyze products",
@@ -874,9 +874,9 @@
    "tool_ids": [],
    "group": "Libraries and third-party notices",
    "statement": "Binalyze's open source software list names SQLite 3.39.2, the go-sqlite3 driver and a Binalyze fork.",
-   "source_label": "Vendor knowledge base",
-   "source_url": "https://kb.binalyze.com/general",
-   "checked": "2026-11-24"
+   "source_label": "Binalyze knowledge base: Open-Source Software List",
+   "source_url": "https://kb.binalyze.ai/general/licenses-open-source-software-list.html",
+   "checked": "2026-11-25"
   },
   {
    "product": "Binalyze products",
@@ -887,10 +887,10 @@
     "sigma"
    ],
    "group": "Libraries and third-party notices",
-   "statement": "Binalyze's open source software list names the SigmaHQ detection rule collection, along with Hayabusa rules.",
-   "source_label": "Vendor knowledge base",
-   "source_url": "https://kb.binalyze.com/general",
-   "checked": "2026-11-24"
+   "statement": "Binalyze's open source software list names the SigmaHQ detection rule collection.",
+   "source_label": "Binalyze knowledge base: Open-Source Software List",
+   "source_url": "https://kb.binalyze.ai/general/licenses-open-source-software-list.html",
+   "checked": "2026-11-25"
   },
   {
    "product": "Arcserve ImageManager 8",

@@ -87,7 +87,8 @@
    "text": "Record the card details, the image hash, the tool names and versions, the options you chose, the number of files each tool found and your counts of complete, partial and damaged files. Keep the output folders unchanged as your working evidence.",
    "tools": [
     "testdisk",
-    "foremost"
+    "foremost",
+    "scalpel"
    ]
   }
  ],

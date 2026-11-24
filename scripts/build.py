@@ -42,7 +42,8 @@ RELDATA = load("releases.json", {"generated": None, "tools": {}})
 REL = RELDATA.get("tools", {})
 
 PREVIEW = "--preview" in sys.argv
-MAX_PER_CATEGORY = 10
+MAX_PER_CATEGORY = 25
+CATEGORY_SHOWN = 10
 
 
 def load_folder(name):
@@ -127,7 +128,19 @@ def licence(t):
         return "oss", "Open source", "Open source" + (" (%s)" % spdx if spdx else "")
     if ty == "source-published":
         return "src", "Free, source published", "Free, source published" + (" (%s)" % spdx if spdx else "")
+    if ty == "free-resource":
+        return "src", "Free resource", "Free public resource (data or programme, not software)"
     return "free", "Free, closed source", "Free, closed source"
+
+
+NOTICE_LABEL = {"deprecated": "Deprecated", "maintenance": "Maintenance mode", "unmaintained": "Not maintained"}
+
+
+def notice_badge(t):
+    n = t.get("notice")
+    if not n:
+        return ""
+    return '<span class="badge warn">%s</span>' % NOTICE_LABEL.get(n.get("level"), "Note")
 
 
 def activity(t):
@@ -180,7 +193,14 @@ if BASICS:
     NAV.insert(0, ("basics", "Basics", "basics.html"))
 
 
-def page(path, title, desc, body, current=""):
+def ld(obj):
+    """JSON-LD script tag. The closing-tag sequence is escaped so page text cannot end the script early."""
+    return '<script type="application/ld+json">%s</script>' % json.dumps(obj, ensure_ascii=False).replace("</", "<\\/")
+
+
+def page(path, title, desc, body, current="", head="", og_type="website"):
+    if len(desc) > 158:
+        desc = desc[:155].rsplit(" ", 1)[0].rstrip(",.;:") + "…"
     depth = path.count("/")
     px = "../" * depth
     if path == "404.html" and BASE:
@@ -200,13 +220,21 @@ def page(path, title, desc, body, current=""):
 <meta name="description" content="{desc}">
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
-<meta property="og:type" content="website">
-<meta name="theme-color" content="#1437C8">
+<meta property="og:type" content="{og_type}">
+<meta property="og:url" content="{og_url}">
+<meta property="og:site_name" content="{name}">
+{og_image}<meta name="twitter:card" content="summary_large_image">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#1437C8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0B1020" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
 <meta name="format-detection" content="telephone=no">
 <script>document.documentElement.className="js"</script>
 {canonical}
 <link rel="icon" href="{favicon}">
+<link rel="apple-touch-icon" href="{px}assets/apple-touch-icon.png">
 <link rel="stylesheet" href="{px}assets/style.css">
+{head}
 </head>
 <body id="top">
 <a class="skip" href="#main">Skip to content</a>
@@ -220,15 +248,26 @@ def page(path, title, desc, body, current=""):
 </main>
 <footer class="site-foot"><div class="wrap">
 <p class="about">{name} is an independent educational resource. It is not affiliated with, sponsored by or endorsed by any vendor or project listed here. Credit for every tool belongs to its developers. Product names are trademarks of their owners. Downloads come from third parties: validate every tool yourself before using it on real evidence.</p>
-<nav aria-label="Footer">{basics_link}<a href="{px}index.html#categories">Categories</a><a href="{px}alternatives.html">Alternatives</a><a href="{px}inside.html">Inside commercial tools</a><a href="{px}learn.html">Learn</a><a href="{px}compare.html">Compare tools</a><a href="{px}lab.html">Evidence lab</a><a href="{px}toolbox.html">Pocket toolbox</a><a href="{px}nist.html">Browse by NIST functionality</a><a href="{px}about.html">About and disclaimer</a><a href="{px}about.html#corrections">Corrections and removal requests</a><a href="{px}about.html#privacy">Privacy</a>{maint}</nav>
+<nav aria-label="Footer" class="foot-cols">
+<div><div class="label">Learn</div>{basics_link}{wf_link}<a href="{px}learn.html">Learn</a><a href="{px}practice.html">Practice</a><a href="{px}lab.html">Evidence lab</a></div>
+<div><div class="label">Tools</div><a href="{px}index.html#categories">Categories</a><a href="{px}compare.html">Compare tools</a><a href="{px}alternatives.html">Alternatives</a><a href="{px}inside.html">Inside commercial tools</a><a href="{px}vendor-free.html">Free tools from vendors</a><a href="{px}toolbox.html">Pocket toolbox</a><a href="{px}nist.html">Browse by NIST functionality</a></div>
+<div><div class="label">Project</div><a href="{px}about.html">About and disclaimer</a><a href="{px}about.html#corrections">Corrections and removal requests</a><a href="{px}about.html#privacy">Privacy</a>{contribute}{maint}<span class="updated">Last updated: {built}</span></div>
+</nav>
 </div></footer>
 <script src="{px}assets/app.js" defer></script>
 </body>
 </html>
-""".format(title=e(full_title), desc=e(desc), canonical=canonical, favicon=FAVICON, px=px, logo=ICON_LOGO,
+""".format(title=e(full_title), desc=e(desc), canonical=canonical, head=head, og_type=og_type,
+           og_url=e("%s/%s" % (BASE, "" if path == "index.html" else path)) if BASE else "",
+           og_image=('<meta property="og:image" content="%s/assets/og-image.png">\n<meta property="og:image:width" content="1200">'
+                     '<meta property="og:image:height" content="630">\n<meta property="og:image:alt" content="%s: free and open-source digital forensics tools for students">\n'
+                     % (BASE, e(NAME))) if BASE else "", favicon=FAVICON, px=px, logo=ICON_LOGO,
            name=e(NAME), nav=nav, suggest=e(suggest), body=body, menu_icon=ICON_MENU,
            basics_link=('<a href="%sbasics.html">Basics</a><a href="%sglossary.html">Glossary</a>' % (px, px)) if BASICS else "",
-           maint=('<span style="padding:10px 0">Maintained by %s</span>' % e(maint)) if maint else "")
+           wf_link=('<a href="%sworkflows.html">Workflows</a>' % px) if WORKFLOWS else "",
+           contribute=('<a href="https://github.com/%s" rel="noopener">Contribute on GitHub</a>' % e(REPO)) if REPO else "",
+           built=datetime.date.today().strftime("%d %b %Y").lstrip("0"),
+           maint=('<span>Maintained by %s</span>' % e(maint)) if maint else "")
     target = OUT / path
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(doc, encoding="utf-8")
@@ -247,19 +286,20 @@ def card(t, px):
     cls, badge, _ = licence(t)
     r = rel_of(t) or {}
     text = " ".join([t["name"], t["developer"], t["summary"], " ".join(t.get("similar_to", [])),
-                     " ".join(CAT[c]["name"] for c in t["categories"]), " ".join(t["platforms"])]).lower()
+                     " ".join(CAT[c]["name"] for c in t["categories"]), " ".join(t["platforms"]),
+                     t.get("licence_note", "")]).lower()
     foot = ""
     if t.get("similar_to"):
         foot = '<div class="foot"><span class="label">Similar job to</span><br>%s</div>' % e(", ".join(t["similar_to"]))
     return ('<article class="card" data-item data-name="{name_l}" data-text="{text}" data-type="{type}" '
             'data-level="{level}" data-plat="{plat}" data-stars="{stars}" data-updated="{upd}">'
             '<div class="top"><div><h3><a href="{px}tools/{id}.html">{name}</a></h3><div class="by">by {dev}</div></div>'
-            '<span class="badge {cls}">{badge}</span></div>'
+            '<span class="badge {cls}">{badge}</span></div>{nb}'
             '<p class="sum">{sum}</p>{tags}{foot}</article>').format(
         name_l=e(t["name"].lower()), text=e(text), type=eff_type(t), level=t["level"],
         plat=e(" ".join(p.lower() for p in t["platforms"])), stars=r.get("stars") or 0, upd=e(r.get("pushed_at") or ""),
         px=px, id=t["id"], name=e(t["name"]), dev=e(t["developer"]), cls=cls, badge=badge, sum=e(t["summary"]),
-        tags=tool_tags(t), foot=foot)
+        tags=tool_tags(t), foot=foot, nb=('<div class="tags">%s</div>' % notice_badge(t)) if t.get('notice') else '')
 
 
 def filters(target, placeholder, platforms=True):
@@ -276,7 +316,8 @@ def filters(target, placeholder, platforms=True):
             % e(placeholder)]
     more = [
             group("type", "Licence", [("all", "All"), ("open-source", "Open source"),
-                                      ("source-published", "Source published"), ("free-closed", "Free, closed source")]),
+                                      ("source-published", "Source published"), ("free-closed", "Free, closed source"),
+                                      ("free-resource", "Free resource")]),
             group("level", "Level", [("all", "All"), ("beginner", "Beginner"), ("intermediate", "Intermediate"),
                                      ("advanced", "Advanced")])]
     if platforms:
@@ -286,11 +327,17 @@ def filters(target, placeholder, platforms=True):
     return '<div class="filters" data-filters="%s">%s</div>' % (target, "".join(rows))
 
 
-def tool_list(tools, px, placeholder):
-    tools = sorted(tools, key=lambda t: t["name"].lower())
+def tool_list(tools, px, placeholder, limit=0):
+    if limit and len(tools) > limit:
+        order = {"beginner": 0, "intermediate": 1, "advanced": 2}
+        tools = sorted(tools, key=lambda t: (order.get(t["level"], 3), -((REL.get(t["id"]) or {}).get("stars") or 0), t["name"].lower()))
+        lim = ' data-limit="%d"' % limit
+    else:
+        tools = sorted(tools, key=lambda t: t["name"].lower())
+        lim = ""
     return (filters("#list", placeholder) +
             '<p class="count" data-count aria-live="polite">%d tools shown</p>' % len(tools) +
-            '<div class="grid" id="list">%s</div>' % "".join(card(t, px) for t in tools) +
+            '<div class="grid" id="list"%s>%s</div>' % (lim, "".join(card(t, px) for t in tools)) +
             '<p class="empty" data-empty hidden>No tools match these filters. Clear the search or choose "All".</p>')
 
 
@@ -298,12 +345,22 @@ def tool_list(tools, px, placeholder):
 
 def build_home():
     cat_cards = []
+    cat_html = {}
     for i, c in enumerate(CATS):
         members = [t for t in TOOLS if c["id"] in t["categories"]]
         lead = [t for t in members if t["categories"][0] == c["id"]] + [t for t in members if t["categories"][0] != c["id"]]
         eg = ", ".join(t["name"] for t in lead[:3])
-        cat_cards.append('<a class="cat" href="categories/%s.html"><span class="hex"><span>0x%02X</span><span>%d tools</span></span>'
-                         '<span class="n">%s</span><span class="eg">%s</span></a>' % (c["id"], i, len(members), e(c["name"]), e(eg)))
+        cat_html[c["id"]] = ('<a class="cat" href="categories/%s.html"><span class="hex"><span>0x%02X</span><span>%d tools</span></span>'
+                             '<span class="n">%s</span><span class="eg">%s</span></a>' % (c["id"], i, len(members), e(c["name"]), e(eg)))
+    groups = [("Acquire and recover", ["imaging", "forensic-copy", "write-blocking", "recovery", "sanitization"]),
+              ("Analyse systems", ["suites", "windows", "macos", "linux", "memory", "timeline", "logs", "database", "string-search",
+                                   "incident-response", "passwords", "utilities", "validation"]),
+              ("Mobile, cloud and messages", ["android", "ios", "messaging", "email", "browser", "cloud", "gps"]),
+              ("Network and the web", ["network", "wifi", "voip", "p2p", "remote", "osint", "crypto"])]
+    used = {c for _, ids in groups for c in ids}
+    groups.append(("Media, malware and other", [c["id"] for c in CATS if c["id"] not in used]))
+    cat_cards = "".join('<h3 class="cat-group">%s</h3><div class="grid cats">%s</div>' % (e(g), "".join(cat_html[i] for i in ids if i in cat_html))
+                        for g, ids in groups if any(i in cat_html for i in ids))
     rows = []
     for n, it in enumerate(INTEG["integrations"][:3]):
         rows.append('<div class="card row-card"><span class="k">EXHIBIT %s</span><div class="v">'
@@ -332,6 +389,23 @@ def build_home():
                              '<div class="tags"><span class="tag">%s</span><span class="tag">%d steps</span></div></article>'
                              % (wid, e(w["title"]), e(w["lead"]), e(w["level"]), len(w["steps"]))
                              for wid, w in list(WORKFLOWS.items())[:6]))
+    start_here = ('<section class="section" id="start"><div class="section-head"><h2>Start here</h2></div><div class="grid">'
+                  '<article class="card"><h3><a href="%s">New to forensics?</a></h3><p class="sum">Learn the basic ideas in plain words: imaging, write blockers, hashes and custody.</p></article>'
+                  '<article class="card"><h3><a href="%s">Practising for a viva?</a></h3><p class="sum">Hard questions with careful answers, in the examiner\'s hot seat.</p></article>'
+                  '<article class="card"><h3><a href="%s">Doing a case study?</a></h3><p class="sum">Step-by-step workflows with the free tool for each step and public data to practise on.</p></article>'
+                  '</div></section>' % ("basics.html" if BASICS else "tools.html", "hotseat.html" if (DATA / "hotseat.json").exists() else "learn.html",
+                                        "workflows.html" if WORKFLOWS else "tools.html"))
+    dated = []
+    for t in TOOLS:
+        rr = (rel_of(t) or {}).get("release") or {}
+        if rr.get("published_at"):
+            dated.append((rr["published_at"], t, rr.get("tag", "")))
+    dated.sort(key=lambda x: x[0], reverse=True)
+    recent_html = ""
+    if dated:
+        recent_html = ('<section class="section"><div class="section-head"><h2>Recently updated tools</h2></div><ul class="list-plain recent">%s</ul></section>'
+                       % "".join('<li><a href="tools/%s.html">%s</a> <span class="muted">%s, released %s</span></li>'
+                                 % (t["id"], e(t["name"]), e(tag), fmt_date(when)) for when, t, tag in dated[:5]))
     body = """
 <div class="wrap">
 <section class="hero">
@@ -339,18 +413,20 @@ def build_home():
 <h1>Open-source forensic tools, sorted the way you study.</h1>
 <p class="lead">What each tool does, who built it, where to download it, and which commercial product does a similar job. No scattered blogs, no guesswork.</p>
 <form class="search" action="tools.html" method="get" role="search">
-<div class="box">{icon}<label for="hq" class="skip">Search tools</label><input id="hq" name="q" type="search" placeholder="Try registry, RAM dump or WhatsApp" autocomplete="off"></div>
+<div class="box">{icon}<label for="hq" class="skip">Search tools</label><input id="hq" name="q" type="search" placeholder="Search {nround}+ free tools, for example WhatsApp, RAM or PCAP" autocomplete="off"></div>
 <button class="btn primary" type="submit">Search</button>
 </form>
-<div class="chips"><span class="muted">Popular:</span><a href="categories/memory.html">Memory forensics</a><a href="categories/android.html">Android</a><a href="categories/windows.html">Windows registry</a><a href="categories/incident-response.html">Incident response</a></div>
+<div class="chips"><span class="muted">Popular:</span><a href="categories/windows.html">Windows</a><a href="categories/android.html">Android</a><a href="categories/memory.html">Memory</a><a href="categories/network.html">Network</a><a href="categories/imaging.html">Disk imaging</a><a href="categories/osint.html">OSINT</a></div>
 <div class="explore">{explore}</div>
 <div class="stats"><span><b>{n}</b> tools</span><span><b>{oss}</b> open source</span><span><b>{ncat}</b> categories</span>{checked}</div>
 </section>
+{start}
 <section class="section" id="categories">
 <div class="section-head"><h2>Browse by category</h2><span class="mono muted" style="font-size:13px">{ncat} categories · offset 0x00 – 0x{last:02X} · <a href="nist.html">browse by NIST functionality</a></span></div>
-<div class="grid cats">{cats}</div>
+{cats}
 </section>
 {wf}
+{recent}
 </div>
 <section class="band" id="inside"><div class="wrap split">
 <div class="side"><div class="label y">Inside commercial tools</div>
@@ -374,10 +450,13 @@ def build_home():
 <p class="muted" style="max-width:760px">Type the name of a commercial product and see free tools that do a similar job, with honest notes on what "similar" means.</p>
 </section>
 </div>
-""".format(wf=wf_home, explore=explore, cmp="".join(compare_presets("")), tagline=e(SITE["tagline"]), icon=ICON_SEARCH, n=len(TOOLS), oss=oss, ncat=len(CATS), last=len(CATS) - 1,
+""".format(nround=(len(TOOLS) // 10) * 10, start=start_here, recent=recent_html, wf=wf_home, explore=explore, cmp="".join(compare_presets("")), tagline=e(SITE["tagline"]), icon=ICON_SEARCH, n=len(TOOLS), oss=oss, ncat=len(CATS), last=len(CATS) - 1,
            checked=('<span>links checked <b>%s</b></span>' % checked) if checked else "",
-           cats="".join(cat_cards), rows="".join(rows), featured=featured)
-    page("index.html", NAME, SITE["description"], body, "")
+           cats=cat_cards, rows="".join(rows), featured=featured)
+    home_ld = ld({"@context": "https://schema.org", "@type": "WebSite", "name": NAME, "url": (BASE + "/") if BASE else "",
+                  "potentialAction": {"@type": "SearchAction", "target": (BASE + "/tools.html?q={search_term_string}") if BASE else "tools.html?q={search_term_string}",
+                                      "query-input": "required name=search_term_string"}})
+    page("index.html", NAME, SITE["description"], body, "", head=home_ld)
 
 
 def build_tools_index():
@@ -399,7 +478,7 @@ def build_categories():
                 '<div class="mono" style="color:var(--yellow);font-size:13px">0x%02X</div><h1>%s</h1><p class="lead">%s</p>%s%s</div>%s</div>'
                 % (e(c["name"]), i, e(c["name"]), e(c["intro"]), note,
                    ('<p><a class="btn small" href="../compare.html?c=%s">Compare tools in this category</a></p>' % c["id"]) if len(members) > 1 else "",
-                   tool_list(members, "../", "Search this category")))
+                   tool_list(members, "../", "Search this category", CATEGORY_SHOWN)))
         page("categories/%s.html" % c["id"], c["name"],
              "%s: free and open-source tools. %s" % (c["name"], c["intro"]), body, "categories")
 
@@ -407,6 +486,12 @@ def build_categories():
 def download_block(t):
     r = rel_of(t)
     parts = []
+    n = t.get("notice")
+    if n:
+        succ = n.get("successor")
+        succ_html = (' Use <a href="%s.html">%s</a> instead.' % (e(succ), e(TOOL[succ]["name"]))) if succ in TOOL else ""
+        src = (' <a href="%s" rel="noopener">Source</a>' % e(n["source"])) if n.get("source") else ""
+        parts.append('<p><span class="badge warn">%s</span> %s%s%s</p>' % (NOTICE_LABEL.get(n.get("level"), "Note"), e(n["text"]), succ_html, src))
     raw = REL.get(t["id"]) or {}
     if "repo" in t and (raw.get("missing") or raw.get("repo_mismatch")):
         parts.append('<p><span class="badge warn">Under review</span> The project\'s repository has moved or could not be found at the last check, so download links are switched off until a person confirms the new location.</p>')
@@ -581,7 +666,9 @@ def build_tool_pages():
         if used:
             side.append('<div class="card"><div class="label">Used in workflows</div><ul class="list-plain">%s</ul></div>'
                         % "".join('<li><a href="../workflows/%s.html">%s</a></li>' % (wid, e(w["title"])) for wid, w in used))
-        facts = [("Developer", e(t["developer"])), ("Licence", e(lic_long)), ("Interface", e(t["interface"])),
+        facts = [("Developer", e(t["developer"])), ("Licence", e(lic_long))] + \
+                ([("Editions and terms", e(t["licence_note"]))] if t.get("licence_note") else []) + \
+                [("Interface", e(t["interface"])),
                  ("Runs on", e(", ".join(t["platforms"]))), ("Level", LEVELS[t["level"]]),
                  ("Category", ", ".join('<a href="../categories/%s.html">%s</a>' % (c, e(CAT[c]["name"])) for c in t["categories"])),
                  ("Source", '<a href="%s" rel="noopener">%s</a>' % (e(source_url(t)), e(t.get("repo") or urllib.parse.urlparse(t["url"]).netloc)))]
@@ -610,12 +697,24 @@ def build_tool_pages():
         body = ('<div class="wrap"><div class="page-head">'
                 '<div class="crumbs"><a href="../index.html">Home</a> / <a href="../categories/%s.html">%s</a> / %s</div>'
                 '<h1>%s</h1><p class="muted">by %s</p>'
-                '<div class="tags on-blue" style="font-size:12px"><span class="badge %s">%s</span>%s</div></div>'
+                '<div class="tags on-blue" style="font-size:12px"><span class="badge %s">%s</span>%s%s</div></div>'
                 '<div class="tool-layout"><div class="tool-main">%s</div><aside class="tool-side" aria-label="Tool facts">%s</aside></div></div>'
-                % (primary["id"], e(primary["name"]), e(t["name"]), e(t["name"]), e(t["developer"]), cls, badge,
+                % (primary["id"], e(primary["name"]), e(t["name"]), e(t["name"]), e(t["developer"]), cls, badge, notice_badge(t),
                    "".join('<span class="tag">%s</span>' % e(x) for x in [LEVELS[t["level"]], t["interface"]] + t["platforms"]),
                    "".join(main), "".join(side)))
-        page("tools/%s.html" % t["id"], t["name"], "%s by %s. %s" % (t["name"], t["developer"], t["summary"]), body, "tools")
+        app = {"@context": "https://schema.org", "@type": "SoftwareApplication", "name": t["name"], "applicationCategory": "SecurityApplication",
+               "operatingSystem": ", ".join(t["platforms"]), "author": {"@type": "Organization", "name": t["developer"]}, "url": source_url(t)}
+        if t.get("licence") and eff_type(t) != "free-resource":
+            app["license"] = t["licence"]
+        if eff_type(t) != "free-resource":
+            app["offers"] = {"@type": "Offer", "price": "0", "priceCurrency": "USD"}
+        head = ld(app)
+        if BASE:
+            head += ld({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
+                {"@type": "ListItem", "position": 2, "name": primary["name"], "item": "%s/categories/%s.html" % (BASE, primary["id"])},
+                {"@type": "ListItem", "position": 3, "name": t["name"], "item": "%s/tools/%s.html" % (BASE, t["id"])}]})
+        page("tools/%s.html" % t["id"], t["name"], "%s by %s. %s" % (t["name"], t["developer"], t["summary"]), body, "tools", head=head)
 
 
 def draft_banner(item):
@@ -1071,7 +1170,11 @@ def build_basics():
                     '%s<nav class="jump" aria-label="On this page"><span class="label">On this page</span>%s</nav>'
                     '<div class="prose wide basic">%s</div>%s</div>'
                     % (b, e(BRANCH[b][1]), e(g["title"]), e(g["quick"]), draft_banner(g), "".join(jump), "".join(out), pn))
-            page("basics/%s.html" % tid, g["title"], g["quick"][:200], body, "basics")
+            art = {"@context": "https://schema.org", "@type": "Article", "headline": g["title"], "description": g["quick"],
+                   "inLanguage": "en", "publisher": {"@type": "Organization", "name": NAME}}
+            if g.get("reviewed"):
+                art["dateModified"] = g["reviewed"]
+            page("basics/%s.html" % tid, g["title"], g["quick"][:200], body, "basics", head=ld(art), og_type="article")
     # index
     sections = []
     for key, name, intro in BRANCHES:
@@ -1390,7 +1493,7 @@ def main():
     for c in CATS:
         n = sum(1 for t in TOOLS if c["id"] in t["categories"])
         if n > MAX_PER_CATEGORY:
-            sys.exit("Category %s lists %d tools. The limit is %d, to keep the lists short for students." % (c["id"], n, MAX_PER_CATEGORY))
+            sys.exit("Category %s lists %d tools. The limit is %d: split the category or raise MAX_PER_CATEGORY." % (c["id"], n, MAX_PER_CATEGORY))
     for it in INTEG["integrations"] + INTEG.get("open_on_open", []):
         if not it.get("source_url"):
             sys.exit("Integration entry for %s has no source_url. Entries without a source are not published." % it.get("product"))
@@ -1402,6 +1505,8 @@ def main():
             pass
     assets = OUT / "assets"
     shutil.copytree(ROOT / "static", assets, dirs_exist_ok=True)
+    if (ROOT / "static" / "favicon.ico").exists():
+        shutil.copy(ROOT / "static" / "favicon.ico", OUT / "favicon.ico")
     build_home(); build_tools_index(); build_categories(); build_tool_pages()
     build_workflows(); build_xray(); build_compare(); build_hotseat(); build_basics(); build_lab(); build_toolbox(); build_alternatives(); build_inside(); build_vendor_free(); build_nist(); build_practice(); build_learn(); build_about(); build_404()
     (OUT / ".nojekyll").write_text("", encoding="utf-8")

@@ -76,7 +76,10 @@
    "title": "Look at the memory capture",
    "text": "Open the capture with Volatility 3. Start with windows.pslist and windows.pstree to see processes and parents, then windows.cmdline for command lines and windows.netscan for network connections. Look for a program in an odd folder, an unusual parent, command lines that mention encryption or deleting backups, and connections to unknown addresses. Memory is a lead, not a full record.",
    "tools": [
-    "volatility3"
+    "volatility3",
+    "yara-x",
+    "dfir-orc",
+    "grr"
    ],
    "cmd": [
     "python3 vol.py -f memory.raw windows.pslist",

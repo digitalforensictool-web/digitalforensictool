@@ -3,12 +3,12 @@
 @font-face { font-family: "JetBrains Mono"; src: url("fonts/jetbrains-mono.woff2") format("woff2"); font-weight: 100 800; font-display: swap; }
 
 :root {
-  --blue: #1437C8; --band: #0E2A9E; --deep: #0A1F7A; --line: #4E6BE6; --line-strong: #8FA3F5;
+  --blue: #1437C8; --band: #0E2A9E; --deep: #0A1F7A; --line: #6F88EE; --line-strong: #8FA3F5;
   --text: #FFFFFF; --muted: #C9D4FF; --soft: #E4EAFF;
   --yellow: #FFD84A; --on-yellow: #3D2E00;
-  --ink: #0C1B5E; --ink-body: #1E2C66; --ink-muted: #3B4A7A; --dash: #9AA8E0; --paper: #FFFFFF;
-  --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --display: "Space Grotesk", "Inter", system-ui, sans-serif;
+  --ink: #0C1B5E; --ink-body: #1E2C66; --ink-muted: #3B4A7A; --dash: #5D6FB0; --paper: #FFFFFF;
+  --sans: "Inter", "Noto Sans Devanagari", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --display: "Space Grotesk", "Inter", "Noto Sans Devanagari", system-ui, sans-serif;
   --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
 }
 * { box-sizing: border-box; }
@@ -24,7 +24,7 @@ p { margin: 0; }
 .skip { position: absolute; left: -9999px; }
 .skip:focus { left: 16px; top: 16px; background: var(--yellow); color: var(--on-yellow); padding: 12px 16px; border-radius: 8px; z-index: 10; }
 .mono { font-family: var(--mono); }
-.label { font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.label { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
 .label.y { color: var(--yellow); }
 .muted { color: var(--muted); }
 [hidden] { display: none !important; }
@@ -73,7 +73,7 @@ p { margin: 0; }
 .crumbs { font-size: 14px; color: var(--muted); }
 .crumbs { line-height: 1.5; }
 .crumbs a { display: inline-block; padding: 8px 0; }
-.prose { max-width: 780px; display: flex; flex-direction: column; gap: 14px; }
+.prose { max-width: 72ch; display: flex; flex-direction: column; gap: 14px; }
 .prose h2 { font-size: 24px; margin-top: 18px; }
 .prose ul { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 6px; }
 .note { border: 1px dashed var(--line-strong); border-radius: 12px; padding: 16px 18px; color: var(--soft); font-size: 15px; }
@@ -96,7 +96,7 @@ p { margin: 0; }
 .card h3 { font-size: 19px; font-weight: 600; }
 .card h3 a { color: var(--ink); display: inline-block; padding: 9px 0; margin: -9px 0; }
 .card .by { font-size: 13px; color: var(--ink-muted); margin-top: 2px; }
-.card .sum { font-size: 14.5px; line-height: 1.55; color: var(--ink-body); }
+.card .sum { font-size: 15px; line-height: 1.55; color: var(--ink-body); }
 .card .foot { font-size: 13px; line-height: 1.5; color: var(--ink-muted); border-top: 1px dashed var(--dash); padding-top: 10px; margin-top: auto; }
 .card .label { color: var(--ink-muted); }
 .tags { display: flex; flex-wrap: wrap; gap: 6px; font-family: var(--mono); font-size: 12px; }
@@ -292,7 +292,7 @@ ul.tight.on-blue { color: var(--soft); font-size: 15.5px; margin-top: 0; }
 @media (max-width: 380px) { .card .top { flex-wrap: wrap; } .badge, .tag { white-space: normal; } }
 
 /* tablets and small laptops: fold the main menu behind a button */
-@media (max-width: 1199px) {
+@media (max-width: 899px) {
   .js .menu-btn { display: inline-flex; }
   .js .nav { display: none; width: 100%; flex-direction: column; align-items: stretch; gap: 0; padding: 4px 0 10px; font-size: 16px; }
   .js .nav.open { display: flex; }
@@ -418,3 +418,41 @@ blockquote.reportline { margin: 0; padding: 12px 16px; border-left: 4px solid va
 
 .card p, .card li, .tool-main p, .tool-main li, .steps p { overflow-wrap: anywhere; }
 .tag { white-space: normal; overflow-wrap: anywhere; }
+
+
+/* review fixes: links, focus, type scale, footer, home groups */
+.prose a, p a, li a, td a, dd a, .card .sum a, .note a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+.prose a:hover, p a:hover, li a:hover { text-decoration-thickness: 2px; }
+.card h3 a, .card .by a, .tool-chip, .btn, .cat, .breadcrumb a, .crumbs a, .chip, .badge a, .explore a, .nav a, .brand, .jump a, .section-head > a { text-decoration: none; }
+.card h3 a:hover, .btn:hover, .cat:hover, .jump a:hover, .explore a:hover { text-decoration: none; }
+.paper :focus-visible, .card :focus-visible, .facts :focus-visible { outline-color: var(--blue); }
+@media (min-width: 760px) { body { font-size: 17px; } }
+h2 { font-size: clamp(24px, 3vw, 32px); }
+.prose h2 { font-size: clamp(22px, 2.6vw, 26px); }
+[lang="hi"] { line-height: 1.75; }
+.badge::before { content: ""; display: inline-block; width: 0.55em; height: 0.55em; margin-right: 0.45em; border-radius: 50%; background: currentColor; vertical-align: 0.02em; }
+.badge.oss::before { content: ""; border-radius: 50%; }
+.badge.src::before { background: linear-gradient(90deg, currentColor 50%, transparent 50%); border: 1.5px solid currentColor; }
+.badge.free::before { background: transparent; border: 1.5px solid currentColor; }
+.badge.warn::before { content: ""; border-radius: 0; width: 0; height: 0; background: transparent; border-left: 0.35em solid transparent; border-right: 0.35em solid transparent; border-bottom: 0.65em solid currentColor; }
+.site-foot .foot-cols { display: grid; grid-template-columns: repeat(3, minmax(160px, 1fr)); gap: 20px 40px; flex: 1 1 520px; }
+.site-foot .foot-cols > div { display: flex; flex-direction: column; }
+.site-foot .foot-cols .label { margin-bottom: 4px; }
+.site-foot .foot-cols span { padding: 6px 0; }
+.site-foot .updated { font-size: 13px; opacity: 0.85; }
+@media (max-width: 640px) { .site-foot .foot-cols { grid-template-columns: 1fr; } }
+.cat-group { font-family: var(--mono); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--yellow); margin: 26px 0 12px; font-weight: 500; }
+.cat-group:first-of-type { margin-top: 8px; }
+.show-all { margin-top: 14px; }
+.recent li { padding: 6px 0; }
+.table-scroll { overflow-x: auto; }
+
+/* dark theme follows the system setting */
+@media (prefers-color-scheme: dark) {
+  :root { --blue: #0B1020; --band: #111833; --deep: #070B16; --line: #2A3560; --line-strong: #5C6EA8;
+          --text: #E6E9F5; --muted: #A9B4D9; --soft: #D3D9EE; --ink: #F2F4FB; --ink-body: #E6E9F5; --ink-muted: #AEB8DA;
+          --dash: #3A4572; --paper: #161D33; }
+  .card a, .tool-chip { color: #8FA3F5; }
+  .card a:hover { color: #FFFFFF; }
+  .card a:focus-visible, .card button:focus-visible, .paper :focus-visible, .card :focus-visible, .facts :focus-visible { outline-color: var(--yellow); }
+}

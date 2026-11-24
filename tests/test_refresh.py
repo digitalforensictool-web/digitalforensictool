@@ -31,6 +31,25 @@ class DetectOs(unittest.TestCase):
             self.assertIsNone(refresh.detect_os(name), name)
 
 
+class Prefer(unittest.TestCase):
+    def test_mac_apt_windows_file(self):
+        names = ["ios_apt-windows-x64.exe", "mac_apt-windows-x64.exe", "mac_apt-macos-x64.zip", "mac_apt-linux-x64.zip"]
+        picked = refresh.classify_assets([asset(n) for n in names],
+                                         {"windows": r"^mac_apt-windows-x64\.exe$", "macos": r"^mac_apt-macos-x64\.zip$"})
+        self.assertEqual(picked["windows"]["name"], "mac_apt-windows-x64.exe")
+
+    def test_osquery_msi_and_deb(self):
+        names = ["osquery-5.24.1.msi", "osquery-5.24.1.windows_x86_64.zip", "osquery_5.24.1-1.linux_amd64.deb",
+                 "osquery-5.24.1-1.linux.x86_64.rpm"]
+        picked = refresh.classify_assets([asset(n) for n in names], {"windows": r"\.msi$", "linux": r"_amd64\.deb$"})
+        self.assertEqual(picked["windows"]["name"], "osquery-5.24.1.msi")
+        self.assertEqual(picked["linux"]["name"], "osquery_5.24.1-1.linux_amd64.deb")
+
+    def test_fallback_when_pattern_misses(self):
+        picked = refresh.classify_assets([asset("tool-windows-x64.msi")], {"windows": r"nomatch"})
+        self.assertEqual(picked["windows"]["name"], "tool-windows-x64.msi")
+
+
 class Classify(unittest.TestCase):
     def test_prefers_installer_and_x64(self):
         picked = refresh.classify_assets([asset(n) for n in (

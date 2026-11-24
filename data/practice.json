@@ -1,9 +1,86 @@
 [
-  {"name": "NIST CFReDS", "by": "NIST", "url": "https://cfreds.nist.gov/", "what": "Reference data sets with documented contents, made for testing tools and practising examinations."},
-  {"name": "Digital Corpora", "by": "Digital Corpora project", "url": "https://digitalcorpora.org/", "what": "Disk images, memory dumps, network captures and scenario data sets for education and research."},
-  {"name": "MemLabs", "by": "stuxnet999", "url": "https://github.com/stuxnet999/MemLabs", "what": "A series of capture-the-flag style labs for learning memory forensics."},
-  {"name": "DFIR Artifact Museum", "by": "Andrew Rathbun and contributors", "url": "https://github.com/AndrewRathbun/DFIRArtifactMuseum", "what": "A community archive of sample artifacts from many operating systems."},
-  {"name": "EVTX-ATTACK-SAMPLES", "by": "Samir Bousseaden", "url": "https://github.com/sbousseaden/EVTX-ATTACK-SAMPLES", "what": "Windows event log samples for known attack techniques, good for testing log hunting tools."},
-  {"name": "CyberDefenders", "by": "CyberDefenders", "url": "https://cyberdefenders.org/", "what": "Blue-team challenges with downloadable evidence. Some labs are free."},
-  {"name": "NIST Computer Forensics Tool Testing (CFTT)", "by": "NIST", "url": "https://www.nist.gov/itl/ssd/software-quality-group/computer-forensics-tool-testing-program-cftt", "what": "Test reports and methods for validating forensic tools. Read these before trusting any tool in a real case."}
+ {
+  "name": "NIST CFReDS",
+  "by": "NIST",
+  "url": "https://cfreds.nist.gov/",
+  "what": "Reference data sets with documented contents, made for testing tools and practising examinations."
+ },
+ {
+  "name": "Digital Corpora",
+  "by": "Digital Corpora project",
+  "url": "https://digitalcorpora.org/",
+  "what": "Disk images, memory dumps, network captures and scenario data sets for education and research."
+ },
+ {
+  "name": "MemLabs",
+  "by": "stuxnet999",
+  "url": "https://github.com/stuxnet999/MemLabs",
+  "what": "A series of capture-the-flag style labs for learning memory forensics."
+ },
+ {
+  "name": "DFIR Artifact Museum",
+  "by": "Andrew Rathbun and contributors",
+  "url": "https://github.com/AndrewRathbun/DFIRArtifactMuseum",
+  "what": "A community archive of sample artifacts from many operating systems."
+ },
+ {
+  "name": "EVTX-ATTACK-SAMPLES",
+  "by": "Samir Bousseaden",
+  "url": "https://github.com/sbousseaden/EVTX-ATTACK-SAMPLES",
+  "what": "Windows event log samples for known attack techniques, good for testing log hunting tools."
+ },
+ {
+  "name": "CyberDefenders",
+  "by": "CyberDefenders",
+  "url": "https://cyberdefenders.org/",
+  "what": "Blue-team challenges with downloadable evidence. Some labs are free."
+ },
+ {
+  "name": "NIST Computer Forensics Tool Testing (CFTT)",
+  "by": "NIST",
+  "url": "https://www.nist.gov/itl/ssd/software-quality-group/computer-forensics-tool-testing-program-cftt",
+  "what": "Test reports and methods for validating forensic tools. Read these before trusting any tool in a real case."
+ },
+ {
+  "name": "Ali Hadi DFIR datasets",
+  "by": "Dr Ali Hadi",
+  "url": "https://www.ashemery.com/dfir.html",
+  "what": "Free disk, memory and network challenge images with scenarios, widely used in DFIR teaching."
+ },
+ {
+  "name": "Josh Hickman's Android and iOS test images",
+  "by": "Josh Hickman (The Binary Hick)",
+  "url": "https://thebinaryhick.blog/public_images/",
+  "what": "Documented Android and iOS phone images made for testing mobile forensic tools."
+ },
+ {
+  "name": "DFIR Madness case images",
+  "by": "DFIR Madness",
+  "url": "https://dfirmadness.com/",
+  "what": "Case-based challenges with disk and memory images and write-ups."
+ },
+ {
+  "name": "Security Datasets (OTRF)",
+  "by": "Open Threat Research Forge",
+  "url": "https://securitydatasets.com/",
+  "what": "Recorded Windows and cloud attack telemetry (event logs) for practising detection and log analysis."
+ },
+ {
+  "name": "Belkasoft CTFs",
+  "by": "Belkasoft",
+  "url": "https://belkasoft.com/ctf",
+  "what": "Free capture-the-flag challenges with downloadable images; any tool can be used."
+ },
+ {
+  "name": "M57-Patents scenario",
+  "by": "Digital Corpora",
+  "url": "https://digitalcorpora.org/corpora/scenarios/m57-patents-scenario/",
+  "what": "A multi-week company scenario with disk images, memory and network captures for full-case practice."
+ },
+ {
+  "name": "AboutDFIR challenges and CTF list",
+  "by": "AboutDFIR",
+  "url": "https://aboutdfir.com/education/challenges-ctfs/",
+  "what": "A maintained list of current and past DFIR challenges and CTFs."
+ }
 ]

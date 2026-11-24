@@ -51,7 +51,7 @@
  "steps": [
   {
    "title": "Download the project",
-   "text": "Download RegRipper 3.0 from its GitHub page and unzip it. The folder holds rip.exe, rr.exe and a plugins folder. Keep that structure, because the program looks for its plugins next to itself."
+   "text": "Download RegRipper 4.0 from its GitHub page and unzip it. The folder holds rip.exe, rr.exe and a plugins folder. Keep that structure, because the program looks for its plugins next to itself."
   },
   {
    "title": "Get the hive files",
@@ -188,7 +188,11 @@
  ],
  "learn": [
   {
-   "label": "RegRipper 3.0 on GitHub (README)",
+   "label": "RegRipper 4.0 on GitHub (README)",
+   "url": "https://github.com/keydet89/RegRipper4.0"
+  },
+  {
+   "label": "RegRipper 3.0 (legacy, MIT)",
    "url": "https://github.com/keydet89/RegRipper3.0"
   },
   {

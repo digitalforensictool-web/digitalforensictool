@@ -147,8 +147,8 @@
  },
  "learn": [
   {
-   "label": "Kroll: How to identify timestomping with KAPE (PDF)",
-   "url": "https://media-cdn.kroll.com/-/media/kroll-images/pdfs/how-to-identify-timestomping-with-kape.pdf"
+   "label": "Kroll webcast: How to Identify Timestomping Using KAPE (Andrew Rathbun)",
+   "url": "https://www.kroll.com/en/events/2022/webcast-how-to-identify-timestomping-using-kape"
   },
   {
    "label": "MITRE ATT&CK T1070.006: Timestomp",

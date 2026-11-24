@@ -153,7 +153,7 @@
   "learn": [
     {
       "label": "Autopsy User Documentation",
-      "url": "https://sleuthkit.org/autopsy/docs/user-docs/latest/"
+      "url": "https://sleuthkit.org/autopsy/docs/user-docs/4.23.0/"
     },
     {
       "label": "Autopsy Quick Start Guide",

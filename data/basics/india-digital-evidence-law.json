@@ -1,0 +1,143 @@
+{
+ "reviewed": "2026-11-25",
+ "id": "india-digital-evidence-law",
+ "branch": "foundations",
+ "title": "Digital evidence and the law in India",
+ "quick": "In India, electronic records are admitted under the Bharatiya Sakshya Adhiniyam, 2023 (BSA), which came into force on 1 July 2024. A certificate in the BSA Schedule, with hash values, goes with the record. This page is a student guide and is not legal advice.",
+ "sections": [
+  {
+   "title": "Electronic evidence in Indian courts: the Bharatiya Sakshya Adhiniyam, 2023",
+   "text": [
+    "This is a student overview, not legal advice. Laws, rules and court decisions change, so ask your lawyer, your lab's legal officer or your supervisor before you rely on any point here.",
+    "The BSA is the law of evidence that took the place of the Indian Evidence Act, 1872 (section 170 repeals the old Act). It came into force on 1 July 2024. Section 63 of the BSA deals with the admissibility of electronic records and takes the place of Section 65B of the old Act.",
+    "Section 63(4) asks for a certificate to go with the electronic record. The form of the certificate is in the Schedule to the BSA. It has two parts: Part A is filled in by the party producing the record, and Part B is filled in by an expert. Both parts record the hash value or values of the electronic record, and ask for a hash report to be attached."
+   ],
+   "points": [
+    "Record the hash algorithm and the value at the time you acquire the data, not later.",
+    "Keep the hash report with your notes so it can be attached to the certificate.",
+    "Name the device, the time and the method of copying in your notes, in plain words."
+   ]
+  },
+  {
+   "title": "Information Technology Act, 2000 (as amended)",
+   "text": [
+    "The IT Act sets out offences and powers that examiners meet often. This list is a short map, not a full guide:"
+   ],
+   "points": [
+    "Section 43: damage to computer systems (civil liability).",
+    "Section 65: tampering with computer source documents.",
+    "Sections 66, 66C, 66D and 66E: computer-related offences, identity theft, cheating by personation and violation of privacy.",
+    "Section 67: publishing or transmitting obscene material in electronic form.",
+    "Section 69: powers to direct interception, monitoring or decryption.",
+    "Section 70B: the Indian Computer Emergency Response Team (CERT-In).",
+    "Section 79A: the Central Government may notify an Examiner of Electronic Evidence."
+   ]
+  },
+  {
+   "title": "CERT-In Directions of 28 April 2022",
+   "text": [
+    "The directions were issued under section 70B(6) of the IT Act. They matter to log analysis because they set how long logs are kept and how clocks are set."
+   ],
+   "points": [
+    "Covered entities report the listed cyber incidents to CERT-In within 6 hours of noticing them.",
+    "ICT system logs are kept for a rolling 180 days. The directions say the logs stay within Indian jurisdiction; CERT-In's FAQ adds that logs may be held abroad if they can be produced to CERT-In within a reasonable time.",
+    "System clocks are synchronised with the NTP servers of NIC or NPL, or with servers traceable to them. When you read a log, check which time source and time zone it used.",
+    "Data centres, VPS, cloud and VPN providers keep subscriber records for 5 years after registration is cancelled or withdrawn."
+   ]
+  },
+  {
+   "title": "Search, seizure and custody under the BNSS, 2023",
+   "text": [
+    "The Bharatiya Nagarik Suraksha Sanhita, 2023 (BNSS) took the place of the Code of Criminal Procedure from 1 July 2024. It requires audio-video recording of search and seizure. This page does not quote section numbers; read the current text of the Act or ask your legal officer before you cite one.",
+    "Whatever the law says, keep a clear chain of custody record and follow your lab's own procedure."
+   ]
+  },
+  {
+   "title": "Where to learn more",
+   "text": [
+    "Start with the Basics pages on hash values, evidence integrity and chain of custody, then try a Workflow and practise on a public data set. The National Forensic Sciences University (NFSU) publishes programmes and resources for forensic students in India."
+   ]
+  }
+ ],
+ "example": "An examiner images a seized phone and records the SHA-256 value of the image on the acquisition form. Later, the examiner states the tool, the time and the hash in the Schedule certificate. Any reader can recompute the hash from the copy and compare it with the certificate.",
+ "mistakes": [
+  "Writing the hash down only at the end of the case.",
+  "Citing a section number from memory without checking the current text.",
+  "Treating a blog or this page as legal advice.",
+  "Ignoring the time zone and time source when reading logs."
+ ],
+ "terms": [
+  {
+   "term": "BSA",
+   "meaning": "Bharatiya Sakshya Adhiniyam, 2023, the Indian law of evidence from 1 July 2024."
+  },
+  {
+   "term": "BNSS",
+   "meaning": "Bharatiya Nagarik Suraksha Sanhita, 2023, the procedure code that took the place of the CrPC."
+  },
+  {
+   "term": "CERT-In",
+   "meaning": "The Indian Computer Emergency Response Team, set up under section 70B of the IT Act."
+  },
+  {
+   "term": "Schedule certificate",
+   "meaning": "The form in the BSA Schedule that goes with an electronic record, with a Part A and a Part B."
+  }
+ ],
+ "exam": [
+  {
+   "q": "Which section of the BSA deals with the admissibility of electronic records?",
+   "a": "Section 63, which takes the place of Section 65B of the Indian Evidence Act, 1872."
+  },
+  {
+   "q": "Why are hash values important for the BSA certificate?",
+   "a": "Both parts of the Schedule certificate ask for the hash value of the electronic record, so the producing party and the expert can show the copy has not changed."
+  },
+  {
+   "q": "Name two rules in the CERT-In Directions of 2022 that matter for log analysis.",
+   "a": "Logs are kept for a rolling 180 days, and system clocks are synchronised with NIC or NPL NTP servers."
+  }
+ ],
+ "tools": [],
+ "related": [
+  "hash-values",
+  "evidence-integrity",
+  "chain-of-custody",
+  "forensic-report-basics"
+ ],
+ "learn": [
+  {
+   "label": "Bharatiya Sakshya Adhiniyam, 2023 (Gazette text)",
+   "url": "https://egazette.gov.in/WriteReadData/2023/250882.pdf"
+  },
+  {
+   "label": "BSA Schedule certificate form (NCRB)",
+   "url": "https://www.ncrb.mha.gov.in/uploads/SankalanPortal/ScheduleBSA.html"
+  },
+  {
+   "label": "Ministry of Home Affairs: new criminal laws",
+   "url": "https://www.mha.gov.in/en/commoncontent/new-criminal-laws"
+  },
+  {
+   "label": "Information Technology Act, 2000 (India Code PDF)",
+   "url": "https://www.indiacode.nic.in/bitstream/123456789/13116/1/it_act_2000_updated.pdf"
+  },
+  {
+   "label": "Ministry of Electronics and IT: IT Act, 2000",
+   "url": "https://www.meity.gov.in/content/information-technology-act-2000"
+  },
+  {
+   "label": "CERT-In Directions of 28 April 2022",
+   "url": "https://www.cert-in.org.in/PDF/CERT-In_Directions_70B_28.04.2022.pdf"
+  },
+  {
+   "label": "CERT-In FAQs on the Directions (May 2022)",
+   "url": "https://www.cert-in.org.in/PDF/FAQs_on_CyberSecurityDirections_May2022.pdf"
+  },
+  {
+   "label": "National Forensic Sciences University",
+   "url": "https://www.nfsu.ac.in/"
+  }
+ ],
+ "sources_note": "Written in our own words from the Gazette text, the BSA Schedule form and the CERT-In Directions and FAQs. This page is not legal advice."
+}

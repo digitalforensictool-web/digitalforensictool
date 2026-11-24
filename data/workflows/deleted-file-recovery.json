@@ -90,7 +90,9 @@
    "text": "Confirm important files by two routes, for example the same file found in Autopsy and by the command line, or a carved file matched to a file system entry by its hash. In your notes, record the tool names and versions, the image hash, where each recovered file came from and the time zone of any dates.",
    "tools": [
     "autopsy",
-    "sleuthkit"
+    "sleuthkit",
+    "scalpel",
+    "recuperabit"
    ]
   }
  ],

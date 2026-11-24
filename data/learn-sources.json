@@ -1,7 +1,7 @@
 [
   {"name": "This Week in 4n6", "url": "https://thisweekin4n6.com/", "what": "Weekly roundup of new DFIR posts, tools and research"},
   {"name": "The DFIR Report", "url": "https://thedfirreport.com/", "what": "Detailed write-ups of real intrusions, start to finish"},
-  {"name": "13Cubed", "url": "https://www.13cubed.com/", "what": "Video walkthroughs of Windows and memory forensics"},
+  {"name": "13Cubed", "url": "https://training.13cubed.com/", "what": "Video walkthroughs of Windows and memory forensics"},
   {"name": "AboutDFIR", "url": "https://aboutdfir.com/", "what": "Community index of tools, training and challenges"},
   {"name": "DFIR Diva", "url": "https://dfirdiva.com/", "what": "Beginner-friendly lists of free training and resources"},
   {"name": "Forensic Focus", "url": "https://www.forensicfocus.com/", "what": "News, interviews and forums for practitioners"}

@@ -46,7 +46,7 @@
  "steps": [
   {
    "title": "Get the program",
-   "text": "Download the WinPmem program from the project's GitHub page. Use the mini version that matches your computer, for example winpmem_mini_x64.exe for 64-bit Windows. Check the file hash against the one you recorded when you downloaded it."
+   "text": "Download the WinPmem program from the project's GitHub page. Use the mini version that matches your computer, for example winpmem_mini_x64_rc2.exe for 64-bit Windows. The same release also offers go-winpmem_amd64_1.0-rc2_signed.exe, a newer Go-based build; read its usage text before relying on it. Check the file hash against the one you recorded when you downloaded it."
   },
   {
    "title": "Prepare the output drive",
@@ -59,12 +59,12 @@
   {
    "title": "Show the help",
    "text": "Run the program with no arguments to see the usage text for your version.",
-   "cmd": "winpmem_mini_x64.exe"
+   "cmd": "winpmem_mini_x64_rc2.exe"
   },
   {
    "title": "Capture the memory",
    "text": "Run the program with the name of the output file. Wait until it finishes and the prompt returns. The README gives this form of the command.",
-   "cmd": "winpmem_mini_x64.exe physmem.raw"
+   "cmd": "winpmem_mini_x64_rc2.exe physmem.raw"
   },
   {
    "title": "Hash and keep the image",
@@ -77,7 +77,7 @@
  ],
  "options": [
   {
-   "cmd": "winpmem_mini_x64.exe physmem.raw",
+   "cmd": "winpmem_mini_x64_rc2.exe physmem.raw",
    "what": "Writes a raw image to physmem.raw with the default method."
   },
   {
@@ -116,6 +116,7 @@
  "limits": [
   "It writes raw images only. The mini programs cannot write AFF4 files.",
   "The README lists Windows 7 to 10. Check that it works on your Windows version before an important case, and test on a lab computer.",
+  "On Windows 11 with Memory Integrity (HVCI) enabled, unsigned or blocked drivers may fail to load; test first on a lab machine.",
   "The README notes that reads can fail for physical addresses above half the maximum 64-bit value. This is unlikely, but possible as RAM grows.",
   "It loads a kernel driver, so security software may block it. Test this in advance on a lab computer.",
   "It does not analyse memory. You need a tool such as Volatility 3.",

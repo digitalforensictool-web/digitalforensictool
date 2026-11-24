@@ -92,7 +92,9 @@
    "text": "Confirm each important fact in two tools, for example a connection in Wireshark Conversations and the same one in Zeek conn.log. Byte counts differ on purpose: Wireshark counts whole packets, Zeek orig_bytes and resp_bytes count payload only. In conn_state, SF means a normal start and end, S0 means a connection attempt with no reply and REJ means it was rejected. Record tool versions, the capture hash, packet numbers and the time basis.",
    "tools": [
     "wireshark",
-    "zeek"
+    "zeek",
+    "arkime",
+    "snort"
    ]
   }
  ],

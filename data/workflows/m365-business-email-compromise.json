@@ -102,7 +102,8 @@
    "title": "Build the time line and look for persistence",
    "text": "Sort the key events by UTC time: first unusual sign-in, rule creation, mail opened, mail sent, permission change. Then look for ways the attacker could return: new mailbox permissions, new MFA methods, consented apps and role changes. Containment, such as disabling the account or revoking sessions, belongs to the tenant administrator. Agree the time of each action first so it is not confused with the attacker's actions.",
    "tools": [
-    "sof-elk"
+    "sof-elk",
+    "prowler"
    ],
    "note": "Get-UAL can write output in a SOF-ELK format, and SOF-ELK has a microsoft365 input folder, if you want a searchable dashboard."
   }

@@ -25,6 +25,7 @@ import os
 import re
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 from pathlib import Path
 
@@ -117,7 +118,7 @@ def score(name, os_name):
     return s
 
 
-def classify_assets(assets):
+def classify_assets(assets, prefer=None):
     """Picks one clear file per operating system. Ties mean no pick."""
     picked = {}
     buckets = {"windows": [], "macos": [], "linux": []}
@@ -129,6 +130,19 @@ def classify_assets(assets):
         os_name = detect_os(name)
         if os_name:
             buckets[os_name].append((score(name, os_name), name, url, a.get("size") or 0))
+    # An explicit "asset_prefer" pattern in tools.json wins over the automatic guess. It may also
+    # rescue a file whose name carries two system words (for example mac_apt-windows-x64.exe).
+    for os_name, pat in (prefer or {}).items():
+        if os_name not in buckets:
+            continue
+        found = []
+        for a in assets:
+            name = a.get("name") or ""
+            url = a.get("browser_download_url") or ""
+            if name and url.startswith("https://github.com/") and re.search(pat, name, re.I):
+                found.append((score(name, os_name), name, url, a.get("size") or 0))
+        if found:
+            buckets[os_name] = found
     for os_name, cands in buckets.items():
         if not cands:
             continue
@@ -195,11 +209,17 @@ def refresh_tool(tool, now):
             "name": rel.get("name"),
             "published_at": rel.get("published_at"),
             "url": rel.get("html_url"),
-            "assets": classify_assets(rel.get("assets") or []),
+            "assets": classify_assets(rel.get("assets") or [], tool.get("asset_prefer")),
         }
     elif status not in (200, 404):
         return None
     return entry
+
+
+# Hosts that refuse scripted requests (403) or time out for scripts but work in a browser.
+KNOWN_BLOCKED_HOSTS = {"www.kroll.com", "cellebrite.com", "www.cellebrite.com", "sourceforge.net", "guymager.sourceforge.io",
+                       "foremost.sourceforge.net", "steghide.sourceforge.net", "eraser.heidi.ie", "support.passware.com",
+                       "www.cisco.com", "www.mythicsoft.com"}
 
 
 def check_url(url):
@@ -281,6 +301,8 @@ def main():
             for t, status in zip(web, pool.map(lambda x: check_url(x["url"]), web)):
                 if status in (404, 410):
                     review.append((t["id"], "Website returned %d: %s" % (status, t["url"])))
+                elif status == 0 and urllib.parse.urlparse(t["url"]).netloc.lower() in KNOWN_BLOCKED_HOSTS:
+                    continue
                 elif status == 0:
                     review.append((t["id"], "Website did not respond (may be temporary): %s" % t["url"]))
 

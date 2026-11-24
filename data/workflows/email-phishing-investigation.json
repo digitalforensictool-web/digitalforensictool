@@ -86,7 +86,8 @@
    "title": "Find out who else received it and who clicked",
    "text": "The email file cannot tell you this. Ask the mail administrator to search for the same sender, subject or link in the mail logs. Ask for web proxy or DNS logs that show visits to the link domain. On a user's computer, browser history and download records show a click. Report the indicators (defanged links, domains, sender address, attachment hashes) to the security team.",
    "tools": [
-    "cyberchef"
+    "cyberchef",
+    "maigret"
    ]
   },
   {

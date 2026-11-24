@@ -83,8 +83,8 @@
  ],
  "learn": [
   {
-   "label": "SANS: Google Chrome forensics",
-   "url": "https://sans.org/blog/google-chrome-forensics"
+   "label": "Forensics Wiki: Google Chrome",
+   "url": "https://forensics.wiki/google_chrome/"
   }
  ],
  "sources_note": "Written in our own words from public forensic training material and standards."

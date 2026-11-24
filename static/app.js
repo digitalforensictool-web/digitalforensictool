@@ -56,10 +56,35 @@
       });
     }
 
+    var limit = +list.getAttribute("data-limit") || 0;
+    var expanded = false;
+    var moreBtn = null;
+    if (limit && items.length > limit) {
+      moreBtn = document.createElement("button");
+      moreBtn.type = "button";
+      moreBtn.className = "btn small show-all";
+      moreBtn.textContent = "Show all " + items.length + " tools";
+      list.parentNode.insertBefore(moreBtn, list.nextSibling);
+      moreBtn.addEventListener("click", function () { expanded = true; apply(); });
+    }
+
+    function syncUrl(q) {
+      if (!window.history || !window.history.replaceState) return;
+      var p = new URLSearchParams();
+      if (q) p.set("q", q);
+      for (var key in state) { if (state[key] !== "all") p.set(key, state[key]); }
+      var qs = p.toString();
+      window.history.replaceState(null, "", window.location.pathname + (qs ? "?" + qs : "") + window.location.hash);
+    }
+
     function apply() {
       var q = input ? input.value.toLowerCase().trim() : "";
       var words = q ? q.split(/\s+/) : [];
       var shown = 0;
+      var anyFilter = words.length > 0;
+      for (var fk in state) { if (state[fk] !== "all") anyFilter = true; }
+      var capped = limit && !expanded && !anyFilter;
+      var seen = 0;
       items.forEach(function (el) {
         var ok = true;
         var text = el.getAttribute("data-text") || "";
@@ -73,9 +98,12 @@
             if (have.indexOf(" " + state[key] + " ") === -1) { ok = false; break; }
           }
         }
+        if (ok && capped) { seen++; if (seen > limit) ok = false; }
         el.hidden = !ok;
         if (ok) shown++;
       });
+      if (moreBtn) moreBtn.hidden = !capped;
+      syncUrl(q);
       if (toggle) {
         var active = 0;
         for (var k in state) { if (state[k] !== "all") active++; }
@@ -108,14 +136,24 @@
           return (a.getAttribute("data-name") || "").localeCompare(b.getAttribute("data-name") || "");
         });
         sorted.forEach(function (el) { list.appendChild(el); });
+        items = sorted;
+        apply();
       });
     }
 
+    var params = new URLSearchParams(window.location.search);
     if (input) {
-      var params = new URLSearchParams(window.location.search);
       if (params.get("q")) input.value = params.get("q");
       input.addEventListener("input", apply);
     }
+    panel.querySelectorAll("[data-group]").forEach(function (group) {
+      var key = group.getAttribute("data-group");
+      var want = params.get(key);
+      if (!want) return;
+      group.querySelectorAll("button").forEach(function (b) {
+        if (b.getAttribute("data-value") === want) { state[key] = want; b.click(); }
+      });
+    });
     apply();
   });
 
