@@ -1,13 +1,12 @@
 # Review list
 
-Generated 2026-11-26T03:11:58Z. Items here need a person to look at them.
+Generated 2026-11-27T03:14:32Z. Items here need a person to look at them.
 
 - **apollo**: GitHub does not report a recognised licence. Confirm the licence by hand and add a "licence" field in tools.json.
 - **audacity**: GitHub does not report a recognised licence. Confirm the licence by hand and add a "licence" field in tools.json.
 - **btcrecover**: Repository is a fork. Confirm it is the official one.
 - **bulk-extractor**: GitHub does not report a recognised licence. Confirm the licence by hand and add a "licence" field in tools.json.
 - **can-utils**: GitHub does not report a recognised licence. Confirm the licence by hand and add a "licence" field in tools.json.
-- **ddrescue**: Website did not respond (may be temporary): https://www.gnu.org/software/ddrescue/
 - **ffmpeg**: GitHub does not report a recognised licence. Confirm the licence by hand and add a "licence" field in tools.json.
 - **hashdeep**: GitHub does not report a recognised licence. Confirm the licence by hand and add a "licence" field in tools.json.
 - **john**: GitHub does not report a recognised licence. Confirm the licence by hand and add a "licence" field in tools.json.
